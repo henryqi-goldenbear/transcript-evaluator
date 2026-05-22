@@ -4,13 +4,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-token = os.getenv("GITHUB_TOKEN")
-endpoint = "https://models.github.ai/inference"
-model = "openai/gpt-5"
+api_key = os.getenv("OPENROUTER_API_KEY")
+endpoint = "https://openrouter.ai/api/v1"
+model = "openai/gpt-4.1"
 
 client = OpenAI(
     base_url=endpoint,
-    api_key=token,
+    api_key=api_key,
 )
 
 response = client.chat.completions.create(
@@ -21,7 +21,7 @@ response = client.chat.completions.create(
         },
         {
             "role": "user",
-            "content": "What is the capital of France?",
+            "content": "Tell me about the 2025-26 Western USA snowpack"
         }
     ],
     model=model
