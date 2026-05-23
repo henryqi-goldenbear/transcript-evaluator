@@ -1,0 +1,319 @@
+Model: openai/gpt-4.1   Delay: 1500ms   Cases: 22
+
+────────────────────────────────────────────────────────────
+[01] Perfect STAR — full detail, quantified result
+Q: Tell me about a time you led a project under a tight deadline.
+✓ Expected: filler 5/5 | context 5/5 | action 5/5 | result 5/5 | overall 10/10
+↳ Evaluator:
+{
+  "filler":  { "score": 5, "reasoning": "The response is clear and has no filler or unnecessary repetition." },
+  "context": { "score": 5, "reasoning": "The candidate provides company, timeframe, team scope, and high financial stakes." },
+  "action":  { "score": 5, "reasoning": "Actions are specific, I-driven, and describe leadership, task breakdown, ownership, and issue resolution." },
+  "result":  { "score": 5, "reasoning": "The result includes quantified timing, success rate, and penalty avoidance, clearly tied to the candidate's efforts." },
+  "flags":   [],
+  "overall": { "score": 10.0, "reasoning": "This is a textbook STAR example with explicit context, individual action, clear quantifiable result, and no filler." }
+}
+
+────────────────────────────────────────────────────────────
+[02] Strong STAR — no quantification but clear outcome
+Q: Describe a situation where you had to persuade a skeptical stakeholder.
+✓ Expected: filler 5/5 | context 4/5 | action 5/5 | result 4/5 | overall 9/10
+↳ Evaluator:
+{
+  "filler": { "score": 5, "reasoning": "The response is concise, direct, and free of filler or repetition." },
+  "context": { "score": 5, "reasoning": "The candidate identifies the company, timeframe, stakeholders, and the scope of the issue." },
+  "action": { "score": 5, "reasoning": "Actions are clearly I-driven and broken down concretely, showing strategic preparation and delivery." },
+  "result": { "score": 5, "reasoning": "Outcome is both immediate (stakeholder approval) and downstream (positive feedback from clients), with results directly tied to the candidate's actions." },
+  "flags": [],
+  "overall": { "score": 10.0, "reasoning": "The candidate gave a textbook STAR answer with clear action, context, quantifiable results, and no filler, covering all relevant details for a full-score response." }
+}
+
+────────────────────────────────────────────────────────────
+[03] Good STAR — minor filler, mostly solid
+Q: Tell me about a time you had a conflict with a teammate.
+✓ Expected: filler 4/5 | context 4/5 | action 5/5 | result 4/5 | overall 8.8/10
+↳ Evaluator:
+{
+  "filler": { "score": 4, "reasoning": "There is slight filler at the start ('So, um'), but the rest is concise and focused." },
+  "context": { "score": 5, "reasoning": "The candidate names the company, timeframe, teammate, project, and stakes (billing logic)." },
+  "action": { "score": 5, "reasoning": "Actions are explicitly described in first person, with clear reasoning and specific steps toward resolution." },
+  "result": { "score": 5, "reasoning": "A quantified and relevant result is given (zero billing errors in the first month, approach was validated)." },
+  "flags": [],
+  "overall": { "score": 9.8, "reasoning": "This is a strong STAR example with minor filler only at the beginning." }
+}
+
+────────────────────────────────────────────────────────────
+[04] Missing context — no company, timeframe, or stakes
+Q: Tell me about a time you improved a process.
+✓ Expected: filler 4/5 | context 2/5 | action 3/5 | result 2/5 | overall 5.2/10
+↳ Evaluator:
+{
+  "filler":  { "score": 5, "reasoning": "The response is concise and free of filler or repetition." },
+  "context": { "score": 3, "reasoning": "The candidate mentions 'my last job' and a slow deployment process but does not specify the company, timeframe, or broader stakes." },
+  "action":  { "score": 4, "reasoning": "Describes specific, I-driven actions (analyzing, scripting, testing, rolling out), but lacks deep detail or reasoning behind steps." },
+  "result":  { "score": 3, "reasoning": "States that it saved 'a lot of time' but does not quantify the result or tie it directly to broader outcomes." },
+  "flags":   [],
+  "overall": { "score": 6.6, "reasoning": "A concrete example with clear personal actions, but limited context and unquantified results hold it back." }
+}
+
+────────────────────────────────────────────────────────────
+[05] Completely context-free — story floats
+Q: Give me an example of handling a high-pressure situation.
+✓ Expected: filler 4/5 | context 1/5 | action 1/5 | result 1/5 | overall 2.6/10
+↳ Evaluator:
+{
+  "filler": { "score": 5, "reasoning": "The response contains no filler words or repetition." },
+  "context": { "score": 2, "reasoning": "There is no mention of company, timeframe, project, or stakes beyond 'tight deadline' and 'stressful'." },
+  "action": { "score": 2, "reasoning": "The actions are vague, with only 'stayed late and worked hard' and little explanation of specific steps or decision-making." },
+  "result": { "score": 2, "reasoning": "The outcome is only that the manager was happy, with no quantification or detail about the impact." },
+  "flags": ["NO SPECIFIC EXAMPLE"],
+  "overall": { "score": 2.6, "reasoning": "The answer lacks specific context, details on actions, and a clear, measurable result." }
+}
+
+────────────────────────────────────────────────────────────
+[06] We-heavy — individual contribution unclear
+Q: Tell me about a time your team delivered something you're proud of.
+✓ Expected: filler 4/5 | context 4/5 | action 1/5 | result 3/5 | overall 5/10
+↳ Evaluator:
+{
+  "filler":  { "score": 5, "reasoning": "There was no noticeable filler or repetition within the response." },
+  "context": { "score": 5, "reasoning": "The candidate gave the company, timeframe, project scope, and a clear critical timeline." },
+  "action":  { "score": 2, "reasoning": "The answer uses 'we' and describes general team activities without specific actions by the candidate." },
+  "result":  { "score": 5, "reasoning": "A concrete, quantified result (onboarding time dropped by 40%) is directly linked to launch." },
+  "flags":   [],
+  "overall": { "score": 5.6, "reasoning": "Despite strong context and outcome, the lack of 'I'-driven actions significantly weakens the behavioral evidence." }
+}
+
+────────────────────────────────────────────────────────────
+[07] Partial 'I' — mixed ownership, rationale absent
+Q: Describe a time you introduced a new technology to your team.
+✓ Expected: filler 5/5 | context 3/5 | action 2/5 | result 2/5 | overall 5/10
+↳ Evaluator:
+{
+  "filler": { "score": 5, "reasoning": "The answer was concise and free from filler or repetition." },
+  "context": { "score": 4, "reasoning": "The candidate states the company, year, and team context, but does not elaborate on the team size or specific stakes." },
+  "action": { "score": 3, "reasoning": "The candidate mentions researching and creating a proof of concept, but most steps are discussed collectively and lack rich, I-driven detail." },
+  "result": { "score": 3, "reasoning": "The outcome is positive ('deployments got faster'), but lacks quantification or clear tie-in to the candidate’s personal contribution." },
+  "flags": [],
+  "overall": { "score": 6.2, "reasoning": "The response is relevant and complete, but the action and result lack specificity and quantitative evidence." }
+}
+
+────────────────────────────────────────────────────────────
+[08] Missing result — story trails off
+Q: Tell me about a time you had to learn something quickly.
+✓ Expected: filler 5/5 | context 5/5 | action 5/5 | result 1/5 | overall 7.6/10
+↳ Evaluator:
+{
+  "filler":  { "score": 5, "reasoning": "There was no use of filler language or repetition." },
+  "context": { "score": 5, "reasoning": "The answer specified the company, timeframe, scope of work, and the criticality (200+ clients relying on the system)." },
+  "action":  { "score": 5, "reasoning": "The candidate described their individual steps in detail, including scheduling, resources used, and proactive engagement." },
+  "result":  { "score": 4, "reasoning": "The result was partially complete, indicating growing self-sufficiency, but did not quantify the final impact." },
+  "flags":   [],
+  "overall": { "score": 9.4, "reasoning": "This was a strong STAR answer with comprehensive context, detailed actions, and a credible, if somewhat incomplete, outcome." }
+}
+
+────────────────────────────────────────────────────────────
+[09] Result present but vague and disconnected from actions
+Q: Tell me about a time you improved team morale.
+✓ Expected: filler 5/5 | context 2/5 | action 2/5 | result 2/5 | overall 4.6/10
+↳ Evaluator:
+{
+  "filler": { "score": 5, "reasoning": "The response is clear and contains no filler or repetition." },
+  "context": { "score": 3, "reasoning": "The candidate names a previous company and gives a rough timeframe and team condition but lacks details about the company, team size, or stakes." },
+  "action": { "score": 3, "reasoning": "The candidate describes organizing a lunch and suggesting a retrospective but does not expand on how they navigated challenges or facilitated the conversation." },
+  "result": { "score": 2, "reasoning": "The result is vague and not quantified, only indicating team members 'seemed happier' and that things improved." },
+  "flags": [],
+  "overall": { "score": 3.0, "reasoning": "The answer demonstrates some relevant action and a plausible scenario, but lacks specific detail, depth of action, and measurable outcomes." }
+}
+
+────────────────────────────────────────────────────────────
+[10] Filler-heavy — frequent 'um', 'uh', repetition
+Q: Tell me about a time you dealt with ambiguity.
+✓ Expected: filler 1/5 | context 1/5 | action 1/5 | result 1/5 | overall 2/10
+↳ Evaluator:
+{
+  "filler":  { "score": 1, "reasoning": "The response is riddled with filler words and incoherent phrasing." },
+  "context": { "score": 2, "reasoning": "The context is very vague, only mentioning a scenario with unclear requirements and a manager." },
+  "action":  { "score": 2, "reasoning": "Actions are not specific and center on vaguely 'making assumptions' and 'building it,' with little detail." },
+  "result":  { "score": 2, "reasoning": "The result is minimally described as the manager being 'okay with it,' providing almost no meaningful outcome." },
+  "flags":   [],
+  "overall": { "score": 1.8, "reasoning": "The answer lacks detail, is filled with filler words, and fails to provide a clear, compelling example of handling ambiguity." }
+}
+
+────────────────────────────────────────────────────────────
+[11] Moderate filler — disrupts flow but content is recoverable
+Q: Give an example of a time you received critical feedback.
+✓ Expected: filler 3/5 | context 4/5 | action 5/5 | result 3/5 | overall 8/10
+↳ Evaluator:
+{
+  "filler": { "score": 3, "reasoning": "The response contains multiple fillers like 'um' and 'uh,' but remains coherent." },
+  "context": { "score": 5, "reasoning": "The candidate provides company name, timing, role, and stakes (code review and improvement needed)." },
+  "action": { "score": 5, "reasoning": "The candidate details personal actions: soliciting examples, refactoring, documenting, and adding a lint rule." },
+  "result": { "score": 4, "reasoning": "The outcome is clear and attributable, though not numerically quantified: code reviews became faster with fewer style comments." },
+  "flags": [],
+  "overall": { "score": 8.6, "reasoning": "A strong example with clear context, actionable steps, and a direct result, only slightly reduced by filler and lack of quantification." }
+}
+
+────────────────────────────────────────────────────────────
+[12] Credibility risk — deflects on follow-up probe
+Q: Tell me about a time you made a high-stakes technical decision.
+✓ Expected: filler 3/5 | context 4/5 | action 2/5 | result 2/5 | overall 5/10
+  FLAGS: CREDIBILITY RISK: Candidate failed to substantiate after positive probe on architecture trade-off analysis — deflected to team and minimised own role.
+↳ Evaluator:
+{
+  "filler":  { "score": 3, "reasoning": "There is some filler with phrases like 'um' and imprecise language." },
+  "context": { "score": 4, "reasoning": "The candidate provides the company, year, technical scope, and stakes." },
+  "action":  { "score": 2, "reasoning": "The candidate credits the team for technical evaluation and downplays their own actions, focusing on communication with little specific detail." },
+  "result":  { "score": 2, "reasoning": "There is no clear outcome or quantified result detailed in the follow-up." },
+  "flags":   ["CREDIBILITY RISK"],
+  "overall": { "score": 3.2, "reasoning": "The follow-up answer contains filler, weak ownership of actions, and lacks detail on both evaluation and outcomes, raising doubts about the candidate's actual role." }
+}
+
+────────────────────────────────────────────────────────────
+[13] Credibility risk — repeats original answer verbatim on probe
+Q: Describe a time you influenced without authority.
+✓ Expected: filler 3/5 | context 3/5 | action 2/5 | result 2/5 | overall 4.6/10
+  FLAGS: CREDIBILITY RISK: Candidate failed to substantiate after positive probe on argument structure — repeated original answer verbatim with no new detail.
+↳ Evaluator:
+{
+  "filler":  { "score": 5, "reasoning": "The response is clear and free of filler words." },
+  "context": { "score": 4, "reasoning": "Provides company, timeframe, and scope but doesn't elaborate on the stakes." },
+  "action":  { "score": 2, "reasoning": "Describes building and presenting a business case but lacks specific steps or insights into argument structuring." },
+  "result":  { "score": 3, "reasoning": "Links their effort to the outcome but gives no quantification or detail on the impact." },
+  "flags":   ["CREDIBILITY RISK"],
+  "overall": { "score": 4.4, "reasoning": "While context and result are somewhat present, the candidate did not substantively answer the follow-up, undermining credibility and action detail." }
+}
+
+────────────────────────────────────────────────────────────
+[14] Non-STAR — general philosophy instead of specific example
+Q: Tell me about a time you failed and what you learned.
+✓ Expected: filler 4/5 | context 1/5 | action 1/5 | result 1/5 | overall 2.6/10
+  FLAGS: NO SPECIFIC EXAMPLE: Candidate answered with abstract philosophy rather than a past behavioral example.
+↳ Evaluator:
+{
+  "filler":  { "score": 5, "reasoning": "The response was fluent and had no filler words or incoherence." },
+  "context": { "score": 1, "reasoning": "No specific situation, company, timeframe, or stakes were defined." },
+  "action":  { "score": 1, "reasoning": "The response was entirely abstract with no direct actions described." },
+  "result":  { "score": 1, "reasoning": "No specific result or outcome was stated or quantified." },
+  "flags":   ["NO SPECIFIC EXAMPLE"],
+  "overall": { "score": 1.6, "reasoning": "The answer was polished but provided no specific example, action, or measurable result." }
+}
+
+────────────────────────────────────────────────────────────
+[15] Non-STAR — hypothetical instead of past experience
+Q: Give me an example of a time you managed competing priorities.
+✓ Expected: filler 4/5 | context 1/5 | action 1/5 | result 1/5 | overall 2.6/10
+  FLAGS: HYPOTHETICAL FRAMING: Candidate answered with a hypothetical ('I would') rather than a past behavioral example. Follow-up required to elicit a real story.
+↳ Evaluator:
+{
+  "filler": { "score": 5, "reasoning": "The answer is concise and free from filler or repetition." },
+  "context": { "score": 1, "reasoning": "No specific situation or background context is provided." },
+  "action": { "score": 1, "reasoning": "The response uses hypothetical language ('would') and is generic, with no concrete actions taken by the candidate." },
+  "result": { "score": 1, "reasoning": "No result or impact is described." },
+  "flags": ["HYPOTHETICAL FRAMING", "NO SPECIFIC EXAMPLE"],
+  "overall": { "score": 1.6, "reasoning": "The answer is hypothetical with no context, actions, or results tied to a real experience." }
+}
+
+────────────────────────────────────────────────────────────
+[16] Non-STAR — stream of consciousness, no structure
+Q: Tell me about a challenging project.
+✓ Expected: filler 2/5 | context 1/5 | action 1/5 | result 1/5 | overall 2.2/10
+↳ Evaluator:
+{
+  "filler":  { "score": 3, "reasoning": "The response includes some filler phrases and casual language, but it's not pervasive." },
+  "context": { "score": 2, "reasoning": "The candidate mentions a platform project with new technology, but lacks details such as company, timeframe, or specific stakes." },
+  "action":  { "score": 1, "reasoning": "The answer is vague, focused on 'we' with no individual actions or specific steps described." },
+  "result":  { "score": 2, "reasoning": "Mentions that the project 'came together' and 'learned a lot,' but gives no concrete results or impact." },
+  "flags":   ["NO SPECIFIC EXAMPLE"],
+  "overall": { "score": 2.3, "reasoning": "The answer is vague and generic, lacking both personal actions and specific, measurable results." }
+}
+
+────────────────────────────────────────────────────────────
+[17] Missing task — jumps from situation to action
+Q: Tell me about a time you improved a team's technical practices.
+✓ Expected: filler 5/5 | context 3/5 | action 4/5 | result 5/5 | overall 8.4/10
+↳ Evaluator:
+{
+  "filler":  { "score": 5, "reasoning": "The answer is direct with no filler or repetition." },
+  "context": { "score": 5, "reasoning": "Mentions company, timeframe, codebase size, and the technical stakes." },
+  "action":  { "score": 5, "reasoning": "Concrete, I-driven steps with specific tools and processes introduced." },
+  "result":  { "score": 5, "reasoning": "Provides a quantified, time-bound result directly attributable to the candidate's actions." },
+  "flags":   [],
+  "overall": { "score": 10.0, "reasoning": "Fully detailed, impact-oriented answer with strong articulation of context, actions, and outcomes." }
+}
+
+────────────────────────────────────────────────────────────
+[18] Missing situation — jumps straight to action
+Q: Describe a time you mentored someone.
+✓ Expected: filler 5/5 | context 1/5 | action 5/5 | result 5/5 | overall 8.4/10
+↳ Evaluator:
+{
+  "filler":  { "score": 5, "reasoning": "The response is clean and to the point, with no filler." },
+  "context": { "score": 4, "reasoning": "The candidate provides their relationship to the mentee and frequency/duration, but lacks company and specific time indication." },
+  "action":  { "score": 5, "reasoning": "They describe concrete, personal actions in mentoring and enabling the junior engineer." },
+  "result":  { "score": 5, "reasoning": "They share a direct, measurable outcome clearly linked to their mentorship." },
+  "flags":   [],
+  "overall": { "score": 9.6, "reasoning": "This is a clear and specific STAR story with strong results and detailed actions." }
+}
+
+────────────────────────────────────────────────────────────
+[19] One-liner — completely uninformative
+Q: Tell me about a time you showed leadership.
+✓ Expected: filler 5/5 | context 1/5 | action 1/5 | result 1/5 | overall 2.8/10
+↳ Evaluator:
+{
+  "filler": { "score": 5, "reasoning": "There is no filler in the brief response." },
+  "context": { "score": 1, "reasoning": "No details are provided about the company, timeframe, project scope, or stakes." },
+  "action": { "score": 1, "reasoning": "The answer does not describe any specific actions, steps taken, or personal contributions." },
+  "result": { "score": 2, "reasoning": "A vague result is mentioned, but it is not quantified or specifically tied to the candidate's actions." },
+  "flags": ["NO SPECIFIC EXAMPLE"],
+  "overall": { "score": 1.8, "reasoning": "The response is extremely vague, lacking context and details of actions, with only a generic result provided." }
+}
+
+────────────────────────────────────────────────────────────
+[20] Empty / no response
+Q: Give me an example of a time you had to adapt to a major change.
+✓ Expected: filler 1/5 | context 1/5 | action 1/5 | result 1/5 | overall 2/10
+  FLAGS: NO RESPONSE: Candidate provided no answer. May indicate freeze, pass, or interview cut-off.
+↳ Evaluator:
+{
+  "filler":  { "score": 1, "reasoning": "The response is empty and contains no filler, but also no content." },
+  "context": { "score": 1, "reasoning": "No context whatsoever was provided." },
+  "action":  { "score": 1, "reasoning": "No actions described due to lack of response." },
+  "result":  { "score": 1, "reasoning": "No result given." },
+  "flags":   ["NO RESPONSE"],
+  "overall": { "score": 0.2, "reasoning": "The candidate gave no answer, so there is nothing to evaluate." }
+}
+
+────────────────────────────────────────────────────────────
+[21] Pivots to a different example mid-answer
+Q: Tell me about a time you disagreed with your manager's decision.
+✓ Expected: filler 3/5 | context 2/5 | action 2/5 | result 2/5 | overall 4.2/10
+  FLAGS: PIVOT: Candidate abandoned first example mid-answer. First example also showed passivity (disagreement not acted on), which may be the reason for the pivot.
+↳ Evaluator:
+{
+  "filler":  { "score": 4, "reasoning": "The response has minimal filler but did include a mid-answer example swap." },
+  "context": { "score": 2, "reasoning": "The candidate mentions a last company but provides vague or no details about timeframe, stakes, or specific project." },
+  "action":  { "score": 2, "reasoning": "Actions are briefly mentioned ('I pushed back', 'I said we should cut scope') but lack specific steps or reasoning, and switches from 'the team went ahead' to a collective 'we' outcome." },
+  "result":  { "score": 3, "reasoning": "The result is positive and attributed to the change ('we shipped a leaner product that worked out') but lacks measurable outcomes." },
+  "flags":   ["PIVOT"],
+  "overall": { "score": 3.2, "reasoning": "The candidate pivots mid-answer, offers unclear context and actions, and only a basic result, leading to a below-average behavioral example." }
+}
+
+────────────────────────────────────────────────────────────
+[22] Answers a different question entirely
+Q: Tell me about a time you had to make a decision with incomplete information.
+✓ Expected: filler 4/5 | context 2/5 | action 2/5 | result 1/5 | overall 3.8/10
+  FLAGS: OFF-TOPIC: Candidate answered a different question (building data infrastructure) rather than describing a decision made under uncertainty. Follow-up required to redirect.
+↳ Evaluator:
+{
+  "filler":  { "score": 5, "reasoning": "There is no filler or repetition in the answer." },
+  "context": { "score": 2, "reasoning": "Provides current role and type of work, but lacks timeframe, company, and stakes." },
+  "action":  { "score": 2, "reasoning": "Describes building dashboards and analytics stack, but actions are described vaguely and collectively rather than specific decisions made." },
+  "result":  { "score": 2, "reasoning": "Mentions improved team usage but lacks quantification or specific outcomes tied to the candidate." },
+  "flags":   ["NO SPECIFIC EXAMPLE"],
+  "overall": { "score": 2.7, "reasoning": "The answer is abstract, lacks a specific example of decision-making with incomplete information, and does not sufficiently detail actions or outcomes." }
+}
+
+────────────────────────────────────────────────────────────
+Finished — 22 succeeded, 0 errors, 0 skipped.

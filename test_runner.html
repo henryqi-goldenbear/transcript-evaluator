@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Runner — Transcript Evaluator</title>
+  <script src="https://js.puter.com/v2/"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px;
+    }
+
+    header {
+      width: 100%;
+      max-width: 860px;
+      margin-bottom: 32px;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #f8fafc;
+      letter-spacing: -0.02em;
+    }
+
+    header p {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    .card {
+      background: #1e2130;
+      border: 1px solid #2d3148;
+      border-radius: 12px;
+      padding: 24px;
+      width: 100%;
+      max-width: 860px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    select, input[type="number"] {
+      background: #0f1117;
+      border: 1px solid #2d3148;
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-size: 0.9rem;
+      padding: 10px 14px;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+
+    select:focus, input[type="number"]:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+
+    select option { background: #1e2130; }
+
+    input[type="number"] { width: 100px; }
+
+    .controls {
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .field { display: flex; flex-direction: column; }
+    .field.grow { flex: 1; }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    button {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, opacity 0.15s;
+      white-space: nowrap;
+    }
+
+    #run-btn  { background: #6366f1; color: #fff; }
+    #run-btn:hover:not(:disabled) { background: #4f46e5; }
+
+    #stop-btn { background: #374151; color: #e2e8f0; }
+    #stop-btn:hover:not(:disabled) { background: #4b5563; }
+
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Progress */
+    #progress-card { display: none; }
+
+    .progress-label {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+
+    .progress-track {
+      background: #0f1117;
+      border-radius: 999px;
+      height: 6px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #6366f1;
+      border-radius: 999px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    /* Log panel */
+    #log-card { display: none; }
+
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .log-header span {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    #copy-btn {
+      background: #2d3148;
+      color: #a5b4fc;
+      font-size: 0.78rem;
+      padding: 5px 14px;
+    }
+
+    #copy-btn:hover { background: #3d4468; }
+
+    #log-output {
+      background: #0f1117;
+      border: 1px solid #2d3148;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: "Fira Code", "Cascadia Code", ui-monospace, monospace;
+      font-size: 0.82rem;
+      line-height: 1.65;
+      color: #cbd5e1;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 680px;
+      overflow-y: auto;
+    }
+
+    /* Colour-coded log tokens */
+    .log-sep    { color: #3d4468; }
+    .log-id     { color: #818cf8; font-weight: 700; }
+    .log-label  { color: #f8fafc; font-weight: 600; }
+    .log-q      { color: #94a3b8; }
+    .log-expect { color: #34d399; }
+    .log-output { color: #e2e8f0; }
+    .log-error  { color: #f87171; }
+    .log-done   { color: #a78bfa; font-weight: 700; }
+
+    .spinner {
+      display: inline-block;
+      width: 12px; height: 12px;
+      border: 2px solid #6366f1;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    #load-status {
+      font-size: 0.82rem;
+      color: #64748b;
+      margin-top: 8px;
+      min-height: 20px;
+    }
+
+    .error-text { color: #f87171; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Test Runner</h1>
+    <p>Runs all test cases from <code>test_cases.json</code> sequentially through the evaluator.</p>
+  </header>
+
+  <!-- Controls -->
+  <div class="card">
+    <div class="controls">
+      <div class="field grow">
+        <label>Model</label>
+        <select id="model-select">
+          <optgroup label="⚡ Fast">
+            <option value="openai/gpt-4.1-nano" selected>GPT-4.1 Nano (fastest)</option>
+            <option value="openai/gpt-4.1-mini">GPT-4.1 Mini</option>
+            <option value="google/gemini-2.5-flash">Gemini 2.5 Flash</option>
+          </optgroup>
+          <optgroup label="OpenAI">
+            <option value="openai/gpt-5">GPT-5</option>
+            <option value="openai/gpt-5-mini">GPT-5 Mini</option>
+            <option value="openai/gpt-4.1">GPT-4.1</option>
+            <option value="openai/gpt-4o">GPT-4o</option>
+          </optgroup>
+          <optgroup label="Anthropic">
+            <option value="anthropic/claude-opus-4-5">Claude Opus 4.5</option>
+            <option value="anthropic/claude-sonnet-4-6">Claude Sonnet 4.6</option>
+          </optgroup>
+          <optgroup label="Google">
+            <option value="google/gemini-2.5-pro">Gemini 2.5 Pro</option>
+            <option value="google/gemini-2.5-flash">Gemini 2.5 Flash</option>
+          </optgroup>
+          <optgroup label="Meta">
+            <option value="meta/llama-4-maverick">Llama 4 Maverick</option>
+          </optgroup>
+          <optgroup label="DeepSeek">
+            <option value="deepseek/deepseek-r1">DeepSeek R1</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Delay (ms)</label>
+        <input type="number" id="delay-input" value="1500" min="0" max="10000" step="500" />
+      </div>
+
+      <div class="btn-row">
+        <button id="run-btn" onclick="runAll()">Run All</button>
+        <button id="stop-btn" onclick="stopRun()" disabled>Stop</button>
+      </div>
+    </div>
+    <div id="load-status">Loading test_cases.json...</div>
+  </div>
+
+  <!-- Progress -->
+  <div class="card" id="progress-card">
+    <div class="progress-label" id="progress-label">Case 0 / 0</div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <!-- Log output -->
+  <div class="card" id="log-card">
+    <div class="log-header">
+      <span>Output Log</span>
+      <button id="copy-btn" onclick="copyLog()">Copy</button>
+    </div>
+    <div id="log-output"></div>
+  </div>
+
+  <script>
+    const SYSTEM_PROMPT = `You are an expert behavioral interview evaluator using the STAR rubric (Situation, Task, Action, Result).
+
+Given a question and a candidate's response, evaluate the response on four dimensions and return your assessment in this exact JSON format:
+
+{
+  "filler":  { "score": <1-5>, "reasoning": "<one sentence>" },
+  "context": { "score": <1-5>, "reasoning": "<one sentence>" },
+  "action":  { "score": <1-5>, "reasoning": "<one sentence>" },
+  "result":  { "score": <1-5>, "reasoning": "<one sentence>" },
+  "flags":   ["<flag string if applicable, else empty array>"],
+  "overall": { "score": <0.0-10.0>, "reasoning": "<one sentence>" }
+}
+
+Scoring rubric:
+- Filler & Repetition (10%): 5=no filler, 1=constant filler/incoherent
+- Context Definition (20%): 5=company+timeframe+scope+stakes, 1=no context
+- Action Definition (40%): 5=consistent I-driven with specific steps and reasoning, 1=vague or all "we"
+- Result (30%): 5=quantified outcome tied to candidate, 1=no result
+- Overall = (filler*0.10 + context*0.20 + action*0.40 + result*0.30) * 2, rounded to 1 decimal
+
+Flags to raise when applicable:
+- CREDIBILITY RISK: candidate failed to substantiate after a positive probe
+- NO SPECIFIC EXAMPLE: candidate answered with abstract philosophy
+- HYPOTHETICAL FRAMING: candidate used "I would" instead of a real story
+- NO RESPONSE: empty answer
+- PIVOT: candidate abandoned their example mid-answer
+- OFF-TOPIC: candidate answered a different question
+
+Return only the JSON object, no other text.`;
+
+    let testCases = [];
+    let cancelled = false;
+
+    // ── Load test cases ─────────────────────────────────────────────────────
+    async function loadCases() {
+      const status = document.getElementById('load-status');
+      try {
+        const res = await fetch('./test_cases.json');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        testCases = await res.json();
+        status.textContent = `${testCases.length} test cases loaded. Ready to run.`;
+        document.getElementById('run-btn').disabled = false;
+      } catch (err) {
+        status.innerHTML = `<span class="error-text">Failed to load test_cases.json: ${err.message}. Make sure you're serving via http.server, not file://.</span>`;
+        document.getElementById('run-btn').disabled = true;
+      }
+    }
+
+    // ── Logging helpers ──────────────────────────────────────────────────────
+    const logEl = document.getElementById('log-output');
+
+    function appendLog(html) {
+      logEl.innerHTML += html;
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function appendText(cls, text) {
+      const span = document.createElement('span');
+      span.className = cls;
+      span.textContent = text;
+      logEl.appendChild(span);
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function appendRaw(text) {
+      logEl.appendChild(document.createTextNode(text));
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    // ── Progress ─────────────────────────────────────────────────────────────
+    function setProgress(n, total, label) {
+      document.getElementById('progress-label').textContent =
+        `Case ${n} / ${total}${label ? ' — ' + label : ''}`;
+      document.getElementById('progress-fill').style.width =
+        `${Math.round((n / total) * 100)}%`;
+    }
+
+    // ── Sleep util ───────────────────────────────────────────────────────────
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+    // ── Format expected scores ───────────────────────────────────────────────
+    function formatExpected(exp) {
+      const f = exp.filler.score;
+      const c = exp.context.score;
+      const a = exp.action.score;
+      const r = exp.result.score;
+      const o = exp.overall.score;
+      const flags = exp.flags && exp.flags.length ? '\n  FLAGS: ' + exp.flags.join(' | ') : '';
+      return `filler ${f}/5 | context ${c}/5 | action ${a}/5 | result ${r}/5 | overall ${o}/10${flags}`;
+    }
+
+    // ── Stop ─────────────────────────────────────────────────────────────────
+    function stopRun() {
+      cancelled = true;
+      document.getElementById('stop-btn').disabled = true;
+    }
+
+    // ── Main runner ──────────────────────────────────────────────────────────
+    async function runAll() {
+      if (!testCases.length) return;
+
+      cancelled = false;
+      const model = document.getElementById('model-select').value;
+      const delay = parseInt(document.getElementById('delay-input').value, 10) || 1500;
+      const total = testCases.length;
+
+      document.getElementById('run-btn').disabled = true;
+      document.getElementById('stop-btn').disabled = false;
+      document.getElementById('progress-card').style.display = 'block';
+      document.getElementById('log-card').style.display = 'block';
+
+      logEl.innerHTML = '';
+      appendText('log-done', `Model: ${model}   Delay: ${delay}ms   Cases: ${total}\n\n`);
+
+      let passed = 0, errors = 0;
+
+      for (let i = 0; i < total; i++) {
+        if (cancelled) {
+          appendText('log-error', `\n⏹ Stopped at case ${i + 1} of ${total}.\n`);
+          break;
+        }
+
+        const tc = testCases[i];
+        setProgress(i + 1, total, tc.label);
+
+        // Separator + header
+        appendText('log-sep', '─'.repeat(60) + '\n');
+        appendText('log-id', `[${String(tc.id).padStart(2, '0')}] `);
+        appendText('log-label', tc.label + '\n');
+        appendText('log-q', `Q: ${tc.question}\n`);
+
+        // Expected scores
+        appendText('log-expect', `✓ Expected: ${formatExpected(tc.expected)}\n`);
+
+        // Build user message
+        let userMsg = `Question: ${tc.question}\n\nCandidate response: ${tc.response}`;
+        if (tc.follow_up) {
+          userMsg += `\n\nFollow-up question: ${tc.follow_up}`;
+        }
+        if (tc.follow_up_response) {
+          userMsg += `\n\nCandidate follow-up response: ${tc.follow_up_response}`;
+        }
+
+        // Spinner placeholder
+        const spinnerEl = document.createElement('span');
+        spinnerEl.innerHTML = '<span class="spinner"></span> Evaluating...';
+        logEl.appendChild(spinnerEl);
+        logEl.scrollTop = logEl.scrollHeight;
+
+        try {
+          const resp = await puter.ai.chat(
+            [
+              { role: 'system', content: SYSTEM_PROMPT },
+              { role: 'user',   content: userMsg },
+            ],
+            { model, stream: false }
+          );
+
+          spinnerEl.remove();
+
+          const raw = resp?.message?.content ?? resp?.text ?? String(resp);
+
+          appendText('log-output', `↳ Evaluator:\n${raw}\n`);
+          passed++;
+        } catch (err) {
+          spinnerEl.remove();
+          appendText('log-error', `↳ ERROR: ${err.message || err}\n`);
+          errors++;
+        }
+
+        appendRaw('\n');
+
+        if (i < total - 1 && !cancelled) await sleep(delay);
+      }
+
+      setProgress(total, total, 'Done');
+      appendText('log-sep', '─'.repeat(60) + '\n');
+      appendText('log-done',
+        `Finished — ${passed} succeeded, ${errors} errors, ${total - passed - errors} skipped.\n`
+      );
+
+      document.getElementById('run-btn').disabled = false;
+      document.getElementById('stop-btn').disabled = true;
+    }
+
+    // ── Copy log ─────────────────────────────────────────────────────────────
+    function copyLog() {
+      const text = logEl.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copy-btn');
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = orig; }, 1500);
+      });
+    }
+
+    // ── Init ─────────────────────────────────────────────────────────────────
+    document.getElementById('run-btn').disabled = true;
+    loadCases();
+  </script>
+
+</body>
+</html>
