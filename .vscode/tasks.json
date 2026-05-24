@@ -1,6 +1,24 @@
 {
   "version": "2.0.0",
   "tasks": [
+
+    {
+      "label": "Run Test Runner",
+      "type": "shell",
+      "command": "$py = 'C:\\Users\\zhiha\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe'; & $py response_test.py --json | Out-File -FilePath test_cases.json -Encoding utf8; Start-Process $py -ArgumentList '-m', 'http.server', '3000' -WorkingDirectory '${workspaceFolder}' -WindowStyle Hidden; Start-Sleep -Seconds 1; Start-Process 'http://localhost:3000/test_runner.html'",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+
     {
       "label": "Export Test Cases",
       "type": "shell",
@@ -13,20 +31,19 @@
         "panel": "shared"
       }
     },
+
     {
-      "label": "Start Evaluator",
+      "label": "Open Evaluator",
       "type": "shell",
-      "command": "Start-Job { Set-Location '${workspaceFolder}'; C:\\Users\\zhiha\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe -m http.server 3000 }; Start-Sleep -Seconds 1; Start-Process 'http://localhost:3000/evaluator.html'",
+      "command": "Start-Process 'C:\\Users\\zhiha\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe' -ArgumentList '-m', 'http.server', '3000' -WorkingDirectory '${workspaceFolder}' -WindowStyle Hidden; Start-Sleep -Seconds 1; Start-Process 'http://localhost:3000/evaluator.html'",
       "options": {
         "cwd": "${workspaceFolder}"
       },
       "presentation": {
         "reveal": "always",
-        "panel": "new"
-      },
-      "runOptions": {
-        "runOn": "folderOpen"
+        "panel": "shared"
       }
     }
+
   ]
 }

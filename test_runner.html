@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Test Runner — Transcript Evaluator</title>
-  <script src="https://js.puter.com/v2/"></script>
+  <!-- config.js is gitignored and sets window.GEMINI_API_KEY to pre-fill the key field -->
+  <script src="./config.js" onerror="void 0"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -19,87 +20,94 @@
       padding: 40px 16px;
     }
 
-    header {
-      width: 100%;
-      max-width: 860px;
-      margin-bottom: 32px;
-    }
-
-    header h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #f8fafc;
-      letter-spacing: -0.02em;
-    }
-
-    header p {
-      font-size: 0.85rem;
-      color: #64748b;
-      margin-top: 4px;
-    }
+    header { width: 100%; max-width: 920px; margin-bottom: 28px; }
+    header h1 { font-size: 1.5rem; font-weight: 700; color: #f8fafc; letter-spacing: -0.02em; }
+    header p  { font-size: 0.85rem; color: #64748b; margin-top: 4px; }
 
     .card {
       background: #1e2130;
       border: 1px solid #2d3148;
       border-radius: 12px;
-      padding: 24px;
+      padding: 20px 24px;
       width: 100%;
-      max-width: 860px;
-      margin-bottom: 20px;
+      max-width: 920px;
+      margin-bottom: 16px;
     }
 
     label {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 600;
       color: #94a3b8;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
-    select, input[type="number"] {
+    select, input[type="number"], input[type="password"], input[type="text"] {
       background: #0f1117;
       border: 1px solid #2d3148;
       border-radius: 8px;
       color: #e2e8f0;
-      font-size: 0.9rem;
-      padding: 10px 14px;
+      font-size: 0.88rem;
+      padding: 9px 12px;
       font-family: inherit;
       transition: border-color 0.15s;
+      width: 100%;
     }
 
-    select:focus, input[type="number"]:focus {
+    select:focus, input:focus {
       outline: none;
       border-color: #6366f1;
     }
 
     select option { background: #1e2130; }
 
-    input[type="number"] { width: 100px; }
-
     .controls {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       align-items: flex-end;
       flex-wrap: wrap;
     }
 
-    .field { display: flex; flex-direction: column; }
-    .field.grow { flex: 1; }
+    .field          { display: flex; flex-direction: column; }
+    .field.grow     { flex: 1; min-width: 180px; }
+    .field.narrow   { width: 110px; }
+    .field.mid      { width: 160px; }
+
+    .api-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #2d3148;
+    }
+
+    .api-row .field { flex: 1; }
+
+    .api-hint {
+      font-size: 0.78rem;
+      color: #475569;
+      padding-bottom: 9px;
+      white-space: nowrap;
+    }
+
+    .api-hint a { color: #818cf8; text-decoration: none; }
+    .api-hint a:hover { text-decoration: underline; }
 
     .btn-row {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
-      margin-left: auto;
+      padding-bottom: 1px;
     }
 
     button {
       border: none;
       border-radius: 8px;
-      padding: 10px 22px;
-      font-size: 0.9rem;
+      padding: 9px 20px;
+      font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       transition: background 0.15s, opacity 0.15s;
@@ -112,44 +120,68 @@
     #stop-btn { background: #374151; color: #e2e8f0; }
     #stop-btn:hover:not(:disabled) { background: #4b5563; }
 
-    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    button:disabled { opacity: 0.35; cursor: not-allowed; }
 
-    /* Progress */
+    #load-status {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 12px;
+      min-height: 18px;
+    }
+
+    /* ── Progress ───────────────────────────────────────────────────────────── */
     #progress-card { display: none; }
 
     .progress-label {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: #94a3b8;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
     }
 
-    .progress-track {
-      background: #0f1117;
-      border-radius: 999px;
-      height: 6px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
+    .progress-track { background: #0f1117; border-radius: 999px; height: 6px; overflow: hidden; }
+    .progress-fill  {
       height: 100%;
-      background: #6366f1;
       border-radius: 999px;
-      transition: width 0.3s ease;
+      transition: width 0.3s ease, background 0.3s;
+      background: #6366f1;
       width: 0%;
     }
 
-    /* Log panel */
+    /* ── Summary chips ──────────────────────────────────────────────────────── */
+    #summary-row {
+      display: none;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .chip {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid;
+    }
+
+    .chip-pass  { color: #34d399; border-color: #34d399; }
+    .chip-warn  { color: #fbbf24; border-color: #fbbf24; }
+    .chip-fail  { color: #f87171; border-color: #f87171; }
+    .chip-total { color: #818cf8; border-color: #818cf8; }
+
+    /* ── Log ────────────────────────────────────────────────────────────────── */
     #log-card { display: none; }
 
     .log-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .log-header span {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 600;
       color: #94a3b8;
       text-transform: uppercase;
@@ -159,332 +191,857 @@
     #copy-btn {
       background: #2d3148;
       color: #a5b4fc;
-      font-size: 0.78rem;
-      padding: 5px 14px;
+      font-size: 0.76rem;
+      padding: 4px 12px;
     }
 
     #copy-btn:hover { background: #3d4468; }
 
     #log-output {
-      background: #0f1117;
+      background: #0b0d14;
       border: 1px solid #2d3148;
       border-radius: 8px;
-      padding: 16px;
+      padding: 14px 16px;
       font-family: "Fira Code", "Cascadia Code", ui-monospace, monospace;
-      font-size: 0.82rem;
-      line-height: 1.65;
+      font-size: 0.8rem;
+      line-height: 1.7;
       color: #cbd5e1;
       white-space: pre-wrap;
       word-break: break-word;
-      max-height: 680px;
+      max-height: 740px;
       overflow-y: auto;
     }
 
-    /* Colour-coded log tokens */
-    .log-sep    { color: #3d4468; }
+    /* ── Log token colours ──────────────────────────────────────────────────── */
+    .log-sep    { color: #2d3148; }
     .log-id     { color: #818cf8; font-weight: 700; }
     .log-label  { color: #f8fafc; font-weight: 600; }
-    .log-q      { color: #94a3b8; }
+    .log-type   { color: #475569; font-size: 0.72rem; }
+    .log-q      { color: #64748b; }
     .log-expect { color: #34d399; }
-    .log-output { color: #e2e8f0; }
+    .log-actual { color: #93c5fd; }
     .log-error  { color: #f87171; }
     .log-done   { color: #a78bfa; font-weight: 700; }
+    .log-raw    { color: #64748b; font-size: 0.75rem; }
 
+    /* delta */
+    .delta-row  { color: #475569; }
+    .d-exact    { color: #34d399; }
+    .d-near     { color: #fbbf24; }
+    .d-far      { color: #f87171; }
+
+    .badge-calc { color: #6366f1; font-size: 0.72rem; font-style: italic; }
+
+    /* spinner */
     .spinner {
       display: inline-block;
-      width: 12px; height: 12px;
+      width: 11px; height: 11px;
       border: 2px solid #6366f1;
       border-top-color: transparent;
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
-      margin-right: 6px;
+      margin-right: 5px;
       vertical-align: middle;
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    #load-status {
-      font-size: 0.82rem;
-      color: #64748b;
-      margin-top: 8px;
-      min-height: 20px;
-    }
 
     .error-text { color: #f87171; }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Test Runner</h1>
-    <p>Runs all test cases from <code>test_cases.json</code> sequentially through the evaluator.</p>
-  </header>
+<header>
+  <h1>Test Runner</h1>
+  <p>Runs <code>test_cases.json</code> through Google Gemini and compares scores against expected values.</p>
+</header>
 
-  <!-- Controls -->
-  <div class="card">
-    <div class="controls">
-      <div class="field grow">
-        <label>Model</label>
-        <select id="model-select">
-          <optgroup label="⚡ Fast">
-            <option value="openai/gpt-4.1-nano" selected>GPT-4.1 Nano (fastest)</option>
-            <option value="openai/gpt-4.1-mini">GPT-4.1 Mini</option>
-            <option value="google/gemini-2.5-flash">Gemini 2.5 Flash</option>
-          </optgroup>
-          <optgroup label="OpenAI">
-            <option value="openai/gpt-5">GPT-5</option>
-            <option value="openai/gpt-5-mini">GPT-5 Mini</option>
-            <option value="openai/gpt-4.1">GPT-4.1</option>
-            <option value="openai/gpt-4o">GPT-4o</option>
-          </optgroup>
-          <optgroup label="Anthropic">
-            <option value="anthropic/claude-opus-4-5">Claude Opus 4.5</option>
-            <option value="anthropic/claude-sonnet-4-6">Claude Sonnet 4.6</option>
-          </optgroup>
-          <optgroup label="Google">
-            <option value="google/gemini-2.5-pro">Gemini 2.5 Pro</option>
-            <option value="google/gemini-2.5-flash">Gemini 2.5 Flash</option>
-          </optgroup>
-          <optgroup label="Meta">
-            <option value="meta/llama-4-maverick">Llama 4 Maverick</option>
-          </optgroup>
-          <optgroup label="DeepSeek">
-            <option value="deepseek/deepseek-r1">DeepSeek R1</option>
-          </optgroup>
-        </select>
-      </div>
+<!-- Controls -->
+<div class="card">
 
-      <div class="field">
-        <label>Delay (ms)</label>
-        <input type="number" id="delay-input" value="1500" min="0" max="10000" step="500" />
-      </div>
+  <!-- Main controls row -->
+  <div class="controls">
 
-      <div class="btn-row">
-        <button id="run-btn" onclick="runAll()">Run All</button>
-        <button id="stop-btn" onclick="stopRun()" disabled>Stop</button>
-      </div>
+    <div class="field grow">
+      <label>Model</label>
+      <select id="model-select">
+        <optgroup label="Gemma — free · higher RPM">
+          <option value="gemma-4-31b-it" selected>gemma-4-31b-it (Gemma 4 31B)</option>
+          <option value="gemma-4-26b-a4b-it">gemma-4-26b-a4b-it (Gemma 4 26B — stable)</option>
+        </optgroup>
+        <optgroup label="Gemini 2.5 Flash — free · 20 RPM">
+          <option value="gemini-2.5-flash">gemini-2.5-flash (stable)</option>
+          <option value="gemini-2.5-flash-preview-05-20">gemini-2.5-flash-preview-05-20</option>
+        </optgroup>
+        <optgroup label="Gemini 2.5 Pro — free · 5 RPM">
+          <option value="gemini-2.5-pro">gemini-2.5-pro (stable)</option>
+          <option value="gemini-2.5-pro-preview-05-06">gemini-2.5-pro-preview-05-06</option>
+        </optgroup>
+      </select>
     </div>
-    <div id="load-status">Loading test_cases.json...</div>
+
+    <div class="field mid">
+      <label>Filter</label>
+      <select id="filter-select">
+        <option value="all">All cases</option>
+        <option value="behavioral">STAR only</option>
+        <option value="non_behavioral">Non-behavioral only</option>
+      </select>
+    </div>
+
+    <div class="field narrow">
+      <label>Delay (ms)</label>
+      <input type="number" id="delay-input" value="3000" min="0" max="30000" step="500" />
+    </div>
+
+    <div class="field narrow">
+      <label>Batch size</label>
+      <input type="number" id="batch-size-input" value="5" min="1" max="7" step="1" />
+    </div>
+
+    <div class="btn-row">
+      <button id="run-btn" onclick="runAll()" disabled>Run All</button>
+      <button id="stop-btn" onclick="stopRun()" disabled>Stop</button>
+    </div>
+
   </div>
 
-  <!-- Progress -->
-  <div class="card" id="progress-card">
-    <div class="progress-label" id="progress-label">Case 0 / 0</div>
-    <div class="progress-track">
-      <div class="progress-fill" id="progress-fill"></div>
-    </div>
+  <div id="load-status">Loading test_cases.json…</div>
+  <div id="summary-row"></div>
+</div>
+
+<!-- Progress -->
+<div class="card" id="progress-card">
+  <div class="progress-label">
+    <span id="progress-label">Case 0 / 0</span>
+    <span id="progress-pct">0%</span>
   </div>
-
-  <!-- Log output -->
-  <div class="card" id="log-card">
-    <div class="log-header">
-      <span>Output Log</span>
-      <button id="copy-btn" onclick="copyLog()">Copy</button>
-    </div>
-    <div id="log-output"></div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill"></div>
   </div>
+</div>
 
-  <script>
-    const SYSTEM_PROMPT = `You are an expert behavioral interview evaluator using the STAR rubric (Situation, Task, Action, Result).
+<!-- Log -->
+<div class="card" id="log-card">
+  <div class="log-header">
+    <span>Output Log</span>
+    <button id="copy-btn" onclick="copyLog()">Copy</button>
+  </div>
+  <div id="log-output"></div>
+</div>
 
-Given a question and a candidate's response, evaluate the response on four dimensions and return your assessment in this exact JSON format:
+<script>
+// ── System prompts (loaded from markdown files) ───────────────────────────────
 
+let BEHAVIORAL_RUBRIC_MD = "";
+let NON_BEHAVIORAL_RUBRIC_MD = "";
+
+function buildStarPrompt() {
+  return `You are an expert behavioral interview evaluator using the STAR rubric.
+
+Use the rubric below as the source of truth:
+
+${BEHAVIORAL_RUBRIC_MD}
+
+CALIBRATION:
+- Avoid leniency bias. Score what is explicitly present, not what might be implied.
+- Do not let fluent writing inflate weak content.
+- Score each dimension independently.
+
+Return only this JSON, no extra text:
 {
-  "filler":  { "score": <1-5>, "reasoning": "<one sentence>" },
-  "context": { "score": <1-5>, "reasoning": "<one sentence>" },
-  "action":  { "score": <1-5>, "reasoning": "<one sentence>" },
-  "result":  { "score": <1-5>, "reasoning": "<one sentence>" },
-  "flags":   ["<flag string if applicable, else empty array>"],
-  "overall": { "score": <0.0-10.0>, "reasoning": "<one sentence>" }
+  "filler":  { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "context": { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "action":  { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "result":  { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "flags":   [],
+  "overall": { "score": 0.0, "reasoning": "<one sentence summary>" }
+}`;
 }
 
-Scoring rubric:
-- Filler & Repetition (10%): 5=no filler, 1=constant filler/incoherent
-- Context Definition (20%): 5=company+timeframe+scope+stakes, 1=no context
-- Action Definition (40%): 5=consistent I-driven with specific steps and reasoning, 1=vague or all "we"
-- Result (30%): 5=quantified outcome tied to candidate, 1=no result
-- Overall = (filler*0.10 + context*0.20 + action*0.40 + result*0.30) * 2, rounded to 1 decimal
+function buildNonBehavioralPrompt() {
+  return `You are an expert interviewer evaluator for non-behavioral prompts.
 
-Flags to raise when applicable:
-- CREDIBILITY RISK: candidate failed to substantiate after a positive probe
-- NO SPECIFIC EXAMPLE: candidate answered with abstract philosophy
-- HYPOTHETICAL FRAMING: candidate used "I would" instead of a real story
-- NO RESPONSE: empty answer
-- PIVOT: candidate abandoned their example mid-answer
-- OFF-TOPIC: candidate answered a different question
+Use the rubric below as the source of truth:
 
-Return only the JSON object, no other text.`;
+${NON_BEHAVIORAL_RUBRIC_MD}
 
-    let testCases = [];
-    let cancelled = false;
+CALIBRATION:
+- Avoid leniency bias. Score only evidence present in the response.
+- Do not inflate relevance for generic, role-agnostic answers.
+- Omit self_awareness when question type does not require it.
 
-    // ── Load test cases ─────────────────────────────────────────────────────
-    async function loadCases() {
-      const status = document.getElementById('load-status');
-      try {
-        const res = await fetch('./test_cases.json');
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        testCases = await res.json();
-        status.textContent = `${testCases.length} test cases loaded. Ready to run.`;
-        document.getElementById('run-btn').disabled = false;
-      } catch (err) {
-        status.innerHTML = `<span class="error-text">Failed to load test_cases.json: ${err.message}. Make sure you're serving via http.server, not file://.</span>`;
-        document.getElementById('run-btn').disabled = true;
+Return only this JSON, no extra text:
+{
+  "clarity":        { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "relevance":      { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "specificity":    { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "self_awareness": { "score": <1-5>, "reasoning": "<one clear sentence>" },
+  "flags":          [],
+  "overall":        { "score": 0.0, "reasoning": "<one sentence summary>" }
+}`;
+}
+
+// ── Gemini / Gemma API call ───────────────────────────────────────────────────
+
+// responseMimeType:"application/json" is Gemini-only; Gemma returns a plain
+// text response that may be wrapped in markdown fences — strip them here.
+function extractJson(text) {
+  const cleaned = text.replace(/^\s*[*-]\s+/gm, "");
+  const fenced = cleaned.match(/```(?:json)?\s*([\s\S]*?)```/);
+  if (fenced) return fenced[1].trim();
+  // Fallback: find the first balanced { ... } JSON object.
+  const start = cleaned.indexOf("{");
+  if (start !== -1) {
+    let depth = 0;
+    for (let i = start; i < cleaned.length; i++) {
+      const ch = cleaned[i];
+      if (ch === "{") depth++;
+      if (ch === "}") {
+        depth--;
+        if (depth === 0) return cleaned.slice(start, i + 1);
       }
     }
+  }
+  return cleaned.trim();
+}
 
-    // ── Logging helpers ──────────────────────────────────────────────────────
-    const logEl = document.getElementById('log-output');
+async function callGemini(apiKey, model, systemPrompt, userMsg) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-    function appendLog(html) {
-      logEl.innerHTML += html;
-      logEl.scrollTop = logEl.scrollHeight;
+  const isGemma = model.startsWith("gemma-");
+  const generationConfig = { temperature: 0.15 };
+  if (!isGemma) generationConfig.responseMimeType = "application/json";
+
+  // Gemma models do not support system_instruction — prepend to user message.
+  const body = isGemma
+    ? {
+        contents: [{
+          role: "user",
+          parts: [{ text: `${systemPrompt}\n\n---\n\n${userMsg}` }]
+        }],
+        generationConfig
+      }
+    : {
+        system_instruction: { parts: [{ text: systemPrompt }] },
+        contents: [{ role: "user", parts: [{ text: userMsg }] }],
+        generationConfig
+      };
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+
+  if (!res.ok) {
+    let msg = `HTTP ${res.status}`;
+    try { msg = (await res.json()).error?.message || msg; } catch (_) {}
+    throw new Error(msg);
+  }
+
+  const data = await res.json();
+  const parts = data?.candidates?.[0]?.content?.parts ?? [];
+  const visibleParts = parts.filter(
+    p => !p?.thought && typeof p?.text === "string" && p.text.trim()
+  );
+  const text =
+    visibleParts[visibleParts.length - 1]?.text ??
+    parts[parts.length - 1]?.text;
+  if (!text) throw new Error("Empty response from API.");
+  return isGemma ? extractJson(text) : text;
+}
+
+// ── Model → recommended delay map ────────────────────────────────────────────
+
+const MODEL_DELAYS = {
+
+  "gemma-4-26b-a4b-it":             3000,
+  "gemini-2.5-flash":               7000,
+  "gemini-2.5-flash-preview-05-20": 7000,
+  "gemini-2.5-pro":                 13000,
+  "gemini-2.5-pro-preview-05-06":   13000,
+};
+
+// ── Rate-limit retry helpers ──────────────────────────────────────────────────
+
+// Extract the suggested retry delay from a Gemini quota error message.
+// e.g. "Please retry in 11.565148934s." → 14065 ms (+ 2.5 s buffer)
+function parseRetryMs(msg) {
+  const m = msg.match(/retry in ([\d.]+)s/i);
+  if (m) return Math.ceil(parseFloat(m[1]) * 1000) + 2500;
+  return 65000; // safe fallback if no hint found
+}
+
+// Sleep while updating a DOM element with a live countdown.
+async function sleepCountdown(ms, el) {
+  const end = Date.now() + ms;
+  while (Date.now() < end && !cancelled) {
+    const secs = Math.ceil((end - Date.now()) / 1000);
+    el.textContent = `Rate limited — waiting ${secs}s…`;
+    await new Promise(r => setTimeout(r, Math.min(1000, end - Date.now())));
+  }
+}
+
+// Wraps callGemini with up to 2 automatic retries on rate-limit errors.
+async function callGeminiWithRetry(apiKey, model, prompt, userMsg, spinner) {
+  const label = spinner.querySelector("span:last-child");
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      if (attempt > 0) label.textContent = "Retrying…";
+      return await callGemini(apiKey, model, prompt, userMsg);
+    } catch (err) {
+      const isRateLimit =
+        err.message.includes("quota") ||
+        err.message.includes("429")   ||
+        err.message.includes("RESOURCE_EXHAUSTED") ||
+        err.message.toLowerCase().includes("retry in");
+      if (!isRateLimit || attempt >= 2) throw err;
+      await sleepCountdown(parseRetryMs(err.message), label);
+    }
+  }
+}
+
+function strictJsonPrompt(basePrompt) {
+  return `${basePrompt}
+
+CRITICAL OUTPUT RULES:
+- Return valid JSON only.
+- Output must begin with "{" and end with "}".
+- No markdown, no bullets, no prose, no code fences.`;
+}
+
+function tryParseModelJson(rawText) {
+  const raw = (rawText || "").trim();
+  const candidate = extractJson(raw);
+  return JSON.parse(candidate);
+}
+
+// Handles model instability and non-JSON outputs:
+// 1) normal call
+// 2) if Gemma-4 internal error -> fallback to Gemma-4-26b
+// 3) if JSON parse fails -> retry once with stricter JSON-only prompt
+async function evaluateCase(apiKey, model, prompt, userMsg, spinner) {
+  let modelUsed = model;
+  let raw;
+
+  try {
+    raw = await callGeminiWithRetry(apiKey, modelUsed, prompt, userMsg, spinner);
+  } catch (err) {
+    const internal = String(err.message || err).toLowerCase().includes("internal error");
+    if (model === "gemma-4-31b-it" && internal) {
+      modelUsed = "gemma-4-26b-a4b-it";
+      const label = spinner.querySelector("span:last-child");
+      label.textContent = "Gemma-4 unstable, falling back to Gemma-4-26b…";
+      raw = await callGeminiWithRetry(apiKey, modelUsed, prompt, userMsg, spinner);
+    } else {
+      throw err;
+    }
+  }
+
+  try {
+    return { parsed: tryParseModelJson(raw), modelUsed };
+  } catch (_) {
+    const label = spinner.querySelector("span:last-child");
+    label.textContent = "Repairing format (JSON-only retry)…";
+    const rawRetry = await callGeminiWithRetry(
+      apiKey,
+      modelUsed,
+      strictJsonPrompt(prompt),
+      userMsg,
+      spinner
+    );
+    return { parsed: tryParseModelJson(rawRetry), modelUsed };
+  }
+}
+
+function getCaseRubricType(tc) {
+  return tc.rubric_type === "non_behavioral" ? "non_behavioral" : "behavioral";
+}
+
+function collectBatch(cases, startIndex, batchSize) {
+  const firstType = getCaseRubricType(cases[startIndex]);
+  const batch = [];
+  for (let i = startIndex; i < cases.length && batch.length < batchSize; i++) {
+    if (getCaseRubricType(cases[i]) !== firstType) break;
+    batch.push(cases[i]);
+  }
+  return batch;
+}
+
+function buildBatchUserMessage(batchCases, rubricType) {
+  const rubricLabel = rubricType === "non_behavioral" ? "non-behavioral" : "STAR";
+  const schema = rubricType === "non_behavioral"
+    ? `Return JSON only in this format:
+{
+  "evaluations": [
+    {
+      "id": <case id>,
+      "clarity": {"score": <1-5>, "reasoning": "<one sentence>"},
+      "relevance": {"score": <1-5>, "reasoning": "<one sentence>"},
+      "specificity": {"score": <1-5>, "reasoning": "<one sentence>"},
+      "self_awareness": {"score": <1-5>, "reasoning": "<one sentence>"},
+      "flags": [],
+      "overall": {"score": 0.0, "reasoning": "<one sentence>"}
+    }
+  ]
+}
+Rules:
+- Include exactly one evaluation per case id.
+- Omit self_awareness when not applicable (same rule as your rubric).
+- Keep overall.score at 0.0 (it is computed externally).`
+    : `Return JSON only in this format:
+{
+  "evaluations": [
+    {
+      "id": <case id>,
+      "filler": {"score": <1-5>, "reasoning": "<one sentence>"},
+      "context": {"score": <1-5>, "reasoning": "<one sentence>"},
+      "action": {"score": <1-5>, "reasoning": "<one sentence>"},
+      "result": {"score": <1-5>, "reasoning": "<one sentence>"},
+      "flags": [],
+      "overall": {"score": 0.0, "reasoning": "<one sentence>"}
+    }
+  ]
+}
+Rules:
+- Include exactly one evaluation per case id.
+- Keep overall.score at 0.0 (it is computed externally).`;
+
+  const casesText = batchCases.map(tc => {
+    let txt = `Case ID: ${tc.id}\nQuestion: ${tc.question}\nCandidate response:\n${tc.response}`;
+    if (tc.follow_up) txt += `\nFollow-up question: ${tc.follow_up}`;
+    if (tc.follow_up_response) txt += `\nCandidate follow-up response: ${tc.follow_up_response}`;
+    return txt;
+  }).join("\n\n---\n\n");
+
+  return `Evaluate these ${rubricLabel} interview cases.\n\n${schema}\n\n${casesText}`;
+}
+
+function normalizeBatchEvaluations(parsedObj, batchCases) {
+  let arr = null;
+
+  if (Array.isArray(parsedObj)) {
+    arr = parsedObj;
+  } else if (parsedObj && Array.isArray(parsedObj.evaluations)) {
+    arr = parsedObj.evaluations;
+  } else if (parsedObj && typeof parsedObj === "object") {
+    const keys = Object.keys(parsedObj);
+    const numericKeys = keys.filter(k => /^\d+$/.test(k));
+    if (numericKeys.length) {
+      arr = numericKeys.map(k => ({ id: Number(k), ...parsedObj[k] }));
+    }
+  }
+
+  if (!arr) throw new Error("Batch response missing evaluations array/object.");
+
+  // If model omitted ids but returned same count in order, assign by order.
+  const missingIds = arr.every(item => item?.id === undefined);
+  if (missingIds && arr.length === batchCases.length) {
+    arr = arr.map((item, idx) => ({ ...item, id: batchCases[idx].id }));
+  }
+
+  const byId = new Map();
+  for (const item of arr) {
+    const id = Number(item?.id);
+    if (Number.isFinite(id)) byId.set(id, item);
+  }
+  return byId;
+}
+
+async function evaluateBatch(apiKey, model, prompt, batchCases, spinner) {
+  let modelUsed = model;
+  const rubricType = getCaseRubricType(batchCases[0]);
+  const batchMsg = buildBatchUserMessage(batchCases, rubricType);
+  let raw;
+
+  try {
+    raw = await callGeminiWithRetry(apiKey, modelUsed, prompt, batchMsg, spinner);
+  } catch (err) {
+    const internal = String(err.message || err).toLowerCase().includes("internal error");
+    if (model === "gemma-4-31b-it" && internal) {
+      modelUsed = "gemma-4-26b-a4b-it";
+      const label = spinner.querySelector("span:last-child");
+      label.textContent = "Gemma-4 unstable, falling back to Gemma-4-26b…";
+      raw = await callGeminiWithRetry(apiKey, modelUsed, prompt, batchMsg, spinner);
+    } else {
+      throw err;
+    }
+  }
+
+  let parsed;
+  try {
+    parsed = tryParseModelJson(raw);
+  } catch (_) {
+    const label = spinner.querySelector("span:last-child");
+    label.textContent = "Repairing batch format (JSON-only retry)…";
+    const rawRetry = await callGeminiWithRetry(
+      apiKey,
+      modelUsed,
+      strictJsonPrompt(prompt),
+      batchMsg,
+      spinner
+    );
+    parsed = tryParseModelJson(rawRetry);
+  }
+
+  return {
+    modelUsed,
+    evaluationsById: normalizeBatchEvaluations(parsed, batchCases),
+  };
+}
+
+// ── Dimension helpers ─────────────────────────────────────────────────────────
+
+const STAR_DIMS = ["filler", "context", "action", "result"];
+const NB_DIMS   = ["clarity", "relevance", "specificity", "self_awareness"];
+
+function getDims(tc, parsed) {
+  if (tc.rubric_type === "non_behavioral") {
+    // include self_awareness only if present in expected or returned by model
+    const base = ["clarity", "relevance", "specificity"];
+    if ("self_awareness" in tc.expected || (parsed && "self_awareness" in parsed)) {
+      base.push("self_awareness");
+    }
+    return base;
+  }
+  return STAR_DIMS;
+}
+
+// ── Client-side overall formula (deterministic) ───────────────────────────────
+
+function computeOverall(parsed, tc) {
+  if (tc.rubric_type === "non_behavioral") {
+    const dims = ["clarity", "relevance", "specificity", "self_awareness"].filter(d => parsed[d]);
+    if (!dims.length) return 0;
+    const sum = dims.reduce((s, d) => s + (parsed[d]?.score ?? 0), 0);
+    return +(sum / dims.length / 5 * 10).toFixed(1);
+  }
+  const f = parsed.filler?.score  ?? 0;
+  const c = parsed.context?.score ?? 0;
+  const a = parsed.action?.score  ?? 0;
+  const r = parsed.result?.score  ?? 0;
+  return +((f * 0.10 + c * 0.20 + a * 0.40 + r * 0.30) * 2).toFixed(1);
+}
+
+// ── Score formatting helpers ──────────────────────────────────────────────────
+
+function dimLabel(d) {
+  const short = { filler: "fil", context: "ctx", action: "act", result: "res",
+                  clarity: "cla", relevance: "rel", specificity: "spc", self_awareness: "slf" };
+  return short[d] || d.slice(0, 3);
+}
+
+function scoresLine(obj, dims) {
+  return dims.map(d => `${dimLabel(d)} ${obj[d]?.score ?? "?"}/5`).join("  ");
+}
+
+function deltaLine(parsed, tc, dims) {
+  const exp = tc.expected;
+  return dims.map(d => {
+    const e = exp[d]?.score ?? 0;
+    const a = parsed[d]?.score ?? 0;
+    const diff = a - e;
+    const cls  = diff === 0 ? "d-exact" : Math.abs(diff) === 1 ? "d-near" : "d-far";
+    const sym  = diff === 0 ? "·" : diff > 0 ? `+${diff}` : `${diff}`;
+    return `<span class="${cls}">${dimLabel(d)}:${sym}</span>`;
+  }).join("  ");
+}
+
+function overallDeltaHtml(actOv, expOv) {
+  const diff = +(actOv - expOv).toFixed(1);
+  const cls  = diff === 0 ? "d-exact" : Math.abs(diff) <= 1 ? "d-near" : "d-far";
+  const sym  = diff === 0 ? "·" : diff > 0 ? `+${diff}` : `${diff}`;
+  return `<span class="${cls}">overall:${sym}</span>`;
+}
+
+// ── State ─────────────────────────────────────────────────────────────────────
+
+let allCases  = [];
+let cancelled = false;
+
+// ── Load ──────────────────────────────────────────────────────────────────────
+
+async function loadCases() {
+  const status = document.getElementById("load-status");
+  try {
+    const [casesRes, behRes, nbRes] = await Promise.all([
+      fetch("./test_cases.json"),
+      fetch("./behavioral_rubric.md"),
+      fetch("./non_behavioral_rubric.md"),
+    ]);
+    if (!casesRes.ok) throw new Error(`test_cases.json HTTP ${casesRes.status}`);
+    if (!behRes.ok) throw new Error(`behavioral_rubric.md HTTP ${behRes.status}`);
+    if (!nbRes.ok) throw new Error(`non_behavioral_rubric.md HTTP ${nbRes.status}`);
+
+    allCases = await casesRes.json();
+    BEHAVIORAL_RUBRIC_MD = await behRes.text();
+    NON_BEHAVIORAL_RUBRIC_MD = await nbRes.text();
+
+    status.textContent = `${allCases.length} test cases loaded. Enter your API key to run.`;
+    checkReady();
+  } catch (err) {
+    status.innerHTML = `<span class="error-text">Failed to load required files: ${err.message}. Serve via http.server, not file://.</span>`;
+  }
+}
+
+function checkReady() {
+  const key = (window.GEMINI_API_KEY || "").trim();
+  const ready = allCases.length > 0 && key.length > 10;
+  document.getElementById("run-btn").disabled = !ready;
+}
+
+// ── Logging helpers ───────────────────────────────────────────────────────────
+
+const logEl = () => document.getElementById("log-output");
+
+function appendText(cls, text) {
+  const span = document.createElement("span");
+  span.className = cls;
+  span.textContent = text;
+  logEl().appendChild(span);
+  logEl().scrollTop = logEl().scrollHeight;
+}
+
+function appendHtml(html) {
+  const span = document.createElement("span");
+  span.innerHTML = html;
+  logEl().appendChild(span);
+  logEl().scrollTop = logEl().scrollHeight;
+}
+
+function appendRaw(text) {
+  logEl().appendChild(document.createTextNode(text));
+  logEl().scrollTop = logEl().scrollHeight;
+}
+
+// ── Progress ──────────────────────────────────────────────────────────────────
+
+function setProgress(n, total, label) {
+  const pct = total ? Math.round((n / total) * 100) : 0;
+  document.getElementById("progress-label").textContent =
+    `Case ${n} / ${total}${label ? "  —  " + label : ""}`;
+  document.getElementById("progress-pct").textContent = `${pct}%`;
+  const fill = document.getElementById("progress-fill");
+  fill.style.width = `${pct}%`;
+  fill.style.background = n === total ? "#34d399" : "#6366f1";
+}
+
+// ── Stop ──────────────────────────────────────────────────────────────────────
+
+function stopRun() {
+  cancelled = true;
+  document.getElementById("stop-btn").disabled = true;
+}
+
+// ── Summary chips ─────────────────────────────────────────────────────────────
+
+function renderSummary(exact, near, far, errors, total) {
+  const row = document.getElementById("summary-row");
+  row.style.display = "flex";
+  row.innerHTML = `
+    <span class="chip chip-total">Total: ${total}</span>
+    <span class="chip chip-pass">Exact (Δ=0): ${exact}</span>
+    <span class="chip chip-warn">Near (|Δ|≤1): ${near}</span>
+    <span class="chip chip-fail">Off (|Δ|≥2): ${far}</span>
+    ${errors ? `<span class="chip chip-fail">Errors: ${errors}</span>` : ""}
+  `;
+}
+
+function formatTs(d) {
+  return d.toLocaleTimeString([], { hour12: false });
+}
+
+function formatDurationMs(ms) {
+  const totalSec = Math.max(0, Math.round(ms / 1000));
+  const m = Math.floor(totalSec / 60);
+  const s = totalSec % 60;
+  return `${m}m ${s}s`;
+}
+
+// ── Main runner ───────────────────────────────────────────────────────────────
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+async function runAll() {
+  const apiKey = (window.GEMINI_API_KEY || "").trim();
+  if (!apiKey) {
+    alert("Missing API key. Set window.GEMINI_API_KEY in config.js.");
+    return;
+  }
+
+  const model   = document.getElementById("model-select").value;
+  const delay   = parseInt(document.getElementById("delay-input").value, 10) || 6000;
+  const batchSizeInput = parseInt(document.getElementById("batch-size-input").value, 10);
+  const batchSize = Number.isFinite(batchSizeInput)
+    ? Math.max(1, Math.min(7, batchSizeInput))
+    : 5;
+  const filter  = document.getElementById("filter-select").value;
+
+  const cases = filter === "all"
+    ? allCases
+    : allCases.filter(tc => (tc.rubric_type ?? "behavioral") === filter);
+
+  if (!cases.length) { alert("No cases match that filter."); return; }
+
+  cancelled = false;
+  const total = cases.length;
+
+  document.getElementById("run-btn").disabled  = true;
+  document.getElementById("stop-btn").disabled = false;
+  document.getElementById("progress-card").style.display = "block";
+  document.getElementById("log-card").style.display      = "block";
+  document.getElementById("summary-row").style.display   = "none";
+
+  logEl().innerHTML = "";
+  const runStart = new Date();
+  appendText("log-done", `Gemini ${model}   delay: ${delay} ms   batch_size: ${batchSize}   cases: ${total}   started: ${formatTs(runStart)}\n\n`);
+
+  let succeeded = 0, errors = 0;
+  let exactAll = 0, nearAll = 0, farAll = 0;
+
+  for (let i = 0; i < total;) {
+    if (cancelled) {
+      appendText("log-error", `\n⏹ Stopped at case ${i + 1} of ${total}.\n`);
+      break;
     }
 
-    function appendText(cls, text) {
-      const span = document.createElement('span');
-      span.className = cls;
-      span.textContent = text;
-      logEl.appendChild(span);
-      logEl.scrollTop = logEl.scrollHeight;
-    }
+    const batchCases = collectBatch(cases, i, batchSize);
+    const batchEnd = i + batchCases.length;
+    const isNBBatch = getCaseRubricType(batchCases[0]) === "non_behavioral";
+    const batchTypeLabel = isNBBatch ? "non-behavioral" : "STAR";
+    const prompt = isNBBatch ? buildNonBehavioralPrompt() : buildStarPrompt();
+    const batchStartTs = new Date();
 
-    function appendRaw(text) {
-      logEl.appendChild(document.createTextNode(text));
-      logEl.scrollTop = logEl.scrollHeight;
-    }
+    setProgress(Math.min(batchEnd, total), total, `Batch ${i + 1}-${batchEnd}`);
+    appendText("log-sep", "═".repeat(70) + "\n");
+    appendText("log-done", `Batch ${i + 1}-${batchEnd} (${batchTypeLabel}) start: ${formatTs(batchStartTs)}\n`);
 
-    // ── Progress ─────────────────────────────────────────────────────────────
-    function setProgress(n, total, label) {
-      document.getElementById('progress-label').textContent =
-        `Case ${n} / ${total}${label ? ' — ' + label : ''}`;
-      document.getElementById('progress-fill').style.width =
-        `${Math.round((n / total) * 100)}%`;
-    }
+    // One spinner for the whole batch call
+    const spinner = document.createElement("span");
+    spinner.innerHTML = `<span class="spinner"></span><span style="color:#475569">Evaluating batch ${i + 1}-${batchEnd}…</span>`;
+    logEl().appendChild(spinner);
+    logEl().scrollTop = logEl().scrollHeight;
 
-    // ── Sleep util ───────────────────────────────────────────────────────────
-    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    try {
+      const { evaluationsById, modelUsed } = await evaluateBatch(apiKey, model, prompt, batchCases, spinner);
+      spinner.remove();
 
-    // ── Format expected scores ───────────────────────────────────────────────
-    function formatExpected(exp) {
-      const f = exp.filler.score;
-      const c = exp.context.score;
-      const a = exp.action.score;
-      const r = exp.result.score;
-      const o = exp.overall.score;
-      const flags = exp.flags && exp.flags.length ? '\n  FLAGS: ' + exp.flags.join(' | ') : '';
-      return `filler ${f}/5 | context ${c}/5 | action ${a}/5 | result ${r}/5 | overall ${o}/10${flags}`;
-    }
+      if (modelUsed !== model) {
+        appendText("log-raw", `↳ Auto-fallback model: ${modelUsed}\n`);
+      }
 
-    // ── Stop ─────────────────────────────────────────────────────────────────
-    function stopRun() {
-      cancelled = true;
-      document.getElementById('stop-btn').disabled = true;
-    }
+      for (const tc of batchCases) {
+        appendText("log-sep", "─".repeat(70) + "\n");
+        appendText("log-id",    `[${String(tc.id).padStart(2, "0")}] `);
+        appendText("log-label", tc.label);
+        appendText("log-type",  `  (${batchTypeLabel})\n`);
+        appendText("log-q",     `Q: ${tc.question}\n`);
 
-    // ── Main runner ──────────────────────────────────────────────────────────
-    async function runAll() {
-      if (!testCases.length) return;
+        const expDims = getDims(tc, null);
+        appendText("log-expect", `✓ Expect:  ${scoresLine(tc.expected, expDims)}\n`);
 
-      cancelled = false;
-      const model = document.getElementById('model-select').value;
-      const delay = parseInt(document.getElementById('delay-input').value, 10) || 1500;
-      const total = testCases.length;
-
-      document.getElementById('run-btn').disabled = true;
-      document.getElementById('stop-btn').disabled = false;
-      document.getElementById('progress-card').style.display = 'block';
-      document.getElementById('log-card').style.display = 'block';
-
-      logEl.innerHTML = '';
-      appendText('log-done', `Model: ${model}   Delay: ${delay}ms   Cases: ${total}\n\n`);
-
-      let passed = 0, errors = 0;
-
-      for (let i = 0; i < total; i++) {
-        if (cancelled) {
-          appendText('log-error', `\n⏹ Stopped at case ${i + 1} of ${total}.\n`);
-          break;
-        }
-
-        const tc = testCases[i];
-        setProgress(i + 1, total, tc.label);
-
-        // Separator + header
-        appendText('log-sep', '─'.repeat(60) + '\n');
-        appendText('log-id', `[${String(tc.id).padStart(2, '0')}] `);
-        appendText('log-label', tc.label + '\n');
-        appendText('log-q', `Q: ${tc.question}\n`);
-
-        // Expected scores
-        appendText('log-expect', `✓ Expected: ${formatExpected(tc.expected)}\n`);
-
-        // Build user message
-        let userMsg = `Question: ${tc.question}\n\nCandidate response: ${tc.response}`;
-        if (tc.follow_up) {
-          userMsg += `\n\nFollow-up question: ${tc.follow_up}`;
-        }
-        if (tc.follow_up_response) {
-          userMsg += `\n\nCandidate follow-up response: ${tc.follow_up_response}`;
-        }
-
-        // Spinner placeholder
-        const spinnerEl = document.createElement('span');
-        spinnerEl.innerHTML = '<span class="spinner"></span> Evaluating...';
-        logEl.appendChild(spinnerEl);
-        logEl.scrollTop = logEl.scrollHeight;
-
-        try {
-          const resp = await puter.ai.chat(
-            [
-              { role: 'system', content: SYSTEM_PROMPT },
-              { role: 'user',   content: userMsg },
-            ],
-            { model, stream: false }
-          );
-
-          spinnerEl.remove();
-
-          const raw = resp?.message?.content ?? resp?.text ?? String(resp);
-
-          appendText('log-output', `↳ Evaluator:\n${raw}\n`);
-          passed++;
-        } catch (err) {
-          spinnerEl.remove();
-          appendText('log-error', `↳ ERROR: ${err.message || err}\n`);
+        const parsed = evaluationsById.get(tc.id);
+        if (!parsed || typeof parsed !== "object") {
+          appendText("log-error", `↳ ERROR: Missing evaluation for case id ${tc.id} in batch response.\n`);
           errors++;
+          appendRaw("\n");
+          continue;
         }
 
-        appendRaw('\n');
+        parsed._overall = computeOverall(parsed, tc);
+        const actDims = getDims(tc, parsed);
 
-        if (i < total - 1 && !cancelled) await sleep(delay);
+        appendText("log-actual", `↳ Actual:  ${scoresLine(parsed, actDims)}`);
+        appendHtml(`  <span class="badge-calc">overall: ${parsed._overall}/10 [calc]</span>\n`);
+
+        const dHtml = deltaLine(parsed, tc, actDims);
+        const oHtml = overallDeltaHtml(parsed._overall, tc.expected.overall.score);
+        appendHtml(`   Δ  <span class="delta-row">${dHtml}  ${oHtml}</span>\n`);
+
+        const expFlags = tc.expected.flags ?? [];
+        const actFlags = parsed.flags ?? [];
+        if (expFlags.length || actFlags.length) {
+          if (expFlags.length) appendText("log-expect", `   ✓ Expected flags: ${expFlags.map(f => f.split(":")[0]).join(" | ")}\n`);
+          if (actFlags.length) appendText("log-actual",  `   ↳ Model flags:    ${actFlags.map(f => f.split(":")[0]).join(" | ")}\n`);
+        }
+
+        const ovDiff = Math.abs(+(parsed._overall - tc.expected.overall.score).toFixed(1));
+        if (ovDiff === 0)     { exactAll++; }
+        else if (ovDiff <= 1) { nearAll++;  }
+        else                  { farAll++;   }
+
+        succeeded++;
+        appendRaw("\n");
       }
-
-      setProgress(total, total, 'Done');
-      appendText('log-sep', '─'.repeat(60) + '\n');
-      appendText('log-done',
-        `Finished — ${passed} succeeded, ${errors} errors, ${total - passed - errors} skipped.\n`
-      );
-
-      document.getElementById('run-btn').disabled = false;
-      document.getElementById('stop-btn').disabled = true;
+    } catch (err) {
+      spinner.remove();
+      appendText("log-error", `↳ BATCH ERROR (${i + 1}-${batchEnd}): ${err.message || err}\n`);
+      for (const tc of batchCases) {
+        appendText("log-sep", "─".repeat(70) + "\n");
+        appendText("log-id",    `[${String(tc.id).padStart(2, "0")}] `);
+        appendText("log-label", tc.label);
+        appendText("log-type",  `  (${batchTypeLabel})\n`);
+        appendText("log-q",     `Q: ${tc.question}\n`);
+        const expDims = getDims(tc, null);
+        appendText("log-expect", `✓ Expect:  ${scoresLine(tc.expected, expDims)}\n`);
+        appendText("log-error", `↳ ERROR: Batch failed before case-level parse.\n`);
+        errors++;
+        appendRaw("\n");
+      }
     }
 
-    // ── Copy log ─────────────────────────────────────────────────────────────
-    function copyLog() {
-      const text = logEl.innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        const btn = document.getElementById('copy-btn');
-        const orig = btn.textContent;
-        btn.textContent = 'Copied!';
-        setTimeout(() => { btn.textContent = orig; }, 1500);
-      });
-    }
+    const batchEndTs = new Date();
+    appendText(
+      "log-done",
+      `Batch ${i + 1}-${batchEnd} end: ${formatTs(batchEndTs)}  duration: ${formatDurationMs(batchEndTs - batchStartTs)}\n`
+    );
+    appendRaw("\n");
+    i = batchEnd;
+    if (i < total && !cancelled) await sleep(delay);
+  }
 
-    // ── Init ─────────────────────────────────────────────────────────────────
-    document.getElementById('run-btn').disabled = true;
-    loadCases();
-  </script>
+  // Finish
+  setProgress(total, total, "Done");
+  appendText("log-sep", "─".repeat(70) + "\n");
+  const runEnd = new Date();
+  appendText("log-done",
+    `Finished — ${succeeded} evaluated, ${errors} errors. ended: ${formatTs(runEnd)}  elapsed: ${formatDurationMs(runEnd - runStart)}\n`
+  );
+  if (succeeded) {
+    appendText("log-done",
+      `Overall delta — exact: ${exactAll}  near (≤1): ${nearAll}  off (≥2): ${farAll}\n`
+    );
+  }
+
+  renderSummary(exactAll, nearAll, farAll, errors, total);
+  document.getElementById("run-btn").disabled  = false;
+  document.getElementById("stop-btn").disabled = true;
+}
+
+// ── Copy log ──────────────────────────────────────────────────────────────────
+
+function copyLog() {
+  navigator.clipboard.writeText(logEl().innerText).then(() => {
+    const btn = document.getElementById("copy-btn");
+    const orig = btn.textContent;
+    btn.textContent = "Copied!";
+    setTimeout(() => { btn.textContent = orig; }, 1500);
+  });
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+
+// auto-set delay when model changes
+document.getElementById("model-select").addEventListener("change", () => {
+  const model = document.getElementById("model-select").value;
+  if (MODEL_DELAYS[model]) {
+    document.getElementById("delay-input").value = MODEL_DELAYS[model];
+  }
+});
+
+loadCases();
+</script>
 
 </body>
 </html>

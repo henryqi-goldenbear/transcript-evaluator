@@ -1,21 +1,39 @@
 """
 Test cases for the behavioral interview transcript evaluator.
 Each case includes a question, candidate response, and a structured
-expected-score block for each STAR dimension.
+expected-score block.
 
-Weighted score formula (scores are 1–5 per dimension):
-  weighted = (filler * 0.10) + (context * 0.20) + (action * 0.40) + (result * 0.30)
-  overall  = weighted * 2          # normalised to 0–10
+Two rubric types are represented:
 
-Credibility-risk flag caps action and result at a max of 2 for that answer.
+  STAR (rubric_type: "behavioral")
+    Weighted score formula (scores 1–5):
+      weighted = (filler*0.10) + (context*0.20) + (action*0.40) + (result*0.30)
+      overall  = weighted * 2   # normalised to 0–10
+    Credibility-risk flag caps action and result at a max of 2.
+
+  Non-behavioral (rubric_type: "non_behavioral")
+    Dimensions: clarity, relevance, specificity (+ self_awareness for
+    introspective questions such as weaknesses/strengths).
+    Equal-weight formula:
+      overall = (sum of dimensions / n_dimensions / 5) * 10
+    STAR scoring is applied instead when the candidate pivots to a
+    specific past story in response to a non-behavioral question.
 """
 
 import json
 
 
+# ── Score helpers ────────────────────────────────────────────────────────────
+
 def _overall(filler: int, context: int, action: int, result: int) -> float:
+    """Weighted STAR overall (0–10)."""
     weighted = filler * 0.10 + context * 0.20 + action * 0.40 + result * 0.30
     return round(weighted * 2, 1)
+
+
+def _overall_nb(*scores: int) -> float:
+    """Equal-weight non-behavioral overall (0–10) for 3 or 4 dimensions."""
+    return round((sum(scores) / len(scores) / 5) * 10, 1)
 
 
 TEST_CASES = [
@@ -511,18 +529,298 @@ TEST_CASES = [
         },
     },
 
+    # ── NON-BEHAVIORAL QUESTIONS ─────────────────────────────────────────────
+    # Rubric: clarity / relevance / specificity (+ self_awareness where noted)
+    # STAR scoring is applied instead when the candidate pivots to a real story.
+
+    {
+        "id": 23,
+        "label": "Tell me about yourself — strong, tailored narrative",
+        "rubric_type": "non_behavioral",
+        "question": "Tell me about yourself.",
+        "response": (
+            "Sure. I'm a backend engineer with about five years of experience, mostly in fintech. "
+            "I started at a small payments startup where I owned the transaction reconciliation pipeline, "
+            "then moved to Brightline where I led the migration of our core ledger to a microservices "
+            "architecture — that reduced our incident rate by about 60%. "
+            "I'm drawn to this role specifically because your team is building real-time risk scoring, "
+            "which is the exact intersection of high-throughput systems and financial accuracy I find most interesting. "
+            "Outside of work I contribute to an open-source accounting library and I'm working through a "
+            "distributed systems reading group."
+        ),
+        "expected": {
+            "clarity":      {"score": 5, "reasoning": "Well-structured, chronological narrative with no filler. Easy to follow from start to finish."},
+            "relevance":    {"score": 5, "reasoning": "Directly connects past experience (fintech, high-throughput systems) to the specific role being discussed. Not a generic bio."},
+            "specificity":  {"score": 5, "reasoning": "Names companies, systems, and a concrete metric (60% incident reduction). Specific enough to be verifiable."},
+            "flags":        [],
+            "overall":      {"score": _overall_nb(5, 5, 5), "reasoning": "All three dimensions at maximum. Tailored, specific, and clearly structured narrative with a direct bridge to the role."},
+        },
+    },
+
+    {
+        "id": 24,
+        "label": "Tell me about yourself — generic LinkedIn bio recitation",
+        "rubric_type": "non_behavioral",
+        "question": "Tell me about yourself.",
+        "response": (
+            "I'm a passionate and results-driven professional with over five years of experience "
+            "in the technology industry. I have a strong background in software engineering and "
+            "I'm always looking to grow and learn new things. I enjoy working in collaborative "
+            "environments and I'm excited about opportunities that challenge me. "
+            "I'm a team player and I bring a lot of enthusiasm to everything I do."
+        ),
+        "expected": {
+            "clarity":      {"score": 4, "reasoning": "Fluent and grammatically clean, but the lack of concrete content makes it hard to form any picture of the candidate."},
+            "relevance":    {"score": 1, "reasoning": "Contains nothing specific to the role, company, or even a technical domain. Could describe any candidate applying for any job."},
+            "specificity":  {"score": 1, "reasoning": "Zero concrete details — no company names, technologies, projects, or metrics. Pure abstract self-description."},
+            "flags":        ["GENERIC RESPONSE: Answer contains no role-specific content and could be submitted to any employer unchanged."],
+            "overall":      {"score": _overall_nb(4, 1, 1), "reasoning": "High clarity masks the absence of any real content. Relevance and specificity both floor at 1, which together carry most of the evaluation weight."},
+        },
+    },
+
+    {
+        "id": 25,
+        "label": "Tell me about yourself — embeds a mini-STAR story unprompted",
+        "rubric_type": "non_behavioral",
+        "question": "Tell me about yourself.",
+        "response": (
+            "I'm a product manager with six years in B2B SaaS, focused on growth and activation. "
+            "The thing that defines my approach most is a bias toward talking to users before building. "
+            "At my last company, Vela, we were losing 40% of trial users in the first week. "
+            "I ran 30 user interviews in two weeks, identified that the onboarding flow was asking for "
+            "payment before users saw any value, and pushed for a freemium restructure. "
+            "We cut early churn by half in the following quarter. "
+            "I'm looking for a role where I can apply that same user-first lens to a more complex B2B motion."
+        ),
+        "expected": {
+            "clarity":      {"score": 5, "reasoning": "Clean structure: identity → philosophy → concrete story → forward-looking goal. No filler."},
+            "relevance":    {"score": 5, "reasoning": "The story chosen (churn reduction) directly illustrates the candidate's stated strength and bridges to the role's likely focus area."},
+            "specificity":  {"score": 5, "reasoning": "Company named, metrics given (40% trial churn, 30 interviews, 50% churn reduction in one quarter), and specific decision described (freemium restructure)."},
+            "flags":        ["STAR STORY EMBEDDED: Candidate voluntarily included a behavioral example within a non-behavioral question — positive signal of answer quality."],
+            "overall":      {"score": _overall_nb(5, 5, 5), "reasoning": "All dimensions at maximum. Candidate proactively grounds a non-behavioral question with a specific, quantified story — the strongest possible answer format."},
+        },
+    },
+
+    {
+        "id": 26,
+        "label": "What are your weaknesses? — rehearsed non-answer",
+        "rubric_type": "non_behavioral",
+        "question": "What is your greatest weakness?",
+        "response": (
+            "I think my biggest weakness is that I'm a perfectionist. "
+            "I sometimes spend too much time making sure everything is exactly right. "
+            "But I've been working on it and I've gotten a lot better at knowing when something "
+            "is good enough to ship. I think it actually makes me a stronger engineer because "
+            "I care deeply about quality."
+        ),
+        "expected": {
+            "clarity":      {"score": 4, "reasoning": "Fluent and coherent delivery. Easy to follow."},
+            "relevance":    {"score": 2, "reasoning": "Technically addresses the question but pivots immediately to reframing the weakness as a strength — a well-known evasion pattern."},
+            "specificity":  {"score": 1, "reasoning": "No concrete example of the weakness manifesting, no situation where it caused a problem, no specific change made. Entirely abstract."},
+            "self_awareness": {"score": 1, "reasoning": "Perfectionism is the most rehearsed non-answer to this question. The pivot to 'it makes me stronger' signals the candidate is not genuinely engaging with the question."},
+            "flags":        ["REHEARSED NON-ANSWER: 'I am a perfectionist' is a widely recognised evasion. Candidate reframes weakness as strength without substantiating either claim."],
+            "overall":      {"score": _overall_nb(4, 2, 1, 1), "reasoning": "Clear delivery but near-floor on substance. Specificity and self-awareness both score 1 — the candidate neither illustrates the weakness nor demonstrates genuine reflection."},
+        },
+    },
+
+    {
+        "id": 27,
+        "label": "What are your weaknesses? — genuine weakness with concrete growth",
+        "rubric_type": "non_behavioral",
+        "question": "What is your greatest weakness?",
+        "response": (
+            "My weakest area is public speaking to large groups — anything over 20 people and "
+            "I start to lose my fluency. It showed up concretely last year when I had to present "
+            "our Q3 roadmap to about 60 stakeholders and I rushed through several slides because "
+            "I was nervous. The feedback afterward was that key decisions weren't clear. "
+            "Since then I've joined a Toastmasters chapter and I've deliberately volunteered for "
+            "every all-hands slot I can get. It's still uncomfortable but I've gotten measurably "
+            "better — my last all-hands got specific positive comments on clarity."
+        ),
+        "expected": {
+            "clarity":      {"score": 5, "reasoning": "Direct, well-structured answer. Names the weakness, illustrates it, describes the response, and reports progress."},
+            "relevance":    {"score": 5, "reasoning": "Directly and honestly addresses the question without deflection. The weakness named is real and the growth response is credible."},
+            "specificity":  {"score": 5, "reasoning": "Specific incident (Q3 roadmap presentation, 60 stakeholders), specific consequence (feedback on unclear decisions), specific remediation (Toastmasters, all-hands volunteering), and a concrete signal of progress."},
+            "self_awareness": {"score": 5, "reasoning": "Candidate identifies a real professional weakness, acknowledges the cost of it, and demonstrates active remediation without minimising or reframing it as a strength."},
+            "flags":        [],
+            "overall":      {"score": _overall_nb(5, 5, 5, 5), "reasoning": "All four dimensions at maximum. The gold standard weakness answer — genuine, specific, with demonstrated growth and no evasion."},
+        },
+    },
+
+    {
+        "id": 28,
+        "label": "Why do you want this role? — specific and researched",
+        "rubric_type": "non_behavioral",
+        "question": "Why do you want this role?",
+        "response": (
+            "Two specific reasons. First, your fraud detection platform is one of the few in the "
+            "space using graph neural networks at transaction scale — I've been working on graph-based "
+            "anomaly detection as a side project for the past year and this is where I want to apply it "
+            "professionally. Second, I've followed your engineering blog and the post on your real-time "
+            "feature store architecture was exactly the kind of problem I want to work on day-to-day. "
+            "I'm not interested in applying ML to marketing optimisation — I want consequential "
+            "applications, and fraud prevention fits that."
+        ),
+        "expected": {
+            "clarity":      {"score": 5, "reasoning": "Structured as two numbered reasons. Direct and easy to follow."},
+            "relevance":    {"score": 5, "reasoning": "Answer is entirely specific to this company and role — references a named technical approach (graph neural networks), a specific blog post, and an explicit contrast with what the candidate is not interested in."},
+            "specificity":  {"score": 5, "reasoning": "Names the technology (GNNs at transaction scale), the artifact (engineering blog post on feature store), and personal context (side project). Clearly researched."},
+            "flags":        [],
+            "overall":      {"score": _overall_nb(5, 5, 5), "reasoning": "All dimensions at maximum. Candidate demonstrates genuine company-specific research and a clear, non-generic motivation tied to the role's technical substance."},
+        },
+    },
+
+    {
+        "id": 29,
+        "label": "Why do you want this role? — generic, could apply anywhere",
+        "rubric_type": "non_behavioral",
+        "question": "Why do you want this role?",
+        "response": (
+            "I'm really excited about this opportunity because your company has a great reputation "
+            "and I think it would be a fantastic place to grow my career. I'm looking for a role "
+            "where I can make an impact and work with talented people. I feel like my skills are "
+            "a great fit for what you're looking for and I'm passionate about the industry."
+        ),
+        "expected": {
+            "clarity":      {"score": 4, "reasoning": "Coherent and fluent, but content-free clarity."},
+            "relevance":    {"score": 1, "reasoning": "Nothing in this answer is specific to this company, role, or industry. It could be submitted unchanged to any employer."},
+            "specificity":  {"score": 1, "reasoning": "No company name, no product, no technology, no team, no specific aspect of the role. Entirely generic."},
+            "flags":        ["GENERIC RESPONSE: Answer contains no company- or role-specific content. Could apply to any position at any company."],
+            "overall":      {"score": _overall_nb(4, 1, 1), "reasoning": "Same profile as a generic 'tell me about yourself' — fluent but substanceless. Relevance and specificity both floor at 1."},
+        },
+    },
+
+    {
+        "id": 30,
+        "label": "How have you used AI in your work? — stays abstract",
+        "rubric_type": "non_behavioral",
+        "question": "How have you used AI or machine learning in your work?",
+        "response": (
+            "I've used AI in a number of different ways throughout my career. "
+            "I've worked with various ML models and have experience with different tools and frameworks. "
+            "I think AI is really important in the industry right now and I try to stay up to date "
+            "with the latest developments. I've used it to improve processes and make things more efficient."
+        ),
+        "expected": {
+            "clarity":      {"score": 3, "reasoning": "Grammatically fine but vague enough that it's hard to extract any meaning. 'Various ML models' and 'different tools' communicate nothing."},
+            "relevance":    {"score": 2, "reasoning": "The question asks for specific usage; the answer stays at a generic industry-level observation. Partially on-topic but doesn't actually answer what was asked."},
+            "specificity":  {"score": 1, "reasoning": "No model named, no framework, no project, no outcome. The most generic possible answer to a technical question."},
+            "flags":        ["VAGUE SKILL ANSWER: Candidate named no specific tools, models, frameworks, or projects. Follow-up required to extract any meaningful technical signal."],
+            "overall":      {"score": _overall_nb(3, 2, 1), "reasoning": "Specificity floors at 1 for a technical question that requires naming concrete tools and projects. Clarity is partial credit for coherent delivery."},
+        },
+    },
+
+    {
+        "id": 31,
+        "label": "How have you used Python? — candidate pivots to a specific STAR story",
+        "rubric_type": "non_behavioral",
+        "question": "How have you used Python in your work?",
+        "response": (
+            "Most of my Python work has been in data pipelines and automation. "
+            "The most significant project was at Nexus Analytics in 2022 — we had a reporting "
+            "pipeline that was taking 6 hours to run nightly because it was doing row-by-row SQL "
+            "inserts in a loop. I rewrote it using pandas bulk inserts and switched the aggregation "
+            "logic to use vectorised operations. The runtime dropped from 6 hours to 22 minutes. "
+            "I also standardised the job scheduling with Airflow so the team stopped relying on "
+            "cron jobs that would silently fail."
+        ),
+        "expected": {
+            "clarity":      {"score": 5, "reasoning": "Clean structure: general domain → specific project → specific actions → quantified outcome."},
+            "relevance":    {"score": 5, "reasoning": "Directly answers the question with a concrete Python use case. The example is technically specific and credible."},
+            "specificity":  {"score": 5, "reasoning": "Company, year, problem (6-hour runtime, row-by-row inserts), solution (pandas bulk inserts, vectorised ops, Airflow), and outcome (22 minutes) all named explicitly."},
+            "flags":        ["STAR STORY EMBEDDED: Non-behavioral skill question answered with a specific past example — apply STAR scoring in addition to non-behavioral rubric if comparing across question types."],
+            "overall":      {"score": _overall_nb(5, 5, 5), "reasoning": "All dimensions at maximum. Candidate naturally answers a skill question with a specific, quantified story — the strongest possible format for this question type."},
+        },
+    },
+
+    {
+        "id": 32,
+        "label": "Walk me through your resume — well-structured, selective narrative",
+        "rubric_type": "non_behavioral",
+        "question": "Can you walk me through your resume?",
+        "response": (
+            "Sure. I graduated in 2018 with a CS degree and joined DataCo as a junior engineer — "
+            "mainly backend work in Java, building internal tooling. After two years I moved to "
+            "Apex Systems where I shifted into platform engineering; I owned the CI/CD migration "
+            "from Jenkins to GitHub Actions which cut build times by 35%. "
+            "In 2022 I joined my current company, Helios, as a senior engineer. "
+            "My main focus has been the observability stack — I introduced distributed tracing "
+            "across 40 services using OpenTelemetry, which cut our mean time to detect incidents "
+            "from 45 minutes to under 5. "
+            "The thread across all three roles is infrastructure and developer productivity, "
+            "which is what draws me to this position."
+        ),
+        "expected": {
+            "clarity":      {"score": 5, "reasoning": "Chronological and easy to follow. Each role is given appropriate weight without rambling. Ends with a unifying theme."},
+            "relevance":    {"score": 5, "reasoning": "Candidate selects highlights that are relevant to an infrastructure/platform role and explicitly connects the narrative to the position being discussed."},
+            "specificity":  {"score": 5, "reasoning": "Company names, years, technologies (Jenkins, GitHub Actions, OpenTelemetry), and concrete metrics (35% build time reduction, MTTD from 45 min to under 5) are all present."},
+            "flags":        [],
+            "overall":      {"score": _overall_nb(5, 5, 5), "reasoning": "All dimensions at maximum. Selective, metric-backed resume walk-through with a clear narrative thread to the target role."},
+        },
+    },
+
+    {
+        "id": 33,
+        "label": "Walk me through your resume — unfocused chronological dump",
+        "rubric_type": "non_behavioral",
+        "question": "Can you walk me through your resume?",
+        "response": (
+            "So I started my career right out of college and I've had a few different roles. "
+            "My first job was at a tech company where I did a lot of different things. "
+            "Then I moved to another company and got more experience. "
+            "I've worked in a lot of different areas and I've learned a lot along the way. "
+            "Most recently I've been doing software engineering at my current company. "
+            "I feel like each role has taught me something different."
+        ),
+        "expected": {
+            "clarity":      {"score": 2, "reasoning": "Grammatically coherent but so vague it communicates almost nothing. The lack of content makes the structure meaningless."},
+            "relevance":    {"score": 1, "reasoning": "No specific role, technology, or accomplishment is tied to the position being applied for. The narrative has no direction."},
+            "specificity":  {"score": 1, "reasoning": "No company names, job titles, technologies, projects, or outcomes. 'A lot of different things' and 'a lot of different areas' are placeholders, not content."},
+            "flags":        ["CONTENT-FREE RESUME WALK: Candidate provided no specific companies, roles, technologies, or accomplishments. Complete follow-up required."],
+            "overall":      {"score": _overall_nb(2, 1, 1), "reasoning": "Near-floor across all dimensions. Relevance and specificity both score 1; the answer is essentially empty of evaluable content."},
+        },
+    },
+
+    {
+        "id": 34,
+        "label": "Where do you see yourself in 5 years? — vague and evasive",
+        "rubric_type": "non_behavioral",
+        "question": "Where do you see yourself in 5 years?",
+        "response": (
+            "That's a great question. I really see myself growing as a professional and "
+            "taking on more responsibility. I want to continue developing my skills and "
+            "ideally be in a leadership position of some kind. I'm open to wherever the "
+            "journey takes me — I just want to keep learning and making an impact."
+        ),
+        "expected": {
+            "clarity":      {"score": 4, "reasoning": "Fluent and grammatically clean, but the vagueness is structural rather than linguistic."},
+            "relevance":    {"score": 2, "reasoning": "Technically answers a 5-year question but provides nothing role- or domain-specific. 'Leadership of some kind' is not a meaningful answer."},
+            "specificity":  {"score": 1, "reasoning": "No specific role aspired to, no domain focus, no company-type, no skill area. Entirely platitudinous."},
+            "flags":        ["EVASIVE FUTURE ANSWER: Candidate gave no specific direction or domain ambition. Common deflection pattern — 'open to wherever the journey takes me.'"],
+            "overall":      {"score": _overall_nb(4, 2, 1), "reasoning": "Same profile as a generic motivation answer. Fluent but empty on relevance and specificity, which are the evaluable dimensions for this question type."},
+        },
+    },
+
 ]
 
 
 if __name__ == "__main__":
     import sys
+    sys.stdout.reconfigure(encoding="utf-8")
+
+    NB_DIMS = ["clarity", "relevance", "specificity", "self_awareness"]
+    STAR_DIMS = ["filler", "context", "action", "result"]
 
     if "--json" in sys.argv:
         print(json.dumps(TEST_CASES, indent=2))
     else:
         for tc in TEST_CASES:
             exp = tc["expected"]
-            print(f"[{tc['id']:02d}] {tc['label']}")
+            is_nb = tc.get("rubric_type") == "non_behavioral"
+            dims = [d for d in NB_DIMS if d in exp] if is_nb else STAR_DIMS
+            rubric_label = "non-behavioral" if is_nb else "STAR"
+
+            print(f"[{tc['id']:02d}] {tc['label']}  ({rubric_label})")
             print(f"  Q: {tc['question']}")
             resp_preview = tc["response"][:120].strip()
             if len(tc["response"]) > 120:
@@ -531,13 +829,11 @@ if __name__ == "__main__":
             if tc.get("follow_up"):
                 print(f"  FU: {tc['follow_up']}")
             print(f"  Scores:")
-            print(f"    filler:  {exp['filler']['score']}/5  — {exp['filler']['reasoning'][:80]}...")
-            print(f"    context: {exp['context']['score']}/5  — {exp['context']['reasoning'][:80]}...")
-            print(f"    action:  {exp['action']['score']}/5  — {exp['action']['reasoning'][:80]}...")
-            print(f"    result:  {exp['result']['score']}/5  — {exp['result']['reasoning'][:80]}...")
+            for dim in dims:
+                print(f"    {dim:<14} {exp[dim]['score']}/5  — {exp[dim]['reasoning'][:80]}...")
             if exp["flags"]:
                 for flag in exp["flags"]:
                     print(f"    FLAG: {flag[:100]}...")
             ov = exp["overall"]
-            print(f"    overall: {ov['score']}/10  — {ov['reasoning'][:80]}...")
+            print(f"    overall:       {ov['score']}/10  — {ov['reasoning'][:80]}...")
             print()

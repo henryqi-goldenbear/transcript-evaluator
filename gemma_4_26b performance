@@ -1,0 +1,279 @@
+Gemini gemma-4-26b-a4b-it   delay: 3000 ms   cases: 34
+
+──────────────────────────────────────────────────────────────────────
+[01] Perfect STAR — full detail, quantified result  (STAR)
+Q: Tell me about a time you led a project under a tight deadline.
+✓ Expect:  fil 5/5  ctx 5/5  act 5/5  res 5/5
+↳ Actual:  fil 5/5  ctx 5/5  act 5/5  res 5/5  overall: 10/10 [calc]
+   Δ  fil:·  ctx:·  act:·  res:·  overall:·
+
+──────────────────────────────────────────────────────────────────────
+[02] Strong STAR — no quantification but clear outcome  (STAR)
+Q: Describe a situation where you had to persuade a skeptical stakeholder.
+✓ Expect:  fil 5/5  ctx 4/5  act 5/5  res 4/5
+↳ Actual:  fil 5/5  ctx 5/5  act 5/5  res 5/5  overall: 10/10 [calc]
+   Δ  fil:·  ctx:+1  act:·  res:+1  overall:+1
+
+──────────────────────────────────────────────────────────────────────
+[03] Good STAR — minor filler, mostly solid  (STAR)
+Q: Tell me about a time you had a conflict with a teammate.
+✓ Expect:  fil 4/5  ctx 4/5  act 5/5  res 4/5
+↳ Actual:  fil 4/5  ctx 5/5  act 5/5  res 5/5  overall: 9.8/10 [calc]
+   Δ  fil:·  ctx:+1  act:·  res:+1  overall:+1
+
+──────────────────────────────────────────────────────────────────────
+[04] Missing context — no company, timeframe, or stakes  (STAR)
+Q: Tell me about a time you improved a process.
+✓ Expect:  fil 4/5  ctx 2/5  act 3/5  res 2/5
+↳ Actual:  fil 5/5  ctx 2/5  act 3/5  res 3/5  overall: 6/10 [calc]
+   Δ  fil:+1  ctx:·  act:·  res:+1  overall:+0.8
+
+──────────────────────────────────────────────────────────────────────
+[05] Completely context-free — story floats  (STAR)
+Q: Give me an example of handling a high-pressure situation.
+✓ Expect:  fil 4/5  ctx 1/5  act 1/5  res 1/5
+↳ Actual:  fil 5/5  ctx 2/5  act 2/5  res 2/5  overall: 4.6/10 [calc]
+   Δ  fil:+1  ctx:+1  act:+1  res:+1  overall:+2
+   ↳ Model flags:    NO SPECIFIC EXAMPLE
+
+──────────────────────────────────────────────────────────────────────
+[06] We-heavy — individual contribution unclear  (STAR)
+Q: Tell me about a time your team delivered something you're proud of.
+✓ Expect:  fil 4/5  ctx 4/5  act 1/5  res 3/5
+↳ Actual:  fil 5/5  ctx 5/5  act 2/5  res 3/5  overall: 6.4/10 [calc]
+   Δ  fil:+1  ctx:+1  act:+1  res:·  overall:+1.4
+
+──────────────────────────────────────────────────────────────────────
+[07] Partial 'I' — mixed ownership, rationale absent  (STAR)
+Q: Describe a time you introduced a new technology to your team.
+✓ Expect:  fil 5/5  ctx 3/5  act 2/5  res 2/5
+↳ Actual:  fil 5/5  ctx 3/5  act 3/5  res 4/5  overall: 7/10 [calc]
+   Δ  fil:·  ctx:·  act:+1  res:+2  overall:+2
+
+──────────────────────────────────────────────────────────────────────
+[08] Missing result — story trails off  (STAR)
+Q: Tell me about a time you had to learn something quickly.
+✓ Expect:  fil 5/5  ctx 5/5  act 5/5  res 1/5
+↳ Actual:  fil 5/5  ctx 5/5  act 5/5  res 4/5  overall: 9.4/10 [calc]
+   Δ  fil:·  ctx:·  act:·  res:+3  overall:+1.8
+
+──────────────────────────────────────────────────────────────────────
+[09] Result present but vague and disconnected from actions  (STAR)
+Q: Tell me about a time you improved team morale.
+✓ Expect:  fil 5/5  ctx 2/5  act 2/5  res 2/5
+↳ Actual:  fil 5/5  ctx 3/5  act 3/5  res 2/5  overall: 5.8/10 [calc]
+   Δ  fil:·  ctx:+1  act:+1  res:·  overall:+1.2
+
+──────────────────────────────────────────────────────────────────────
+[10] Filler-heavy — frequent 'um', 'uh', repetition  (STAR)
+Q: Tell me about a time you dealt with ambiguity.
+✓ Expect:  fil 1/5  ctx 1/5  act 1/5  res 1/5
+↳ Actual:  fil 1/5  ctx 2/5  act 3/5  res 2/5  overall: 4.6/10 [calc]
+   Δ  fil:·  ctx:+1  act:+2  res:+1  overall:+2.6
+   ↳ Model flags:    NO SPECIFIC EXAMPLE
+
+──────────────────────────────────────────────────────────────────────
+[11] Moderate filler — disrupts flow but content is recoverable  (STAR)
+Q: Give an example of a time you received critical feedback.
+✓ Expect:  fil 3/5  ctx 4/5  act 5/5  res 3/5
+↳ Actual:  fil 3/5  ctx 5/5  act 5/5  res 4/5  overall: 9/10 [calc]
+   Δ  fil:·  ctx:+1  act:·  res:+1  overall:+1
+
+──────────────────────────────────────────────────────────────────────
+[12] Credibility risk — deflects on follow-up probe  (STAR)
+Q: Tell me about a time you made a high-stakes technical decision.
+✓ Expect:  fil 3/5  ctx 4/5  act 2/5  res 2/5
+↳ Actual:  fil 3/5  ctx 5/5  act 2/5  res 2/5  overall: 5.4/10 [calc]
+   Δ  fil:·  ctx:+1  act:·  res:·  overall:+0.4
+   ✓ Expected flags: CREDIBILITY RISK
+   ↳ Model flags:    CREDIBILITY RISK
+
+──────────────────────────────────────────────────────────────────────
+[13] Credibility risk — repeats original answer verbatim on probe  (STAR)
+Q: Describe a time you influenced without authority.
+✓ Expect:  fil 3/5  ctx 3/5  act 2/5  res 2/5
+↳ Actual:  fil 5/5  ctx 5/5  act 2/5  res 2/5  overall: 5.8/10 [calc]
+   Δ  fil:+2  ctx:+2  act:·  res:·  overall:+1.2
+   ✓ Expected flags: CREDIBILITY RISK
+   ↳ Model flags:    CREDIBILITY RISK
+
+──────────────────────────────────────────────────────────────────────
+[14] Non-STAR — general philosophy instead of specific example  (STAR)
+Q: Tell me about a time you failed and what you learned.
+✓ Expect:  fil 4/5  ctx 1/5  act 1/5  res 1/5
+↳ Actual:  fil 3/5  ctx 1/5  act 1/5  res 1/5  overall: 2.4/10 [calc]
+   Δ  fil:-1  ctx:·  act:·  res:·  overall:-0.2
+   ✓ Expected flags: NO SPECIFIC EXAMPLE
+   ↳ Model flags:    NO SPECIFIC EXAMPLE
+
+──────────────────────────────────────────────────────────────────────
+[15] Non-STAR — hypothetical instead of past experience  (STAR)
+Q: Give me an example of a time you managed competing priorities.
+✓ Expect:  fil 4/5  ctx 1/5  act 1/5  res 1/5
+↳ Actual:  fil 4/5  ctx 1/5  act 1/5  res 1/5  overall: 2.6/10 [calc]
+   Δ  fil:·  ctx:·  act:·  res:·  overall:·
+   ✓ Expected flags: HYPOTHETICAL FRAMING
+   ↳ Model flags:    NO SPECIFIC EXAMPLE | HYPOTHETICAL FRAMING
+
+──────────────────────────────────────────────────────────────────────
+[16] Non-STAR — stream of consciousness, no structure  (STAR)
+Q: Tell me about a challenging project.
+✓ Expect:  fil 2/5  ctx 1/5  act 1/5  res 1/5
+↳ Actual:  fil 2/5  ctx 2/5  act 1/5  res 2/5  overall: 3.2/10 [calc]
+   Δ  fil:·  ctx:+1  act:·  res:+1  overall:+1
+   ↳ Model flags:    NO SPECIFIC EXAMPLE
+
+──────────────────────────────────────────────────────────────────────
+[17] Missing task — jumps from situation to action  (STAR)
+Q: Tell me about a time you improved a team's technical practices.
+✓ Expect:  fil 5/5  ctx 3/5  act 4/5  res 5/5
+↳ Actual:  fil 5/5  ctx 5/5  act 4/5  res 4/5  overall: 8.6/10 [calc]
+   Δ  fil:·  ctx:+2  act:·  res:-1  overall:+0.2
+
+──────────────────────────────────────────────────────────────────────
+[18] Missing situation — jumps straight to action  (STAR)
+Q: Describe a time you mentored someone.
+✓ Expect:  fil 5/5  ctx 1/5  act 5/5  res 5/5
+↳ Actual:  fil 5/5  ctx 3/5  act 5/5  res 4/5  overall: 8.6/10 [calc]
+   Δ  fil:·  ctx:+2  act:·  res:-1  overall:+0.2
+
+──────────────────────────────────────────────────────────────────────
+[19] One-liner — completely uninformative  (STAR)
+Q: Tell me about a time you showed leadership.
+✓ Expect:  fil 5/5  ctx 1/5  act 1/5  res 1/5
+↳ Actual:  fil 5/5  ctx 1/5  act 1/5  res 1/5  overall: 2.8/10 [calc]
+   Δ  fil:·  ctx:·  act:·  res:·  overall:·
+   ↳ Model flags:    NO SPECIFIC EXAMPLE
+
+──────────────────────────────────────────────────────────────────────
+[20] Empty / no response  (STAR)
+Q: Give me an example of a time you had to adapt to a major change.
+✓ Expect:  fil 1/5  ctx 1/5  act 1/5  res 1/5
+↳ Actual:  fil 1/5  ctx 1/5  act 1/5  res 1/5  overall: 2/10 [calc]
+   Δ  fil:·  ctx:·  act:·  res:·  overall:·
+   ✓ Expected flags: NO RESPONSE
+   ↳ Model flags:    NO RESPONSE
+
+──────────────────────────────────────────────────────────────────────
+[21] Pivots to a different example mid-answer  (STAR)
+Q: Tell me about a time you disagreed with your manager's decision.
+✓ Expect:  fil 3/5  ctx 2/5  act 2/5  res 2/5
+↳ Actual:  fil 4/5  ctx 2/5  act 2/5  res 3/5  overall: 5/10 [calc]
+   Δ  fil:+1  ctx:·  act:·  res:+1  overall:+0.8
+   ✓ Expected flags: PIVOT
+   ↳ Model flags:    PIVOT
+
+──────────────────────────────────────────────────────────────────────
+[22] Answers a different question entirely  (STAR)
+Q: Tell me about a time you had to make a decision with incomplete information.
+✓ Expect:  fil 4/5  ctx 2/5  act 2/5  res 1/5
+↳ Actual:  fil 5/5  ctx 2/5  act 2/5  res 2/5  overall: 4.6/10 [calc]
+   Δ  fil:+1  ctx:·  act:·  res:+1  overall:+0.8
+   ✓ Expected flags: OFF-TOPIC
+   ↳ Model flags:    NO SPECIFIC EXAMPLE
+
+──────────────────────────────────────────────────────────────────────
+[23] Tell me about yourself — strong, tailored narrative  (non-behavioral)
+Q: Tell me about yourself.
+✓ Expect:  cla 5/5  rel 5/5  spc 5/5
+↳ Actual:  cla 5/5  rel 5/5  spc 5/5  overall: 10/10 [calc]
+   Δ  cla:·  rel:·  spc:·  overall:·
+   ↳ Model flags:    STAR STORY EMBEDDED
+
+──────────────────────────────────────────────────────────────────────
+[24] Tell me about yourself — generic LinkedIn bio recitation  (non-behavioral)
+Q: Tell me about yourself.
+✓ Expect:  cla 4/5  rel 1/5  spc 1/5
+↳ Actual:  cla 3/5  rel 2/5  spc 1/5  overall: 4/10 [calc]
+   Δ  cla:-1  rel:+1  spc:·  overall:·
+   ✓ Expected flags: GENERIC RESPONSE
+   ↳ Model flags:    GENERIC RESPONSE
+
+──────────────────────────────────────────────────────────────────────
+[25] Tell me about yourself — embeds a mini-STAR story unprompted  (non-behavioral)
+Q: Tell me about yourself.
+✓ Expect:  cla 5/5  rel 5/5  spc 5/5
+↳ Actual:  cla 5/5  rel 5/5  spc 5/5  overall: 10/10 [calc]
+   Δ  cla:·  rel:·  spc:·  overall:·
+   ✓ Expected flags: STAR STORY EMBEDDED
+   ↳ Model flags:    STAR STORY EMBEDDED
+
+──────────────────────────────────────────────────────────────────────
+[26] What are your weaknesses? — rehearsed non-answer  (non-behavioral)
+Q: What is your greatest weakness?
+✓ Expect:  cla 4/5  rel 2/5  spc 1/5  slf 1/5
+↳ Actual:  cla 4/5  rel 5/5  spc 1/5  slf 2/5  overall: 6/10 [calc]
+   Δ  cla:·  rel:+3  spc:·  slf:+1  overall:+2
+   ✓ Expected flags: REHEARSED NON-ANSWER
+   ↳ Model flags:    REHEARSED NON-ANSWER | GENERIC RESPONSE
+
+──────────────────────────────────────────────────────────────────────
+[27] What are your weaknesses? — genuine weakness with concrete growth  (non-behavioral)
+Q: What is your greatest weakness?
+✓ Expect:  cla 5/5  rel 5/5  spc 5/5  slf 5/5
+↳ Actual:  cla 5/5  rel 5/5  spc 5/5  slf 5/5  overall: 10/10 [calc]
+   Δ  cla:·  rel:·  spc:·  slf:·  overall:·
+   ↳ Model flags:    STAR STORY EMBEDDED
+
+──────────────────────────────────────────────────────────────────────
+[28] Why do you want this role? — specific and researched  (non-behavioral)
+Q: Why do you want this role?
+✓ Expect:  cla 5/5  rel 5/5  spc 5/5
+↳ Actual:  cla 5/5  rel 5/5  spc 5/5  overall: 10/10 [calc]
+   Δ  cla:·  rel:·  spc:·  overall:·
+
+──────────────────────────────────────────────────────────────────────
+[29] Why do you want this role? — generic, could apply anywhere  (non-behavioral)
+Q: Why do you want this role?
+✓ Expect:  cla 4/5  rel 1/5  spc 1/5
+↳ Actual:  cla 3/5  rel 2/5  spc 1/5  overall: 4/10 [calc]
+   Δ  cla:-1  rel:+1  spc:·  overall:·
+   ✓ Expected flags: GENERIC RESPONSE
+   ↳ Model flags:    GENERIC RESPONSE
+
+──────────────────────────────────────────────────────────────────────
+[30] How have you used AI in your work? — stays abstract  (non-behavioral)
+Q: How have you used AI or machine learning in your work?
+✓ Expect:  cla 3/5  rel 2/5  spc 1/5
+↳ Actual:  cla 3/5  rel 2/5  spc 1/5  overall: 4/10 [calc]
+   Δ  cla:·  rel:·  spc:·  overall:·
+   ✓ Expected flags: VAGUE SKILL ANSWER
+   ↳ Model flags:    GENERIC RESPONSE | VAGUE SKILL ANSWER
+
+──────────────────────────────────────────────────────────────────────
+[31] How have you used Python? — candidate pivots to a specific STAR story  (non-behavioral)
+Q: How have you used Python in your work?
+✓ Expect:  cla 5/5  rel 5/5  spc 5/5
+↳ Actual:  cla 5/5  rel 5/5  spc 5/5  overall: 10/10 [calc]
+   Δ  cla:·  rel:·  spc:·  overall:·
+   ✓ Expected flags: STAR STORY EMBEDDED
+   ↳ Model flags:    STAR STORY EMBEDDED
+
+──────────────────────────────────────────────────────────────────────
+[32] Walk me through your resume — well-structured, selective narrative  (non-behavioral)
+Q: Can you walk me through your resume?
+✓ Expect:  cla 5/5  rel 5/5  spc 5/5
+↳ Actual:  cla 5/5  rel 5/5  spc 5/5  overall: 10/10 [calc]
+   Δ  cla:·  rel:·  spc:·  overall:·
+
+──────────────────────────────────────────────────────────────────────
+[33] Walk me through your resume — unfocused chronological dump  (non-behavioral)
+Q: Can you walk me through your resume?
+✓ Expect:  cla 2/5  rel 1/5  spc 1/5
+↳ Actual:  cla 3/5  rel 2/5  spc 1/5  overall: 4/10 [calc]
+   Δ  cla:+1  rel:+1  spc:·  overall:+1.3
+   ✓ Expected flags: CONTENT-FREE RESUME WALK
+   ↳ Model flags:    GENERIC RESPONSE | CONTENT-FREE RESUME WALK
+
+──────────────────────────────────────────────────────────────────────
+[34] Where do you see yourself in 5 years? — vague and evasive  (non-behavioral)
+Q: Where do you see yourself in 5 years?
+✓ Expect:  cla 4/5  rel 2/5  spc 1/5
+↳ Actual:  cla 4/5  rel 2/5  spc 1/5  overall: 4.7/10 [calc]
+   Δ  cla:·  rel:·  spc:·  overall:·
+   ✓ Expected flags: EVASIVE FUTURE ANSWER
+   ↳ Model flags:    GENERIC RESPONSE | EVASIVE FUTURE ANSWER
+
+──────────────────────────────────────────────────────────────────────
+Finished — 34 evaluated, 0 errors.
+Overall delta — exact: 14  near (≤1): 11  off (≥2): 9

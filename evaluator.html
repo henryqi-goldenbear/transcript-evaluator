@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Transcript Evaluator</title>
-  <script src="https://js.puter.com/v2/"></script>
+  <script src="./config.js" onerror="void 0"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -22,7 +22,7 @@
     header {
       width: 100%;
       max-width: 780px;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
     header h1 {
@@ -38,6 +38,9 @@
       margin-top: 4px;
     }
 
+    header p a { color: #818cf8; text-decoration: none; }
+    header p a:hover { text-decoration: underline; }
+
     .card {
       background: #1e2130;
       border: 1px solid #2d3148;
@@ -45,17 +48,17 @@
       padding: 24px;
       width: 100%;
       max-width: 780px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     label {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 600;
       color: #94a3b8;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     textarea, select {
@@ -78,17 +81,27 @@
 
     select option { background: #1e2130; }
 
-    .row {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 16px;
-      align-items: flex-end;
-    }
-
-    .row .field { flex: 1; }
-
     .field { margin-bottom: 16px; }
     .field:last-child { margin-bottom: 0; }
+
+    .optional-label {
+      font-size: 0.72rem;
+      color: #475569;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: 0;
+      margin-left: 6px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 14px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .controls .field.grow { flex: 1; min-width: 200px; }
+    .controls .field.mid  { width: 200px; }
 
     button {
       background: #6366f1;
@@ -103,40 +116,122 @@
       white-space: nowrap;
     }
 
-    button:hover { background: #4f46e5; }
+    button:hover:not(:disabled) { background: #4f46e5; }
     button:disabled { opacity: 0.45; cursor: not-allowed; }
 
-    #response-card { display: none; }
+    #load-status {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 12px;
+      min-height: 18px;
+    }
 
-    .response-header {
+    .error-text { color: #f87171; }
+
+    #results-card { display: none; }
+
+    .results-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .response-header span {
-      font-size: 0.78rem;
+    .results-header h2 {
+      font-size: 0.75rem;
       font-weight: 600;
       color: #94a3b8;
       text-transform: uppercase;
       letter-spacing: 0.06em;
     }
 
-    .model-tag {
-      font-size: 0.75rem;
+    .meta-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 0.72rem;
       background: #2d3148;
       color: #a5b4fc;
       padding: 3px 10px;
       border-radius: 20px;
     }
 
-    #response-output {
-      white-space: pre-wrap;
-      line-height: 1.7;
-      font-size: 0.92rem;
+    .overall-banner {
+      background: #0f1117;
+      border: 1px solid #2d3148;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+
+    .overall-score {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .overall-score span { color: #6366f1; font-size: 0.85rem; font-weight: 500; }
+
+    .overall-reasoning {
+      font-size: 0.88rem;
+      color: #94a3b8;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .dim-grid { display: flex; flex-direction: column; gap: 10px; }
+
+    .dim-row {
+      background: #0f1117;
+      border: 1px solid #2d3148;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .dim-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .dim-name {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #818cf8;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .dim-score {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #93c5fd;
+    }
+
+    .dim-reasoning {
+      font-size: 0.86rem;
       color: #cbd5e1;
-      min-height: 60px;
+      line-height: 1.55;
+    }
+
+    .flags-block {
+      margin-top: 14px;
+      font-size: 0.85rem;
+      color: #fbbf24;
+    }
+
+    .status-row {
+      font-size: 0.82rem;
+      color: #64748b;
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
     }
 
     .spinner {
@@ -152,122 +247,465 @@
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    .status {
-      font-size: 0.82rem;
-      color: #64748b;
-      display: flex;
-      align-items: center;
-    }
-
-    .error { color: #f87171; }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Transcript Evaluator</h1>
-    <p>Powered by Puter.js — no API key required</p>
-  </header>
+<header>
+  <h1>Transcript Evaluator</h1>
+  <p>Scores interview responses with the same STAR / non-behavioral rubrics and models as the <a href="test_runner.html">test runner</a>. Set <code>window.GEMINI_API_KEY</code> in <code>config.js</code>.</p>
+</header>
 
-  <div class="card">
-    <div class="field" style="display:none">
-      <label>System Prompt</label>
-      <textarea id="system-prompt" rows="5" readonly>You are an expert interview evaluator. Given an interview transcript or response, assess the candidate's performance across key dimensions: communication clarity, technical knowledge, problem-solving approach, and cultural fit. Provide a structured evaluation with strengths, areas for improvement, and an overall rating out of 10.</textarea>
-    </div>
-
-    <div class="field">
-      <label>User Message</label>
-      <textarea id="user-message" rows="6" placeholder="Paste the interview transcript or candidate response here..."></textarea>
-    </div>
-
-    <div class="row">
-      <div class="field" style="margin-bottom:0">
-        <label>Model</label>
-        <select id="model-select">
-          <optgroup label="⚡ Fast">
-            <option value="openai/gpt-4.1-nano" selected>GPT-4.1 Nano (fastest)</option>
-            <option value="openai/gpt-4.1-mini">GPT-4.1 Mini</option>
-            <option value="google/gemini-2.5-flash">Gemini 2.5 Flash</option>
-          </optgroup>
-          <optgroup label="OpenAI">
-            <option value="openai/gpt-5">GPT-5</option>
-            <option value="openai/gpt-5-mini">GPT-5 Mini</option>
-            <option value="openai/gpt-4.1">GPT-4.1</option>
-            <option value="openai/gpt-4o">GPT-4o</option>
-          </optgroup>
-          <optgroup label="Anthropic">
-            <option value="anthropic/claude-opus-4-5">Claude Opus 4.5</option>
-            <option value="anthropic/claude-sonnet-4-6">Claude Sonnet 4.6</option>
-          </optgroup>
-          <optgroup label="Google">
-            <option value="google/gemini-2.5-pro">Gemini 2.5 Pro</option>
-            <option value="google/gemini-2.5-flash">Gemini 2.5 Flash</option>
-          </optgroup>
-          <optgroup label="Meta">
-            <option value="meta/llama-4-maverick">Llama 4 Maverick</option>
-          </optgroup>
-          <optgroup label="DeepSeek">
-            <option value="deepseek/deepseek-r1">DeepSeek R1</option>
-          </optgroup>
-        </select>
-      </div>
-      <button id="run-btn" onclick="runEvaluation()">Run</button>
-    </div>
+<div class="card">
+  <div class="field">
+    <label for="rubric-select">Rubric</label>
+    <select id="rubric-select">
+      <option value="behavioral">STAR (behavioral)</option>
+      <option value="non_behavioral">Non-behavioral</option>
+    </select>
   </div>
 
-  <div class="card" id="response-card">
-    <div class="response-header">
-      <span>Response</span>
-      <span class="model-tag" id="model-tag"></span>
-    </div>
-    <div id="response-output"></div>
-    <div class="status" id="status" style="margin-top:12px"></div>
+  <div class="field">
+    <label for="question-input">Question</label>
+    <textarea id="question-input" rows="2" placeholder="Interview question…"></textarea>
   </div>
 
-  <script>
-    async function runEvaluation() {
-      const systemPrompt = document.getElementById('system-prompt').value.trim();
-      const userMessage = document.getElementById('user-message').value.trim();
-      const model = document.getElementById('model-select').value;
-      const btn = document.getElementById('run-btn');
-      const output = document.getElementById('response-output');
-      const status = document.getElementById('status');
-      const card = document.getElementById('response-card');
-      const modelTag = document.getElementById('model-tag');
+  <div class="field">
+    <label for="response-input">Candidate response</label>
+    <textarea id="response-input" rows="8" placeholder="Paste the candidate's answer…"></textarea>
+  </div>
 
-      if (!userMessage) return;
+  <div class="field">
+    <label for="follow-up-input">Follow-up question <span class="optional-label">(optional)</span></label>
+    <textarea id="follow-up-input" rows="2" placeholder="Follow-up question, if any…"></textarea>
+  </div>
 
-      btn.disabled = true;
-      card.style.display = 'block';
-      output.textContent = '';
-      status.innerHTML = '<span class="spinner"></span> Generating...';
-      modelTag.textContent = model;
+  <div class="field">
+    <label for="follow-up-response-input">Follow-up response <span class="optional-label">(optional)</span></label>
+    <textarea id="follow-up-response-input" rows="4" placeholder="Candidate's follow-up answer…"></textarea>
+  </div>
 
-      const messages = [];
-      if (systemPrompt) messages.push({ role: 'system', content: systemPrompt });
-      messages.push({ role: 'user', content: userMessage });
+  <div class="controls">
+    <div class="field grow">
+      <label for="model-select">Model</label>
+      <select id="model-select">
+        <optgroup label="Gemma — free · higher RPM">
+          <option value="gemma-4-31b-it" selected>gemma-4-31b-it (Gemma 4 31B)</option>
+          <option value="gemma-4-26b-a4b-it">gemma-4-26b-a4b-it (Gemma 4 26B — stable)</option>
+        </optgroup>
+        <optgroup label="Gemini 2.5 Flash — free · 20 RPM">
+          <option value="gemini-2.5-flash">gemini-2.5-flash (stable)</option>
+          <option value="gemini-2.5-flash-preview-05-20">gemini-2.5-flash-preview-05-20</option>
+        </optgroup>
+        <optgroup label="Gemini 2.5 Pro — free · 5 RPM">
+          <option value="gemini-2.5-pro">gemini-2.5-pro (stable)</option>
+          <option value="gemini-2.5-pro-preview-05-06">gemini-2.5-pro-preview-05-06</option>
+        </optgroup>
+      </select>
+    </div>
+    <button id="run-btn" type="button" disabled>Evaluate</button>
+  </div>
 
-      try {
-        const resp = await puter.ai.chat(messages, { model, stream: true });
-        let full = '';
-        for await (const chunk of resp) {
-          const text = chunk?.text ?? '';
-          full += text;
-          output.textContent = full;
-        }
-        status.innerHTML = '&#10003; Done';
-      } catch (err) {
-        status.innerHTML = `<span class="error">Error: ${err.message || err}</span>`;
-      } finally {
-        btn.disabled = false;
+  <div id="load-status">Loading rubrics…</div>
+</div>
+
+<div class="card" id="results-card">
+  <div class="results-header">
+    <h2>Evaluation</h2>
+    <div class="meta-tags">
+      <span class="tag" id="tag-rubric"></span>
+      <span class="tag" id="tag-model"></span>
+    </div>
+  </div>
+  <div class="overall-banner">
+    <div class="overall-score"><span id="overall-value">—</span>/10 <span>[calculated]</span></div>
+    <div class="overall-reasoning" id="overall-reasoning"></div>
+  </div>
+  <div class="dim-grid" id="dim-grid"></div>
+  <div class="flags-block" id="flags-block" style="display:none"></div>
+  <div class="status-row" id="status-row"></div>
+</div>
+
+<script>
+// ── Rubrics (loaded from markdown) ────────────────────────────────────────────
+
+let BEHAVIORAL_RUBRIC_MD = "";
+let NON_BEHAVIORAL_RUBRIC_MD = "";
+
+function buildStarPrompt() {
+  return `You are an expert behavioral interview evaluator using the STAR rubric.
+
+Use the rubric below as the source of truth:
+
+${BEHAVIORAL_RUBRIC_MD}
+
+CALIBRATION:
+- Avoid leniency bias. Score what is explicitly present, not what might be implied.
+- Do not let fluent writing inflate weak content.
+- Score each dimension independently.
+
+Return only this JSON, no extra text:
+{
+  "filler":  { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "context": { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "action":  { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "result":  { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "flags":   [],
+  "overall": { "score": 0.0, "reasoning": "<one sentence summary>" }
+}`;
+}
+
+function buildNonBehavioralPrompt() {
+  return `You are an expert interviewer evaluator for non-behavioral prompts.
+
+Use the rubric below as the source of truth:
+
+${NON_BEHAVIORAL_RUBRIC_MD}
+
+CALIBRATION:
+- Avoid leniency bias. Score only evidence present in the response.
+- Do not inflate relevance for generic, role-agnostic answers.
+- Omit self_awareness when question type does not require it.
+
+Return only this JSON, no extra text:
+{
+  "clarity":        { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "relevance":      { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "specificity":    { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
+  "self_awareness": { "score": <1-5>, "reasoning": "<one clear sentence>" },
+  "flags":          [],
+  "overall":        { "score": 0.0, "reasoning": "<one sentence summary>" }
+}`;
+}
+
+function buildUserMessage(input) {
+  const label = input.rubric_type === "non_behavioral" ? "non-behavioral" : "STAR";
+  let txt = `Question: ${input.question}\nCandidate response:\n${input.response}`;
+  if (input.follow_up) txt += `\nFollow-up question: ${input.follow_up}`;
+  if (input.follow_up_response) txt += `\nCandidate follow-up response: ${input.follow_up_response}`;
+  return `Evaluate this ${label} interview case.\n\n${txt}`;
+}
+
+// ── Gemini / Gemma API (same as test_runner.html) ─────────────────────────────
+
+function extractJson(text) {
+  const cleaned = text.replace(/^\s*[*-]\s+/gm, "");
+  const fenced = cleaned.match(/```(?:json)?\s*([\s\S]*?)```/);
+  if (fenced) return fenced[1].trim();
+  const start = cleaned.indexOf("{");
+  if (start !== -1) {
+    let depth = 0;
+    for (let i = start; i < cleaned.length; i++) {
+      const ch = cleaned[i];
+      if (ch === "{") depth++;
+      if (ch === "}") {
+        depth--;
+        if (depth === 0) return cleaned.slice(start, i + 1);
       }
     }
+  }
+  return cleaned.trim();
+}
 
-    document.addEventListener('keydown', e => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') runEvaluation();
-    });
-  </script>
+async function callGemini(apiKey, model, systemPrompt, userMsg) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+  const isGemma = model.startsWith("gemma-");
+  const generationConfig = { temperature: 0.15 };
+  if (!isGemma) generationConfig.responseMimeType = "application/json";
+
+  const body = isGemma
+    ? {
+        contents: [{
+          role: "user",
+          parts: [{ text: `${systemPrompt}\n\n---\n\n${userMsg}` }]
+        }],
+        generationConfig
+      }
+    : {
+        system_instruction: { parts: [{ text: systemPrompt }] },
+        contents: [{ role: "user", parts: [{ text: userMsg }] }],
+        generationConfig
+      };
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+
+  if (!res.ok) {
+    let msg = `HTTP ${res.status}`;
+    try { msg = (await res.json()).error?.message || msg; } catch (_) {}
+    throw new Error(msg);
+  }
+
+  const data = await res.json();
+  const parts = data?.candidates?.[0]?.content?.parts ?? [];
+  const visibleParts = parts.filter(
+    p => !p?.thought && typeof p?.text === "string" && p.text.trim()
+  );
+  const text =
+    visibleParts[visibleParts.length - 1]?.text ??
+    parts[parts.length - 1]?.text;
+  if (!text) throw new Error("Empty response from API.");
+  return isGemma ? extractJson(text) : text;
+}
+
+function parseRetryMs(msg) {
+  const m = msg.match(/retry in ([\d.]+)s/i);
+  if (m) return Math.ceil(parseFloat(m[1]) * 1000) + 2500;
+  return 65000;
+}
+
+async function sleepCountdown(ms, el) {
+  const end = Date.now() + ms;
+  while (Date.now() < end) {
+    const secs = Math.ceil((end - Date.now()) / 1000);
+    el.textContent = `Rate limited — waiting ${secs}s…`;
+    await new Promise(r => setTimeout(r, Math.min(1000, end - Date.now())));
+  }
+}
+
+async function callGeminiWithRetry(apiKey, model, prompt, userMsg, statusEl) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      if (attempt > 0) statusEl.textContent = "Retrying…";
+      else statusEl.innerHTML = '<span class="spinner"></span> Calling model…';
+      return await callGemini(apiKey, model, prompt, userMsg);
+    } catch (err) {
+      const isRateLimit =
+        err.message.includes("quota") ||
+        err.message.includes("429") ||
+        err.message.includes("RESOURCE_EXHAUSTED") ||
+        err.message.toLowerCase().includes("retry in");
+      if (!isRateLimit || attempt >= 2) throw err;
+      await sleepCountdown(parseRetryMs(err.message), statusEl);
+    }
+  }
+}
+
+function strictJsonPrompt(basePrompt) {
+  return `${basePrompt}
+
+CRITICAL OUTPUT RULES:
+- Return valid JSON only.
+- Output must begin with "{" and end with "}".
+- No markdown, no bullets, no prose, no code fences.`;
+}
+
+function tryParseModelJson(rawText) {
+  const candidate = extractJson((rawText || "").trim());
+  return JSON.parse(candidate);
+}
+
+async function evaluateCase(apiKey, model, prompt, userMsg, statusEl) {
+  let modelUsed = model;
+  let raw;
+
+  try {
+    raw = await callGeminiWithRetry(apiKey, modelUsed, prompt, userMsg, statusEl);
+  } catch (err) {
+    const internal = String(err.message || err).toLowerCase().includes("internal error");
+    if (model === "gemma-4-31b-it" && internal) {
+      modelUsed = "gemma-4-26b-a4b-it";
+      statusEl.textContent = "Gemma-4 unstable, falling back to Gemma-4-26b…";
+      raw = await callGeminiWithRetry(apiKey, modelUsed, prompt, userMsg, statusEl);
+    } else {
+      throw err;
+    }
+  }
+
+  try {
+    return { parsed: tryParseModelJson(raw), modelUsed };
+  } catch (_) {
+    statusEl.textContent = "Repairing format (JSON-only retry)…";
+    const rawRetry = await callGeminiWithRetry(
+      apiKey,
+      modelUsed,
+      strictJsonPrompt(prompt),
+      userMsg,
+      statusEl
+    );
+    return { parsed: tryParseModelJson(rawRetry), modelUsed };
+  }
+}
+
+// ── Scoring helpers (same as test_runner.html) ────────────────────────────────
+
+const STAR_DIMS = ["filler", "context", "action", "result"];
+const DIM_LABELS = {
+  filler: "Filler & repetition",
+  context: "Context",
+  action: "Action",
+  result: "Result",
+  clarity: "Clarity",
+  relevance: "Relevance",
+  specificity: "Specificity",
+  self_awareness: "Self-awareness"
+};
+
+function getDims(tc, parsed) {
+  if (tc.rubric_type === "non_behavioral") {
+    const base = ["clarity", "relevance", "specificity"];
+    if (parsed && "self_awareness" in parsed) base.push("self_awareness");
+    return base;
+  }
+  return STAR_DIMS;
+}
+
+function computeOverall(parsed, tc) {
+  if (tc.rubric_type === "non_behavioral") {
+    const dims = ["clarity", "relevance", "specificity", "self_awareness"].filter(d => parsed[d]);
+    if (!dims.length) return 0;
+    const sum = dims.reduce((s, d) => s + (parsed[d]?.score ?? 0), 0);
+    return +(sum / dims.length / 5 * 10).toFixed(1);
+  }
+  const f = parsed.filler?.score ?? 0;
+  const c = parsed.context?.score ?? 0;
+  const a = parsed.action?.score ?? 0;
+  const r = parsed.result?.score ?? 0;
+  return +((f * 0.10 + c * 0.20 + a * 0.40 + r * 0.30) * 2).toFixed(1);
+}
+
+// ── UI ────────────────────────────────────────────────────────────────────────
+
+function checkReady() {
+  const key = (window.GEMINI_API_KEY || "").trim();
+  const rubricsOk = BEHAVIORAL_RUBRIC_MD.length > 0 && NON_BEHAVIORAL_RUBRIC_MD.length > 0;
+  const hasInput =
+    document.getElementById("question-input").value.trim().length > 0 &&
+    document.getElementById("response-input").value.trim().length > 0;
+  document.getElementById("run-btn").disabled = !(rubricsOk && key.length > 10 && hasInput);
+}
+
+async function loadRubrics() {
+  const status = document.getElementById("load-status");
+  try {
+    const [behRes, nbRes] = await Promise.all([
+      fetch("./behavioral_rubric.md"),
+      fetch("./non_behavioral_rubric.md"),
+    ]);
+    if (!behRes.ok) throw new Error(`behavioral_rubric.md HTTP ${behRes.status}`);
+    if (!nbRes.ok) throw new Error(`non_behavioral_rubric.md HTTP ${nbRes.status}`);
+    BEHAVIORAL_RUBRIC_MD = await behRes.text();
+    NON_BEHAVIORAL_RUBRIC_MD = await nbRes.text();
+    status.textContent = "Rubrics loaded. Enter question and response to evaluate.";
+    checkReady();
+  } catch (err) {
+    status.innerHTML = `<span class="error-text">Failed to load rubrics: ${err.message}. Serve via http.server, not file://.</span>`;
+  }
+}
+
+function renderResults(parsed, tc, modelUsed) {
+  const rubricLabel = tc.rubric_type === "non_behavioral" ? "Non-behavioral" : "STAR";
+  document.getElementById("tag-rubric").textContent = rubricLabel;
+  document.getElementById("tag-model").textContent = modelUsed;
+
+  const overall = computeOverall(parsed, tc);
+  document.getElementById("overall-value").textContent = overall;
+  document.getElementById("overall-reasoning").textContent =
+    parsed.overall?.reasoning || "—";
+
+  const grid = document.getElementById("dim-grid");
+  grid.innerHTML = "";
+  for (const dim of getDims(tc, parsed)) {
+    const row = parsed[dim];
+    if (!row) continue;
+    const el = document.createElement("div");
+    el.className = "dim-row";
+    el.innerHTML = `
+      <div class="dim-head">
+        <span class="dim-name">${DIM_LABELS[dim] || dim}</span>
+        <span class="dim-score">${row.score ?? "?"}/5</span>
+      </div>
+      <div class="dim-reasoning">${escapeHtml(row.reasoning || "")}</div>`;
+    grid.appendChild(el);
+  }
+
+  const flags = parsed.flags ?? [];
+  const flagsEl = document.getElementById("flags-block");
+  if (flags.length) {
+    flagsEl.style.display = "block";
+    flagsEl.textContent = `Flags: ${flags.join(" | ")}`;
+  } else {
+    flagsEl.style.display = "none";
+  }
+
+  document.getElementById("results-card").style.display = "block";
+}
+
+function escapeHtml(s) {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+async function runEvaluation() {
+  const apiKey = (window.GEMINI_API_KEY || "").trim();
+  if (!apiKey) {
+    alert("Missing API key. Set window.GEMINI_API_KEY in config.js.");
+    return;
+  }
+
+  const rubricType = document.getElementById("rubric-select").value;
+  const question = document.getElementById("question-input").value.trim();
+  const response = document.getElementById("response-input").value.trim();
+  const follow_up = document.getElementById("follow-up-input").value.trim();
+  const follow_up_response = document.getElementById("follow-up-response-input").value.trim();
+
+  if (!question || !response) return;
+
+  const input = {
+    rubric_type: rubricType,
+    question,
+    response,
+    follow_up: follow_up || undefined,
+    follow_up_response: follow_up_response || undefined,
+  };
+
+  const model = document.getElementById("model-select").value;
+  const prompt = rubricType === "non_behavioral"
+    ? buildNonBehavioralPrompt()
+    : buildStarPrompt();
+  const userMsg = buildUserMessage(input);
+
+  const btn = document.getElementById("run-btn");
+  const statusEl = document.getElementById("status-row");
+  btn.disabled = true;
+  document.getElementById("results-card").style.display = "block";
+  document.getElementById("dim-grid").innerHTML = "";
+  document.getElementById("flags-block").style.display = "none";
+  statusEl.innerHTML = '<span class="spinner"></span> Evaluating…';
+
+  try {
+    const { parsed, modelUsed } = await evaluateCase(apiKey, model, prompt, userMsg, statusEl);
+    renderResults(parsed, input, modelUsed);
+    statusEl.textContent = "Done";
+  } catch (err) {
+    statusEl.innerHTML = `<span class="error-text">Error: ${escapeHtml(String(err.message || err))}</span>`;
+  } finally {
+    btn.disabled = false;
+    checkReady();
+  }
+}
+
+document.getElementById("run-btn").addEventListener("click", runEvaluation);
+["question-input", "response-input", "follow-up-input", "follow-up-response-input"].forEach(id => {
+  document.getElementById(id).addEventListener("input", checkReady);
+});
+document.getElementById("rubric-select").addEventListener("change", checkReady);
+
+document.addEventListener("keydown", e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === "Enter" && !document.getElementById("run-btn").disabled) {
+    runEvaluation();
+  }
+});
+
+loadRubrics();
+</script>
 
 </body>
 </html>
