@@ -3,6 +3,19 @@
   "tasks": [
 
     {
+      "label": "Convert Transcript To Evaluator JSON",
+      "type": "shell",
+      "command": "& 'C:\\Users\\zhiha\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe' txt_to_json.py 'input data/entire_interview.txt' --ollama-model 'llama3.2:latest'",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+
+    {
       "label": "Run Test Runner",
       "type": "shell",
       "command": "$py = 'C:\\Users\\zhiha\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe'; & $py response_test.py --json | Out-File -FilePath test_cases.json -Encoding utf8; Start-Process $py -ArgumentList '-m', 'http.server', '3000' -WorkingDirectory '${workspaceFolder}' -WindowStyle Hidden; Start-Sleep -Seconds 1; Start-Process 'http://localhost:3000/test_runner.html'",
@@ -39,6 +52,19 @@
       "options": {
         "cwd": "${workspaceFolder}"
       },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+
+    {
+      "label": "Convert + Open Evaluator",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Convert Transcript To Evaluator JSON",
+        "Open Evaluator"
+      ],
       "presentation": {
         "reveal": "always",
         "panel": "shared"
