@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "label": "Auto case 1",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "Tell me about a time you improved a process.",
+    "response": "At my last job we had a slow deployment process. I looked at it and figured out we could automate the manual steps with a script. I wrote the script myself, tested it, and rolled it out to the team. It ended up saving everyone a lot of time.",
+    "follow_ups": [],
+    "expected": {}
+  }
+]

@@ -1,0 +1,41 @@
+INTERVIEWER:
+Hi Alex, thanks for joining. I'm Priya — I lead the platform engineering group here at Northline. How's your day going so far?
+
+CANDIDATE:
+Going well, thanks. Appreciate you making the time. I've been looking forward to this one — I've followed Northline's engineering blog for a while.
+
+INTERVIEWER:
+Good to hear. Before we dive in, any trouble with the video link or the calendar invite on your side?
+
+CANDIDATE:
+No, all smooth. I had a chance to skim the team page this morning too.
+
+INTERVIEWER:
+Perfect. Here's how I'd like to use our thirty minutes. We'll do a few minutes on your background, walk through your resume together, then I'll ask about some past situations — mix of how you work and specific examples. We'll save the last five or six minutes for your questions. Does that work?
+
+CANDIDATE:
+That works great.
+
+INTERVIEWER:
+Let's start broad. Tell me about yourself — the version you'd give if we only had two minutes.
+
+CANDIDATE:
+Sure. I'm a backend engineer with about seven years in fintech and payments. Most recently at LedgerPay I owned the settlement reconciliation service — batch jobs, idempotency, the unglamorous stuff that has to be correct. What I care about is building systems that stay boring under load: clear contracts, good observability, and failure modes you can reason about in an incident. Before LedgerPay I was at a smaller startup where I wore more hats, which is where I picked up Go and got comfortable owning services end to end. I'm here because Northline's platform team sits on the critical path for fraud and ledger consistency, and that's the kind of problem I want my next few years to be about.
+
+INTERVIEWER:
+Thanks. Let's go chronologically — walk me through your resume, starting from education or your first relevant role, whatever you think is the right entry point.
+
+CANDIDATE:
+I'll start with university briefly, then the jobs that matter for this role. I studied computer science at State University of New York at Buffalo — graduated 2017. My first job was at CardNest, a small payments startup in New York, for about two years. I was mostly doing CRUD APIs in Ruby, but I got exposure to PCI scope and why you don't log certain fields. In 2019 I moved to PayLoom, still mid-stage — that's where I switched to Go because the team was rewriting a monolith into services. I owned the merchant webhook delivery service: retries, signing, delivery guarantees. We scaled from a few thousand merchants to low six figures of daily events while I was there. I left in early 2022 when LedgerPay recruited me for reconciliation — they needed someone who had seen high-volume money movement and wasn't scared of batch windows. At LedgerPay I've been senior engineer for three years, tech lead on reconciliation for the last eighteen months. On paper my title is still senior, but I've been acting lead on the settlement migration and on-call rotation. Happy to go deeper on any of those stops.
+
+INTERVIEWER:
+On PayLoom — you said low six figures of daily webhook events. What broke first when you scaled?
+
+CANDIDATE:
+Honestly, our Postgres write pattern on the delivery log table. We were inserting one row per attempt without partitioning, and hot indexes killed us around eighty thousand events a day. I proposed monthly partitions and moving retry scheduling to a Redis-backed queue so we weren't polling the database. We shipped partitions first — that bought headroom — then the queue refactor over two sprints. p99 delivery latency went from about four seconds to under eight hundred milliseconds at peak. That's the project I'm proudest of from PayLoom because it was the first time I owned a production scaling problem end to end.
+
+INTERVIEWER:
+And LedgerPay — you list reconciliation and settlement. Are those the same system or separate?
+
+CANDIDATE:
+Separate services, shared data model. Reconciliation compares internal ledger entries to bank files and flags exceptions. Settlement is the outbound generation — ACH files, NACHA formatting, cutoffs. They talk through an event bus; settlement emits "file submitted" and reconciliation consumes it for next-day matching. I own reconciliation; I was tech lead on the settlement migration last year but day-to-day ownership is split with another lead now.
