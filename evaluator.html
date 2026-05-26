@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Transcript Evaluator</title>
-  <script src="./config.js" onerror="void 0"></script>
-  <script src="./analytics.js"></script>
+  <script src="./web helpers/config.js" onerror="void 0"></script>
+  <script src="./web helpers/analytics.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -177,7 +177,7 @@
     </div>
     <div class="field grow">
       <label for="batch-file-input">Input JSON file</label>
-      <input id="batch-file-input" type="text" value="entire_interview.json" placeholder="entire_interview.json" style="width:100%;background:#0f1117;border:1px solid #2d3148;border-radius:8px;color:#e2e8f0;font-size:0.9rem;padding:12px 14px;" />
+      <input id="batch-file-input" type="text" value="input data/entire_interview.json" placeholder="input data/entire_interview.json" style="width:100%;background:#0f1117;border:1px solid #2d3148;border-radius:8px;color:#e2e8f0;font-size:0.9rem;padding:12px 14px;" />
     </div>
     <div class="field mid">
       <label for="debug-mode-input">Debug mode</label>
@@ -190,11 +190,11 @@
   <div class="batch-log" id="batch-log">Batch run log will appear here.</div>
 </div>
 
-<script src="./rubrics.js"></script>
-<script src="./log.js"></script>
-<script src="./pdf.js"></script>
-<script src="./gemini.js"></script>
-<script src="./evaluator-app.js"></script>
+<script src="./web helpers/rubrics.js"></script>
+<script src="./web helpers/log.js"></script>
+<script src="./web helpers/pdf.js"></script>
+<script src="./web helpers/gemini.js"></script>
+<script src="./web helpers/evaluator-app.js"></script>
 <script>
   EvaluatorApp.init();
 </script>
