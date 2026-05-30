@@ -1,0 +1,6 @@
+﻿{
+    "scripts":  {
+                    "review-agent":  "node agents/reviewer-agent.mjs",
+                    "pdf-feedback":  "node agents/pdf-feedback-flow.mjs"
+                }
+}

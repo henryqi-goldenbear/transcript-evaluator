@@ -22,7 +22,7 @@ Output format:
         "question": "...",
         "response": "...",
         "probe_type": "clarifying" | "deepening",
-        "classification_source": "ollama" | "heuristic"
+        "classification_source": "heuristic"
       }
     ],
     "expected": {}
@@ -33,11 +33,13 @@ Output format:
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import os
 import re
+from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 from urllib import error, request
 
 
@@ -58,6 +60,9 @@ NON_QUESTION_PATTERNS = [
     re.compile(r"\bany trouble with (the )?(video|audio|link)\b", re.IGNORECASE),
     re.compile(r"\bthanks for joining\b", re.IGNORECASE),
     re.compile(r"\bshall we get started\b", re.IGNORECASE),
+    re.compile(r"\bhere'?s how (i'?d|i would) like to use\b", re.IGNORECASE),
+    re.compile(r"\bwe'?ll save\b.*\bfor your questions\b", re.IGNORECASE),
+    re.compile(r"\bdoes that work\b", re.IGNORECASE),
 ]
 FOLLOW_UP_PATTERNS = [
     re.compile(r"^\s*can you\b", re.IGNORECASE),
@@ -169,142 +174,18 @@ def _ollama_generate_json(prompt: str, model: str, host: str) -> Any | None:
             return None
 
 
-def _normalize_single_call_cases(payload: Any) -> list[dict[str, Any]] | None:
-    if isinstance(payload, dict):
-        for key in ("cases", "test_cases", "items", "data", "result"):
-            maybe = payload.get(key)
-            if isinstance(maybe, list):
-                payload = maybe
-                break
-
-    if not isinstance(payload, list):
-        return None
-
-    normalized: list[dict[str, Any]] = []
-    allowed_turn_types = {"behavioral", "non_behavioral"}
-    allowed_probe_types = {"clarifying", "deepening"}
-
-    next_id = 1
-    for case in payload:
-        if not isinstance(case, dict):
-            continue
-
-        question = str(
-            case.get("question", case.get("main_question", case.get("interviewer_question", "")))
-        ).strip()
-        response = str(
-            case.get("response", case.get("main_response", case.get("candidate_response", "")))
-        ).strip()
-        turn_type = str(
-            case.get("turn_type", case.get("type", case.get("classification", "")))
-        ).strip().lower()
-        reasoning = str(
-            case.get(
-                "classification_reasoning",
-                case.get("reasoning", case.get("reason", "")),
-            )
-        ).strip()
-        if turn_type in {"non_question", "nonscorable", "non_scorable"}:
-            continue
-        if turn_type not in allowed_turn_types or not question:
-            continue
-
-        follow_ups_in = case.get("follow_ups", case.get("probes", case.get("followups", [])))
-        follow_ups_out: list[dict[str, Any]] = []
-        if isinstance(follow_ups_in, list):
-            for fu in follow_ups_in:
-                if not isinstance(fu, dict):
-                    continue
-                fu_question = str(
-                    fu.get("question", fu.get("follow_up_question", fu.get("interviewer_question", "")))
-                ).strip()
-                if not fu_question:
-                    continue
-                probe_type = str(fu.get("probe_type", "")).strip().lower()
-                if probe_type not in allowed_probe_types:
-                    probe_type = "clarifying"
-                follow_ups_out.append(
-                    {
-                        "question": fu_question,
-                        "response": str(fu.get("response", "")).strip(),
-                        "probe_type": probe_type,
-                        "classification_source": "ollama",
-                    }
-                )
-
-        normalized.append(
-            {
-                "id": next_id,
-                "label": f"Auto case {next_id}",
-                "turn_type": turn_type,
-                "rubric_type": turn_type,
-                "classification_source": "ollama",
-                "classification_reasoning": reasoning or "Single-pass transcript classification by Ollama.",
-                "question": question,
-                "response": response,
-                "follow_ups": follow_ups_out,
-                "expected": {},
-            }
-        )
-        next_id += 1
-
-    return normalized if normalized else None
-
-
-def _single_ollama_transcript_parse(
-    raw_text: str,
-    ollama_model: str,
-    ollama_host: str,
-) -> list[dict[str, Any]] | None:
-    prompt = f"""Convert the transcript into evaluator test cases.
-
-Return JSON only as an array of objects with this exact schema:
-[
-  {{
-    "question": "main interviewer question",
-    "response": "candidate response paired to main question",
-    "turn_type": "behavioral" | "non_behavioral",
-    "classification_reasoning": "one sentence",
-    "follow_ups": [
-      {{
-        "question": "follow-up interviewer question",
-        "response": "candidate response to this follow-up",
-        "probe_type": "clarifying" | "deepening"
-      }}
-    ]
-  }}
-]
-
-Rules:
-- Ignore non-scorable interviewer turns (greetings, logistics, setup chatter).
-- Keep only scorable main interviewer questions as top-level objects.
-- Attach follow-up probes to the most recent main question.
-- A main question should be classified as:
-  - behavioral: asks for a specific past example/experience.
-  - non_behavioral: scorable but does not require specific past example.
-- Do not include markdown fences or extra keys.
-
-Transcript:
-{raw_text}
-"""
-    parsed = _ollama_generate_json(prompt, ollama_model, ollama_host)
-    if parsed is None:
-        return None
-    return _normalize_single_call_cases(parsed)
-
-
 def _heuristic_turn_classification(question_text: str) -> dict[str, str | bool]:
     cleaned = " ".join(question_text.strip().split())
     if not cleaned:
         return {
-            "turn_type": "non_question",
+            "turn_type": "not_scorable",
             "is_scorable": False,
             "reasoning": "Empty interviewer turn.",
             "source": "heuristic",
         }
     if any(pattern.search(cleaned) for pattern in NON_QUESTION_PATTERNS):
         return {
-            "turn_type": "non_question",
+            "turn_type": "not_scorable",
             "is_scorable": False,
             "reasoning": "Detected social or logistics-only interviewer turn.",
             "source": "heuristic",
@@ -329,36 +210,49 @@ def _classify_turn(
     ollama_model: str | None,
     ollama_host: str,
 ) -> dict[str, str | bool]:
-    if not ollama_model:
-        return _heuristic_turn_classification(question_text)
+    heuristic_info = _heuristic_turn_classification(question_text)
+    if not bool(heuristic_info["is_scorable"]) or not ollama_model:
+        return heuristic_info
 
     prompt = f"""Classify this interviewer turn for transcript scoring.
+            Return JSON only:
+            {{
+            "turn_type": "behavioral" | "non_behavioral" | "not_scorable",
+            "is_scorable": true | false,
+            "reasoning": "one sentence"
+            }}
 
-Return JSON only:
-{{
-  "turn_type": "behavioral" | "non_behavioral" | "non_question",
-  "is_scorable": true | false,
-  "reasoning": "one sentence"
-}}
+            Definitions:
+            - behavioral: requires a specific past example or concrete prior experience
+            - non_behavioral: scorable interview question that does not require a specific past example
+            - not_scorable: social, logistics, greeting, setup, or otherwise not an interview scoring question
 
-Definitions:
-- behavioral: requires a specific past example or concrete prior experience
-- non_behavioral: scorable interview question that does not require a specific past example
-- non_question: social, logistics, greeting, setup, or otherwise not scorable
+            Important:
+            - Use not_scorable for greetings, video/audio/calendar logistics, rapport-building chatter, and setup prompts.
+            - Do not classify non-scorable turns as non_behavioral.
 
-Interviewer turn:
-{question_text}
-"""
+            Interviewer turn:
+            {question_text}
+            """
     parsed = _ollama_generate_json(prompt, ollama_model, ollama_host)
     if not parsed:
         return _heuristic_turn_classification(question_text)
 
     turn_type = str(parsed.get("turn_type", "")).strip().lower()
-    if turn_type not in {"behavioral", "non_behavioral", "non_question"}:
+    if turn_type in {"non_question", "nonscorable", "non_scorable", "not scorable", "not-scorable"}:
+        turn_type = "not_scorable"
+    if turn_type not in {"behavioral", "non_behavioral", "not_scorable"}:
         return _heuristic_turn_classification(question_text)
+    raw_is_scorable = parsed.get("is_scorable", turn_type != "not_scorable")
+    if isinstance(raw_is_scorable, str):
+        is_scorable = raw_is_scorable.strip().lower() == "true"
+    else:
+        is_scorable = bool(raw_is_scorable)
+    if turn_type == "not_scorable":
+        is_scorable = False
     return {
         "turn_type": turn_type,
-        "is_scorable": bool(parsed.get("is_scorable", turn_type != "non_question")),
+        "is_scorable": is_scorable,
         "reasoning": str(parsed.get("reasoning", "Ollama classification.")),
         "source": "ollama",
     }
@@ -369,38 +263,10 @@ def _heuristic_is_follow_up(question_text: str) -> bool:
     return any(pattern.search(cleaned) for pattern in FOLLOW_UP_PATTERNS)
 
 
-def _is_follow_up_question(
-    question_text: str,
-    previous_case: dict[str, Any] | None,
-    ollama_model: str | None,
-    ollama_host: str,
-) -> bool:
+def _is_follow_up_question(question_text: str, previous_case: dict[str, Any] | None) -> bool:
     if previous_case is None:
         return False
-    if not ollama_model:
-        return _heuristic_is_follow_up(question_text)
-
-    prompt = f"""Decide whether this interviewer turn is a follow-up probe on the immediately previous interview case.
-
-Return JSON only:
-{{
-  "is_follow_up": true | false,
-  "reasoning": "one sentence"
-}}
-
-Previous main question:
-{previous_case.get("question", "")}
-
-Previous candidate response:
-{previous_case.get("response", "")}
-
-Current interviewer turn:
-{question_text}
-"""
-    parsed = _ollama_generate_json(prompt, ollama_model, ollama_host)
-    if not parsed:
-        return _heuristic_is_follow_up(question_text)
-    return bool(parsed.get("is_follow_up", False))
+    return _heuristic_is_follow_up(question_text)
 
 
 def _heuristic_probe_type(question_text: str) -> str:
@@ -412,45 +278,16 @@ def _heuristic_probe_type(question_text: str) -> str:
     return "deepening" if _heuristic_is_follow_up(cleaned) else "clarifying"
 
 
-def _classify_probe_type(
-    question_text: str,
-    ollama_model: str | None,
-    ollama_host: str,
-) -> tuple[str, str]:
-    if not ollama_model:
-        return _heuristic_probe_type(question_text), "heuristic"
-
-    prompt = f"""Classify this interview follow-up probe.
-
-Return JSON only:
-{{
-  "probe_type": "clarifying" | "deepening",
-  "reasoning": "one sentence"
-}}
-
-Definitions:
-- clarifying: interviewer is trying to recover specificity or missing details
-- deepening: interviewer is pressing deeper on an already substantive answer
-
-Follow-up question:
-{question_text}
-"""
-    parsed = _ollama_generate_json(prompt, ollama_model, ollama_host)
-    probe_type = str(parsed.get("probe_type", "")).strip().lower() if parsed else ""
-    if probe_type not in {"clarifying", "deepening"}:
-        return _heuristic_probe_type(question_text), "heuristic"
-    return probe_type, "ollama"
-
-
 def parse_transcript_to_test_cases(
     raw_text: str,
     ollama_model: str | None = None,
     ollama_host: str = "http://127.0.0.1:11434",
     print_each_entry: bool = False,
+    entry_logger: Callable[[str], None] | None = None,
+    workers: int = 8,
 ) -> list[dict[str, Any]]:
     turns = _extract_turns(raw_text)
-    cases: list[dict[str, Any]] = []
-    case_id = 1
+    interviewer_items: list[dict[str, str]] = []
     i = 0
 
     while i < len(turns):
@@ -470,21 +307,80 @@ def parse_transcript_to_test_cases(
             response = turns[i + 1]["text"].strip()
             consumed_candidate = True
 
-        turn_info = _classify_turn(question, ollama_model, ollama_host)
+        interviewer_items.append(
+            {
+                "question": question,
+                "response": response,
+            }
+        )
+        i += 2 if consumed_candidate else 1
+
+    turn_infos: list[dict[str, str | bool]] = []
+    turn_timings: list[tuple[datetime, datetime]] = []
+    worker_limit = max(1, workers)
+
+    def _timed_classify(question_text: str) -> tuple[dict[str, str | bool], datetime, datetime]:
+        started_at = datetime.now()
+        info = _classify_turn(question_text, ollama_model, ollama_host)
+        ended_at = datetime.now()
+        return info, started_at, ended_at
+
+    if interviewer_items:
+        max_workers = min(worker_limit, len(interviewer_items))
+        if entry_logger:
+            entry_logger(
+                f"per_turn_parallel_classification=started at {datetime.now().isoformat(timespec='seconds')} "
+                f"workers={max_workers} requested_workers={worker_limit}"
+            )
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = [
+                executor.submit(
+                    _timed_classify,
+                    item["question"],
+                )
+                for item in interviewer_items
+            ]
+            for idx, future in enumerate(futures):
+                try:
+                    turn_info, started_at, ended_at = future.result()
+                    turn_infos.append(turn_info)
+                    turn_timings.append((started_at, ended_at))
+                except Exception:
+                    turn_infos.append(
+                        _heuristic_turn_classification(interviewer_items[idx]["question"])
+                    )
+                    fallback_at = datetime.now()
+                    turn_timings.append((fallback_at, fallback_at))
+        if entry_logger:
+            entry_logger(f"per_turn_parallel_classification=finished at {datetime.now().isoformat(timespec='seconds')}")
+
+    cases: list[dict[str, Any]] = []
+    case_id = 1
+
+    for item, turn_info, timing in zip(interviewer_items, turn_infos, turn_timings):
+        question = item["question"]
+        response = item["response"]
+        entry_started_at, entry_ended_at = timing
+        duration_seconds = (entry_ended_at - entry_started_at).total_seconds()
+
         if not bool(turn_info["is_scorable"]):
-            i += 2 if consumed_candidate else 1
+            if entry_logger:
+                entry_logger(
+                    f'skipped turn_type={turn_info["turn_type"]} '
+                    f'source={turn_info["source"]} '
+                    f'start={entry_started_at.isoformat(timespec="seconds")} '
+                    f'end={entry_ended_at.isoformat(timespec="seconds")} '
+                    f'duration_seconds={duration_seconds:.3f}'
+                )
             continue
 
         previous_case = cases[-1] if cases else None
-        if _is_follow_up_question(question, previous_case, ollama_model, ollama_host):
-            probe_type, probe_source = _classify_probe_type(
-                question, ollama_model, ollama_host
-            )
+        if _is_follow_up_question(question, previous_case):
             follow_up = {
                 "question": question,
                 "response": response,
-                "probe_type": probe_type,
-                "classification_source": probe_source,
+                "probe_type": _heuristic_probe_type(question),
+                "classification_source": "heuristic",
             }
             cases[-1]["follow_ups"].append(
                 {
@@ -499,6 +395,18 @@ def parse_transcript_to_test_cases(
                     f'ENTRY {cases[-1]["id"]} follow_up '
                     f'({follow_up["classification_source"]}): '
                     f'{json.dumps(follow_up, ensure_ascii=False)}'
+                )
+            if entry_logger:
+                follow_up_ended_at = datetime.now()
+                follow_up_duration_seconds = (
+                    follow_up_ended_at - entry_started_at
+                ).total_seconds()
+                entry_logger(
+                    f'follow_up case_id={cases[-1]["id"]} '
+                    f'source={follow_up["classification_source"]} '
+                    f'start={entry_started_at.isoformat(timespec="seconds")} '
+                    f'end={follow_up_ended_at.isoformat(timespec="seconds")} '
+                    f'duration_seconds={follow_up_duration_seconds:.3f}'
                 )
         else:
             case_entry = {
@@ -519,10 +427,16 @@ def parse_transcript_to_test_cases(
                     f'ENTRY {case_entry["id"]} '
                     f'({case_entry["classification_source"]}): '
                     f'{json.dumps(case_entry, ensure_ascii=False)}'
+            )
+            if entry_logger:
+                entry_logger(
+                    f'case id={case_entry["id"]} '
+                    f'source={case_entry["classification_source"]} '
+                    f'start={entry_started_at.isoformat(timespec="seconds")} '
+                    f'end={entry_ended_at.isoformat(timespec="seconds")} '
+                    f'duration_seconds={duration_seconds:.3f}'
                 )
             case_id += 1
-
-        i += 2 if consumed_candidate else 1
 
     return cases
 
@@ -541,7 +455,7 @@ def main() -> None:
     parser.add_argument(
         "--ollama-model",
         default=os.environ.get("OLLAMA_MODEL"),
-        help="Optional Ollama model name for turn/probe classification.",
+        help="Optional Ollama model name for turn classification only.",
     )
     parser.add_argument(
         "--ollama-host",
@@ -553,7 +467,20 @@ def main() -> None:
         action="store_true",
         help="Print each completed case/follow-up as it is parsed.",
     )
+    parser.add_argument(
+        "--entry-log-file",
+        help="Optional path for per-entry timing logs. Defaults to <input>_entry_timing.log.",
+    )
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=8,
+        help="Maximum number of interviewer turns to classify in parallel (default: 8).",
+    )
     args = parser.parse_args()
+
+    if args.workers < 1:
+        raise ValueError(f"--workers must be at least 1. Got: {args.workers}")
 
     input_path = Path(args.input)
     if not input_path.exists():
@@ -562,12 +489,26 @@ def main() -> None:
         raise ValueError(f"Input must be a .txt file. Got: {input_path.name}")
 
     output_path = input_path.with_suffix(".json")
+    entry_log_path = (
+        Path(args.entry_log_file)
+        if args.entry_log_file
+        else Path("log") / f"{input_path.stem}_entry_timing.log"
+    )
+    entry_log_path.parent.mkdir(parents=True, exist_ok=True)
+    entry_log_path.write_text("", encoding="utf-8")
+
+    def entry_logger(message: str) -> None:
+        with entry_log_path.open("a", encoding="utf-8") as log_file:
+            log_file.write(f"{message}\n")
+
     raw_text = input_path.read_text(encoding="utf-8")
     parsed_cases = parse_transcript_to_test_cases(
         raw_text,
         ollama_model=args.ollama_model,
         ollama_host=args.ollama_host,
         print_each_entry=args.print_each_entry,
+        entry_logger=entry_logger,
+        workers=args.workers,
     )
     output_path.write_text(
         json.dumps(parsed_cases, indent=args.indent), encoding="utf-8"
@@ -577,8 +518,10 @@ def main() -> None:
         f"ollama:{args.ollama_model}" if args.ollama_model else "heuristic-only"
     )
     print(f"Wrote JSON to: {output_path}")
+    print(f"Wrote entry timing log to: {entry_log_path}")
     print(f"Cases: {len(parsed_cases)}")
     print(f"Classifier: {classifier_mode}")
+    print(f"Workers: {args.workers}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "brightdata-mcp": {
+      "command": "node",
+      "args": [".cursor/brightdata-mcp-launcher.mjs"]
+    }
+  }
+}
