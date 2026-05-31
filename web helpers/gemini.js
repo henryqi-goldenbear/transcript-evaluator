@@ -1,6 +1,4 @@
-﻿(function() {
-  const REQUEST_TIMEOUT_MS = 120000;
-
+(function() {
   function extractJson(text) {
     const cleaned = text.replace(/^\s*[*-]\s+/gm, "");
     const fenced = cleaned.match(/```(?:json)?\s*([\s\S]*?)```/);
@@ -54,18 +52,6 @@ CRITICAL OUTPUT RULES:
   async function callGemini(apiKey, model, systemPrompt, userMsg, signal, traceRun, traceCtx, attemptCtx) {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
     const requestStarted = Date.now();
-    const requestController = new AbortController();
-    let timedOut = false;
-    const timeoutId = setTimeout(() => {
-      timedOut = true;
-      requestController.abort();
-    }, REQUEST_TIMEOUT_MS);
-    const abortFromBatch = () => requestController.abort();
-    if (signal?.aborted) {
-      clearTimeout(timeoutId);
-      throw new Error("Batch stopped by user.");
-    }
-    signal?.addEventListener("abort", abortFromBatch, { once: true });
     Analytics.addEvent(traceRun, {
       eventType: "request_start",
       traceId: traceCtx?.traceId,
@@ -94,34 +80,12 @@ CRITICAL OUTPUT RULES:
           generationConfig
         };
 
-    let res;
-    try {
-      res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-        signal: requestController.signal
-      });
-    } catch (err) {
-      if (timedOut) {
-        Analytics.addEvent(traceRun, {
-          eventType: "request_error",
-          traceId: traceCtx?.traceId,
-          caseId: traceCtx?.caseId,
-          attempt: attemptCtx?.attempt,
-          attemptId: attemptCtx?.attemptId,
-          model,
-          durationMs: Date.now() - requestStarted,
-          errorCode: "timeout",
-          errorMessage: `Request timed out after ${Math.round(REQUEST_TIMEOUT_MS / 1000)}s.`
-        });
-        throw new Error(`Request timed out after ${Math.round(REQUEST_TIMEOUT_MS / 1000)}s.`);
-      }
-      throw err;
-    } finally {
-      clearTimeout(timeoutId);
-      signal?.removeEventListener("abort", abortFromBatch);
-    }
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      signal
+    });
 
     if (!res.ok) {
       let msg = `HTTP ${res.status}`;

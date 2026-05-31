@@ -64,7 +64,6 @@
 
     addLine(`Run time: ${reportData.runTimeIso}`);
     addLine(`Model: ${reportData.model}`);
-    if (reportData.reviewModel) addLine(`Second agent reviewer: ${reportData.reviewModel}`);
     addLine(`Input file: ${reportData.inputFile}`);
     addLine(`Batch size: ${reportData.batchSize}`);
     addLine(`Total runtime: ${reportData.totalDuration}`);
@@ -113,22 +112,6 @@
 
       addSectionTitle("Overall Reasoning");
       addWrapped("", textOrNone(item.parsed?.overall?.reasoning));
-
-      if (item.review || item.reviewError) {
-        addSectionTitle("Second Agent Review");
-        if (item.review) {
-          addWrapped(
-            "",
-            `agreement=${item.review.agreement || "unknown"} | recommended=${item.review.recommended_overall ?? "n/a"} | delta=${item.review.score_delta ?? "n/a"} | ${textOrNone(item.review.reasoning)}`
-          );
-          const issues = Array.isArray(item.review.issues) && item.review.issues.length
-            ? item.review.issues.join(" | ")
-            : "None";
-          addWrapped("Issues: ", issues);
-        } else {
-          addWrapped("Reviewer error: ", item.reviewError);
-        }
-      }
 
       addSectionTitle("Flags");
       const flags = Array.isArray(item.parsed?.flags) && item.parsed.flags.length

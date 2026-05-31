@@ -4,10 +4,10 @@
     "label": "Auto case 1",
     "turn_type": "non_behavioral",
     "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "Let's start broad. Tell me about yourself \u2014 the version you'd give if we only had two minutes.",
-    "response": "Sure. I'm a backend engineer with about seven years in fintech and payments. Most recently at LedgerPay I owned the settlement reconciliation service \u2014 batch jobs, idempotency, the unglamorous stuff that has to be correct. What I care about is building systems that stay boring under load: clear contracts, good observability, and failure modes you can reason about in an incident. Before LedgerPay I was at a smaller startup where I wore more hats, which is where I picked up Go and got comfortable owning services end to end. I'm here because Northline's platform team sits on the critical path for fraud and ledger consistency, and that's the kind of problem I want my next few years to be about.",
+    "classification_source": "ollama",
+    "classification_reasoning": "social, logistics, greeting",
+    "question": "Hi Alex, thanks for joining. I'm Priya \u2014 I lead the platform engineering group here at Northline. How's your day going so far?",
+    "response": "Going well, thanks. Appreciate you making the time. I've been looking forward to this one \u2014 I've followed Northline's engineering blog for a while.",
     "follow_ups": [],
     "expected": {}
   },
@@ -16,18 +16,11 @@
     "label": "Auto case 2",
     "turn_type": "non_behavioral",
     "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "Thanks. Let's go chronologically \u2014 walk me through your resume, starting from education or your first relevant role, whatever you think is the right entry point.",
-    "response": "I'll start with university briefly, then the jobs that matter for this role. I studied computer science at State University of New York at Buffalo \u2014 graduated 2017. My first job was at CardNest, a small payments startup in New York, for about two years. I was mostly doing CRUD APIs in Ruby, but I got exposure to PCI scope and why you don't log certain fields. In 2019 I moved to PayLoom, still mid-stage \u2014 that's where I switched to Go because the team was rewriting a monolith into services. I owned the merchant webhook delivery service: retries, signing, delivery guarantees. We scaled from a few thousand merchants to low six figures of daily events while I was there. I left in early 2022 when LedgerPay recruited me for reconciliation \u2014 they needed someone who had seen high-volume money movement and wasn't scared of batch windows. At LedgerPay I've been senior engineer for three years, tech lead on reconciliation for the last eighteen months. On paper my title is still senior, but I've been acting lead on the settlement migration and on-call rotation. Happy to go deeper on any of those stops.",
-    "follow_ups": [
-      {
-        "question": "On PayLoom \u2014 you said low six figures of daily webhook events. What broke first when you scaled?",
-        "response": "Honestly, our Postgres write pattern on the delivery log table. We were inserting one row per attempt without partitioning, and hot indexes killed us around eighty thousand events a day. I proposed monthly partitions and moving retry scheduling to a Redis-backed queue so we weren't polling the database. We shipped partitions first \u2014 that bought headroom \u2014 then the queue refactor over two sprints. p99 delivery latency went from about four seconds to under eight hundred milliseconds at peak. That's the project I'm proudest of from PayLoom because it was the first time I owned a production scaling problem end to end.",
-        "probe_type": "deepening",
-        "classification_source": "heuristic"
-      }
-    ],
+    "classification_source": "ollama",
+    "classification_reasoning": "social, logistics",
+    "question": "Good to hear. Before we dive in, any trouble with the video link or the calendar invite on your side?",
+    "response": "No, all smooth. I had a chance to skim the team page this morning too.",
+    "follow_ups": [],
     "expected": {}
   },
   {
@@ -35,10 +28,10 @@
     "label": "Auto case 3",
     "turn_type": "non_behavioral",
     "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "And LedgerPay \u2014 you list reconciliation and settlement. Are those the same system or separate?",
-    "response": "Separate services, shared data model. Reconciliation compares internal ledger entries to bank files and flags exceptions. Settlement is the outbound generation \u2014 ACH files, NACHA formatting, cutoffs. They talk through an event bus; settlement emits \"file submitted\" and reconciliation consumes it for next-day matching. I own reconciliation; I was tech lead on the settlement migration last year but day-to-day ownership is split with another lead now.",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "Let's start broad. Tell me about yourself \u2014 the version you'd give if we only had two minutes.",
+    "response": "Sure. I'm a backend engineer with about seven years in fintech and payments. Most recently at LedgerPay I owned the settlement reconciliation service \u2014 batch jobs, idempotency, the unglamorous stuff that has to be correct. What I care about is building systems that stay boring under load: clear contracts, good observability, and failure modes you can reason about in an incident. Before LedgerPay I was at a smaller startup where I wore more hats, which is where I picked up Go and got comfortable owning services end to end. I'm here because Northline's platform team sits on the critical path for fraud and ledger consistency, and that's the kind of problem I want my next few years to be about.",
     "follow_ups": [],
     "expected": {}
   },
@@ -47,11 +40,18 @@
     "label": "Auto case 4",
     "turn_type": "non_behavioral",
     "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "Got it. Any gap on the resume we should address? I don't see anything long between roles.",
-    "response": "No intentional gaps. There's a three-week overlap in 2022 when I finished PayLoom and started LedgerPay \u2014 I used that for relocation and to finish an online course on distributed tracing, which I've used heavily since.",
-    "follow_ups": [],
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "Thanks. Let's go chronologically \u2014 walk me through your resume, starting from education or your first relevant role, whatever you think is the right entry point.",
+    "response": "I'll start with university briefly, then the jobs that matter for this role. I studied computer science at State University of New York at Buffalo \u2014 graduated 2017. My first job was at CardNest, a small payments startup in New York, for about two years. I was mostly doing CRUD APIs in Ruby, but I got exposure to PCI scope and why you don't log certain fields. In 2019 I moved to PayLoom, still mid-stage \u2014 that's where I switched to Go because the team was rewriting a monolith into services. I owned the merchant webhook delivery service: retries, signing, delivery guarantees. We scaled from a few thousand merchants to low six figures of daily events while I was there. I left in early 2022 when LedgerPay recruited me for reconciliation \u2014 they needed someone who had seen high-volume money movement and wasn't scared of batch windows. At LedgerPay I've been senior engineer for three years, tech lead on reconciliation for the last eighteen months. On paper my title is still senior, but I've been acting lead on the settlement migration and on-call rotation. Happy to go deeper on any of those stops.",
+    "follow_ups": [
+      {
+        "question": "On PayLoom \u2014 you said low six figures of daily webhook events. What broke first when you scaled?",
+        "response": "Honestly, our Postgres write pattern on the delivery log table. We were inserting one row per attempt without partitioning, and hot indexes killed us around eighty thousand events a day. I proposed monthly partitions and moving retry scheduling to a Redis-backed queue so we weren't polling the database. We shipped partitions first \u2014 that bought headroom \u2014 then the queue refactor over two sprints. p99 delivery latency went from about four seconds to under eight hundred milliseconds at peak. That's the project I'm proudest of from PayLoom because it was the first time I owned a production scaling problem end to end.",
+        "probe_type": "deepening",
+        "classification_source": "ollama"
+      }
+    ],
     "expected": {}
   },
   {
@@ -59,10 +59,10 @@
     "label": "Auto case 5",
     "turn_type": "non_behavioral",
     "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "Good. Why Northline, and why this role specifically?",
-    "response": "Two reasons. First, your public write-up on the event-sourced ledger and how you handle out-of-order settlement events \u2014 that's exactly the class of consistency problems I've been working on, and I want to go deeper at your scale. Second, the job description called out on-call rotation and production ownership for platform engineers, not a handoff-to-ops model. I've run primary on-call for reconciliation for eighteen months and I think owning what you ship is how you build good systems. I'm not looking for a feature factory role; I want to be closer to the core transaction path.",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "And LedgerPay \u2014 you list reconciliation and settlement. Are those the same system or separate?",
+    "response": "Separate services, shared data model. Reconciliation compares internal ledger entries to bank files and flags exceptions. Settlement is the outbound generation \u2014 ACH files, NACHA formatting, cutoffs. They talk through an event bus; settlement emits \"file submitted\" and reconciliation consumes it for next-day matching. I own reconciliation; I was tech lead on the settlement migration last year but day-to-day ownership is split with another lead now.",
     "follow_ups": [],
     "expected": {}
   },
@@ -71,20 +71,44 @@
     "label": "Auto case 6",
     "turn_type": "non_behavioral",
     "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "How have you used Go in production \u2014 not just syntax, but how you structure services?",
-    "response": "At LedgerPay almost everything I ship is Go. Typical layout: cmd/ for binaries, internal/ for domain packages, thin HTTP handlers that delegate to a service layer. I use context for cancellation everywhere, structured logging with trace IDs propagated from our ingress, and table-driven tests on pure logic. Concurrency-wise I prefer errgroup for bounded parallel work \u2014 like parsing bank file rows in workers with a fixed pool \u2014 rather than unbounded goroutines. I've also learned to be disciplined about not leaking goroutines on retries; we had an incident once from a forgotten timer channel that taught the team to always tie worker lifetimes to context cancel. I'm not a generics power user, but interfaces for storage boundaries \u2014 file store, ledger client \u2014 make testing with fakes straightforward.",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "Got it. Any gap on the resume we should address? I don't see anything long between roles.",
+    "response": "No intentional gaps. There's a three-week overlap in 2022 when I finished PayLoom and started LedgerPay \u2014 I used that for relocation and to finish an online course on distributed tracing, which I've used heavily since.",
     "follow_ups": [],
     "expected": {}
   },
   {
     "id": 7,
     "label": "Auto case 7",
-    "turn_type": "behavioral",
-    "rubric_type": "behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question explicitly asks for a past concrete example.",
+    "turn_type": "non_behavioral",
+    "rubric_type": "non_behavioral",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "Good. Why Northline, and why this role specifically?",
+    "response": "Two reasons. First, your public write-up on the event-sourced ledger and how you handle out-of-order settlement events \u2014 that's exactly the class of consistency problems I've been working on, and I want to go deeper at your scale. Second, the job description called out on-call rotation and production ownership for platform engineers, not a handoff-to-ops model. I've run primary on-call for reconciliation for eighteen months and I think owning what you ship is how you build good systems. I'm not looking for a feature factory role; I want to be closer to the core transaction path.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 8,
+    "label": "Auto case 8",
+    "turn_type": "non_behavioral",
+    "rubric_type": "non_behavioral",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "How have you used Go in production \u2014 not just syntax, but how you structure services?",
+    "response": "At LedgerPay almost everything I ship is Go. Typical layout: cmd/ for binaries, internal/ for domain packages, thin HTTP handlers that delegate to a service layer. I use context for cancellation everywhere, structured logging with trace IDs propagated from our ingress, and table-driven tests on pure logic. Concurrency-wise I prefer errgroup for bounded parallel work \u2014 like parsing bank file rows in workers with a fixed pool \u2014 rather than unbounded goroutines. I've also learned to be disciplined about not leaking goroutines on retries; we had an incident once from a forgotten timer channel that taught the team to always tie worker lifetimes to context cancel. I'm not a generics power user, but interfaces for storage boundaries \u2014 file store, ledger client \u2014 make testing with fakes straightforward.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 9,
+    "label": "Auto case 9",
+    "turn_type": "non_behavioral",
+    "rubric_type": "non_behavioral",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
     "question": "Makes sense. Let's shift to behavioral examples. Tell me about a time you led a project under a tight deadline.",
     "response": "In Q3 2023 at LedgerPay we had to migrate our ACH settlement file generator to a new bank format before a regulatory cutoff in six weeks. I was tech lead for a team of four. The stakes were a potential processing halt if we missed the date. I mapped every field mapping and exception path in week one, split work into schema validation versus production cutover, and ran daily fifteen-minute standups focused only on blockers. I took the riskiest piece \u2014 the idempotent replay logic \u2014 myself. On day twelve we found the bank's sandbox dropped duplicate trace numbers; I escalated to their integration team and got a documented workaround. We went live on day thirty-eight, two days early, and the first production week had zero settlement exceptions tied to the migration.",
     "follow_ups": [
@@ -92,33 +116,9 @@
         "question": "You mentioned idempotent replay. What would have broken if you hadn't gotten that right?",
         "response": "We would have double-posted or skipped settlements on retry. In our system that surfaces as customer balance drift, which is a Sev-1. The replay layer keys on bank trace ID plus file sequence so a partial failure can resume without re-applying successful rows. We proved it with chaos tests that killed the worker mid-batch before we cut over.",
         "probe_type": "deepening",
-        "classification_source": "heuristic"
+        "classification_source": "ollama"
       }
     ],
-    "expected": {}
-  },
-  {
-    "id": 8,
-    "label": "Auto case 8",
-    "turn_type": "behavioral",
-    "rubric_type": "behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question explicitly asks for a past concrete example.",
-    "question": "Different topic \u2014 describe a situation where you had to persuade a skeptical stakeholder.",
-    "response": "At LedgerPay last year, product wanted to defer investing in dead-letter queue visibility for our async payout pipeline to hit a marketing launch. Our VP of Engineering was skeptical it was worth two sprints. I put together a short doc: three production incidents in the prior quarter where we lost two-plus hours each because we couldn't see poison messages, an estimate that DLQ tooling would cut mean time to recovery by roughly half based on those incidents, and a phased plan to ship read-only inspection in one sprint and alerting in the second. I walked her through it in a thirty-minute slot and addressed the roadmap concern by showing the second sprint could run parallel to the launch freeze. She approved both sprints. We shipped the dashboard before Black Friday and it was used in a real incident that week \u2014 we cleared a stuck payout batch in under twenty minutes instead of the usual multi-hour log dive.",
-    "follow_ups": [],
-    "expected": {}
-  },
-  {
-    "id": 9,
-    "label": "Auto case 9",
-    "turn_type": "behavioral",
-    "rubric_type": "behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question explicitly asks for a past concrete example.",
-    "question": "Tell me about a time you had a conflict with a teammate.",
-    "response": "So, um, at LedgerPay in mid-2022 I disagreed with a senior engineer about test strategy for a new ledger adjustment service. He wanted integration tests only to move faster. I was uncomfortable because the service touched balance mutations. I asked for a one-on-one instead of debating in the team channel \u2014 I didn't want it to feel public. I walked through concrete failure modes unit tests would catch that integration tests had missed on a sister service. We landed on a hybrid: unit tests on the mutation layer, integration tests for the HTTP and messaging boundaries. The service launched with no adjustment-related incidents in the first two months.",
-    "follow_ups": [],
     "expected": {}
   },
   {
@@ -126,10 +126,10 @@
     "label": "Auto case 10",
     "turn_type": "behavioral",
     "rubric_type": "behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question explicitly asks for a past concrete example.",
-    "question": "Tell me about a time you failed or made a significant mistake.",
-    "response": "In 2023 I merged a change that tightened a validation rule on settlement files without realizing an older bank integration still sent a deprecated optional field. Production rejected about twelve hundred rows over a weekend batch window. I was primary on-call. I rolled back within twenty minutes, but the batch had already partially committed so we had to run a manual repair script Monday morning with finance watching. I owned the postmortem. Root cause was I didn't check integration-specific fixtures \u2014 we had tests for the new format only. After that I added a contract test suite per bank partner and made \"partner matrix\" a required checkbox on the PR template for anything touching file schemas. We haven't had a repeat, but I still think about it when someone says a change is \"just validation.\"",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "Different topic \u2014 describe a situation where you had to persuade a skeptical stakeholder.",
+    "response": "At LedgerPay last year, product wanted to defer investing in dead-letter queue visibility for our async payout pipeline to hit a marketing launch. Our VP of Engineering was skeptical it was worth two sprints. I put together a short doc: three production incidents in the prior quarter where we lost two-plus hours each because we couldn't see poison messages, an estimate that DLQ tooling would cut mean time to recovery by roughly half based on those incidents, and a phased plan to ship read-only inspection in one sprint and alerting in the second. I walked her through it in a thirty-minute slot and addressed the roadmap concern by showing the second sprint could run parallel to the launch freeze. She approved both sprints. We shipped the dashboard before Black Friday and it was used in a real incident that week \u2014 we cleared a stuck payout batch in under twenty minutes instead of the usual multi-hour log dive.",
     "follow_ups": [],
     "expected": {}
   },
@@ -138,10 +138,10 @@
     "label": "Auto case 11",
     "turn_type": "behavioral",
     "rubric_type": "behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question explicitly asks for a past concrete example.",
-    "question": "Tell me about a time you received tough feedback and what you did with it.",
-    "response": "Early in the settlement migration my director told me I was over-explaining in cross-functional updates and losing the room \u2014 product and finance stopped asking questions because my updates ran twenty minutes. I was defensive at first because I thought detail meant rigor. I asked for a concrete example and she pointed to a steering meeting recording. I watched it and she was right: I buried the decision. I switched to a format: decision needed, recommendation, risks, appendix doc for depth. I also started sending pre-reads twenty-four hours ahead. Next steering meeting we finished in twelve minutes and we got sign-off on the cutover plan that week. The feedback stung but it made me a better tech lead.",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "Tell me about a time you had a conflict with a teammate.",
+    "response": "So, um, at LedgerPay in mid-2022 I disagreed with a senior engineer about test strategy for a new ledger adjustment service. He wanted integration tests only to move faster. I was uncomfortable because the service touched balance mutations. I asked for a one-on-one instead of debating in the team channel \u2014 I didn't want it to feel public. I walked through concrete failure modes unit tests would catch that integration tests had missed on a sister service. We landed on a hybrid: unit tests on the mutation layer, integration tests for the HTTP and messaging boundaries. The service launched with no adjustment-related incidents in the first two months.",
     "follow_ups": [],
     "expected": {}
   },
@@ -150,18 +150,11 @@
     "label": "Auto case 12",
     "turn_type": "behavioral",
     "rubric_type": "behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question explicitly asks for a past concrete example.",
-    "question": "Tell me about a time you improved a process.",
-    "response": "At my last job we had a slow deployment process. I looked at it and figured out we could automate the manual steps with a script. I wrote the script myself, tested it, and rolled it out to the team. It ended up saving everyone a lot of time.",
-    "follow_ups": [
-      {
-        "question": "Can you be more specific \u2014 what was slow, what did the script do, and how much time did you save?",
-        "response": "Fair push. The pain was our staging promote: engineers ran six manual kubectl and migration steps in a wiki order, often skipping one. I wrote a single Make target that ran migrations in order, waited on health checks, and posted the deploy SHA to Slack. After rollout, promote time went from about forty-five minutes with frequent rollbacks to twelve minutes, and failed promotes dropped from roughly one in four to near zero over the next month.",
-        "probe_type": "clarifying",
-        "classification_source": "heuristic"
-      }
-    ],
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "Tell me about a time you failed or made a significant mistake.",
+    "response": "In 2023 I merged a change that tightened a validation rule on settlement files without realizing an older bank integration still sent a deprecated optional field. Production rejected about twelve hundred rows over a weekend batch window. I was primary on-call. I rolled back within twenty minutes, but the batch had already partially committed so we had to run a manual repair script Monday morning with finance watching. I owned the postmortem. Root cause was I didn't check integration-specific fixtures \u2014 we had tests for the new format only. After that I added a contract test suite per bank partner and made \"partner matrix\" a required checkbox on the PR template for anything touching file schemas. We haven't had a repeat, but I still think about it when someone says a change is \"just validation.\"",
+    "follow_ups": [],
     "expected": {}
   },
   {
@@ -169,35 +162,49 @@
     "label": "Auto case 13",
     "turn_type": "behavioral",
     "rubric_type": "behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question explicitly asks for a past concrete example.",
-    "question": "Tell me about a time you mentored someone or helped them grow.",
-    "response": "I paired with a junior engineer twice a week for a month. I gave them structured code review feedback with explanations rather than corrections. I also assigned them a small feature end-to-end so they'd have full ownership. By the end of the month they were submitting PRs that needed minimal review. They were promoted six months later.",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "Tell me about a time you received tough feedback and what you did with it.",
+    "response": "Early in the settlement migration my director told me I was over-explaining in cross-functional updates and losing the room \u2014 product and finance stopped asking questions because my updates ran twenty minutes. I was defensive at first because I thought detail meant rigor. I asked for a concrete example and she pointed to a steering meeting recording. I watched it and she was right: I buried the decision. I switched to a format: decision needed, recommendation, risks, appendix doc for depth. I also started sending pre-reads twenty-four hours ahead. Next steering meeting we finished in twelve minutes and we got sign-off on the cutover plan that week. The feedback stung but it made me a better tech lead.",
     "follow_ups": [],
     "expected": {}
   },
   {
     "id": 14,
     "label": "Auto case 14",
-    "turn_type": "non_behavioral",
-    "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "I'd like a bit more context on that one \u2014 where was this, and why were you mentoring them?",
-    "response": "That was at LedgerPay in 2023. She joined the reconciliation team straight from bootcamp. Her manager asked me because I had bandwidth after we shipped the partition work. The gap was system thinking \u2014 she could fix tickets but didn't see how reconciliation tied to finance's month-end close. I had her own the \"exception reason codes\" feature: small surface area but touched schema, API, and a finance report. I did office hours twice a week and required her to write the rollout plan. Promotion six months later was partly on that feature shipping without rollback.",
-    "follow_ups": [],
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "Tell me about a time you improved a process.",
+    "response": "At my last job we had a slow deployment process. I looked at it and figured out we could automate the manual steps with a script. I wrote the script myself, tested it, and rolled it out to the team. It ended up saving everyone a lot of time.",
+    "follow_ups": [
+      {
+        "question": "Can you be more specific \u2014 what was slow, what did the script do, and how much time did you save?",
+        "response": "Fair push. The pain was our staging promote: engineers ran six manual kubectl and migration steps in a wiki order, often skipping one. I wrote a single Make target that ran migrations in order, waited on health checks, and posted the deploy SHA to Slack. After rollout, promote time went from about forty-five minutes with frequent rollbacks to twelve minutes, and failed promotes dropped from roughly one in four to near zero over the next month.",
+        "probe_type": "clarifying",
+        "classification_source": "ollama"
+      }
+    ],
     "expected": {}
   },
   {
     "id": 15,
     "label": "Auto case 15",
-    "turn_type": "non_behavioral",
-    "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "What is your greatest weakness?",
-    "response": "I can be slow to delegate when I'm under pressure on a critical path. It showed up last year during the settlement migration \u2014 I took on too many code reviews myself and became a bottleneck for the team for about a week. My manager flagged it in a one-on-one. Since then I've been explicit about pairing juniors on reviewable chunks earlier, and I use a simple rule: if I'm the only person who can approve more than three PRs in a day, I stop coding and redistribute. It's still a tendency when stakes feel high, but the last two projects hit review SLA without me being the gate.",
-    "follow_ups": [],
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "Tell me about a time you mentored someone or helped them grow.",
+    "response": "I paired with a junior engineer twice a week for a month. I gave them structured code review feedback with explanations rather than corrections. I also assigned them a small feature end-to-end so they'd have full ownership. By the end of the month they were submitting PRs that needed minimal review. They were promoted six months later.",
+    "follow_ups": [
+      {
+        "question": "I'd like a bit more context on that one \u2014 where was this, and why were you mentoring them?",
+        "response": "That was at LedgerPay in 2023. She joined the reconciliation team straight from bootcamp. Her manager asked me because I had bandwidth after we shipped the partition work. The gap was system thinking \u2014 she could fix tickets but didn't see how reconciliation tied to finance's month-end close. I had her own the \"exception reason codes\" feature: small surface area but touched schema, API, and a finance report. I did office hours twice a week and required her to write the rollout plan. Promotion six months later was partly on that feature shipping without rollback.",
+        "probe_type": "clarifying",
+        "classification_source": "ollama"
+      }
+    ],
     "expected": {}
   },
   {
@@ -205,10 +212,10 @@
     "label": "Auto case 16",
     "turn_type": "non_behavioral",
     "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "How do you handle competing priorities when everything is urgent?",
-    "response": "If I were in that situation, I would list tasks by customer impact and regulatory exposure first, then communicate tradeoffs to product and my manager in writing so there's a shared record. I'd time-box investigation on Sev-2s and escalate when scope creeps.",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "What is your greatest weakness?",
+    "response": "I can be slow to delegate when I'm under pressure on a critical path. It showed up last year during the settlement migration \u2014 I took on too many code reviews myself and became a bottleneck for the team for about a week. My manager flagged it in a one-on-one. Since then I've been explicit about pairing juniors on reviewable chunks earlier, and I use a simple rule: if I'm the only person who can approve more than three PRs in a day, I stop coding and redistribute. It's still a tendency when stakes feel high, but the last two projects hit review SLA without me being the gate.",
     "follow_ups": [],
     "expected": {}
   },
@@ -217,10 +224,10 @@
     "label": "Auto case 17",
     "turn_type": "non_behavioral",
     "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "I hear the framework \u2014 can you give me a past example when you actually had to do that?",
-    "response": "Yes. In January 2024 we had a production ledger discrepancy, a bank certification deadline, and a hiring loop I was running \u2014 all in the same week. I triaged with my manager: the discrepancy was P0 because of money movement, certification was P1 with a fixed external date, recruiting was P2. I spent Monday through Wednesday on the discrepancy root cause \u2014 turned out to be a timezone boundary in cutover logic \u2014 shipped a patch with verification from finance, then shifted to certification test cases Thursday and Friday. I handed the recruiting debrief to another engineer who had been shadowing the loop. We hit the bank date; the ledger fix held; we still made the hire.",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "How do you handle competing priorities when everything is urgent?",
+    "response": "If I were in that situation, I would list tasks by customer impact and regulatory exposure first, then communicate tradeoffs to product and my manager in writing so there's a shared record. I'd time-box investigation on Sev-2s and escalate when scope creeps.",
     "follow_ups": [],
     "expected": {}
   },
@@ -229,34 +236,34 @@
     "label": "Auto case 18",
     "turn_type": "behavioral",
     "rubric_type": "behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question explicitly asks for a past concrete example.",
-    "question": "Tell me about a time you showed leadership when you weren't the formal lead.",
-    "response": "During an outage in November 2023 our on-call primary was out sick and I wasn't scheduled but I was online. The incident was elevated payout latency across regions. I joined the bridge, started a shared doc with timeline and hypotheses, and assigned parallel tracks \u2014 one person on metrics, one on recent deploys, one on vendor status. I wasn't the manager, but I kept the room focused on disproving theories with data. We found a feature flag rollout that had increased DB connection pool usage; we rolled back within forty minutes of bridge start. Afterward I proposed a pre-flight checklist for flag changes that the team adopted \u2014 no title change, but it stuck.",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "I hear the framework \u2014 can you give me a past example when you actually had to do that?",
+    "response": "Yes. In January 2024 we had a production ledger discrepancy, a bank certification deadline, and a hiring loop I was running \u2014 all in the same week. I triaged with my manager: the discrepancy was P0 because of money movement, certification was P1 with a fixed external date, recruiting was P2. I spent Monday through Wednesday on the discrepancy root cause \u2014 turned out to be a timezone boundary in cutover logic \u2014 shipped a patch with verification from finance, then shifted to certification test cases Thursday and Friday. I handed the recruiting debrief to another engineer who had been shadowing the loop. We hit the bank date; the ledger fix held; we still made the hire.",
     "follow_ups": [],
     "expected": {}
   },
   {
     "id": 19,
     "label": "Auto case 19",
-    "turn_type": "non_behavioral",
-    "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "How do you typically work with product managers \u2014 give me a real pattern, not an ideal.",
-    "response": "At LedgerPay my PM and I do weekly thirty-minute syncs plus async Slack. I push back early if a spec hand-waves cutoffs or timezone rules \u2014 I'll draft the edge-case list before we estimate. When we disagree, I insist we write down assumptions and pick a cheap spike if it's architectural. Last quarter she wanted \"real-time reconciliation,\" which meant different things to us; we spent one sprint on a prototype that proved sub-minute matching wasn't worth the cost for our volume, and we shipped hourly instead with a clear SLA. It's not always smooth, but the habit is: name the tradeoff, measure, then commit.",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "Tell me about a time you showed leadership when you weren't the formal lead.",
+    "response": "During an outage in November 2023 our on-call primary was out sick and I wasn't scheduled but I was online. The incident was elevated payout latency across regions. I joined the bridge, started a shared doc with timeline and hypotheses, and assigned parallel tracks \u2014 one person on metrics, one on recent deploys, one on vendor status. I wasn't the manager, but I kept the room focused on disproving theories with data. We found a feature flag rollout that had increased DB connection pool usage; we rolled back within forty minutes of bridge start. Afterward I proposed a pre-flight checklist for flag changes that the team adopted \u2014 no title change, but it stuck.",
     "follow_ups": [],
     "expected": {}
   },
   {
     "id": 20,
     "label": "Auto case 20",
-    "turn_type": "non_behavioral",
-    "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "We're coming up on time. What do you want to know from us?",
-    "response": "A few things. How does platform partner with fraud engineering on schema changes \u2014 is there a formal RFC process or more ad hoc? What does success look like in the first ninety days for this hire? And how is the team thinking about on-call load \u2014 rotation size, weekend coverage?",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "How do you typically work with product managers \u2014 give me a real pattern, not an ideal.",
+    "response": "At LedgerPay my PM and I do weekly thirty-minute syncs plus async Slack. I push back early if a spec hand-waves cutoffs or timezone rules \u2014 I'll draft the edge-case list before we estimate. When we disagree, I insist we write down assumptions and pick a cheap spike if it's architectural. Last quarter she wanted \"real-time reconciliation,\" which meant different things to us; we spent one sprint on a prototype that proved sub-minute matching wasn't worth the cost for our volume, and we shipped hourly instead with a clear SLA. It's not always smooth, but the habit is: name the tradeoff, measure, then commit.",
     "follow_ups": [],
     "expected": {}
   },
@@ -265,35 +272,24 @@
     "label": "Auto case 21",
     "turn_type": "non_behavioral",
     "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "RFC for anything that touches the ledger or event bus; fraud has a standing reviewer on that committee. First ninety days: ship one medium-sized improvement to observability or deploy safety, get comfortable on-call, and build trust with fraud and core banking. On-call we're six engineers per rotation, one week primary and one backup, weekends included but pages have been roughly two per week average this quarter. Anything else?",
-    "response": "That's the main list. Maybe one more \u2014 is there room to work on the event-sourced ledger itself in this role, or mostly consuming it?",
-    "follow_ups": [],
-    "expected": {}
-  },
-  {
-    "id": 22,
-    "label": "Auto case 22",
-    "turn_type": "non_behavioral",
-    "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "Both. Most work is consumption and hardening, but we've had seniors contribute to ordering guarantees and replay tooling. If that's your interest, there's a path. We'll follow up within a week on next steps. Thanks for the thorough walkthrough today, Alex.",
-    "response": "Thank you, Priya. I appreciated the depth of the questions \u2014 this reinforced that the problems here are the ones I want. Looking forward to hearing from you.",
-    "follow_ups": [],
-    "expected": {}
-  },
-  {
-    "id": 23,
-    "label": "Auto case 23",
-    "turn_type": "non_behavioral",
-    "rubric_type": "non_behavioral",
-    "classification_source": "heuristic",
-    "classification_reasoning": "Question appears substantive but does not explicitly require a past specific example.",
-    "question": "Have a good rest of your day.\n\n---\n\n# Expected rubric mapping (for manual / automated integration checks)\n# | Segment                                      | Rubric type      | Notes                                      |\n# |----------------------------------------------|------------------|--------------------------------------------|\n# | Tell me about yourself (short)               | non_behavioral   | Strong specificity, role-aligned           |\n# | Walk me through your resume (full arc)       | non_behavioral   | Chronological; concrete roles/metrics      |\n# | Resume probe \u2014 PayLoom scaling               | non_behavioral   | STAR story embedded in resume answer       |\n# | Resume probe \u2014 reconciliation vs settlement  | non_behavioral   | Clarification, technical specificity       |\n# | Gap / overlap question                       | non_behavioral   | Direct, brief                              |\n# | Why Northline / this role                    | non_behavioral   | Company-specific, not generic              |\n# | How have you used Go in production           | non_behavioral   | Skill depth; concrete patterns             |\n# | Tight deadline (settlement migration)        | behavioral STAR  | Strong; follow-up on replay                |\n# | Persuade skeptical stakeholder (DLQ)         | behavioral STAR  | Strong                                     |\n# | Conflict with teammate (testing)             | behavioral STAR  | Good; minor filler at open                 |\n# | Failed / significant mistake (validation)    | behavioral STAR  | Strong; owns failure + remediation         |\n# | Tough feedback (steering meetings)           | behavioral STAR  | Strong                                     |\n# | Improve a process (first answer)             | behavioral STAR  | Weak \u2014 vague until follow-up               |\n# | Improve a process (after follow-up)          | behavioral STAR  | Stronger                                   |\n# | Mentoring (first answer)                     | behavioral STAR  | Weak context \u2014 missing situation           |\n# | Mentoring (after follow-up)                   | behavioral STAR  | Stronger with LedgerPay context            |\n# | Greatest weakness                            | non_behavioral   | Genuine weakness + remediation             |\n# | Competing priorities (first answer)          | behavioral STAR  | HYPOTHETICAL \u2014 should flag / need follow-up|\n# | Competing priorities (second answer)         | behavioral STAR  | Real example after probe                     |\n# | Leadership without formal lead (outage)      | behavioral STAR  | Strong                                     |\n# | How you work with PMs                        | non_behavioral   | Real pattern; tradeoff example             |\n# | Candidate questions                          | n/a              | Not scored as interview response           |",
-    "response": "",
-    "follow_ups": [],
+    "classification_source": "ollama",
+    "classification_reasoning": "one sentence",
+    "question": "We're coming up on time. What do you want to know from us?",
+    "response": "A few things. How does platform partner with fraud engineering on schema changes \u2014 is there a formal RFC process or more ad hoc? What does success look like in the first ninety days for this hire? And how is the team thinking about on-call load \u2014 rotation size, weekend coverage?",
+    "follow_ups": [
+      {
+        "question": "RFC for anything that touches the ledger or event bus; fraud has a standing reviewer on that committee. First ninety days: ship one medium-sized improvement to observability or deploy safety, get comfortable on-call, and build trust with fraud and core banking. On-call we're six engineers per rotation, one week primary and one backup, weekends included but pages have been roughly two per week average this quarter. Anything else?",
+        "response": "That's the main list. Maybe one more \u2014 is there room to work on the event-sourced ledger itself in this role, or mostly consuming it?",
+        "probe_type": "deepening",
+        "classification_source": "ollama"
+      },
+      {
+        "question": "Both. Most work is consumption and hardening, but we've had seniors contribute to ordering guarantees and replay tooling. If that's your interest, there's a path. We'll follow up within a week on next steps. Thanks for the thorough walkthrough today, Alex.",
+        "response": "Thank you, Priya. I appreciated the depth of the questions \u2014 this reinforced that the problems here are the ones I want. Looking forward to hearing from you.",
+        "probe_type": "deepening",
+        "classification_source": "heuristic"
+      }
+    ],
     "expected": {}
   }
 ]

@@ -1,0 +1,6 @@
+[mcp stderr] Checking for required zones...
+[mcp stderr] Required zone "mcp_unlocker" already exists
+[mcp stderr] Required zone "mcp_browser" already exists
+[mcp stderr] Starting server...
+[mcp stderr] [session_stats] executing (client=unknown-client) {}
+[mcp stderr] [session_stats] tool finished in 0ms

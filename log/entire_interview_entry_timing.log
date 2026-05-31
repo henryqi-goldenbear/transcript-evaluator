@@ -1,0 +1,31 @@
+per_turn_parallel_classification=started at 2026-05-30T14:24:52 workers=8 requested_workers=8
+per_turn_parallel_classification=finished at 2026-05-30T14:24:52
+skipped turn_type=not_scorable source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+skipped turn_type=not_scorable source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+skipped turn_type=not_scorable source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=1 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=2 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+follow_up case_id=2 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.004
+case id=3 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=4 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=5 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=6 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=7 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+follow_up case_id=7 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.005
+case id=8 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=9 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=10 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=11 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=12 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+follow_up case_id=12 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.005
+case id=13 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=14 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=15 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=16 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=17 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=18 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=19 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=20 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=21 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=22 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.000
+case id=23 source=heuristic start=2026-05-30T14:24:52 end=2026-05-30T14:24:52 duration_seconds=0.001

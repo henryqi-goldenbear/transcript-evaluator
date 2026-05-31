@@ -1,0 +1,4 @@
+Reviewer agent listening on http://127.0.0.1:8811
+Reviewer provider: mcp
+MCP mode: stdio
+MCP tool: extract

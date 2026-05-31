@@ -1,0 +1,9 @@
+per_turn_parallel_classification=started at 2026-05-30T12:28:05 workers=7 requested_workers=8
+per_turn_parallel_classification=finished at 2026-05-30T12:28:48
+skipped turn_type=not_scorable source=heuristic start=2026-05-30T12:28:05 end=2026-05-30T12:28:05 duration_seconds=0.000
+skipped turn_type=not_scorable source=heuristic start=2026-05-30T12:28:05 end=2026-05-30T12:28:05 duration_seconds=0.000
+skipped turn_type=not_scorable source=heuristic start=2026-05-30T12:28:05 end=2026-05-30T12:28:05 duration_seconds=0.000
+case id=1 source=ollama start=2026-05-30T12:28:05 end=2026-05-30T12:28:28 duration_seconds=23.216
+case id=2 source=ollama start=2026-05-30T12:28:05 end=2026-05-30T12:28:41 duration_seconds=36.450
+follow_up case_id=2 source=heuristic start=2026-05-30T12:28:05 end=2026-05-30T12:28:48 duration_seconds=43.181
+case id=3 source=ollama start=2026-05-30T12:28:05 end=2026-05-30T12:28:34 duration_seconds=29.205

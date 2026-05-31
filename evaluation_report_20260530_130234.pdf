@@ -1,0 +1,3844 @@
+%PDF-1.3
+%ºß¬à
+3 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 4 0 R
+>>
+endobj
+4 0 obj
+<<
+/Length 5649
+>>
+stream
+0.200025 w
+0 G
+BT
+/F2 16 Tf
+18.3999999999999986 TL
+0 g
+40. 801.8899999999999864 Td
+(Transcript Evaluator - Batch Report) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 781.8899999999999864 Td
+(Run time: 2026-05-30T19:47:06.629Z) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 767.8899999999999864 Td
+(Model: gemma-4-26b-a4b-it) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 753.8899999999999864 Td
+(Input file: input data/entire_interview.json) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 739.8899999999999864 Td
+(Batch size: 5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 725.8899999999999864 Td
+(Total runtime: 927.52s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 711.8899999999999864 Td
+(Status: Completed | Total: 22 | Success: 22 | Failed: 0 | Avg overall: 4.72) Tj
+ET
+0.35 0.39 0.47 RG
+40. 693.8899999999999864 m
+555.2799999999999727 693.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 679.8899999999999864 Td
+(Case #2: Auto case 2) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 663.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 650.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 637.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 624.8899999999999864 Td
+(Case runtime: 29.22s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 611.8899999999999864 Td
+(Question: Thanks. Let's go chronologically — walk me through your resume, starting from education or your first) Tj
+T* (relevant role, whatever you think is the right entry point.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 583.8899999999999864 Td
+(Response: I'll start with university briefly, then the jobs that matter for this role. I studied computer science at State) Tj
+T* (University of New York at Buffalo — graduated 2017. My first job was at CardNest, a small payments startup in New) Tj
+T* (York, for about two years. I was mostly doing CRUD APIs in Ruby, but I got exposure to PCI scope and why you don't) Tj
+T* (log certain fields. In 2019 I moved to PayLoom, still mid-stage — that's where I switched to Go because the team) Tj
+T* (was rewriting a monolith into services. I owned the merchant webhook delivery service: retries, signing, delivery) Tj
+T* (guarantees. We scaled from a few thousand merchants to low six figures of daily events while I was there. I left in) Tj
+T* (early 2022 when LedgerPay recruited me for reconciliation — they needed someone who had seen high-volume) Tj
+T* (money movement and wasn't scared of batch windows. At LedgerPay I've been senior engineer for three years, tech) Tj
+T* (lead on reconciliation for the last eighteen months. On paper my title is still senior, but I've been acting lead on the) Tj
+T* (settlement migration and on-call rotation. Happy to go deeper on any of those stops.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 451.8899999999999864 Td
+(Follow-up question: On PayLoom — you said low six figures of daily webhook events. What broke first when you) Tj
+T* (scaled?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 423.8899999999999864 Td
+(Follow-up response: Honestly, our Postgres write pattern on the delivery log table. We were inserting one row per) Tj
+T* (attempt without partitioning, and hot indexes killed us around eighty thousand events a day. I proposed monthly) Tj
+T* (partitions and moving retry scheduling to a Redis-backed queue so we weren't polling the database. We shipped) Tj
+T* (partitions first — that bought headroom — then the queue refactor over two sprints. p99 delivery latency went from) Tj
+T* (about four seconds to under eight hundred milliseconds at peak. That's the project I'm proudest of from PayLoom) Tj
+T* (because it was the first time I owned a production scaling problem end to end.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 343.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 327.8899999999999864 Td
+(Yes - The candidate provides a detailed career history with specific technical ownership) Tj
+T* (and measurable outcomes.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 299.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 283.8899999999999864 Td
+(base \(5/5\): The candidate provided a clear, structured, and highly relevant chronological) Tj
+T* (overview of their professional experience.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 255.8899999999999864 Td
+(personal_contribution \(5/5\): The candidate clearly articulated their ownership of the webhook service and their) Tj
+T* (specific role in proposing and implementing the architectural fix.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 227.8899999999999864 Td
+(real_example \(5/5\): The candidate provided specific technical details regarding Postgres write patterns, indexing) Tj
+T* (issues, and the transition to a Redis-backed queue.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 199.8899999999999864 Td
+(outcome \(5/5\): The candidate provided a quantifiable and impressive result regarding p99 delivery latency reduction.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 184.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 168.8899999999999864 Td
+(present=yes | probe=deepening | impact=positive_signal | The candidate provided) Tj
+T* (significant technical depth and specific metrics in response to the probe, reinforcing their) Tj
+T* (credibility.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 127.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 111.8899999999999864 Td
+(The candidate demonstrated strong technical ownership, provided specific and) Tj
+T* (quantifiable outcomes, and successfully handled a deepening probe with high-quality) Tj
+T* (technical detail.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 70.8899999999999864 Td
+(Flags) Tj
+ET
+endstream
+endobj
+5 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 6 0 R
+>>
+endobj
+6 0 obj
+<<
+/Length 5234
+>>
+stream
+0.200025 w
+0.35 0.39 0.47 RG
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 801.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 778.8899999999999864 m
+555.2799999999999727 778.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 764.8899999999999864 Td
+(Case #5: Auto case 5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 748.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 735.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 722.8899999999999864 Td
+(Overall: 4/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 709.8899999999999864 Td
+(Case runtime: 59.19s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 696.8899999999999864 Td
+(Question: Good. Why Northline, and why this role specifically?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 681.8899999999999864 Td
+(Response: Two reasons. First, your public write-up on the event-sourced ledger and how you handle out-of-order) Tj
+T* (settlement events — that's exactly the class of consistency problems I've been working on, and I want to go deeper) Tj
+T* (at your scale. Second, the job description called out on-call rotation and production ownership for platform engineers,) Tj
+T* (not a handoff-to-ops model. I've run primary on-call for reconciliation for eighteen months and I think owning what) Tj
+T* (you ship is how you build good systems. I'm not looking for a feature factory role; I want to be closer to the core) Tj
+T* (transaction path.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 601.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 585.8899999999999864 Td
+(Yes - The candidate provides a substantive and highly specific response to the question.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 570.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 554.8899999999999864 Td
+(base \(5/5\): The response is articulate, well-structured, and demonstrates deep research) Tj
+T* (into the company.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 526.8899999999999864 Td
+(personal_contribution \(4/5\): The candidate clearly identifies their specific expertise in consistency problems and their) Tj
+T* (experience in on-call roles.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 498.8899999999999864 Td
+(real_example \(4/5\): The candidate references specific technical domains like event-sourced ledgers and) Tj
+T* (reconciliation processes.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 470.8899999999999864 Td
+(outcome \(2/5\): The candidate describes their experience and tenure but does not explicitly state a specific result or) Tj
+T* (impact achieved.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 442.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 426.8899999999999864 Td
+(present=no | probe=none | impact=none | No follow-up probe was provided in the input.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 411.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 395.8899999999999864 Td
+(A very strong response that demonstrates high technical alignment and relevant) Tj
+T* (experience, though it lacks specific outcome metrics.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 367.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 351.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 328.8899999999999864 m
+555.2799999999999727 328.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 314.8899999999999864 Td
+(Case #1: Auto case 1) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 298.8899999999999864 Td
+(Rubric: non_behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 285.8899999999999864 Td
+(Resolved path: non_behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 272.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 259.8899999999999864 Td
+(Case runtime: 68.72s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 246.8899999999999864 Td
+(Question: Let's start broad. Tell me about yourself — the version you'd give if we only had two minutes.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 231.8899999999999864 Td
+(Response: Sure. I'm a backend engineer with about seven years in fintech and payments. Most recently at) Tj
+T* (LedgerPay I owned the settlement reconciliation service — batch jobs, idempotency, the unglamorous stuff that has) Tj
+T* (to be correct. What I care about is building systems that stay boring under load: clear contracts, good observability,) Tj
+T* (and failure modes you can reason about in an incident. Before LedgerPay I was at a smaller startup where I wore) Tj
+T* (more hats, which is where I picked up Go and got comfortable owning services end to end. I'm here because) Tj
+T* (Northline's platform team sits on the critical path for fraud and ledger consistency, and that's the kind of problem I) Tj
+T* (want my next few years to be about.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 138.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 122.8899999999999864 Td
+(Yes - The candidate provides a clear and professional summary of their background.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 107.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 91.8899999999999864 Td
+(base \(5/5\): The response is well-structured, concise, and effectively connects past) Tj
+T* (experience to the target role.) Tj
+ET
+endstream
+endobj
+7 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 8 0 R
+>>
+endobj
+8 0 obj
+<<
+/Length 4993
+>>
+stream
+0.200025 w
+0.35 0.39 0.47 RG
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 801.8899999999999864 Td
+(technical_relevance \(5/5\): The candidate uses specific, high-value technical concepts like idempotency and) Tj
+T* (observability that are relevant to the role.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 773.8899999999999864 Td
+(domain_alignment \(5/5\): The candidate demonstrates deep familiarity with fintech-specific challenges like settlement) Tj
+T* (and ledger consistency.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 745.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 729.8899999999999864 Td
+(present=no | probe=none | impact=none | None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 714.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 698.8899999999999864 Td
+(A highly effective professional pitch that demonstrates both technical authority and) Tj
+T* (strong alignment with the company's domain.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 670.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 654.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 631.8899999999999864 m
+555.2799999999999727 631.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 617.8899999999999864 Td
+(Case #4: Auto case 4) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 601.8899999999999864 Td
+(Rubric: non_behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 588.8899999999999864 Td
+(Resolved path: non_behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 575.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 562.8899999999999864 Td
+(Case runtime: 84.65s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 549.8899999999999864 Td
+(Question: Got it. Any gap on the resume we should address? I don't see anything long between roles.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 534.8899999999999864 Td
+(Response: No intentional gaps. There's a three-week overlap in 2022 when I finished PayLoom and started) Tj
+T* (LedgerPay — I used that for relocation and to finish an online course on distributed tracing, which I've used heavily) Tj
+T* (since.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 493.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 477.8899999999999864 Td
+(Yes - The candidate provides a direct and informative response to a specific question) Tj
+T* (about their employment history.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 449.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 433.8899999999999864 Td
+(base \(5/5\): The candidate provides a clear, proactive explanation that addresses the) Tj
+T* (question and highlights professional development.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 405.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 389.8899999999999864 Td
+(present=no | probe=none | impact=none | None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 374.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 358.8899999999999864 Td
+(The candidate provided a direct, transparent, and value-added response to a clarifying) Tj
+T* (question.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 330.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 314.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 291.8899999999999864 m
+555.2799999999999727 291.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 277.8899999999999864 Td
+(Case #3: Auto case 3) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 261.8899999999999864 Td
+(Rubric: non_behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 248.8899999999999864 Td
+(Resolved path: non_behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 235.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 222.8899999999999864 Td
+(Case runtime: 86.29s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 209.8899999999999864 Td
+(Question: And LedgerPay — you list reconciliation and settlement. Are those the same system or separate?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 194.8899999999999864 Td
+(Response: Separate services, shared data model. Reconciliation compares internal ledger entries to bank files and) Tj
+T* (flags exceptions. Settlement is the outbound generation — ACH files, NACHA formatting, cutoffs. They talk through) Tj
+T* (an event bus; settlement emits "file submitted" and reconciliation consumes it for next-day matching. I own) Tj
+T* (reconciliation; I was tech lead on the settlement migration last year but day-to-day ownership is split with another) Tj
+T* (lead now.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 127.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 111.8899999999999864 Td
+(Yes - The candidate provides a detailed technical explanation of the systems mentioned.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 96.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 80.8899999999999864 Td
+(base \(5/5\): The candidate provides a clear, accurate, and technically detailed distinction) Tj
+T* (between the two systems.) Tj
+ET
+endstream
+endobj
+9 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 10 0 R
+>>
+endobj
+10 0 obj
+<<
+/Length 5083
+>>
+stream
+0.200025 w
+0.35 0.39 0.47 RG
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 801.8899999999999864 Td
+(technical_depth \(5/5\): The candidate demonstrates deep domain knowledge by mentioning specific protocols, file) Tj
+T* (formats, and architectural patterns.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 773.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 757.8899999999999864 Td
+(present=no | probe=none | impact=none | No follow-up was provided in the input.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 742.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 726.8899999999999864 Td
+(The candidate provided a highly precise and technically sophisticated answer that clearly) Tj
+T* (distinguished between the two systems.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 698.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 682.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 659.8899999999999864 m
+555.2799999999999727 659.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 645.8899999999999864 Td
+(Case #8: Auto case 8) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 629.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 616.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 603.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 590.8899999999999864 Td
+(Case runtime: 24.68s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 577.8899999999999864 Td
+(Question: Different topic — describe a situation where you had to persuade a skeptical stakeholder.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 562.8899999999999864 Td
+(Response: At LedgerPay last year, product wanted to defer investing in dead-letter queue visibility for our async) Tj
+T* (payout pipeline to hit a marketing launch. Our VP of Engineering was skeptical it was worth two sprints. I put together) Tj
+T* (a short doc: three production incidents in the prior quarter where we lost two-plus hours each because we couldn't) Tj
+T* (see poison messages, an estimate that DLQ tooling would cut mean time to recovery by roughly half based on those) Tj
+T* (incidents, and a phased plan to ship read-only inspection in one sprint and alerting in the second. I walked her) Tj
+T* (through it in a thirty-minute slot and addressed the roadmap concern by showing the second sprint could run parallel) Tj
+T* (to the launch freeze. She approved both sprints. We shipped the dashboard before Black Friday and it was used in a) Tj
+T* (real incident that week — we cleared a stuck payout batch in under twenty minutes instead of the usual multi-hour) Tj
+T* (log dive.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 443.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 427.8899999999999864 Td
+(Yes - The candidate provides a complete behavioral response with a clear situation,) Tj
+T* (action, and measurable outcome.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 399.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 383.8899999999999864 Td
+(base \(5/5\): The response is highly structured, concise, and directly addresses the prompt.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 368.8899999999999864 Td
+(personal_contribution \(5/5\): The candidate clearly defines their specific actions, including data analysis, document) Tj
+T* (creation, and strategic negotiation.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 340.8899999999999864 Td
+(real_example \(5/5\): The candidate provides specific context, including the company, the technical problem, and the) Tj
+T* (specific stakeholders involved.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 312.8899999999999864 Td
+(outcome \(5/5\): The outcome is quantified with specific time-to-resolution improvements and a successful real-world) Tj
+T* (application.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 284.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 268.8899999999999864 Td
+(present=no | probe=none | impact=none | No follow-up probe was provided in the input.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 253.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 237.8899999999999864 Td
+(This is a top-tier behavioral response that demonstrates data-driven influence and clear) Tj
+T* (business impact.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 209.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 193.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 170.8899999999999864 m
+555.2799999999999727 170.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 156.8899999999999864 Td
+(Case #9: Auto case 9) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 140.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 127.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 114.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 101.8899999999999864 Td
+(Case runtime: 26.62s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 88.8899999999999864 Td
+(Question: Tell me about a time you had a conflict with a teammate.) Tj
+ET
+endstream
+endobj
+11 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 12 0 R
+>>
+endobj
+12 0 obj
+<<
+/Length 5521
+>>
+stream
+0.200025 w
+0.35 0.39 0.47 RG
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 801.8899999999999864 Td
+(Response: So, um, at LedgerPay in mid-2022 I disagreed with a senior engineer about test strategy for a new ledger) Tj
+T* (adjustment service. He wanted integration tests only to move faster. I was uncomfortable because the service) Tj
+T* (touched balance mutations. I asked for a one-on-one instead of debating in the team channel — I didn't want it to feel) Tj
+T* (public. I walked through concrete failure modes unit tests would catch that integration tests had missed on a sister) Tj
+T* (service. We landed on a hybrid: unit tests on the mutation layer, integration tests for the HTTP and messaging) Tj
+T* (boundaries. The service launched with no adjustment-related incidents in the first two months.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 721.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 705.8899999999999864 Td
+(Yes - The candidate provides a complete and structured response to a behavioral) Tj
+T* (question.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 677.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 661.8899999999999864 Td
+(base \(5/5\): The response is professional, well-structured, and directly addresses the) Tj
+T* (prompt.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 633.8899999999999864 Td
+(personal_contribution \(5/5\): The candidate clearly outlines their specific actions: choosing a private setting and) Tj
+T* (providing technical evidence.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 605.8899999999999864 Td
+(real_example \(5/5\): The candidate provides specific context including company name, timeframe, and technical) Tj
+T* (details.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 577.8899999999999864 Td
+(outcome \(5/5\): The candidate describes both a technical compromise and a successful business result with) Tj
+T* (measurable stability.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 549.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 533.8899999999999864 Td
+(present=no | probe=none | impact=none | No follow-up probe was provided in the input.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 518.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 502.8899999999999864 Td
+(The candidate delivered a high-quality STAR response with clear technical reasoning and) Tj
+T* (measurable impact.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 474.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 458.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 435.8899999999999864 m
+555.2799999999999727 435.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 421.8899999999999864 Td
+(Case #7: Auto case 7) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 405.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 392.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 379.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 366.8899999999999864 Td
+(Case runtime: 28.14s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 353.8899999999999864 Td
+(Question: Makes sense. Let's shift to behavioral examples. Tell me about a time you led a project under a tight) Tj
+T* (deadline.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 325.8899999999999864 Td
+(Response: In Q3 2023 at LedgerPay we had to migrate our ACH settlement file generator to a new bank format) Tj
+T* (before a regulatory cutoff in six weeks. I was tech lead for a team of four. The stakes were a potential processing halt) Tj
+T* (if we missed the date. I mapped every field mapping and exception path in week one, split work into schema) Tj
+T* (validation versus production cutover, and ran daily fifteen-minute standups focused only on blockers. I took the) Tj
+T* (riskiest piece — the idempotent replay logic — myself. On day twelve we found the bank's sandbox dropped) Tj
+T* (duplicate trace numbers; I escalated to their integration team and got a documented workaround. We went live on) Tj
+T* (day thirty-eight, two days early, and the first production week had zero settlement exceptions tied to the migration.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 232.8899999999999864 Td
+(Follow-up question: You mentioned idempotent replay. What would have broken if you hadn't gotten that right?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 217.8899999999999864 Td
+(Follow-up response: We would have double-posted or skipped settlements on retry. In our system that surfaces as) Tj
+T* (customer balance drift, which is a Sev-1. The replay layer keys on bank trace ID plus file sequence so a partial failure) Tj
+T* (can resume without re-applying successful rows. We proved it with chaos tests that killed the worker mid-batch) Tj
+T* (before we cut over.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 163.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 147.8899999999999864 Td
+(Yes - The candidate provides a complete behavioral response with a clear follow-up that) Tj
+T* (adds significant technical depth.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 119.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 103.8899999999999864 Td
+(base \(5/5\): The response is highly structured, addressing the situation, task, action, and) Tj
+T* (result clearly.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 75.8899999999999864 Td
+(personal_contribution \(5/5\): The candidate explicitly details their specific actions, such as mapping fields and taking) Tj
+T* (on the riskiest technical task.) Tj
+ET
+endstream
+endobj
+13 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 14 0 R
+>>
+endobj
+14 0 obj
+<<
+/Length 5215
+>>
+stream
+0.200025 w
+0.35 0.39 0.47 RG
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 801.8899999999999864 Td
+(real_example \(5/5\): The response uses specific context, including dates, company names, and technical constraints.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 786.8899999999999864 Td
+(outcome \(5/5\): The outcome is quantified with a specific timeline and a zero-error metric.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 771.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 755.8899999999999864 Td
+(present=yes | probe=deepening | impact=positive_signal | The candidate added significant) Tj
+T* (new technical detail regarding system impact and validation methods.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 727.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 711.8899999999999864 Td
+(An exceptional response that demonstrates leadership, technical ownership, and) Tj
+T* (measurable success, further validated by a high-quality technical follow-up.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 683.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 667.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 644.8899999999999864 m
+555.2799999999999727 644.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 630.8899999999999864 Td
+(Case #10: Auto case 10) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 614.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 601.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 588.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 575.8899999999999864 Td
+(Case runtime: 28.77s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 562.8899999999999864 Td
+(Question: Tell me about a time you failed or made a significant mistake.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 547.8899999999999864 Td
+(Response: In 2023 I merged a change that tightened a validation rule on settlement files without realizing an older) Tj
+T* (bank integration still sent a deprecated optional field. Production rejected about twelve hundred rows over a weekend) Tj
+T* (batch window. I was primary on-call. I rolled back within twenty minutes, but the batch had already partially) Tj
+T* (committed so we had to run a manual repair script Monday morning with finance watching. I owned the postmortem.) Tj
+T* (Root cause was I didn't check integration-specific fixtures — we had tests for the new format only. After that I added) Tj
+T* (a contract test suite per bank partner and made "partner matrix" a required checkbox on the PR template for anything) Tj
+T* (touching file schemas. We haven't had a repeat, but I still think about it when someone says a change is "just) Tj
+T* (validation.") Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 441.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 425.8899999999999864 Td
+(Yes - The candidate provides a complete behavioral response including context, specific) Tj
+T* (actions, and long-term outcomes.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 397.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 381.8899999999999864 Td
+(base \(5/5\): The response is highly structured, clear, and directly addresses the prompt.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 366.8899999999999864 Td
+(personal_contribution \(5/5\): The candidate clearly identifies their specific roles in the rollback, the manual repair, and) Tj
+T* (owning the postmortem.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 338.8899999999999864 Td
+(real_example \(5/5\): The candidate provides specific technical details, such as the number of rows affected and the) Tj
+T* (exact nature of the validation error.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 310.8899999999999864 Td
+(outcome \(5/5\): The candidate describes both the immediate resolution and the systemic improvements made to) Tj
+T* (prevent recurrence.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 282.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 266.8899999999999864 Td
+(present=no | probe=none | impact=none | No follow-up probe was provided in the input.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 251.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 235.8899999999999864 Td
+(A top-tier behavioral response that demonstrates accountability, technical depth, and a) Tj
+T* (proactive approach to systemic improvement.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 207.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 191.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 168.8899999999999864 m
+555.2799999999999727 168.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 154.8899999999999864 Td
+(Case #6: Auto case 6) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 138.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 125.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 112.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 99.8899999999999864 Td
+(Case runtime: 47.86s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 86.8899999999999864 Td
+(Question: How have you used Go in production — not just syntax, but how you structure services?) Tj
+ET
+endstream
+endobj
+15 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 16 0 R
+>>
+endobj
+16 0 obj
+<<
+/Length 5482
+>>
+stream
+0.200025 w
+0.35 0.39 0.47 RG
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 801.8899999999999864 Td
+(Response: At LedgerPay almost everything I ship is Go. Typical layout: cmd/ for binaries, internal/ for domain) Tj
+T* (packages, thin HTTP handlers that delegate to a service layer. I use context for cancellation everywhere, structured) Tj
+T* (logging with trace IDs propagated from our ingress, and table-driven tests on pure logic. Concurrency-wise I prefer) Tj
+T* (errgroup for bounded parallel work — like parsing bank file rows in workers with a fixed pool — rather than) Tj
+T* (unbounded goroutines. I've also learned to be disciplined about not leaking goroutines on retries; we had an incident) Tj
+T* (once from a forgotten timer channel that taught the team to always tie worker lifetimes to context cancel. I'm not a) Tj
+T* (generics power user, but interfaces for storage boundaries — file store, ledger client — make testing with fakes) Tj
+T* (straightforward.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 695.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 679.8899999999999864 Td
+(Yes - The candidate provides a substantive response with specific technical details and a) Tj
+T* (real-world example.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 651.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 635.8899999999999864 Td
+(base \(5/5\): The candidate demonstrates expert-level knowledge of Go production) Tj
+T* (standards, directory structures, and concurrency patterns.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 607.8899999999999864 Td
+(personal_contribution \(5/5\): The candidate clearly articulates their specific architectural decisions, testing strategies,) Tj
+T* (and concurrency preferences.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 579.8899999999999864 Td
+(real_example \(5/5\): The candidate provides a specific, technical example of a production incident involving a) Tj
+T* (goroutine leak caused by a timer channel.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 551.8899999999999864 Td
+(outcome \(5/5\): The candidate describes a successful resolution that resulted in a permanent change to team) Tj
+T* (practices to prevent future leaks.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 523.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 507.8899999999999864 Td
+(present=no | probe=none | impact=none | No follow-up was provided in the input.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 492.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 476.8899999999999864 Td
+(The candidate delivered a high-signal response that demonstrated technical depth,) Tj
+T* (personal agency, and the ability to learn from mistakes.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 448.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 432.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 409.8899999999999864 m
+555.2799999999999727 409.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 395.8899999999999864 Td
+(Case #11: Auto case 11) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 379.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 366.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 353.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 340.8899999999999864 Td
+(Case runtime: 23.54s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 327.8899999999999864 Td
+(Question: Tell me about a time you received tough feedback and what you did with it.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 312.8899999999999864 Td
+(Response: Early in the settlement migration my director told me I was over-explaining in cross-functional updates) Tj
+T* (and losing the room — product and finance stopped asking questions because my updates ran twenty minutes. I was) Tj
+T* (defensive at first because I thought detail meant rigor. I asked for a concrete example and she pointed to a steering) Tj
+T* (meeting recording. I watched it and she was right: I buried the decision. I switched to a format: decision needed,) Tj
+T* (recommendation, risks, appendix doc for depth. I also started sending pre-reads twenty-four hours ahead. Next) Tj
+T* (steering meeting we finished in twelve minutes and we got sign-off on the cutover plan that week. The feedback) Tj
+T* (stung but it made me a better tech lead.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 219.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 203.8899999999999864 Td
+(Yes - The candidate provides a complete behavioral response with a specific situation,) Tj
+T* (action, and result.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 175.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 159.8899999999999864 Td
+(base \(5/5\): The response is highly structured, addressing the feedback, the reaction, the) Tj
+T* (action, and the result clearly.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 131.8899999999999864 Td
+(personal_contribution \(5/5\): The candidate took proactive steps to improve by seeking concrete examples and) Tj
+T* (implementing a new communication framework.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 103.8899999999999864 Td
+(real_example \(5/5\): The candidate uses a specific context regarding a settlement migration and steering meetings.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 88.8899999999999864 Td
+(outcome \(5/5\): The candidate provides a clear, positive outcome involving improved meeting efficiency and project) Tj
+T* (sign-off.) Tj
+ET
+endstream
+endobj
+17 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 18 0 R
+>>
+endobj
+18 0 obj
+<<
+/Length 5036
+>>
+stream
+0.200025 w
+0.35 0.39 0.47 RG
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 801.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 785.8899999999999864 Td
+(present=no | probe=none | impact=none | No follow-up probe was provided in the input.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 770.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 754.8899999999999864 Td
+(This is an excellent behavioral response that demonstrates self-awareness, coachability,) Tj
+T* (and measurable professional growth.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 726.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 710.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 687.8899999999999864 m
+555.2799999999999727 687.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 673.8899999999999864 Td
+(Case #13: Auto case 13) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 657.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 644.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 631.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 618.8899999999999864 Td
+(Case runtime: 30.93s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 605.8899999999999864 Td
+(Question: Tell me about a time you mentored someone or helped them grow.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 590.8899999999999864 Td
+(Response: I paired with a junior engineer twice a week for a month. I gave them structured code review feedback) Tj
+T* (with explanations rather than corrections. I also assigned them a small feature end-to-end so they'd have full) Tj
+T* (ownership. By the end of the month they were submitting PRs that needed minimal review. They were promoted six) Tj
+T* (months later.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 536.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 520.8899999999999864 Td
+(Yes - The candidate provides a complete behavioral response with specific actions and a) Tj
+T* (clear outcome.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 492.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 476.8899999999999864 Td
+(base \(5/5\): The response is direct, coherent, and fully addresses the prompt.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 461.8899999999999864 Td
+(personal_contribution \(5/5\): The candidate explicitly details their specific actions, such as pairing, feedback style, and) Tj
+T* (task delegation.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 433.8899999999999864 Td
+(real_example \(5/5\): The candidate describes a specific instance involving a junior engineer and a defined timeframe.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 418.8899999999999864 Td
+(outcome \(5/5\): The candidate provides both immediate performance improvements and a long-term career) Tj
+T* (milestone.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 390.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 374.8899999999999864 Td
+(present=no | probe=none | impact=none | No follow-up question was provided in the input.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 359.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 343.8899999999999864 Td
+(The candidate delivered a high-quality behavioral response with clear actions and tangible) Tj
+T* (results.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 315.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 299.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 276.8899999999999864 m
+555.2799999999999727 276.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 262.8899999999999864 Td
+(Case #15: Auto case 15) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 246.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 233.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 220.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 207.8899999999999864 Td
+(Case runtime: 31.38s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 194.8899999999999864 Td
+(Question: What is your greatest weakness?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 179.8899999999999864 Td
+(Response: I can be slow to delegate when I'm under pressure on a critical path. It showed up last year during the) Tj
+T* (settlement migration — I took on too many code reviews myself and became a bottleneck for the team for about a) Tj
+T* (week. My manager flagged it in a one-on-one. Since then I've been explicit about pairing juniors on reviewable) Tj
+T* (chunks earlier, and I use a simple rule: if I'm the only person who can approve more than three PRs in a day, I stop) Tj
+T* (coding and redistribute. It's still a tendency when stakes feel high, but the last two projects hit review SLA without me) Tj
+T* (being the gate.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 99.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 83.8899999999999864 Td
+(Yes - The candidate provides a complete, structured response to a behavioral-style) Tj
+T* (question.) Tj
+ET
+endstream
+endobj
+19 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 20 0 R
+>>
+endobj
+20 0 obj
+<<
+/Length 5130
+>>
+stream
+0.200025 w
+0.35 0.39 0.47 RG
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 801.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 785.8899999999999864 Td
+(base \(5/5\): The candidate demonstrates high self-awareness by identifying a specific,) Tj
+T* (non-cliché weakness.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 757.8899999999999864 Td
+(personal_contribution \(5/5\): The candidate implemented a concrete, rule-based system to manage their tendency to) Tj
+T* (bottleneck.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 729.8899999999999864 Td
+(real_example \(5/5\): The candidate provided a specific context \(settlement migration\) and a clear consequence) Tj
+T* (\(one-week bottleneck\).) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 701.8899999999999864 Td
+(outcome \(5/5\): The candidate cited a measurable improvement in meeting review SLAs in recent projects.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 686.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 670.8899999999999864 Td
+(present=no | probe=none | impact=none | No follow-up probe was provided in the input.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 655.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 639.8899999999999864 Td
+(This is an excellent behavioral response that follows a clear situation-action-result pattern) Tj
+T* (with high specificity.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 611.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 595.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 572.8899999999999864 m
+555.2799999999999727 572.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 558.8899999999999864 Td
+(Case #14: Auto case 14) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 542.8899999999999864 Td
+(Rubric: non_behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 529.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 516.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 503.8899999999999864 Td
+(Case runtime: 73.43s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 490.8899999999999864 Td
+(Question: I'd like a bit more context on that one — where was this, and why were you mentoring them?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 475.8899999999999864 Td
+(Response: That was at LedgerPay in 2023. She joined the reconciliation team straight from bootcamp. Her manager) Tj
+T* (asked me because I had bandwidth after we shipped the partition work. The gap was system thinking — she could) Tj
+T* (fix tickets but didn't see how reconciliation tied to finance's month-end close. I had her own the "exception reason) Tj
+T* (codes" feature: small surface area but touched schema, API, and a finance report. I did office hours twice a week) Tj
+T* (and required her to write the rollout plan. Promotion six months later was partly on that feature shipping without) Tj
+T* (rollback.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 395.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 379.8899999999999864 Td
+(Yes - The candidate provides a highly detailed and specific response to a follow-up) Tj
+T* (question regarding a past experience.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 351.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 335.8899999999999864 Td
+(base \(5/5\): The response is structured, concise, and directly addresses the context) Tj
+T* (requested.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 307.8899999999999864 Td
+(personal_contribution \(5/5\): The candidate explicitly details their actions, such as conducting office hours and setting) Tj
+T* (specific requirements for the mentee.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 279.8899999999999864 Td
+(real_example \(5/5\): The candidate provides specific details including the company name, year, team, and the exact) Tj
+T* (feature name.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 251.8899999999999864 Td
+(outcome \(5/5\): The candidate provides a clear, measurable outcome: a promotion and a successful, rollback-free) Tj
+T* (deployment.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 223.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 207.8899999999999864 Td
+(present=yes | probe=deepening | impact=positive_signal | The candidate added significant) Tj
+T* (new details that provided much-needed depth to the previous context.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 179.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 163.8899999999999864 Td
+(This is an excellent behavioral response that provides specific context, clear personal) Tj
+T* (actions, and a tangible outcome.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 135.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 119.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 96.8899999999999864 m
+555.2799999999999727 96.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 82.8899999999999864 Td
+(Case #12: Auto case 12) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 66.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 53.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+endstream
+endobj
+21 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 22 0 R
+>>
+endobj
+22 0 obj
+<<
+/Length 5296
+>>
+stream
+0.200025 w
+0.35 0.39 0.47 RG
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 801.8899999999999864 Td
+(Overall: skip) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 788.8899999999999864 Td
+(Case runtime: 697.31s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 775.8899999999999864 Td
+(Question: Tell me about a time you improved a process.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 760.8899999999999864 Td
+(Response: At my last job we had a slow deployment process. I looked at it and figured out we could automate the) Tj
+T* (manual steps with a script. I wrote the script myself, tested it, and rolled it out to the team. It ended up saving) Tj
+T* (everyone a lot of time.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 719.8899999999999864 Td
+(Follow-up question: Can you be more specific — what was slow, what did the script do, and how much time did you) Tj
+T* (save?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 691.8899999999999864 Td
+(Follow-up response: Fair push. The pain was our staging promote: engineers ran six manual kubectl and migration) Tj
+T* (steps in a wiki order, often skipping one. I wrote a single Make target that ran migrations in order, waited on health) Tj
+T* (checks, and posted the deploy SHA to Slack. After rollout, promote time went from about forty-five minutes with) Tj
+T* (frequent rollbacks to twelve minutes, and failed promotes dropped from roughly one in four to near zero over the next) Tj
+T* (month.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 624.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 608.8899999999999864 Td
+(Yes - None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 593.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 577.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 561.8899999999999864 Td
+(present=no | probe=none | impact=none | None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 546.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 530.8899999999999864 Td
+(None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 515.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 499.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 476.8899999999999864 m
+555.2799999999999727 476.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 462.8899999999999864 Td
+(Case #18: Auto case 18) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 446.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 433.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 420.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 407.8899999999999864 Td
+(Case runtime: 25.08s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 394.8899999999999864 Td
+(Question: Tell me about a time you showed leadership when you weren't the formal lead.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 379.8899999999999864 Td
+(Response: During an outage in November 2023 our on-call primary was out sick and I wasn't scheduled but I was) Tj
+T* (online. The incident was elevated payout latency across regions. I joined the bridge, started a shared doc with) Tj
+T* (timeline and hypotheses, and assigned parallel tracks — one person on metrics, one on recent deploys, one on) Tj
+T* (vendor status. I wasn't the manager, but I kept the room focused on disproving theories with data. We found a) Tj
+T* (feature flag rollout that had increased DB connection pool usage; we rolled back within forty minutes of bridge start.) Tj
+T* (Afterward I proposed a pre-flight checklist for flag changes that the team adopted — no title change, but it stuck.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 299.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 283.8899999999999864 Td
+(Yes - The candidate provides a complete and structured response to a behavioral) Tj
+T* (question.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 255.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 239.8899999999999864 Td
+(base \(5/5\): The response is highly relevant, well-structured, and directly addresses the) Tj
+T* (prompt.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 211.8899999999999864 Td
+(personal_contribution \(5/5\): The candidate clearly identifies their specific actions, such as starting the doc and) Tj
+T* (assigning tracks, rather than just describing team actions.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 183.8899999999999864 Td
+(real_example \(5/5\): The candidate provides specific context, including a date, a specific technical issue, and the) Tj
+T* (exact cause found.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 155.8899999999999864 Td
+(outcome \(5/5\): The candidate describes both an immediate technical resolution and a lasting process improvement.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 140.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 124.8899999999999864 Td
+(present=no | probe=none | impact=none | No follow-up probe was provided in the input.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 109.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 93.8899999999999864 Td
+(This is an excellent behavioral response that demonstrates leadership through specific,) Tj
+T* (high-impact actions and measurable outcomes.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 65.8899999999999864 Td
+(Flags) Tj
+ET
+endstream
+endobj
+23 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 24 0 R
+>>
+endobj
+24 0 obj
+<<
+/Length 5386
+>>
+stream
+0.200025 w
+0.35 0.39 0.47 RG
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 801.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 778.8899999999999864 m
+555.2799999999999727 778.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 764.8899999999999864 Td
+(Case #17: Auto case 17) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 748.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 735.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 722.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 709.8899999999999864 Td
+(Case runtime: 26.71s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 696.8899999999999864 Td
+(Question: I hear the framework — can you give me a past example when you actually had to do that?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 681.8899999999999864 Td
+(Response: Yes. In January 2024 we had a production ledger discrepancy, a bank certification deadline, and a hiring) Tj
+T* (loop I was running — all in the same week. I triaged with my manager: the discrepancy was P0 because of money) Tj
+T* (movement, certification was P1 with a fixed external date, recruiting was P2. I spent Monday through Wednesday on) Tj
+T* (the discrepancy root cause — turned out to be a timezone boundary in cutover logic — shipped a patch with) Tj
+T* (verification from finance, then shifted to certification test cases Thursday and Friday. I handed the recruiting debrief) Tj
+T* (to another engineer who had been shadowing the loop. We hit the bank date; the ledger fix held; we still made the) Tj
+T* (hire.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 588.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 572.8899999999999864 Td
+(Yes - The candidate provides a concrete past example with specific details and outcomes.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 557.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 541.8899999999999864 Td
+(base \(5/5\): The candidate demonstrates excellent prioritization skills by categorizing tasks) Tj
+T* (by urgency and impact.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 513.8899999999999864 Td
+(personal_contribution \(5/5\): The candidate clearly outlines their specific actions, including root cause analysis and) Tj
+T* (task delegation.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 485.8899999999999864 Td
+(real_example \(5/5\): The response includes specific dates, technical details, and a clear context.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 470.8899999999999864 Td
+(outcome \(5/5\): All objectives mentioned in the scenario were successfully achieved.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 455.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 439.8899999999999864 Td
+(present=no | probe=none | impact=none | No follow-up probe was provided in the input.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 424.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 408.8899999999999864 Td
+(A high-quality behavioral response that covers all necessary dimensions with specificity) Tj
+T* (and clear results.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 380.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 364.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 341.8899999999999864 m
+555.2799999999999727 341.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 327.8899999999999864 Td
+(Case #19: Auto case 19) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 311.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 298.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 285.8899999999999864 Td
+(Overall: 5/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 272.8899999999999864 Td
+(Case runtime: 27.41s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 259.8899999999999864 Td
+(Question: How do you typically work with product managers — give me a real pattern, not an ideal.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 244.8899999999999864 Td
+(Response: At LedgerPay my PM and I do weekly thirty-minute syncs plus async Slack. I push back early if a spec) Tj
+T* (hand-waves cutoffs or timezone rules — I'll draft the edge-case list before we estimate. When we disagree, I insist) Tj
+T* (we write down assumptions and pick a cheap spike if it's architectural. Last quarter she wanted "real-time) Tj
+T* (reconciliation," which meant different things to us; we spent one sprint on a prototype that proved sub-minute) Tj
+T* (matching wasn't worth the cost for our volume, and we shipped hourly instead with a clear SLA. It's not always) Tj
+T* (smooth, but the habit is: name the tradeoff, measure, then commit.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 164.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 148.8899999999999864 Td
+(Yes - The candidate provides a specific pattern and a concrete example of working with a) Tj
+T* (PM.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 120.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 104.8899999999999864 Td
+(base \(5/5\): The response is highly structured and directly addresses the prompt's request) Tj
+T* (for a real pattern rather than an ideal.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 76.8899999999999864 Td
+(personal_contribution \(5/5\): The candidate clearly outlines their specific actions, such as drafting edge-case lists and) Tj
+T* (driving the use of spikes.) Tj
+ET
+endstream
+endobj
+25 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 26 0 R
+>>
+endobj
+26 0 obj
+<<
+/Length 5100
+>>
+stream
+0.200025 w
+0.35 0.39 0.47 RG
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 801.8899999999999864 Td
+(real_example \(5/5\): The reconciliation prototype serves as a strong, specific real-world example of conflict resolution.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 786.8899999999999864 Td
+(outcome \(5/5\): The example concludes with a clear, data-driven decision that optimized cost and performance via an) Tj
+T* (hourly SLA.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 758.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 742.8899999999999864 Td
+(present=no | probe=none | impact=none | None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 727.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 711.8899999999999864 Td
+(A top-tier behavioral response that includes a clear pattern, personal agency, a concrete) Tj
+T* (example, and a successful outcome.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 683.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 667.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 644.8899999999999864 m
+555.2799999999999727 644.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 630.8899999999999864 Td
+(Case #20: Auto case 20) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 614.8899999999999864 Td
+(Rubric: non_behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 601.8899999999999864 Td
+(Resolved path: skip) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 588.8899999999999864 Td
+(Overall: skip) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 575.8899999999999864 Td
+(Case runtime: 39.85s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 562.8899999999999864 Td
+(Question: RFC for anything that touches the ledger or event bus; fraud has a standing reviewer on that committee.) Tj
+T* (First ninety days: ship one medium-sized improvement to observability or deploy safety, get comfortable on-call, and) Tj
+T* (build trust with fraud and core banking. On-call we're six engineers per rotation, one week primary and one backup,) Tj
+T* (weekends included but pages have been roughly two per week average this quarter. Anything else?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 508.8899999999999864 Td
+(Response: That's the main list. Maybe one more — is there room to work on the event-sourced ledger itself in this) Tj
+T* (role, or mostly consuming it?) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 480.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 464.8899999999999864 Td
+(No - The candidate is asking a clarifying question about the role's scope rather than) Tj
+T* (providing a response that demonstrates competency.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 436.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 420.8899999999999864 Td
+(base \(?/5\): None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 405.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 389.8899999999999864 Td
+(present=no | probe=none | impact=none | None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 374.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 358.8899999999999864 Td
+(None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 343.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 327.8899999999999864 Td
+(None) Tj
+ET
+0.35 0.39 0.47 RG
+40. 304.8899999999999864 m
+555.2799999999999727 304.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 290.8899999999999864 Td
+(Case #16: Auto case 16) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 274.8899999999999864 Td
+(Rubric: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 261.8899999999999864 Td
+(Resolved path: behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 248.8899999999999864 Td
+(Overall: 1/5) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 235.8899999999999864 Td
+(Case runtime: 54.87s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 222.8899999999999864 Td
+(Question: How do you handle competing priorities when everything is urgent?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 207.8899999999999864 Td
+(Response: If I were in that situation, I would list tasks by customer impact and regulatory exposure first, then) Tj
+T* (communicate tradeoffs to product and my manager in writing so there's a shared record. I'd time-box investigation on) Tj
+T* (Sev-2s and escalate when scope creeps.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 166.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 150.8899999999999864 Td
+(Yes - The candidate provides a direct response to the interviewer's question.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 135.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 119.8899999999999864 Td
+(base \(3/5\): The candidate outlines a logical and professional framework for prioritization) Tj
+T* (and communication.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 91.8899999999999864 Td
+(personal_contribution \(1/5\): The response is entirely hypothetical and does not describe a specific action taken by) Tj
+T* (the candidate in a real situation.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 63.8899999999999864 Td
+(real_example \(1/5\): No specific past event or real-world scenario was provided.) Tj
+ET
+endstream
+endobj
+27 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 28 0 R
+>>
+endobj
+28 0 obj
+<<
+/Length 5598
+>>
+stream
+0.200025 w
+0.35 0.39 0.47 RG
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 801.8899999999999864 Td
+(outcome \(1/5\): No result or measurable impact was mentioned as the response was hypothetical.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 786.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 770.8899999999999864 Td
+(present=no | probe=none | impact=none | No follow-up was provided in this turn.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 755.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 739.8899999999999864 Td
+(The candidate failed to provide a behavioral response, offering only a hypothetical) Tj
+T* (framework instead of demonstrating past experience through a real example.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 711.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 695.8899999999999864 Td
+(hypothetical_response) Tj
+ET
+0.35 0.39 0.47 RG
+40. 672.8899999999999864 m
+555.2799999999999727 672.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 658.8899999999999864 Td
+(Case #22: Auto case 22) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 642.8899999999999864 Td
+(Rubric: non_behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 629.8899999999999864 Td
+(Resolved path: skip) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 616.8899999999999864 Td
+(Overall: skip) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 603.8899999999999864 Td
+(Case runtime: 36.02s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 590.8899999999999864 Td
+(Question: Have a good rest of your day.) Tj
+T* () Tj
+T* (---) Tj
+T* () Tj
+T* (# Expected rubric mapping \(for manual / automated integration checks\)) Tj
+T* (# | Segment                                      | Rubric type      | Notes                                      |) Tj
+T* (# |----------------------------------------------|------------------|--------------------------------------------|) Tj
+T* (# | Tell me about yourself \(short\)               | non_behavioral   | Strong specificity, role-aligned           |) Tj
+T* (# | Walk me through your resume \(full arc\)       | non_behavioral   | Chronological; concrete roles/metrics      |) Tj
+T* (# | Resume probe — PayLoom scaling               | non_behavioral   | STAR story embedded in resume answer       |) Tj
+T* (# | Resume probe — reconciliation vs settlement  | non_behavioral   | Clarification, technical specificity       |) Tj
+T* (# | Gap / overlap question                       | non_behavioral   | Direct, brief                              |) Tj
+T* (# | Why Northline / this role                    | non_behavioral   | Company-specific, not generic              |) Tj
+T* (# | How have you used Go in production           | non_behavioral   | Skill depth; concrete patterns             |) Tj
+T* (# | Tight deadline \(settlement migration\)        | behavioral STAR  | Strong; follow-up on replay                |) Tj
+T* (# | Persuade skeptical stakeholder \(DLQ\)         | behavioral STAR  | Strong                                     |) Tj
+T* (# | Conflict with teammate \(testing\)             | behavioral STAR  | Good; minor filler at open                 |) Tj
+T* (# | Failed / significant mistake \(validation\)    | behavioral STAR  | Strong; owns failure + remediation         |) Tj
+T* (# | Tough feedback \(steering meetings\)           | behavioral STAR  | Strong                                     |) Tj
+T* (# | Improve a process \(first answer\)             | behavioral STAR  | Weak — vague until follow-up               |) Tj
+T* (# | Improve a process \(after follow-up\)          | behavioral STAR  | Stronger                                   |) Tj
+T* (# | Mentoring \(first answer\)                     | behavioral STAR  | Weak context — missing situation           |) Tj
+T* (# | Mentoring \(after follow-up\)                   | behavioral STAR  | Stronger with LedgerPay context            |) Tj
+T* (# | Greatest weakness                            | non_behavioral   | Genuine weakness + remediation             |) Tj
+T* (# | Competing priorities \(first answer\)          | behavioral STAR  | HYPOTHETICAL — should flag / need follow-up|) Tj
+T* (# | Competing priorities \(second answer\)         | behavioral STAR  | Real example after probe                     |) Tj
+T* (# | Leadership without formal lead \(outage\)      | behavioral STAR  | Strong                                     |) Tj
+T* (# | How you work with PMs                        | non_behavioral   | Real pattern; tradeoff example             |) Tj
+T* (# | Candidate questions                          | n/a              | Not scored as interview response           |) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 211.8899999999999864 Td
+(Response: None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 196.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 180.8899999999999864 Td
+(No - The turn is a closing pleasantry and contains no candidate response to evaluate.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 165.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 149.8899999999999864 Td
+(base \(?/5\): None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 134.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 118.8899999999999864 Td
+(present=no | probe=none | impact=none | None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 103.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 87.8899999999999864 Td
+(The turn is not scorable.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 72.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 56.8899999999999864 Td
+(None) Tj
+ET
+endstream
+endobj
+29 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 30 0 R
+>>
+endobj
+30 0 obj
+<<
+/Length 2105
+>>
+stream
+0.200025 w
+0.35 0.39 0.47 RG
+0.35 0.39 0.47 RG
+40. 801.8899999999999864 m
+555.2799999999999727 801.8899999999999864 l
+S
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 787.8899999999999864 Td
+(Case #21: Auto case 21) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 771.8899999999999864 Td
+(Rubric: non_behavioral) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 758.8899999999999864 Td
+(Resolved path: skip) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 745.8899999999999864 Td
+(Overall: skip) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 732.8899999999999864 Td
+(Case runtime: 41.18s) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 719.8899999999999864 Td
+(Question: Both. Most work is consumption and hardening, but we've had seniors contribute to ordering guarantees) Tj
+T* (and replay tooling. If that's your interest, there's a path. We'll follow up within a week on next steps. Thanks for the) Tj
+T* (thorough walkthrough today, Alex.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 678.8899999999999864 Td
+(Response: Thank you, Priya. I appreciated the depth of the questions — this reinforced that the problems here are) Tj
+T* (the ones I want. Looking forward to hearing from you.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 650.8899999999999864 Td
+(Scorable) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 634.8899999999999864 Td
+(No - The turn consists of closing pleasantries and does not contain any substantive) Tj
+T* (content to evaluate.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 606.8899999999999864 Td
+(Dimensions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 590.8899999999999864 Td
+(base \(?/5\): None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 575.8899999999999864 Td
+(Follow-up) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 559.8899999999999864 Td
+(present=no | probe=none | impact=none | None) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 544.8899999999999864 Td
+(Overall Reasoning) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 528.8899999999999864 Td
+(The turn is a social closing and provides no evaluable signal.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+40. 513.8899999999999864 Td
+(Flags) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+40. 497.8899999999999864 Td
+(None) Tj
+ET
+endstream
+endobj
+1 0 obj
+<</Type /Pages
+/Kids [3 0 R 5 0 R 7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R 19 0 R 21 0 R 23 0 R 25 0 R 27 0 R 29 0 R ]
+/Count 14
+>>
+endobj
+31 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+32 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+33 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+34 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+35 0 obj
+<<
+/Type /Font
+/BaseFont /Courier
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+36 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+37 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+38 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+39 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Roman
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+40 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+41 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Italic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+42 0 obj
+<<
+/Type /Font
+/BaseFont /Times-BoldItalic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+43 0 obj
+<<
+/Type /Font
+/BaseFont /ZapfDingbats
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+44 0 obj
+<<
+/Type /Font
+/BaseFont /Symbol
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+2 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/Font <<
+/F1 31 0 R
+/F2 32 0 R
+/F3 33 0 R
+/F4 34 0 R
+/F5 35 0 R
+/F6 36 0 R
+/F7 37 0 R
+/F8 38 0 R
+/F9 39 0 R
+/F10 40 0 R
+/F11 41 0 R
+/F12 42 0 R
+/F13 43 0 R
+/F14 44 0 R
+>>
+/XObject <<
+>>
+>>
+endobj
+45 0 obj
+<<
+/Producer (jsPDF 2.5.1)
+/CreationDate (D:20260530130234-07'00')
+>>
+endobj
+46 0 obj
+<<
+/Type /Catalog
+/Pages 1 0 R
+/OpenAction [3 0 R /FitH null]
+/PageLayout /OneColumn
+>>
+endobj
+xref
+0 47
+0000000000 65535 f 
+0000073521 00000 n 
+0000075432 00000 n 
+0000000015 00000 n 
+0000000152 00000 n 
+0000005853 00000 n 
+0000005990 00000 n 
+0000011276 00000 n 
+0000011413 00000 n 
+0000016458 00000 n 
+0000016596 00000 n 
+0000021732 00000 n 
+0000021871 00000 n 
+0000027445 00000 n 
+0000027584 00000 n 
+0000032852 00000 n 
+0000032991 00000 n 
+0000038526 00000 n 
+0000038665 00000 n 
+0000043754 00000 n 
+0000043893 00000 n 
+0000049076 00000 n 
+0000049215 00000 n 
+0000054564 00000 n 
+0000054703 00000 n 
+0000060142 00000 n 
+0000060281 00000 n 
+0000065434 00000 n 
+0000065573 00000 n 
+0000071224 00000 n 
+0000071363 00000 n 
+0000073667 00000 n 
+0000073793 00000 n 
+0000073924 00000 n 
+0000074058 00000 n 
+0000074196 00000 n 
+0000074320 00000 n 
+0000074449 00000 n 
+0000074581 00000 n 
+0000074717 00000 n 
+0000074845 00000 n 
+0000074972 00000 n 
+0000075101 00000 n 
+0000075234 00000 n 
+0000075336 00000 n 
+0000075685 00000 n 
+0000075771 00000 n 
+trailer
+<<
+/Size 47
+/Root 46 0 R
+/Info 45 0 R
+/ID [ <CA19CCA8858ACEE7E919C66DB160359F> <CA19CCA8858ACEE7E919C66DB160359F> ]
+>>
+startxref
+75875
+%%EOF

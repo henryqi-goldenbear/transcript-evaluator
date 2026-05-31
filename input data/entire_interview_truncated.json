@@ -5,6 +5,30 @@
     "turn_type": "non_behavioral",
     "rubric_type": "non_behavioral",
     "classification_source": "ollama",
+    "classification_reasoning": "social, logistics, greeting",
+    "question": "Hi Alex, thanks for joining. I'm Priya \u2014 I lead the platform engineering group here at Northline. How's your day going so far?",
+    "response": "Going well, thanks. Appreciate you making the time. I've been looking forward to this one \u2014 I've followed Northline's engineering blog for a while.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 2,
+    "label": "Auto case 2",
+    "turn_type": "non_behavioral",
+    "rubric_type": "non_behavioral",
+    "classification_source": "ollama",
+    "classification_reasoning": "social, logistics",
+    "question": "Good to hear. Before we dive in, any trouble with the video link or the calendar invite on your side?",
+    "response": "No, all smooth. I had a chance to skim the team page this morning too.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 3,
+    "label": "Auto case 3",
+    "turn_type": "non_behavioral",
+    "rubric_type": "non_behavioral",
+    "classification_source": "ollama",
     "classification_reasoning": "one sentence",
     "question": "Let's start broad. Tell me about yourself \u2014 the version you'd give if we only had two minutes.",
     "response": "Sure. I'm a backend engineer with about seven years in fintech and payments. Most recently at LedgerPay I owned the settlement reconciliation service \u2014 batch jobs, idempotency, the unglamorous stuff that has to be correct. What I care about is building systems that stay boring under load: clear contracts, good observability, and failure modes you can reason about in an incident. Before LedgerPay I was at a smaller startup where I wore more hats, which is where I picked up Go and got comfortable owning services end to end. I'm here because Northline's platform team sits on the critical path for fraud and ledger consistency, and that's the kind of problem I want my next few years to be about.",
@@ -12,10 +36,10 @@
     "expected": {}
   },
   {
-    "id": 2,
-    "label": "Auto case 2",
-    "turn_type": "behavioral",
-    "rubric_type": "behavioral",
+    "id": 4,
+    "label": "Auto case 4",
+    "turn_type": "non_behavioral",
+    "rubric_type": "non_behavioral",
     "classification_source": "ollama",
     "classification_reasoning": "one sentence",
     "question": "Thanks. Let's go chronologically \u2014 walk me through your resume, starting from education or your first relevant role, whatever you think is the right entry point.",
@@ -25,14 +49,14 @@
         "question": "On PayLoom \u2014 you said low six figures of daily webhook events. What broke first when you scaled?",
         "response": "Honestly, our Postgres write pattern on the delivery log table. We were inserting one row per attempt without partitioning, and hot indexes killed us around eighty thousand events a day. I proposed monthly partitions and moving retry scheduling to a Redis-backed queue so we weren't polling the database. We shipped partitions first \u2014 that bought headroom \u2014 then the queue refactor over two sprints. p99 delivery latency went from about four seconds to under eight hundred milliseconds at peak. That's the project I'm proudest of from PayLoom because it was the first time I owned a production scaling problem end to end.",
         "probe_type": "deepening",
-        "classification_source": "heuristic"
+        "classification_source": "ollama"
       }
     ],
     "expected": {}
   },
   {
-    "id": 3,
-    "label": "Auto case 3",
+    "id": 5,
+    "label": "Auto case 5",
     "turn_type": "non_behavioral",
     "rubric_type": "non_behavioral",
     "classification_source": "ollama",
