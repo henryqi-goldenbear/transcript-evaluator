@@ -198,6 +198,38 @@
 <script>
   EvaluatorApp.init();
 </script>
+<script>
+  (() => {
+    const params = new URLSearchParams(window.location.search);
+    const input = params.get("input");
+    const batchSize = params.get("batch_size");
+    const shouldAutoRun = input || batchSize;
+
+    if (input) {
+      document.getElementById("batch-file-input").value = input;
+    }
+
+    if (batchSize) {
+      document.getElementById("batch-size-input").value = batchSize;
+    }
+
+    if (shouldAutoRun) {
+      let attempts = 0;
+      const clickWhenReady = () => {
+        const runButton = document.getElementById("run-entire-btn");
+        if (window.EvaluatorApp && runButton && !runButton.disabled) {
+          runButton.click();
+          return;
+        }
+        attempts += 1;
+        if (attempts < 100) {
+          window.setTimeout(clickWhenReady, 100);
+        }
+      };
+      clickWhenReady();
+    }
+  })();
+</script>
 
 </body>
 </html>

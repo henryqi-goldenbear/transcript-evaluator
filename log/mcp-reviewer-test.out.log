@@ -1,4 +1,0 @@
-Reviewer agent listening on http://127.0.0.1:8797
-Reviewer provider: mcp
-MCP mode: stdio
-MCP tool: review_interview_evaluation

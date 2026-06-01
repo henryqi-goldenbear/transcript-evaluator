@@ -1,0 +1,28 @@
+2026-05-31 19:23:23,864 INFO [__main__] Starting convert and evaluate task; logging to logs\entire_interview_truncated.log
+2026-05-31 19:23:23,865 INFO [__main__] input=input data\entire_interview_truncated.txt batch_size=3
+2026-05-31 19:23:23,867 INFO [__main__] Detected 4 evaluator cases
+2026-05-31 19:23:23,867 INFO [__main__] Question/answer pair 1: started_at=2026-06-01T02:23:23.867539+00:00 finished_at=2026-06-01T02:23:23.867560+00:00 question_chars=295 answer_chars=17 follow_ups=0
+2026-05-31 19:23:23,867 INFO [__main__] Question/answer pair 2: started_at=2026-06-01T02:23:23.867699+00:00 finished_at=2026-06-01T02:23:23.867711+00:00 question_chars=94 answer_chars=699 follow_ups=0
+2026-05-31 19:23:23,868 INFO [__main__] Question/answer pair 3: started_at=2026-06-01T02:23:23.868242+00:00 finished_at=2026-06-01T02:23:23.868264+00:00 question_chars=161 answer_chars=1107 follow_ups=1
+2026-05-31 19:23:23,868 INFO [__main__] Question/answer pair 4: started_at=2026-06-01T02:23:23.868446+00:00 finished_at=2026-06-01T02:23:23.868456+00:00 question_chars=94 answer_chars=452 follow_ups=0
+2026-05-31 19:23:23,870 INFO [__main__] Finished conversion: input=input data\entire_interview_truncated.txt output=input data\entire_interview_truncated.json started_at=2026-06-01T02:23:23.865766+00:00 finished_at=2026-06-01T02:23:23.870168+00:00 input_chars=4275 cases=4 batch_size=3
+2026-05-31 19:23:23,871 INFO [__main__] Opening evaluator HTML: file:///C:/Users/zhiha/transcript-evaluator/evaluator.html?input=input+data%5Centire_interview_truncated.json&batch_size=3
+2026-05-31 19:24:13,861 INFO [__main__] Starting convert and evaluate task; logging to logs\entire_interview_truncated.log
+2026-05-31 19:24:13,861 INFO [__main__] input=input data\entire_interview_truncated.txt batch_size=3
+2026-05-31 19:24:13,863 INFO [__main__] Detected 4 evaluator cases
+2026-05-31 19:24:13,863 INFO [__main__] Question/answer pair 1: started_at=2026-06-01T02:24:13.863469+00:00 finished_at=2026-06-01T02:24:13.863484+00:00 question_chars=295 answer_chars=17 follow_ups=0
+2026-05-31 19:24:13,863 INFO [__main__] Question/answer pair 2: started_at=2026-06-01T02:24:13.863555+00:00 finished_at=2026-06-01T02:24:13.863562+00:00 question_chars=94 answer_chars=699 follow_ups=0
+2026-05-31 19:24:13,863 INFO [__main__] Question/answer pair 3: started_at=2026-06-01T02:24:13.863640+00:00 finished_at=2026-06-01T02:24:13.863645+00:00 question_chars=161 answer_chars=1107 follow_ups=1
+2026-05-31 19:24:13,863 INFO [__main__] Question/answer pair 4: started_at=2026-06-01T02:24:13.863697+00:00 finished_at=2026-06-01T02:24:13.863701+00:00 question_chars=94 answer_chars=452 follow_ups=0
+2026-05-31 19:24:13,865 INFO [__main__] Finished conversion: input=input data\entire_interview_truncated.txt output=input data\entire_interview_truncated.json started_at=2026-06-01T02:24:13.862173+00:00 finished_at=2026-06-01T02:24:13.864944+00:00 input_chars=4275 cases=4 batch_size=3
+2026-05-31 19:24:13,866 INFO [__main__] Opening evaluator HTML: file:///C:/Users/zhiha/transcript-evaluator/evaluator.html?input=input+data%2Fentire_interview_truncated.json&batch_size=3
+2026-05-31 19:29:46,408 INFO [__main__] Starting convert and evaluate task; logging to logs\entire_interview_truncated.log
+2026-05-31 19:29:46,409 INFO [__main__] input=input data\entire_interview_truncated.txt batch_size=3
+2026-05-31 19:29:46,409 INFO [__main__] Detected 4 evaluator cases
+2026-05-31 19:29:46,409 INFO [__main__] Question/answer pair 1: started_at=2026-06-01T02:29:46.409842+00:00 finished_at=2026-06-01T02:29:46.409849+00:00 question_chars=295 answer_chars=17 follow_ups=0
+2026-05-31 19:29:46,409 INFO [__main__] Question/answer pair 2: started_at=2026-06-01T02:29:46.409886+00:00 finished_at=2026-06-01T02:29:46.409889+00:00 question_chars=94 answer_chars=699 follow_ups=0
+2026-05-31 19:29:46,409 INFO [__main__] Question/answer pair 3: started_at=2026-06-01T02:29:46.409920+00:00 finished_at=2026-06-01T02:29:46.409923+00:00 question_chars=161 answer_chars=1107 follow_ups=1
+2026-05-31 19:29:46,409 INFO [__main__] Question/answer pair 4: started_at=2026-06-01T02:29:46.409949+00:00 finished_at=2026-06-01T02:29:46.409951+00:00 question_chars=94 answer_chars=452 follow_ups=0
+2026-05-31 19:29:46,410 INFO [__main__] Finished conversion: input=input data\entire_interview_truncated.txt output=input data\entire_interview_truncated.json started_at=2026-06-01T02:29:46.409184+00:00 finished_at=2026-06-01T02:29:46.410574+00:00 input_chars=4275 cases=4 batch_size=3
+2026-05-31 19:29:46,412 INFO [__main__] Reusing existing local server on port 3000
+2026-05-31 19:29:46,413 INFO [__main__] Opening evaluator HTML: http://localhost:3000/evaluator.html?input=input+data%2Fentire_interview_truncated.json&batch_size=3

@@ -3,9 +3,9 @@
   "tasks": [
 
     {
-      "label": "Convert Transcript To Evaluator JSON",
+      "label": "Convert and Run Evaluator",
       "type": "shell",
-      "command": "& 'C:\\Users\\zhiha\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe' txt_to_json.py 'input data/entire_interview.txt' --ollama-model 'llama3.2:latest'",
+      "command": "& 'C:\\Users\\zhiha\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe' txt_to_json.py '${input:transcriptTxtPath}' --batch-size '${input:evaluatorBatchSize}'",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -56,20 +56,21 @@
         "reveal": "always",
         "panel": "shared"
       }
-    },
-
-    {
-      "label": "Convert + Open Evaluator",
-      "dependsOrder": "sequence",
-      "dependsOn": [
-        "Convert Transcript To Evaluator JSON",
-        "Open Evaluator"
-      ],
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared"
-      }
     }
 
+  ],
+  "inputs": [
+    {
+      "id": "transcriptTxtPath",
+      "type": "promptString",
+      "description": "TXT transcript path",
+      "default": "input data/entire_interview_truncated.txt"
+    },
+    {
+      "id": "evaluatorBatchSize",
+      "type": "promptString",
+      "description": "Evaluator batch size (1-7)",
+      "default": "3"
+    }
   ]
 }

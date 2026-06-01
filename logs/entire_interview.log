@@ -1,0 +1,72 @@
+2026-05-31 19:41:07,532 INFO [__main__] Starting convert and evaluate task; logging to logs\entire_interview.log
+2026-05-31 19:41:07,532 INFO [__main__] input=input data\entire_interview.txt batch_size=3
+2026-05-31 19:53:42,511 INFO [__main__] Starting convert and evaluate task; logging to logs\entire_interview.log
+2026-05-31 19:53:42,511 INFO [__main__] input=entire_interview.txt batch_size=4
+2026-05-31 19:53:42,512 ERROR [__main__] Input file not found: entire_interview.txt
+2026-05-31 19:54:05,495 INFO [__main__] Starting convert and evaluate task; logging to logs\entire_interview.log
+2026-05-31 19:54:05,497 INFO [__main__] input=input data\entire_interview.txt batch_size=4
+2026-05-31 20:01:58,229 INFO [__main__] Starting convert and evaluate task; logging to logs\entire_interview.log
+2026-05-31 20:01:58,229 INFO [__main__] input=input data\entire_interview.txt batch_size=4
+2026-05-31 20:01:58,230 INFO [__main__] Parsing transcript: input=input data\entire_interview.txt chars=20942 classifier=heuristic-only
+2026-05-31 20:01:58,235 INFO [__main__] Parsed transcript into 24 cases
+2026-05-31 20:01:58,235 INFO [__main__] Detected 24 evaluator cases
+2026-05-31 20:01:58,235 INFO [__main__] Question/answer pair 1: started_at=2026-06-01T03:01:58.235938+00:00 finished_at=2026-06-01T03:01:58.235965+00:00 question_chars=295 answer_chars=17 follow_ups=0
+2026-05-31 20:01:58,236 INFO [__main__] Question/answer pair 2: started_at=2026-06-01T03:01:58.236076+00:00 finished_at=2026-06-01T03:01:58.236088+00:00 question_chars=94 answer_chars=699 follow_ups=0
+2026-05-31 20:01:58,236 INFO [__main__] Question/answer pair 3: started_at=2026-06-01T03:01:58.236182+00:00 finished_at=2026-06-01T03:01:58.236191+00:00 question_chars=161 answer_chars=1107 follow_ups=1
+2026-05-31 20:01:58,236 INFO [__main__] Question/answer pair 4: started_at=2026-06-01T03:01:58.236277+00:00 finished_at=2026-06-01T03:01:58.236286+00:00 question_chars=94 answer_chars=452 follow_ups=0
+2026-05-31 20:01:58,236 INFO [__main__] Question/answer pair 5: started_at=2026-06-01T03:01:58.236365+00:00 finished_at=2026-06-01T03:01:58.236373+00:00 question_chars=89 answer_chars=218 follow_ups=0
+2026-05-31 20:01:58,236 INFO [__main__] Question/answer pair 6: started_at=2026-06-01T03:01:58.236448+00:00 finished_at=2026-06-01T03:01:58.236455+00:00 question_chars=52 answer_chars=585 follow_ups=0
+2026-05-31 20:01:58,236 INFO [__main__] Question/answer pair 7: started_at=2026-06-01T03:01:58.236528+00:00 finished_at=2026-06-01T03:01:58.236535+00:00 question_chars=85 answer_chars=806 follow_ups=0
+2026-05-31 20:01:58,236 INFO [__main__] Question/answer pair 8: started_at=2026-06-01T03:01:58.236616+00:00 finished_at=2026-06-01T03:01:58.236623+00:00 question_chars=111 answer_chars=772 follow_ups=1
+2026-05-31 20:01:58,236 INFO [__main__] Question/answer pair 9: started_at=2026-06-01T03:01:58.236721+00:00 finished_at=2026-06-01T03:01:58.236729+00:00 question_chars=89 answer_chars=920 follow_ups=0
+2026-05-31 20:01:58,236 INFO [__main__] Question/answer pair 10: started_at=2026-06-01T03:01:58.236805+00:00 finished_at=2026-06-01T03:01:58.236812+00:00 question_chars=56 answer_chars=655 follow_ups=0
+2026-05-31 20:01:58,236 INFO [__main__] Question/answer pair 11: started_at=2026-06-01T03:01:58.236891+00:00 finished_at=2026-06-01T03:01:58.236899+00:00 question_chars=62 answer_chars=805 follow_ups=0
+2026-05-31 20:01:58,237 INFO [__main__] Question/answer pair 12: started_at=2026-06-01T03:01:58.236976+00:00 finished_at=2026-06-01T03:01:58.236984+00:00 question_chars=74 answer_chars=710 follow_ups=0
+2026-05-31 20:01:58,237 INFO [__main__] Question/answer pair 13: started_at=2026-06-01T03:01:58.237059+00:00 finished_at=2026-06-01T03:01:58.237067+00:00 question_chars=44 answer_chars=241 follow_ups=1
+2026-05-31 20:01:58,237 INFO [__main__] Question/answer pair 14: started_at=2026-06-01T03:01:58.237142+00:00 finished_at=2026-06-01T03:01:58.237149+00:00 question_chars=62 answer_chars=337 follow_ups=0
+2026-05-31 20:01:58,237 INFO [__main__] Question/answer pair 15: started_at=2026-06-01T03:01:58.237221+00:00 finished_at=2026-06-01T03:01:58.237228+00:00 question_chars=90 answer_chars=567 follow_ups=0
+2026-05-31 20:01:58,237 INFO [__main__] Question/answer pair 16: started_at=2026-06-01T03:01:58.237451+00:00 finished_at=2026-06-01T03:01:58.237462+00:00 question_chars=31 answer_chars=580 follow_ups=0
+2026-05-31 20:01:58,237 INFO [__main__] Question/answer pair 17: started_at=2026-06-01T03:01:58.237573+00:00 finished_at=2026-06-01T03:01:58.237582+00:00 question_chars=65 answer_chars=258 follow_ups=0
+2026-05-31 20:01:58,237 INFO [__main__] Question/answer pair 18: started_at=2026-06-01T03:01:58.237763+00:00 finished_at=2026-06-01T03:01:58.237773+00:00 question_chars=87 answer_chars=675 follow_ups=0
+2026-05-31 20:01:58,237 INFO [__main__] Question/answer pair 19: started_at=2026-06-01T03:01:58.237868+00:00 finished_at=2026-06-01T03:01:58.237875+00:00 question_chars=76 answer_chars=665 follow_ups=0
+2026-05-31 20:01:58,237 INFO [__main__] Question/answer pair 20: started_at=2026-06-01T03:01:58.237950+00:00 finished_at=2026-06-01T03:01:58.237957+00:00 question_chars=87 answer_chars=612 follow_ups=0
+2026-05-31 20:01:58,238 INFO [__main__] Question/answer pair 21: started_at=2026-06-01T03:01:58.238035+00:00 finished_at=2026-06-01T03:01:58.238043+00:00 question_chars=58 answer_chars=279 follow_ups=0
+2026-05-31 20:01:58,238 INFO [__main__] Question/answer pair 22: started_at=2026-06-01T03:01:58.238118+00:00 finished_at=2026-06-01T03:01:58.238125+00:00 question_chars=432 answer_chars=133 follow_ups=0
+2026-05-31 20:01:58,238 INFO [__main__] Question/answer pair 23: started_at=2026-06-01T03:01:58.238204+00:00 finished_at=2026-06-01T03:01:58.238212+00:00 question_chars=256 answer_chars=157 follow_ups=0
+2026-05-31 20:01:58,238 INFO [__main__] Question/answer pair 24: started_at=2026-06-01T03:01:58.238286+00:00 finished_at=2026-06-01T03:01:58.238293+00:00 question_chars=2868 answer_chars=0 follow_ups=0
+2026-05-31 20:01:58,240 INFO [__main__] Finished conversion: input=input data\entire_interview.txt output=input data\entire_interview.json started_at=2026-06-01T03:01:58.229890+00:00 finished_at=2026-06-01T03:01:58.240447+00:00 input_chars=20942 cases=24 batch_size=4
+2026-05-31 20:01:58,243 INFO [__main__] Reusing existing local server on port 3000
+2026-05-31 20:01:58,245 INFO [__main__] Opening evaluator HTML: http://localhost:3000/evaluator.html?input=input+data%2Fentire_interview.json&batch_size=4
+2026-05-31 20:12:41,037 INFO [__main__] Detected 21 evaluator cases
+2026-05-31 20:12:41,038 INFO [__main__] Question/answer pair 1: started_at=2026-06-01T03:12:41.037979+00:00 finished_at=2026-06-01T03:12:41.038002+00:00 question_chars=126 answer_chars=147 follow_ups=0
+2026-05-31 20:12:41,038 INFO [__main__] Question/answer pair 2: started_at=2026-06-01T03:12:41.038086+00:00 finished_at=2026-06-01T03:12:41.038092+00:00 question_chars=101 answer_chars=70 follow_ups=0
+2026-05-31 20:12:41,038 INFO [__main__] Question/answer pair 3: started_at=2026-06-01T03:12:41.038149+00:00 finished_at=2026-06-01T03:12:41.038153+00:00 question_chars=94 answer_chars=699 follow_ups=0
+2026-05-31 20:12:41,038 INFO [__main__] Question/answer pair 4: started_at=2026-06-01T03:12:41.038199+00:00 finished_at=2026-06-01T03:12:41.038203+00:00 question_chars=161 answer_chars=1107 follow_ups=1
+2026-05-31 20:12:41,038 INFO [__main__] Question/answer pair 5: started_at=2026-06-01T03:12:41.038242+00:00 finished_at=2026-06-01T03:12:41.038245+00:00 question_chars=94 answer_chars=452 follow_ups=0
+2026-05-31 20:12:41,038 INFO [__main__] Question/answer pair 6: started_at=2026-06-01T03:12:41.038282+00:00 finished_at=2026-06-01T03:12:41.038285+00:00 question_chars=89 answer_chars=218 follow_ups=0
+2026-05-31 20:12:41,038 INFO [__main__] Question/answer pair 7: started_at=2026-06-01T03:12:41.038322+00:00 finished_at=2026-06-01T03:12:41.038326+00:00 question_chars=52 answer_chars=585 follow_ups=0
+2026-05-31 20:12:41,038 INFO [__main__] Question/answer pair 8: started_at=2026-06-01T03:12:41.038360+00:00 finished_at=2026-06-01T03:12:41.038363+00:00 question_chars=85 answer_chars=806 follow_ups=0
+2026-05-31 20:12:41,038 INFO [__main__] Question/answer pair 9: started_at=2026-06-01T03:12:41.038493+00:00 finished_at=2026-06-01T03:12:41.038497+00:00 question_chars=111 answer_chars=772 follow_ups=1
+2026-05-31 20:12:41,038 INFO [__main__] Question/answer pair 10: started_at=2026-06-01T03:12:41.038563+00:00 finished_at=2026-06-01T03:12:41.038567+00:00 question_chars=89 answer_chars=920 follow_ups=0
+2026-05-31 20:12:41,038 INFO [__main__] Question/answer pair 11: started_at=2026-06-01T03:12:41.038611+00:00 finished_at=2026-06-01T03:12:41.038614+00:00 question_chars=56 answer_chars=655 follow_ups=0
+2026-05-31 20:12:41,038 INFO [__main__] Question/answer pair 12: started_at=2026-06-01T03:12:41.038651+00:00 finished_at=2026-06-01T03:12:41.038654+00:00 question_chars=62 answer_chars=805 follow_ups=0
+2026-05-31 20:12:41,039 INFO [__main__] Question/answer pair 13: started_at=2026-06-01T03:12:41.039057+00:00 finished_at=2026-06-01T03:12:41.039078+00:00 question_chars=74 answer_chars=710 follow_ups=0
+2026-05-31 20:12:41,039 INFO [__main__] Question/answer pair 14: started_at=2026-06-01T03:12:41.039298+00:00 finished_at=2026-06-01T03:12:41.039310+00:00 question_chars=44 answer_chars=241 follow_ups=1
+2026-05-31 20:12:41,039 INFO [__main__] Question/answer pair 15: started_at=2026-06-01T03:12:41.039403+00:00 finished_at=2026-06-01T03:12:41.039408+00:00 question_chars=62 answer_chars=337 follow_ups=1
+2026-05-31 20:12:41,039 INFO [__main__] Question/answer pair 16: started_at=2026-06-01T03:12:41.039460+00:00 finished_at=2026-06-01T03:12:41.039465+00:00 question_chars=31 answer_chars=580 follow_ups=0
+2026-05-31 20:12:41,039 INFO [__main__] Question/answer pair 17: started_at=2026-06-01T03:12:41.039506+00:00 finished_at=2026-06-01T03:12:41.039509+00:00 question_chars=65 answer_chars=258 follow_ups=0
+2026-05-31 20:12:41,039 INFO [__main__] Question/answer pair 18: started_at=2026-06-01T03:12:41.039546+00:00 finished_at=2026-06-01T03:12:41.039551+00:00 question_chars=87 answer_chars=675 follow_ups=0
+2026-05-31 20:12:41,039 INFO [__main__] Question/answer pair 19: started_at=2026-06-01T03:12:41.039587+00:00 finished_at=2026-06-01T03:12:41.039590+00:00 question_chars=76 answer_chars=665 follow_ups=0
+2026-05-31 20:12:41,039 INFO [__main__] Question/answer pair 20: started_at=2026-06-01T03:12:41.039624+00:00 finished_at=2026-06-01T03:12:41.039628+00:00 question_chars=87 answer_chars=612 follow_ups=0
+2026-05-31 20:12:41,039 INFO [__main__] Question/answer pair 21: started_at=2026-06-01T03:12:41.039663+00:00 finished_at=2026-06-01T03:12:41.039667+00:00 question_chars=58 answer_chars=279 follow_ups=2
+2026-05-31 20:12:41,041 INFO [__main__] Finished conversion: input=input data\entire_interview.txt output=input data\entire_interview.json started_at=2026-06-01T02:54:05.497669+00:00 finished_at=2026-06-01T03:12:41.041263+00:00 input_chars=20942 cases=21 batch_size=4
+2026-05-31 20:12:41,042 INFO [__main__] Reusing existing local server on port 3000
+2026-05-31 20:12:41,044 INFO [__main__] Opening evaluator HTML: http://localhost:3000/evaluator.html?input=input+data%2Fentire_interview.json&batch_size=4
+2026-05-31 20:12:45,464 INFO [__main__] Starting convert and evaluate task; logging to logs\entire_interview.log
+2026-05-31 20:12:45,464 INFO [__main__] input=input data\entire_interview.txt batch_size=5
+2026-05-31 20:12:45,465 INFO [__main__] Parsing transcript: input=input data\entire_interview.txt chars=20942 classifier=heuristic-only
+2026-05-31 20:12:45,469 INFO [__main__] Parsed transcript into 24 cases
+2026-05-31 20:12:45,470 INFO [__main__] Detected 24 evaluator cases
+2026-05-31 20:12:45,589 INFO [__main__] Finished conversion: input=input data\entire_interview.txt output=input data\entire_interview.json started_at=2026-06-01T03:12:45.465221+00:00 finished_at=2026-06-01T03:12:45.589316+00:00 input_chars=20942 cases=24 batch_size=5
+2026-05-31 20:12:45,592 INFO [__main__] Reusing existing local server on port 3000
+2026-05-31 20:12:45,594 INFO [__main__] Opening evaluator HTML: http://localhost:3000/evaluator.html?input=input+data%2Fentire_interview.json&batch_size=5

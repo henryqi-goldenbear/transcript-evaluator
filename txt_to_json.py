@@ -34,66 +34,46 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import os
 import re
+import socket
+import subprocess
+import sys
+import time
+import webbrowser
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlencode
 from urllib import error, request
+from patterns import SPEAKER_RE, NON_QUESTION_PATTERNS, BEHAVIORAL_PATTERNS, FOLLOW_UP_PATTERNS, CLARIFYING_PATTERNS, DEEPENING_PATTERNS
 
 
-SPEAKER_RE = re.compile(r"^\s*(INTERVIEWER|CANDIDATE)\s*:\s*(.*)$")
-BEHAVIORAL_PATTERNS = [
-    re.compile(r"\btell me about a time\b", re.IGNORECASE),
-    re.compile(r"\bgive me an example\b", re.IGNORECASE),
-    re.compile(r"\bdescribe a situation\b", re.IGNORECASE),
-    re.compile(r"\bwalk me through a time\b", re.IGNORECASE),
-    re.compile(r"\bwhen have you\b", re.IGNORECASE),
-    re.compile(r"\bwhat's a time\b", re.IGNORECASE),
-]
-NON_QUESTION_PATTERNS = [
-    re.compile(r"\bhow('?s| is) your day\b", re.IGNORECASE),
-    re.compile(r"\bnice to meet you\b", re.IGNORECASE),
-    re.compile(r"\bcan you hear me\b", re.IGNORECASE),
-    re.compile(r"\bcan you see my screen\b", re.IGNORECASE),
-    re.compile(r"\bany trouble with (the )?(video|audio|link)\b", re.IGNORECASE),
-    re.compile(r"\bthanks for joining\b", re.IGNORECASE),
-    re.compile(r"\bshall we get started\b", re.IGNORECASE),
-]
-FOLLOW_UP_PATTERNS = [
-    re.compile(r"^\s*can you\b", re.IGNORECASE),
-    re.compile(r"^\s*could you\b", re.IGNORECASE),
-    re.compile(r"^\s*would you\b", re.IGNORECASE),
-    re.compile(r"^\s*you mentioned\b", re.IGNORECASE),
-    re.compile(r"^\s*on [a-z0-9_-]+", re.IGNORECASE),
-    re.compile(r"^\s*when you said\b", re.IGNORECASE),
-    re.compile(r"^\s*tell me more\b", re.IGNORECASE),
-    re.compile(r"^\s*go deeper\b", re.IGNORECASE),
-    re.compile(r"^\s*what happened next\b", re.IGNORECASE),
-    re.compile(r"^\s*what broke\b", re.IGNORECASE),
-    re.compile(r"^\s*what was your role\b", re.IGNORECASE),
-    re.compile(r"^\s*how exactly\b", re.IGNORECASE),
-    re.compile(r"^\s*be more specific\b", re.IGNORECASE),
-    re.compile(r"^\s*walk me through\b", re.IGNORECASE),
-]
-CLARIFYING_PATTERNS = [
-    re.compile(r"\bclarify\b", re.IGNORECASE),
-    re.compile(r"\bmore specific\b", re.IGNORECASE),
-    re.compile(r"\bwhat exactly\b", re.IGNORECASE),
-    re.compile(r"\bcan you expand\b", re.IGNORECASE),
-    re.compile(r"\bhelp me understand\b", re.IGNORECASE),
-    re.compile(r"\bwhat do you mean\b", re.IGNORECASE),
-]
-DEEPENING_PATTERNS = [
-    re.compile(r"\bwhat broke\b", re.IGNORECASE),
-    re.compile(r"\bwhat happened next\b", re.IGNORECASE),
-    re.compile(r"\bwhy\b", re.IGNORECASE),
-    re.compile(r"\btrade-?off\b", re.IGNORECASE),
-    re.compile(r"\bedge case\b", re.IGNORECASE),
-    re.compile(r"\bon [a-z0-9_-]+", re.IGNORECASE),
-    re.compile(r"\byou mentioned\b", re.IGNORECASE),
-]
+LOGGER = logging.getLogger(__name__)
+EVALUATOR_PORT = 3000
 
 
+def utc_timestamp() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def log_path_for_input(input_path: Path) -> Path:
+    return Path("logs") / f"{input_path.stem}.log"
+
+
+def configure_file_logging(log_file: Path) -> Path:
+    log_file.parent.mkdir(parents=True, exist_ok=True)
+    logging.basicConfig(
+        filename=log_file,
+        filemode="a",
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
+        encoding="utf-8",
+    )
+    return log_file
+
+# extract turns from raw text
 def _extract_turns(raw_text: str) -> list[dict[str, Any]]:
     lines = raw_text.splitlines()
     turns: list[dict[str, Any]] = []
@@ -126,11 +106,16 @@ def _extract_turns(raw_text: str) -> list[dict[str, Any]]:
 
         if current_speaker is not None:
             current_message.append(line)
-
     flush_current()
     return turns
 
-
+"""
+Generate JSON response from Ollama.
+@param prompt - The prompt to send to the model.
+@param model - The model to use.
+@param host - The host to use.
+@return The JSON response from the model.
+"""
 def _ollama_generate_json(prompt: str, model: str, host: str) -> Any | None:
     body = json.dumps(
         {
@@ -168,131 +153,11 @@ def _ollama_generate_json(prompt: str, model: str, host: str) -> Any | None:
         except json.JSONDecodeError:
             return None
 
-
-def _normalize_single_call_cases(payload: Any) -> list[dict[str, Any]] | None:
-    if isinstance(payload, dict):
-        for key in ("cases", "test_cases", "items", "data", "result"):
-            maybe = payload.get(key)
-            if isinstance(maybe, list):
-                payload = maybe
-                break
-
-    if not isinstance(payload, list):
-        return None
-
-    normalized: list[dict[str, Any]] = []
-    allowed_turn_types = {"behavioral", "non_behavioral"}
-    allowed_probe_types = {"clarifying", "deepening"}
-
-    next_id = 1
-    for case in payload:
-        if not isinstance(case, dict):
-            continue
-
-        question = str(
-            case.get("question", case.get("main_question", case.get("interviewer_question", "")))
-        ).strip()
-        response = str(
-            case.get("response", case.get("main_response", case.get("candidate_response", "")))
-        ).strip()
-        turn_type = str(
-            case.get("turn_type", case.get("type", case.get("classification", "")))
-        ).strip().lower()
-        reasoning = str(
-            case.get(
-                "classification_reasoning",
-                case.get("reasoning", case.get("reason", "")),
-            )
-        ).strip()
-        if turn_type in {"non_question", "nonscorable", "non_scorable"}:
-            continue
-        if turn_type not in allowed_turn_types or not question:
-            continue
-
-        follow_ups_in = case.get("follow_ups", case.get("probes", case.get("followups", [])))
-        follow_ups_out: list[dict[str, Any]] = []
-        if isinstance(follow_ups_in, list):
-            for fu in follow_ups_in:
-                if not isinstance(fu, dict):
-                    continue
-                fu_question = str(
-                    fu.get("question", fu.get("follow_up_question", fu.get("interviewer_question", "")))
-                ).strip()
-                if not fu_question:
-                    continue
-                probe_type = str(fu.get("probe_type", "")).strip().lower()
-                if probe_type not in allowed_probe_types:
-                    probe_type = "clarifying"
-                follow_ups_out.append(
-                    {
-                        "question": fu_question,
-                        "response": str(fu.get("response", "")).strip(),
-                        "probe_type": probe_type,
-                        "classification_source": "ollama",
-                    }
-                )
-
-        normalized.append(
-            {
-                "id": next_id,
-                "label": f"Auto case {next_id}",
-                "turn_type": turn_type,
-                "rubric_type": turn_type,
-                "classification_source": "ollama",
-                "classification_reasoning": reasoning or "Single-pass transcript classification by Ollama.",
-                "question": question,
-                "response": response,
-                "follow_ups": follow_ups_out,
-                "expected": {},
-            }
-        )
-        next_id += 1
-
-    return normalized if normalized else None
-
-
-def _single_ollama_transcript_parse(
-    raw_text: str,
-    ollama_model: str,
-    ollama_host: str,
-) -> list[dict[str, Any]] | None:
-    prompt = f"""Convert the transcript into evaluator test cases.
-
-Return JSON only as an array of objects with this exact schema:
-[
-  {{
-    "question": "main interviewer question",
-    "response": "candidate response paired to main question",
-    "turn_type": "behavioral" | "non_behavioral",
-    "classification_reasoning": "one sentence",
-    "follow_ups": [
-      {{
-        "question": "follow-up interviewer question",
-        "response": "candidate response to this follow-up",
-        "probe_type": "clarifying" | "deepening"
-      }}
-    ]
-  }}
-]
-
-Rules:
-- Ignore non-scorable interviewer turns (greetings, logistics, setup chatter).
-- Keep only scorable main interviewer questions as top-level objects.
-- Attach follow-up probes to the most recent main question.
-- A main question should be classified as:
-  - behavioral: asks for a specific past example/experience.
-  - non_behavioral: scorable but does not require specific past example.
-- Do not include markdown fences or extra keys.
-
-Transcript:
-{raw_text}
 """
-    parsed = _ollama_generate_json(prompt, ollama_model, ollama_host)
-    if parsed is None:
-        return None
-    return _normalize_single_call_cases(parsed)
-
-
+Heuristic turn classification.
+@param question_text - The question text to classify.
+@return The classification result.
+"""
 def _heuristic_turn_classification(question_text: str) -> dict[str, str | bool]:
     cleaned = " ".join(question_text.strip().split())
     if not cleaned:
@@ -323,12 +188,14 @@ def _heuristic_turn_classification(question_text: str) -> dict[str, str | bool]:
         "source": "heuristic",
     }
 
-
-def _classify_turn(
-    question_text: str,
-    ollama_model: str | None,
-    ollama_host: str,
-) -> dict[str, str | bool]:
+"""
+Classify the turn using Ollama.
+@param question_text - The question text to classify.
+@param ollama_model - The model to use.
+@param ollama_host - The host to use.
+@return The classification result.
+"""
+def _classify_turn(question_text: str,ollama_model: str | None, ollama_host: str,) -> dict[str, str | bool]:
     if not ollama_model:
         return _heuristic_turn_classification(question_text)
 
@@ -363,12 +230,23 @@ Interviewer turn:
         "source": "ollama",
     }
 
-
+"""
+Check if the question is a follow-up.
+@param question_text - The question text to check.
+@return True if the question is a follow-up, False otherwise.
+"""
 def _heuristic_is_follow_up(question_text: str) -> bool:
     cleaned = question_text.strip()
     return any(pattern.search(cleaned) for pattern in FOLLOW_UP_PATTERNS)
 
-
+"""
+Check if the question is a follow-up question.
+@param question_text - The question text to check.
+@param previous_case - The previous case.
+@param ollama_model - The model to use.
+@param ollama_host - The host to use.
+@return True if the question is a follow-up question, False otherwise.
+"""
 def _is_follow_up_question(
     question_text: str,
     previous_case: dict[str, Any] | None,
@@ -446,7 +324,6 @@ def parse_transcript_to_test_cases(
     raw_text: str,
     ollama_model: str | None = None,
     ollama_host: str = "http://127.0.0.1:11434",
-    print_each_entry: bool = False,
 ) -> list[dict[str, Any]]:
     turns = _extract_turns(raw_text)
     cases: list[dict[str, Any]] = []
@@ -494,12 +371,6 @@ def parse_transcript_to_test_cases(
                     "classification_source": follow_up["classification_source"],
                 }
             )
-            if print_each_entry:
-                print(
-                    f'ENTRY {cases[-1]["id"]} follow_up '
-                    f'({follow_up["classification_source"]}): '
-                    f'{json.dumps(follow_up, ensure_ascii=False)}'
-                )
         else:
             case_entry = {
                 "id": case_id,
@@ -514,12 +385,6 @@ def parse_transcript_to_test_cases(
                 "expected": {},
             }
             cases.append(case_entry)
-            if print_each_entry:
-                print(
-                    f'ENTRY {case_entry["id"]} '
-                    f'({case_entry["classification_source"]}): '
-                    f'{json.dumps(case_entry, ensure_ascii=False)}'
-                )
             case_id += 1
 
         i += 2 if consumed_candidate else 1
@@ -527,16 +392,142 @@ def parse_transcript_to_test_cases(
     return cases
 
 
+def get_input_path(input_arg: str | None) -> Path:
+    if input_arg:
+        return resolve_input_path(input_arg)
+
+    while True:
+        prompted_path = input("Enter the TXT file to convert: ").strip().strip('"')
+        if prompted_path:
+            return resolve_input_path(prompted_path)
+        print("Please enter a file path.")
+
+
+def resolve_input_path(input_value: str) -> Path:
+    input_path = Path(input_value)
+    if input_path.exists() or input_path.parent != Path("."):
+        return input_path
+
+    input_data_path = Path("input data") / input_path
+    if input_data_path.exists():
+        return input_data_path
+
+    return input_path
+
+
+def get_batch_size(batch_size_arg: int | None) -> int:
+    if batch_size_arg is not None:
+        if 1 <= batch_size_arg <= 7:
+            return batch_size_arg
+        raise ValueError("Batch size must be between 1 and 7.")
+
+    while True:
+        prompted_size = input("Enter batch size (1-7): ").strip()
+        try:
+            batch_size = int(prompted_size)
+        except ValueError:
+            print("Please enter a whole number from 1 to 7.")
+            continue
+
+        if 1 <= batch_size <= 7:
+            return batch_size
+        print("Please enter a batch size from 1 to 7.")
+
+
+def log_parsed_cases(cases: list[dict[str, Any]]) -> None:
+    LOGGER.info("Detected %s evaluator cases", len(cases))
+    for case in cases:
+        pair_started_at = utc_timestamp()
+        question = str(case.get("question", ""))
+        response = str(case.get("response", ""))
+        pair_finished_at = utc_timestamp()
+        LOGGER.info(
+            "Question/answer pair %s: started_at=%s finished_at=%s "
+            "question_chars=%s answer_chars=%s follow_ups=%s",
+            case.get("id"),
+            pair_started_at,
+            pair_finished_at,
+        )
+
+
+def run_evaluator_html(
+    json_path: Path,
+    batch_size: int,
+    evaluator_html_path: str = "evaluator.html",
+) -> str:
+    evaluator_html = Path(evaluator_html_path)
+    if not evaluator_html.exists():
+        raise FileNotFoundError(f"Missing evaluator HTML file: {evaluator_html}")
+
+    start_http_server_if_needed(EVALUATOR_PORT)
+    query_input = json_path_for_browser(json_path)
+    query = urlencode(
+        {
+            "input": query_input,
+            "batch_size": batch_size,
+        }
+    )
+    evaluator_url = f"http://localhost:{EVALUATOR_PORT}/{evaluator_html.as_posix()}?{query}"
+
+    LOGGER.info("Opening evaluator HTML: %s", evaluator_url)
+    webbrowser.open(evaluator_url)
+    return evaluator_url
+
+
+def json_path_for_browser(json_path: Path) -> str:
+    try:
+        return json_path.resolve().relative_to(Path.cwd().resolve()).as_posix()
+    except ValueError:
+        LOGGER.warning(
+            "Output JSON is outside the project folder and may not be loadable: %s",
+            json_path,
+        )
+        return json_path.as_posix()
+
+
+def start_http_server_if_needed(port: int) -> None:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.settimeout(0.5)
+        if sock.connect_ex(("127.0.0.1", port)) == 0:
+            LOGGER.info("Reusing existing local server on port %s", port)
+            return
+
+    creationflags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
+    subprocess.Popen(
+        [sys.executable, "-m", "http.server", str(port)],
+        cwd=Path.cwd(),
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        creationflags=creationflags,
+    )
+    time.sleep(1)
+    LOGGER.info("Started local server on port %s", port)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Convert transcript text into evaluator-ready JSON."
+        description="Convert transcript text into evaluator-ready JSON and run evaluation."
     )
-    parser.add_argument("input", help="Path to transcript text file")
+    parser.add_argument(
+        "input",
+        nargs="?",
+        help="Path to transcript text file. If omitted, you will be prompted.",
+    )
     parser.add_argument(
         "--indent",
         type=int,
         default=2,
         help="JSON indentation (default: 2)",
+    )
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        help="Evaluator batch size from 1 to 7. If omitted, you will be prompted.",
+    )
+    parser.add_argument(
+        "--evaluator-html",
+        default="evaluator.html",
+        help="Path to evaluator.html. Defaults to evaluator.html in this folder.",
     )
     parser.add_argument(
         "--ollama-model",
@@ -548,29 +539,51 @@ def main() -> None:
         default=os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434"),
         help="Ollama host URL (default: http://127.0.0.1:11434).",
     )
-    parser.add_argument(
-        "--print-each-entry",
-        action="store_true",
-        help="Print each completed case/follow-up as it is parsed.",
-    )
     args = parser.parse_args()
 
-    input_path = Path(args.input)
+    input_path = get_input_path(args.input)
+    batch_size = get_batch_size(args.batch_size)
+    log_file = configure_file_logging(log_path_for_input(input_path))
+    LOGGER.info("Starting convert and evaluate task; logging to %s", log_file)
+    LOGGER.info("input=%s batch_size=%s", input_path, batch_size)
+
     if not input_path.exists():
+        LOGGER.error("Input file not found: %s", input_path)
         raise FileNotFoundError(f"Input file not found: {input_path}")
     if input_path.suffix.lower() != ".txt":
+        LOGGER.error("Input must be a .txt file. Got: %s", input_path.name)
         raise ValueError(f"Input must be a .txt file. Got: {input_path.name}")
 
+    conversion_started_at = utc_timestamp()
     output_path = input_path.with_suffix(".json")
     raw_text = input_path.read_text(encoding="utf-8")
+    LOGGER.info(
+        "Parsing transcript: input=%s chars=%s classifier=%s",
+        input_path,
+        len(raw_text),
+        f"ollama:{args.ollama_model}" if args.ollama_model else "heuristic-only",
+    )
     parsed_cases = parse_transcript_to_test_cases(
         raw_text,
         ollama_model=args.ollama_model,
         ollama_host=args.ollama_host,
-        print_each_entry=args.print_each_entry,
     )
+    LOGGER.info("Parsed transcript into %s cases", len(parsed_cases))
+    log_parsed_cases(parsed_cases)
     output_path.write_text(
         json.dumps(parsed_cases, indent=args.indent), encoding="utf-8"
+    )
+    conversion_finished_at = utc_timestamp()
+    LOGGER.info(
+        "Finished conversion: input=%s output=%s started_at=%s finished_at=%s "
+        "input_chars=%s cases=%s batch_size=%s",
+        input_path,
+        output_path,
+        conversion_started_at,
+        conversion_finished_at,
+        len(raw_text),
+        len(parsed_cases),
+        batch_size,
     )
 
     classifier_mode = (
@@ -579,6 +592,8 @@ def main() -> None:
     print(f"Wrote JSON to: {output_path}")
     print(f"Cases: {len(parsed_cases)}")
     print(f"Classifier: {classifier_mode}")
+    evaluator_url = run_evaluator_html(output_path, batch_size, args.evaluator_html)
+    print(f"Opened evaluator: {evaluator_url}")
 
 
 if __name__ == "__main__":

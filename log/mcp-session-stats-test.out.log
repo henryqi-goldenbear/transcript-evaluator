@@ -1,4 +1,0 @@
-Reviewer agent listening on http://127.0.0.1:8810
-Reviewer provider: mcp
-MCP mode: stdio
-MCP tool: session_stats
