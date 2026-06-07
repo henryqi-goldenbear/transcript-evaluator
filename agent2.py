@@ -17,7 +17,7 @@ import os
 import socket
 import ssl
 import sys
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 from urllib import error, request
@@ -31,8 +31,36 @@ DEFAULT_PLAYGROUND_PROMPT = "Hello! Reply with one short sentence confirming Age
 MAX_TEXT_CHARS = 60_000
 
 
-def utc_stamp() -> str:
-    return datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+def local_file_stamp(include_date: bool = True) -> str:
+    return datetime.now().strftime("%Y%m%d_%H%M%S" if include_date else "%H%M%S")
+
+
+def local_report_date_label() -> str:
+    return datetime.now().strftime("%m/%d/%y")
+
+
+def local_report_date_filename() -> str:
+    return datetime.now().strftime("%m-%d-%y")
+
+
+def local_time_mark() -> str:
+    return datetime.now().strftime("%H:%M:%S")
+
+
+def safe_filename_part(value: str, fallback: str = "handoff") -> str:
+    clean = "".join(char if char.isalnum() or char in {"-", "_"} else "_" for char in value.strip())
+    clean = "_".join(part for part in clean.split("_") if part)
+    return clean or fallback
+
+
+def unique_path(path: Path) -> Path:
+    if not path.exists():
+        return path
+    for index in range(2, 1000):
+        candidate = path.with_name(f"{path.stem}_{index}{path.suffix}")
+        if not candidate.exists():
+            return candidate
+    raise RuntimeError(f"Could not find an available report filename for {path}")
 
 
 def load_dotenv(path: Path) -> None:
@@ -62,7 +90,7 @@ def agent2_logs_dir() -> Path:
 
 
 def append_agent_log(message: str) -> None:
-    line = f"{datetime.now(timezone.utc).isoformat()} {message}\n"
+    line = f"{local_time_mark()} {message}\n"
     (agent2_logs_dir() / "agent2.log").open("a", encoding="utf-8").write(line)
 
 
@@ -252,11 +280,22 @@ def extract_text(response: dict[str, Any]) -> str:
     return "\n".join(chunk.strip() for chunk in chunks if chunk.strip()).strip()
 
 
-def write_report(response: dict[str, Any], source_name: str = "handoff") -> Path:
+def payload_file_stem(payload: dict[str, Any] | None) -> str:
+    if not payload:
+        return "playground_prompt"
+    for key in ("input_json_file", "input_file", "log_file"):
+        value = str(payload.get(key) or "").strip()
+        if value:
+            return safe_filename_part(Path(value).stem)
+    return "handoff"
+
+
+def write_report(response: dict[str, Any], source_name: str = "handoff", file_stem: str = "handoff") -> Path:
     report_text = extract_text(response) or json.dumps(response, indent=2)
-    report_path = agent2_logs_dir() / f"agent2_report_{utc_stamp()}.md"
+    report_name = f"agent2_{safe_filename_part(file_stem)}_{local_report_date_filename()}.md"
+    report_path = unique_path(agent2_logs_dir() / report_name)
     conversation_id = response.get("conversation_id")
-    header = f"# Agent 2 Report\n\nSource: {source_name}\n"
+    header = f"# Agent 2 Report\n\nSource: {source_name}\nDate: {local_report_date_label()}\n"
     if conversation_id:
         header += f"Conversation ID: {conversation_id}\n"
     report_path.write_text(f"{header}\n{report_text}\n", encoding="utf-8")
@@ -266,6 +305,7 @@ def write_report(response: dict[str, Any], source_name: str = "handoff") -> Path
 
 def run(ws_url: str | None, prompt: str | None, dry_run: bool) -> tuple[Path, str]:
     load_dotenv(Path.cwd() / ".env")
+    payload: dict[str, Any] | None = None
     if ws_url:
         payload = json.loads(websocket_receive_text(ws_url))
         built_prompt = build_prompt(payload)
@@ -277,14 +317,16 @@ def run(ws_url: str | None, prompt: str | None, dry_run: bool) -> tuple[Path, st
         built_prompt = DEFAULT_PLAYGROUND_PROMPT
         source_name = "playground prompt"
 
+    file_stem = payload_file_stem(payload)
     if dry_run:
-        report_path = agent2_logs_dir() / f"agent2_prompt_{utc_stamp()}.txt"
+        prompt_name = f"agent2_prompt_{safe_filename_part(file_stem)}_{local_report_date_filename()}_{local_file_stamp(include_date=False)}.txt"
+        report_path = unique_path(agent2_logs_dir() / prompt_name)
         report_path.write_text(built_prompt, encoding="utf-8")
         append_agent_log(f"Wrote dry-run prompt to {report_path}")
         return report_path, built_prompt
 
     response = call_mistral_agent(built_prompt)
-    report_path = write_report(response, source_name)
+    report_path = write_report(response, source_name, file_stem)
     return report_path, extract_text(response) or json.dumps(response, indent=2)
 
 

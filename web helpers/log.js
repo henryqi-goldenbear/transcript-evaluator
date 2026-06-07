@@ -15,10 +15,6 @@
     return `${(n / 1000).toFixed(2)}s`;
   }
 
-  function formatIso(tsMs) {
-    return new Date(tsMs).toISOString();
-  }
-
   function formatTimeOnly(tsMs) {
     const d = new Date(tsMs);
     const hh = String(d.getHours()).padStart(2, "0");
@@ -115,7 +111,6 @@
     appendPipelineLog,
     appendPipelineResult,
     escapeHtml,
-    formatIso,
     formatMs,
     formatTimeOnly,
     flushPipelineLog,

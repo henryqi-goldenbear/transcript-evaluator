@@ -42,7 +42,7 @@ import subprocess
 import sys
 import time
 import webbrowser
-from datetime import datetime, timezone
+from datetime import datetime
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -56,12 +56,13 @@ from patterns import SPEAKER_RE, NON_QUESTION_PATTERNS, BEHAVIORAL_PATTERNS, FOL
 LOGGER = logging.getLogger(__name__)
 EVALUATOR_PORT = 3000
 AGENT2_BRIDGE = Agent2Bridge()
-DEFAULT_MISTRAL_MODEL = "mistral-large-latest"
+DEFAULT_MISTRAL_MODEL = "mistral-small-latest"
 DEFAULT_MISTRAL_API_BASE = "https://api.mistral.ai/v1"
+EVALUATOR_ASSET_VERSION = "mistral-small-1"
 
 
-def utc_timestamp() -> str:
-    return datetime.now(timezone.utc).isoformat()
+def local_time_mark() -> str:
+    return datetime.now().strftime("%H:%M:%S")
 
 
 def load_dotenv(path: Path = Path(".env")) -> None:
@@ -89,6 +90,7 @@ def configure_file_logging(log_file: Path) -> Path:
         filemode="a",
         level=logging.INFO,
         format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
+        datefmt="%H:%M:%S",
         encoding="utf-8",
     )
     return log_file
@@ -457,10 +459,10 @@ def get_batch_size(batch_size_arg: int | None) -> int:
 def log_parsed_cases(cases: list[dict[str, Any]]) -> None:
     LOGGER.info("Detected %s evaluator cases", len(cases))
     for case in cases:
-        pair_started_at = utc_timestamp()
+        pair_started_at = local_time_mark()
         question = str(case.get("question", ""))
         response = str(case.get("response", ""))
-        pair_finished_at = utc_timestamp()
+        pair_finished_at = local_time_mark()
         LOGGER.info(
             "Question/answer pair %s: started_at=%s finished_at=%s "
             "question_chars=%s answer_chars=%s follow_ups=%s",
@@ -486,6 +488,7 @@ def run_evaluator_html(
     server_port = start_http_server_if_needed(EVALUATOR_PORT)
     query_input = json_path_for_browser(json_path)
     query_args = {
+        "v": EVALUATOR_ASSET_VERSION,
         "input": query_input,
         "batch_size": batch_size,
     }
@@ -632,6 +635,11 @@ def call_mistral_evaluator(system_prompt: str, user_message: str, model: str | N
 class PipelineHTTPRequestHandler(SimpleHTTPRequestHandler):
     server_version = "TranscriptEvaluatorPipeline/1.0"
 
+    def end_headers(self) -> None:
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")
+        self.send_header("Pragma", "no-cache")
+        super().end_headers()
+
     def log_message(self, format: str, *args: Any) -> None:
         LOGGER.info("server %s - %s", self.address_string(), format % args)
 
@@ -696,6 +704,7 @@ def run_pipeline_server(port: int) -> None:
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
+        datefmt="%H:%M:%S",
         encoding="utf-8",
     )
     server = ThreadingHTTPServer(("127.0.0.1", port), PipelineHTTPRequestHandler)
@@ -762,7 +771,7 @@ def main() -> None:
         LOGGER.error("Input must be a .txt file. Got: %s", input_path.name)
         raise ValueError(f"Input must be a .txt file. Got: {input_path.name}")
 
-    conversion_started_at = utc_timestamp()
+    conversion_started_at = local_time_mark()
     output_path = input_path.with_suffix(".json")
     raw_text = input_path.read_text(encoding="utf-8")
     LOGGER.info(
@@ -781,7 +790,7 @@ def main() -> None:
     output_path.write_text(
         json.dumps(parsed_cases, indent=args.indent), encoding="utf-8"
     )
-    conversion_finished_at = utc_timestamp()
+    conversion_finished_at = local_time_mark()
     LOGGER.info(
         "Finished conversion: input=%s output=%s started_at=%s finished_at=%s "
         "input_chars=%s cases=%s batch_size=%s",

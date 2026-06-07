@@ -126,7 +126,7 @@
     runBtn.disabled = true;
     stopBtn.disabled = false;
     logEl.textContent = "";
-    LogUtils.appendPipelineLog(`[pipeline] Evaluator run started at ${new Date().toISOString()}\n`);
+    LogUtils.appendPipelineLog(`[pipeline] Evaluator run started at ${LogUtils.formatTimeOnly(Date.now())}\n`);
 
     let cases;
     try {
@@ -223,8 +223,8 @@
                 overallDisplay,
                 durationMs,
                 duration: LogUtils.formatMs(durationMs),
-                startedAtIso: LogUtils.formatIso(startedMs),
-                endedAtIso: LogUtils.formatIso(endedMs)
+                startedAt: LogUtils.formatTimeOnly(startedMs),
+                endedAt: LogUtils.formatTimeOnly(endedMs)
               });
               LogUtils.appendBatchLog(logEl, `[ok] #${tc.id} ${tc.label} | ${tc.rubric_type} | model=${modelUsed} | overall=${overallDisplay}\n`);
               LogUtils.appendBatchLog(logEl, buildScoreBreakdown(parsed));
@@ -237,8 +237,8 @@
                 overall,
                 overallDisplay,
                 durationMs,
-                startedAtIso: LogUtils.formatIso(startedMs),
-                endedAtIso: LogUtils.formatIso(endedMs),
+                startedAt: LogUtils.formatTimeOnly(startedMs),
+                endedAt: LogUtils.formatTimeOnly(endedMs),
                 parsed
               });
               Analytics.verboseLog(debugMode, logEl, `trace=${traceCtx.traceId} case=${tc.id} completed overall=${overallDisplay}`);
@@ -307,7 +307,7 @@
         const totalDuration = LogUtils.formatMs(Date.now() - processStartMs);
         if (canExportPdf) {
           await PdfReport.generateBatchPdf({
-            runTimeIso: runStartedAt.toISOString(),
+            runTime: LogUtils.formatTimeOnly(runStartedAt.getTime()),
             model,
             inputFile: requestedFile,
             batchSize,
@@ -348,7 +348,7 @@
         success: results.length,
         failed: failures,
         completedAll: results.length + failures === total,
-        finishedAtIso: new Date().toISOString()
+        finishedAt: LogUtils.formatTimeOnly(Date.now())
       });
 
       try {

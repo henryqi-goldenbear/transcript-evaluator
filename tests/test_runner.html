@@ -264,7 +264,7 @@
 
     <div class="field grow">
       <label>Model</label>
-      <select id="model-select"><optgroup label="Mistral"><option value="mistral-large-latest" selected>mistral-large-latest</option><option value="mistral-small-latest">mistral-small-latest</option></optgroup></select>
+      <select id="model-select"><optgroup label="Mistral"><option value="mistral-small-latest" selected>mistral-small-latest</option><option value="mistral-large-latest">mistral-large-latest</option></optgroup></select>
     </div>
 
     <div class="field mid">
@@ -687,7 +687,7 @@ async function loadCases() {
     status.textContent = `${allCases.length} test cases loaded.`;
     checkReady();
   } catch (err) {
-    status.innerHTML = `<span class="error-text">Failed to load required files: ${err.message}. Serve via http.server, not file://.</span>`;
+    status.innerHTML = `<span class="error-text">Failed to load required files: ${err.message}. Open this through the transcript evaluator pipeline server, not file://.</span>`;
   }
 }
 

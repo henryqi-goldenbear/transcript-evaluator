@@ -1,15 +1,42 @@
-[pipeline] Evaluator run started at 2026-06-07T01:31:08.643Z
-[ok] #1 Auto case 1 | behavioral | model=mistral-large-latest | overall=4
+﻿19:23:44 INFO [__main__] Starting convert and evaluate task; logging to logs\one_entry_eval.log
+19:23:44 INFO [__main__] input=input data\one_entry.txt batch_size=1
+19:23:44 INFO [__main__] Parsing transcript: input=input data\one_entry.txt chars=312 classifier=heuristic-only
+19:23:44 INFO [__main__] Parsed transcript into 1 cases
+19:23:44 INFO [__main__] Detected 1 evaluator cases
+19:23:44 INFO [__main__] Question/answer pair 1: started_at=19:23:44 finished_at=19:23:44 question_chars=44 answer_chars=241 follow_ups=0
+19:23:44 INFO [__main__] Finished conversion: input=input data\one_entry.txt output=input data\one_entry.json started_at=19:23:44 finished_at=19:23:44 input_chars=312 cases=1 batch_size=1
+19:23:45 INFO [__main__] Reusing existing pipeline server on port 3000
+19:23:45 INFO [__main__] Opening evaluator HTML: http://localhost:3000/evaluator.html?v=mistral-small-1&input=input+data%2Fone_entry.json&batch_size=1&log_file=logs%2Fone_entry_eval.log
+[pipeline] Evaluator run started at 19:23:46
+[pipeline] Evaluator run started at 19:23:46
+[ok] #1 Auto case 1 | behavioral | model=mistral-small-latest | overall=5
      breakdown: scorable=true | path=behavioral
-     - scorable_reasoning: The response describes a specific situation, action, and outcome, making it scorable.
-     - base: 4 | The response addresses the question directly and provides a clear scenario.
-     - personal_contribution: 5 | The candidate explicitly states they identified the issue, wrote the script, and implemented it.
-     - real_example: 4 | The example is concrete but lacks some specific details (e.g., context, metrics).
-     - outcome: 4 | The outcome is positive and clear but could benefit from quantifiable results.
-     - follow_up: present=false | probe=none | impact=none | No follow-up probe was applied in this turn.
-     - overall: 4 | The response is strong in personal contribution and clarity but could improve with more specifics and measurable outcomes.
-     start=18:31:09 | end=18:31:13 | duration=4.68s
-[result] {"status":"ok","id":1,"label":"Auto case 1","rubric_type":"behavioral","overall":4,"overallDisplay":4,"durationMs":4683,"startedAtIso":"2026-06-07T01:31:09.001Z","endedAtIso":"2026-06-07T01:31:13.684Z","parsed":{"scorable":{"value":true,"reasoning":"The response describes a specific situation, action, and outcome, making it scorable."},"path":"behavioral","base":{"score":4,"reasoning":"The response addresses the question directly and provides a clear scenario."},"personal_contribution":{"score":5,"reasoning":"The candidate explicitly states they identified the issue, wrote the script, and implemented it."},"real_example":{"score":4,"reasoning":"The example is concrete but lacks some specific details (e.g., context, metrics)."},"outcome":{"score":4,"reasoning":"The outcome is positive and clear but could benefit from quantifiable results."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was applied in this turn."},"flags":[],"overall":{"score":4,"reasoning":"The response is strong in personal contribution and clarity but could improve with more specifics and measurable outcomes."}}}
+     - scorable_reasoning: The response is a clear behavioral example addressing process improvement.
+     - base: 5 | The response is clear, concise, and directly addresses the question.
+     - personal_contribution: 5 | The candidate explicitly describes their direct role in identifying and implementing the solution.
+     - real_example: 5 | A specific, concrete example is provided with clear context and actions.
+     - outcome: 4 | The outcome is mentioned but lacks quantifiable details (e.g., 'a lot of time' could be more specific).
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 5 | The response is strong, with clear personal contribution and a real example, though the outcome could be more specific.
+     start=19:23:46 | end=19:23:49 | duration=2.23s
+[ok] #1 Auto case 1 | behavioral | model=mistral-small-latest | overall=5
+[result] {"status":"ok","id":1,"label":"Auto case 1","rubric_type":"behavioral","overall":5,"overallDisplay":5,"durationMs":2234,"startedAt":"19:23:46","endedAt":"19:23:49","parsed":{"scorable":{"value":true,"reasoning":"The response is a clear behavioral example addressing process improvement."},"path":"behavioral","base":{"score":5,"reasoning":"The response is clear, concise, and directly addresses the question."},"personal_contribution":{"score":5,"reasoning":"The candidate explicitly describes their direct role in identifying and implementing the solution."},"real_example":{"score":5,"reasoning":"A specific, concrete example is provided with clear context and actions."},"outcome":{"score":4,"reasoning":"The outcome is mentioned but lacks quantifiable details (e.g., 'a lot of time' could be more specific)."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":5,"reasoning":"The response is strong, with clear personal contribution and a real example, though the outcome could be more specific."}}}
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response describes a specific past experience with clear actions and outcomes.
+     - base: 5 | The response is clear, concise, and directly addresses the question.
+     - personal_contribution: 5 | The candidate explicitly states they wrote the script themselves and took ownership of the solution.
+     - real_example: 5 | A concrete example is provided with specific details about the process and the improvement.
+     - outcome: 4 | The outcome is mentioned ('saved everyone a lot of time') but lacks quantifiable metrics.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 5 | The response is strong across all behavioral dimensions, with only a minor gap in quantifiable outcomes.
 [pdf] Evaluation report PDF downloaded.
-[result] {"status":"done","inputFile":"input data/one_entry.json","model":"mistral-large-latest","batchSize":1,"total":1,"success":1,"failed":0,"completedAll":true,"finishedAtIso":"2026-06-07T01:31:13.696Z"}
+     start=19:23:47 | end=19:23:49 | duration=2.07s
+[result] {"status":"done","inputFile":"input data/one_entry.json","model":"mistral-small-latest","batchSize":1,"total":1,"success":1,"failed":0,"completedAll":true,"finishedAt":"19:23:49"}
+[result] {"status":"ok","id":1,"label":"Auto case 1","rubric_type":"behavioral","overall":5,"overallDisplay":5,"durationMs":2068,"startedAt":"19:23:47","endedAt":"19:23:49","parsed":{"scorable":{"value":true,"reasoning":"The response describes a specific past experience with clear actions and outcomes."},"path":"behavioral","base":{"score":5,"reasoning":"The response is clear, concise, and directly addresses the question."},"personal_contribution":{"score":5,"reasoning":"The candidate explicitly states they wrote the script themselves and took ownership of the solution."},"real_example":{"score":5,"reasoning":"A concrete example is provided with specific details about the process and the improvement."},"outcome":{"score":4,"reasoning":"The outcome is mentioned ('saved everyone a lot of time') but lacks quantifiable metrics."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":5,"reasoning":"The response is strong across all behavioral dimensions, with only a minor gap in quantifiable outcomes."}}}
+[pdf] Evaluation report PDF downloaded.
 [agent2] queued: evaluation log, input text, and input JSON queued for Agent 2 websocket delivery
+[result] {"status":"done","inputFile":"input data/one_entry.json","model":"mistral-small-latest","batchSize":1,"total":1,"success":1,"failed":0,"completedAll":true,"finishedAt":"19:23:50"}
+[agent2] queued: evaluation log, input text, and input JSON queued for Agent 2 websocket delivery
+
+[pipeline] Evaluator run started at 19:25:15
+

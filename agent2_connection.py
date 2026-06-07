@@ -10,7 +10,7 @@ import os
 import subprocess
 import sys
 import threading
-from datetime import datetime, timezone
+from datetime import datetime
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler
 from pathlib import Path
@@ -21,8 +21,8 @@ LOGGER = logging.getLogger(__name__)
 WEBSOCKET_GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 
 
-def utc_timestamp() -> str:
-    return datetime.now(timezone.utc).isoformat()
+def local_time_mark() -> str:
+    return datetime.now().strftime("%H:%M:%S")
 
 
 def path_for_browser(path: Path) -> str:
@@ -118,7 +118,7 @@ class Agent2Bridge:
 
         payload = {
             "type": "evaluation_handoff",
-            "created_at": utc_timestamp(),
+            "created_at": local_time_mark(),
             "log_file": path_for_browser(log_file),
             "input_file": path_for_browser(input_file),
             "log_text": log_file.read_text(encoding="utf-8", errors="replace"),
@@ -136,7 +136,7 @@ class Agent2Bridge:
             payload = self._pending_payloads.pop(0) if self._pending_payloads else None
         return payload or {
             "type": "evaluation_handoff",
-            "created_at": utc_timestamp(),
+            "created_at": local_time_mark(),
             "error": "no pending Agent 2 payload",
         }
 

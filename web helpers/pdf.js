@@ -62,7 +62,7 @@
     doc.text("Transcript Evaluator - Batch Report", left, y);
     y += 20;
 
-    addLine(`Run time: ${reportData.runTimeIso}`);
+    addLine(`Run time: ${reportData.runTime}`);
     addLine(`Model: ${reportData.model}`);
     addLine(`Input file: ${reportData.inputFile}`);
     addLine(`Batch size: ${reportData.batchSize}`);
