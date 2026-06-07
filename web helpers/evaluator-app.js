@@ -23,8 +23,7 @@
   }
 
   function checkReady() {
-    const key = (window.GEMINI_API_KEY || "").trim();
-    document.getElementById("run-entire-btn").disabled = !(Rubrics.hasLoaded() && key.length > 10);
+    document.getElementById("run-entire-btn").disabled = !Rubrics.hasLoaded();
   }
 
   function clampBatchSize(v) {
@@ -58,6 +57,50 @@
     };
   }
 
+  function formatScoreValue(value) {
+    return typeof value === "number" ? String(value) : "n/a";
+  }
+
+  function scoreLine(name, scoreObj) {
+    if (!scoreObj || typeof scoreObj !== "object") return `     - ${name}: n/a`;
+    const score = formatScoreValue(scoreObj.score);
+    const reasoning = scoreObj.reasoning ? ` | ${scoreObj.reasoning}` : "";
+    return `     - ${name}: ${score}${reasoning}`;
+  }
+
+  function buildScoreBreakdown(parsed) {
+    const lines = [];
+    lines.push(`     breakdown: scorable=${parsed?.scorable?.value ?? "unknown"} | path=${parsed?.path || "unknown"}`);
+    if (parsed?.scorable?.reasoning) {
+      lines.push(`     - scorable_reasoning: ${parsed.scorable.reasoning}`);
+    }
+    lines.push(scoreLine("base", parsed?.base));
+    lines.push(scoreLine("personal_contribution", parsed?.personal_contribution));
+    lines.push(scoreLine("real_example", parsed?.real_example));
+    lines.push(scoreLine("outcome", parsed?.outcome));
+    if (Array.isArray(parsed?.type_specific_dimensions) && parsed.type_specific_dimensions.length) {
+      for (const dim of parsed.type_specific_dimensions) {
+        const name = dim?.name || "type_specific";
+        lines.push(scoreLine(name, dim));
+      }
+    }
+    if (parsed?.follow_up) {
+      const follow = parsed.follow_up;
+      const details = [
+        `present=${follow.present ?? "unknown"}`,
+        `probe=${follow.probe_type ?? "none"}`,
+        `impact=${follow.impact ?? "none"}`
+      ].join(" | ");
+      const reasoning = follow.reasoning ? ` | ${follow.reasoning}` : "";
+      lines.push(`     - follow_up: ${details}${reasoning}`);
+    }
+    if (Array.isArray(parsed?.flags) && parsed.flags.length) {
+      lines.push(`     - flags: ${parsed.flags.join(", ")}`);
+    }
+    lines.push(scoreLine("overall", parsed?.overall));
+    return `${lines.join("\n")}\n`;
+  }
+
   function updateBatchProgress(batchStatusEl, total, results, failures, batchSize, processedUpperBound) {
     const processed = results.length + failures;
     batchStatusEl.innerHTML =
@@ -68,12 +111,6 @@
     stopBatch = false;
     batchAbortController = new AbortController();
     const batchSignal = batchAbortController.signal;
-    const apiKey = (window.GEMINI_API_KEY || "").trim();
-    if (!apiKey) {
-      alert("Missing API key. Set window.GEMINI_API_KEY in config.js.");
-      return;
-    }
-
     const batchInput = document.getElementById("batch-size-input");
     const batchSize = clampBatchSize(batchInput.value);
     batchInput.value = String(batchSize);
@@ -89,6 +126,7 @@
     runBtn.disabled = true;
     stopBtn.disabled = false;
     logEl.textContent = "";
+    LogUtils.appendPipelineLog(`[pipeline] Evaluator run started at ${LogUtils.formatTimeOnly(Date.now())}\n`);
 
     let cases;
     try {
@@ -125,7 +163,7 @@
       for (let i = 0; i < total; i += batchSize) {
         if (stopBatch) {
           batchStatusEl.textContent = `Stopped. Processed: ${results.length + failures}/${total}, Success: ${results.length}, Failed: ${failures}`;
-          logEl.textContent += "[stop] Batch run stopped by user.\n";
+          LogUtils.appendBatchLog(logEl, "[stop] Batch run stopped by user.\n");
           stopped = true;
           return;
         }
@@ -151,8 +189,7 @@
               const prompt = Rubrics.buildEvaluationPrompt();
               const userMsg = Rubrics.buildUserMessage(tc);
               const startedMs = Date.now();
-              const { parsed } = await GeminiClient.evaluateCase(
-                apiKey,
+              const { parsed, modelUsed } = await MistralClient.evaluateCase(
                 model,
                 prompt,
                 userMsg,
@@ -186,11 +223,24 @@
                 overallDisplay,
                 durationMs,
                 duration: LogUtils.formatMs(durationMs),
-                startedAtIso: LogUtils.formatIso(startedMs),
-                endedAtIso: LogUtils.formatIso(endedMs)
+                startedAt: LogUtils.formatTimeOnly(startedMs),
+                endedAt: LogUtils.formatTimeOnly(endedMs)
               });
-              logEl.textContent += `[ok] #${tc.id} ${tc.label} | ${tc.rubric_type} | overall=${overallDisplay}\n`;
-              logEl.textContent += `     start=${LogUtils.formatTimeOnly(startedMs)} | end=${LogUtils.formatTimeOnly(endedMs)} | duration=${LogUtils.formatMs(durationMs)}\n`;
+              LogUtils.appendBatchLog(logEl, `[ok] #${tc.id} ${tc.label} | ${tc.rubric_type} | model=${modelUsed} | overall=${overallDisplay}\n`);
+              LogUtils.appendBatchLog(logEl, buildScoreBreakdown(parsed));
+              LogUtils.appendBatchLog(logEl, `     start=${LogUtils.formatTimeOnly(startedMs)} | end=${LogUtils.formatTimeOnly(endedMs)} | duration=${LogUtils.formatMs(durationMs)}\n`);
+              LogUtils.appendPipelineResult({
+                status: "ok",
+                id: tc.id,
+                label: tc.label,
+                rubric_type: tc.rubric_type,
+                overall,
+                overallDisplay,
+                durationMs,
+                startedAt: LogUtils.formatTimeOnly(startedMs),
+                endedAt: LogUtils.formatTimeOnly(endedMs),
+                parsed
+              });
               Analytics.verboseLog(debugMode, logEl, `trace=${traceCtx.traceId} case=${tc.id} completed overall=${overallDisplay}`);
               updateBatchProgress(batchStatusEl, total, results, failures, batchSize, Math.min(i + batchSize, total));
               return { status: "fulfilled" };
@@ -201,7 +251,14 @@
               }
               failures += 1;
               failureItems.push({ caseRef: String(tc.id ?? "?"), error: msg });
-              logEl.textContent += `[err] case failed: ${msg}\n`;
+              LogUtils.appendBatchLog(logEl, `[err] case failed: ${msg}\n`);
+              LogUtils.appendPipelineResult({
+                status: "error",
+                id: tc.id ?? "?",
+                label: tc.label,
+                rubric_type: tc.rubric_type,
+                error: msg
+              });
               Analytics.addFailure(traceRun, {
                 traceId: traceCtx.traceId,
                 caseId: tc.id ?? "?",
@@ -216,7 +273,7 @@
 
         if (stopBatch) {
           batchStatusEl.textContent = `Stopped. Processed: ${results.length + failures}/${total}, Success: ${results.length}, Failed: ${failures}`;
-          logEl.textContent += "[stop] Batch run stopped by user.\n";
+          LogUtils.appendBatchLog(logEl, "[stop] Batch run stopped by user.\n");
           stopped = true;
           return;
         }
@@ -232,7 +289,7 @@
     } catch (err) {
       if (stopBatch) {
         batchStatusEl.textContent = `Stopped. Processed: ${results.length + failures}/${total}, Success: ${results.length}, Failed: ${failures}`;
-        logEl.textContent += "[stop] Batch run stopped by user.\n";
+        LogUtils.appendBatchLog(logEl, "[stop] Batch run stopped by user.\n");
         stopped = true;
       } else {
         batchStatusEl.innerHTML = `<span class="error-text">Batch error: ${LogUtils.escapeHtml(String(err.message || err))}</span>`;
@@ -250,7 +307,7 @@
         const totalDuration = LogUtils.formatMs(Date.now() - processStartMs);
         if (canExportPdf) {
           await PdfReport.generateBatchPdf({
-            runTimeIso: runStartedAt.toISOString(),
+            runTime: LogUtils.formatTimeOnly(runStartedAt.getTime()),
             model,
             inputFile: requestedFile,
             batchSize,
@@ -263,10 +320,10 @@
             successItems: results,
             failureItems
           });
-          logEl.textContent += "[pdf] Evaluation report PDF downloaded.\n";
+          LogUtils.appendBatchLog(logEl, "[pdf] Evaluation report PDF downloaded.\n");
           batchStatusEl.textContent = summaryAtEntry || "Done";
         } else {
-          logEl.textContent += "[pdf] Skipped PDF export (run not fully successful).\n";
+          LogUtils.appendBatchLog(logEl, "[pdf] Skipped PDF export (run not fully successful).\n");
         }
         if (failures > 0 && !stopped) {
           Analytics.addEvent(traceRun, {
@@ -274,12 +331,34 @@
             failures
           });
           Analytics.exportDebugReport(traceRun);
-          logEl.textContent += "[dbg] Exported debug_trace JSON for failures.\n";
+          LogUtils.appendBatchLog(logEl, "[dbg] Exported debug_trace JSON for failures.\n");
         }
       } catch (pdfErr) {
         const msg = String(pdfErr?.message || pdfErr || "Unknown PDF error");
-        logEl.textContent += `[pdf-err] Failed to generate PDF: ${msg}\n`;
+        LogUtils.appendBatchLog(logEl, `[pdf-err] Failed to generate PDF: ${msg}\n`);
         batchStatusEl.innerHTML = `<span class="error-text">PDF generation failed: ${LogUtils.escapeHtml(msg)}</span>`;
+      }
+
+      LogUtils.appendPipelineResult({
+        status: stopped ? "stopped" : "done",
+        inputFile: requestedFile,
+        model,
+        batchSize,
+        total,
+        success: results.length,
+        failed: failures,
+        completedAll: results.length + failures === total,
+        finishedAt: LogUtils.formatTimeOnly(Date.now())
+      });
+
+      try {
+        const agent2 = await LogUtils.sendToAgent2(requestedFile);
+        if (agent2?.status) {
+          LogUtils.appendBatchLog(logEl, `[agent2] ${agent2.status}: ${agent2.message || "handoff complete"}\n`);
+        }
+      } catch (agentErr) {
+        const msg = String(agentErr?.message || agentErr || "Unknown Agent 2 error");
+        LogUtils.appendBatchLog(logEl, `[agent2-err] ${msg}\n`);
       }
 
       runBtn.disabled = false;

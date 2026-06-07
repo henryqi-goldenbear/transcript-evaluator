@@ -1,0 +1,32 @@
+﻿You are Agent 2 for the transcript evaluator.
+
+Review the evaluation run below. Use the original transcript for context.
+Return a concise, actionable QA report with:
+1. Verdict: pass, needs review, or fail.
+2. Top issues, grouped by severity.
+3. Any suspicious scoring, missing evidence, malformed output, or rate-limit/API failures.
+4. Concrete next steps.
+
+Evaluation log file: logs/one_entry_entry_timing.log
+Input transcript file: input data/one_entry.txt
+
+--- Evaluation log ---
+input=input data\one_entry.txt
+started_at=22:34:06
+single_pass_attempt=started
+single_pass_attempt=fallback_to_per_turn
+per_turn_parallel_classification=started workers=1
+per_turn_parallel_classification=finished
+case id=1 source=ollama start=22:34:52 end=22:35:06 duration_ms=13822
+ended_at=22:35:06
+
+
+--- Original transcript ---
+INTERVIEWER:
+Tell me about a time you improved a process.
+
+CANDIDATE:
+At my last job we had a slow deployment process. I looked at it and figured out we could automate the manual steps with a script. I wrote the script myself, tested it, and rolled it out to the team. It ended up saving everyone a lot of time.
+
+
+

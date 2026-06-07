@@ -42,24 +42,45 @@ import subprocess
 import sys
 import time
 import webbrowser
-from datetime import datetime, timezone
+from datetime import datetime
+from http import HTTPStatus
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 from urllib import error, request
+from agent2_connection import Agent2Bridge, resolve_pipeline_log_path, write_json_response
 from patterns import SPEAKER_RE, NON_QUESTION_PATTERNS, BEHAVIORAL_PATTERNS, FOLLOW_UP_PATTERNS, CLARIFYING_PATTERNS, DEEPENING_PATTERNS
 
 
 LOGGER = logging.getLogger(__name__)
 EVALUATOR_PORT = 3000
+AGENT2_BRIDGE = Agent2Bridge()
+DEFAULT_MISTRAL_MODEL = "mistral-small-latest"
+DEFAULT_MISTRAL_API_BASE = "https://api.mistral.ai/v1"
+EVALUATOR_ASSET_VERSION = "mistral-small-1"
 
 
-def utc_timestamp() -> str:
-    return datetime.now(timezone.utc).isoformat()
+def local_time_mark() -> str:
+    return datetime.now().strftime("%H:%M:%S")
+
+
+def load_dotenv(path: Path = Path(".env")) -> None:
+    if not path.exists():
+        return
+    for raw_line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key and key not in os.environ:
+            os.environ[key] = value
 
 
 def log_path_for_input(input_path: Path) -> Path:
-    return Path("logs") / f"{input_path.stem}.log"
+    return Path("logs") / f"{input_path.stem}_eval.log"
 
 
 def configure_file_logging(log_file: Path) -> Path:
@@ -69,6 +90,7 @@ def configure_file_logging(log_file: Path) -> Path:
         filemode="a",
         level=logging.INFO,
         format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
+        datefmt="%H:%M:%S",
         encoding="utf-8",
     )
     return log_file
@@ -437,16 +459,19 @@ def get_batch_size(batch_size_arg: int | None) -> int:
 def log_parsed_cases(cases: list[dict[str, Any]]) -> None:
     LOGGER.info("Detected %s evaluator cases", len(cases))
     for case in cases:
-        pair_started_at = utc_timestamp()
+        pair_started_at = local_time_mark()
         question = str(case.get("question", ""))
         response = str(case.get("response", ""))
-        pair_finished_at = utc_timestamp()
+        pair_finished_at = local_time_mark()
         LOGGER.info(
             "Question/answer pair %s: started_at=%s finished_at=%s "
             "question_chars=%s answer_chars=%s follow_ups=%s",
             case.get("id"),
             pair_started_at,
             pair_finished_at,
+            len(question),
+            len(response),
+            len(case.get("follow_ups", []) or []),
         )
 
 
@@ -454,20 +479,23 @@ def run_evaluator_html(
     json_path: Path,
     batch_size: int,
     evaluator_html_path: str = "evaluator.html",
+    log_file: Path | None = None,
 ) -> str:
     evaluator_html = Path(evaluator_html_path)
     if not evaluator_html.exists():
         raise FileNotFoundError(f"Missing evaluator HTML file: {evaluator_html}")
 
-    start_http_server_if_needed(EVALUATOR_PORT)
+    server_port = start_http_server_if_needed(EVALUATOR_PORT)
     query_input = json_path_for_browser(json_path)
-    query = urlencode(
-        {
-            "input": query_input,
-            "batch_size": batch_size,
-        }
-    )
-    evaluator_url = f"http://localhost:{EVALUATOR_PORT}/{evaluator_html.as_posix()}?{query}"
+    query_args = {
+        "v": EVALUATOR_ASSET_VERSION,
+        "input": query_input,
+        "batch_size": batch_size,
+    }
+    if log_file is not None:
+        query_args["log_file"] = log_path_for_browser(log_file)
+    query = urlencode(query_args)
+    evaluator_url = f"http://localhost:{server_port}/{evaluator_html.as_posix()}?{query}"
 
     LOGGER.info("Opening evaluator HTML: %s", evaluator_url)
     webbrowser.open(evaluator_url)
@@ -485,23 +513,203 @@ def json_path_for_browser(json_path: Path) -> str:
         return json_path.as_posix()
 
 
-def start_http_server_if_needed(port: int) -> None:
+def log_path_for_browser(log_file: Path) -> str:
+    try:
+        return log_file.resolve().relative_to(Path.cwd().resolve()).as_posix()
+    except ValueError:
+        LOGGER.warning(
+            "Log file is outside the project folder and may not be writable from evaluator: %s",
+            log_file,
+        )
+        return log_file.as_posix()
+
+
+def pipeline_server_is_available(port: int) -> bool:
+    try:
+        with request.urlopen(f"http://127.0.0.1:{port}/pipeline-log/health", timeout=1) as resp:
+            return resp.status == HTTPStatus.NO_CONTENT
+    except (error.URLError, TimeoutError):
+        return False
+
+
+def port_is_open(port: int) -> bool:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.settimeout(0.5)
-        if sock.connect_ex(("127.0.0.1", port)) == 0:
-            LOGGER.info("Reusing existing local server on port %s", port)
-            return
+        return sock.connect_ex(("127.0.0.1", port)) == 0
+
+
+def find_pipeline_server_port(preferred_port: int) -> int:
+    for offset in range(20):
+        candidate = preferred_port + offset
+        if pipeline_server_is_available(candidate):
+            LOGGER.info("Reusing existing pipeline server on port %s", candidate)
+            return candidate
+        if not port_is_open(candidate):
+            return candidate
+    raise RuntimeError("Could not find an available local server port.")
+
+
+def start_http_server_if_needed(port: int) -> int:
+    server_port = find_pipeline_server_port(port)
+    if pipeline_server_is_available(server_port):
+        return server_port
 
     creationflags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
     subprocess.Popen(
-        [sys.executable, "-m", "http.server", str(port)],
+        [sys.executable, str(Path(__file__).resolve()), "--serve-internal", str(server_port)],
         cwd=Path.cwd(),
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
         creationflags=creationflags,
     )
     time.sleep(1)
-    LOGGER.info("Started local server on port %s", port)
+    if not pipeline_server_is_available(server_port):
+        raise RuntimeError(f"Pipeline server did not start on port {server_port}.")
+    LOGGER.info("Started pipeline server on port %s", server_port)
+    return server_port
+
+
+def extract_mistral_content(payload: dict[str, Any]) -> str:
+    message = payload.get("choices", [{}])[0].get("message", {})
+    content = message.get("content", "")
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        chunks = []
+        for item in content:
+            if isinstance(item, dict) and isinstance(item.get("text"), str):
+                chunks.append(item["text"])
+            elif isinstance(item, str):
+                chunks.append(item)
+        return "\n".join(chunks)
+    return ""
+
+
+def call_mistral_evaluator(system_prompt: str, user_message: str, model: str | None = None) -> dict[str, Any]:
+    load_dotenv()
+    api_key = os.environ.get("MISTRAL_API_KEY")
+    if not api_key:
+        raise RuntimeError("MISTRAL_API_KEY is not set in .env or the environment.")
+
+    selected_model = model or os.environ.get("MISTRAL_EVALUATOR_MODEL", DEFAULT_MISTRAL_MODEL)
+    api_base = os.environ.get("MISTRAL_API_BASE", DEFAULT_MISTRAL_API_BASE).rstrip("/")
+    timeout = float(os.environ.get("MISTRAL_EVALUATOR_TIMEOUT_SECONDS", "180"))
+    body = {
+        "model": selected_model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_message},
+        ],
+        "temperature": 0.15,
+        "response_format": {"type": "json_object"},
+    }
+    req = request.Request(
+        f"{api_base}/chat/completions",
+        data=json.dumps(body).encode("utf-8"),
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with request.urlopen(req, timeout=timeout) as resp:
+            response_payload = json.loads(resp.read().decode("utf-8"))
+    except error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"Mistral API HTTP {exc.code}: {detail}") from exc
+    except error.URLError as exc:
+        raise RuntimeError(f"Mistral API request failed: {exc}") from exc
+
+    content = extract_mistral_content(response_payload)
+    if not content:
+        raise RuntimeError("Empty response from Mistral API.")
+    return {
+        "model": selected_model,
+        "content": content,
+        "raw": response_payload,
+    }
+
+
+class PipelineHTTPRequestHandler(SimpleHTTPRequestHandler):
+    server_version = "TranscriptEvaluatorPipeline/1.0"
+
+    def end_headers(self) -> None:
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")
+        self.send_header("Pragma", "no-cache")
+        super().end_headers()
+
+    def log_message(self, format: str, *args: Any) -> None:
+        LOGGER.info("server %s - %s", self.address_string(), format % args)
+
+    def do_GET(self) -> None:
+        if urlparse(self.path).path == "/agent2-ws":
+            self.handle_agent2_websocket()
+            return
+        if self.path == "/pipeline-log/health":
+            self.send_response(HTTPStatus.NO_CONTENT)
+            self.end_headers()
+            return
+        super().do_GET()
+
+    def do_POST(self) -> None:
+        if self.path == "/agent2/handoff":
+            port = int(getattr(self.server, "server_port", EVALUATOR_PORT))
+            AGENT2_BRIDGE.handle_handoff(self, port)
+            return
+        if self.path == "/mistral/evaluate":
+            self.handle_mistral_evaluate()
+            return
+        if self.path != "/pipeline-log":
+            self.send_error(HTTPStatus.NOT_FOUND, "Unknown endpoint")
+            return
+
+        try:
+            content_length = int(self.headers.get("Content-Length", "0"))
+            body = self.rfile.read(content_length).decode("utf-8")
+            payload = json.loads(body)
+            log_file = resolve_pipeline_log_path(str(payload.get("log_file", "")))
+            text = str(payload.get("text", ""))
+            if not text:
+                raise ValueError("missing text")
+            log_file.parent.mkdir(parents=True, exist_ok=True)
+            with log_file.open("a", encoding="utf-8", newline="") as f:
+                f.write(text)
+            self.send_response(HTTPStatus.NO_CONTENT)
+            self.end_headers()
+        except Exception as exc:
+            self.send_error(HTTPStatus.BAD_REQUEST, str(exc))
+
+    def handle_agent2_websocket(self) -> None:
+        AGENT2_BRIDGE.handle_websocket(self)
+
+    def handle_mistral_evaluate(self) -> None:
+        try:
+            content_length = int(self.headers.get("Content-Length", "0"))
+            body = self.rfile.read(content_length).decode("utf-8")
+            payload = json.loads(body)
+            system_prompt = str(payload.get("system_prompt", ""))
+            user_message = str(payload.get("user_message", ""))
+            model = str(payload.get("model", "")).strip() or None
+            if not system_prompt or not user_message:
+                raise ValueError("missing system_prompt or user_message")
+            result = call_mistral_evaluator(system_prompt, user_message, model)
+            write_json_response(self, HTTPStatus.OK, result)
+        except Exception as exc:
+            write_json_response(self, HTTPStatus.BAD_REQUEST, {"status": "error", "message": str(exc)})
+
+
+def run_pipeline_server(port: int) -> None:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
+        datefmt="%H:%M:%S",
+        encoding="utf-8",
+    )
+    server = ThreadingHTTPServer(("127.0.0.1", port), PipelineHTTPRequestHandler)
+    LOGGER.info("Serving transcript evaluator pipeline on http://127.0.0.1:%s", port)
+    server.serve_forever()
 
 
 def main() -> None:
@@ -539,7 +747,16 @@ def main() -> None:
         default=os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434"),
         help="Ollama host URL (default: http://127.0.0.1:11434).",
     )
+    parser.add_argument(
+        "--serve-internal",
+        type=int,
+        help=argparse.SUPPRESS,
+    )
     args = parser.parse_args()
+
+    if args.serve_internal:
+        run_pipeline_server(args.serve_internal)
+        return
 
     input_path = get_input_path(args.input)
     batch_size = get_batch_size(args.batch_size)
@@ -554,7 +771,7 @@ def main() -> None:
         LOGGER.error("Input must be a .txt file. Got: %s", input_path.name)
         raise ValueError(f"Input must be a .txt file. Got: {input_path.name}")
 
-    conversion_started_at = utc_timestamp()
+    conversion_started_at = local_time_mark()
     output_path = input_path.with_suffix(".json")
     raw_text = input_path.read_text(encoding="utf-8")
     LOGGER.info(
@@ -573,7 +790,7 @@ def main() -> None:
     output_path.write_text(
         json.dumps(parsed_cases, indent=args.indent), encoding="utf-8"
     )
-    conversion_finished_at = utc_timestamp()
+    conversion_finished_at = local_time_mark()
     LOGGER.info(
         "Finished conversion: input=%s output=%s started_at=%s finished_at=%s "
         "input_chars=%s cases=%s batch_size=%s",
@@ -592,7 +809,7 @@ def main() -> None:
     print(f"Wrote JSON to: {output_path}")
     print(f"Cases: {len(parsed_cases)}")
     print(f"Classifier: {classifier_mode}")
-    evaluator_url = run_evaluator_html(output_path, batch_size, args.evaluator_html)
+    evaluator_url = run_evaluator_html(output_path, batch_size, args.evaluator_html, log_file)
     print(f"Opened evaluator: {evaluator_url}")
 
 

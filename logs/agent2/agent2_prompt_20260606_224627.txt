@@ -1,0 +1,2 @@
+﻿Hello from Agent 2 config smoke test
+

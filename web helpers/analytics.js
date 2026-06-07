@@ -1,6 +1,18 @@
 (() => {
-  function nowIso() {
-    return new Date().toISOString();
+  function nowTime() {
+    const d = new Date();
+    const hh = String(d.getHours()).padStart(2, "0");
+    const mm = String(d.getMinutes()).padStart(2, "0");
+    const ss = String(d.getSeconds()).padStart(2, "0");
+    return `${hh}:${mm}:${ss}`;
+  }
+
+  function localFileStamp() {
+    const d = new Date();
+    const yyyy = String(d.getFullYear());
+    const mo = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${yyyy}${mo}${dd}_${nowTime().replace(/:/g, "")}`;
   }
 
   function id(prefix) {
@@ -31,7 +43,7 @@
   function createRun(meta) {
     return {
       runId: id("run"),
-      startedAt: nowIso(),
+      startedAt: nowTime(),
       meta: { ...meta },
       events: [],
       failures: []
@@ -59,7 +71,7 @@
   function addEvent(run, event) {
     if (!run) return;
     run.events.push({
-      ts: nowIso(),
+      ts: nowTime(),
       ...event
     });
   }
@@ -67,7 +79,7 @@
   function addFailure(run, failure) {
     if (!run) return;
     run.failures.push({
-      ts: nowIso(),
+      ts: nowTime(),
       ...failure
     });
   }
@@ -78,7 +90,7 @@
   }
 
   function exportDebugReport(run) {
-    const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\..+/, "").replace("T", "_");
+    const stamp = localFileStamp();
     const name = `debug_trace_${stamp}.json`;
     const blob = new Blob([JSON.stringify(run, null, 2)], { type: "application/json;charset=utf-8" });
     const url = URL.createObjectURL(blob);
@@ -103,4 +115,3 @@
     verboseLog
   };
 })();
-
