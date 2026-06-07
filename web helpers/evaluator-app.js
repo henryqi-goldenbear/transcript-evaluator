@@ -23,8 +23,7 @@
   }
 
   function checkReady() {
-    const key = (window.GEMINI_API_KEY || "").trim();
-    document.getElementById("run-entire-btn").disabled = !(Rubrics.hasLoaded() && key.length > 10);
+    document.getElementById("run-entire-btn").disabled = !Rubrics.hasLoaded();
   }
 
   function clampBatchSize(v) {
@@ -58,6 +57,50 @@
     };
   }
 
+  function formatScoreValue(value) {
+    return typeof value === "number" ? String(value) : "n/a";
+  }
+
+  function scoreLine(name, scoreObj) {
+    if (!scoreObj || typeof scoreObj !== "object") return `     - ${name}: n/a`;
+    const score = formatScoreValue(scoreObj.score);
+    const reasoning = scoreObj.reasoning ? ` | ${scoreObj.reasoning}` : "";
+    return `     - ${name}: ${score}${reasoning}`;
+  }
+
+  function buildScoreBreakdown(parsed) {
+    const lines = [];
+    lines.push(`     breakdown: scorable=${parsed?.scorable?.value ?? "unknown"} | path=${parsed?.path || "unknown"}`);
+    if (parsed?.scorable?.reasoning) {
+      lines.push(`     - scorable_reasoning: ${parsed.scorable.reasoning}`);
+    }
+    lines.push(scoreLine("base", parsed?.base));
+    lines.push(scoreLine("personal_contribution", parsed?.personal_contribution));
+    lines.push(scoreLine("real_example", parsed?.real_example));
+    lines.push(scoreLine("outcome", parsed?.outcome));
+    if (Array.isArray(parsed?.type_specific_dimensions) && parsed.type_specific_dimensions.length) {
+      for (const dim of parsed.type_specific_dimensions) {
+        const name = dim?.name || "type_specific";
+        lines.push(scoreLine(name, dim));
+      }
+    }
+    if (parsed?.follow_up) {
+      const follow = parsed.follow_up;
+      const details = [
+        `present=${follow.present ?? "unknown"}`,
+        `probe=${follow.probe_type ?? "none"}`,
+        `impact=${follow.impact ?? "none"}`
+      ].join(" | ");
+      const reasoning = follow.reasoning ? ` | ${follow.reasoning}` : "";
+      lines.push(`     - follow_up: ${details}${reasoning}`);
+    }
+    if (Array.isArray(parsed?.flags) && parsed.flags.length) {
+      lines.push(`     - flags: ${parsed.flags.join(", ")}`);
+    }
+    lines.push(scoreLine("overall", parsed?.overall));
+    return `${lines.join("\n")}\n`;
+  }
+
   function updateBatchProgress(batchStatusEl, total, results, failures, batchSize, processedUpperBound) {
     const processed = results.length + failures;
     batchStatusEl.innerHTML =
@@ -68,12 +111,6 @@
     stopBatch = false;
     batchAbortController = new AbortController();
     const batchSignal = batchAbortController.signal;
-    const apiKey = (window.GEMINI_API_KEY || "").trim();
-    if (!apiKey) {
-      alert("Missing API key. Set window.GEMINI_API_KEY in config.js.");
-      return;
-    }
-
     const batchInput = document.getElementById("batch-size-input");
     const batchSize = clampBatchSize(batchInput.value);
     batchInput.value = String(batchSize);
@@ -152,8 +189,7 @@
               const prompt = Rubrics.buildEvaluationPrompt();
               const userMsg = Rubrics.buildUserMessage(tc);
               const startedMs = Date.now();
-              const { parsed } = await GeminiClient.evaluateCase(
-                apiKey,
+              const { parsed, modelUsed } = await MistralClient.evaluateCase(
                 model,
                 prompt,
                 userMsg,
@@ -190,7 +226,8 @@
                 startedAtIso: LogUtils.formatIso(startedMs),
                 endedAtIso: LogUtils.formatIso(endedMs)
               });
-              LogUtils.appendBatchLog(logEl, `[ok] #${tc.id} ${tc.label} | ${tc.rubric_type} | overall=${overallDisplay}\n`);
+              LogUtils.appendBatchLog(logEl, `[ok] #${tc.id} ${tc.label} | ${tc.rubric_type} | model=${modelUsed} | overall=${overallDisplay}\n`);
+              LogUtils.appendBatchLog(logEl, buildScoreBreakdown(parsed));
               LogUtils.appendBatchLog(logEl, `     start=${LogUtils.formatTimeOnly(startedMs)} | end=${LogUtils.formatTimeOnly(endedMs)} | duration=${LogUtils.formatMs(durationMs)}\n`);
               LogUtils.appendPipelineResult({
                 status: "ok",

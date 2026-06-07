@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Test Runner — Transcript Evaluator</title>
-  <!-- config.js is gitignored and sets window.GEMINI_API_KEY to pre-fill the key field -->
+  <title>Test Runner â€” Transcript Evaluator</title>
+  <!-- config.js is gitignored; Mistral requests go through the local pipeline server. -->
   <script src="../web helpers/config.js" onerror="void 0"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -129,7 +129,7 @@
       min-height: 18px;
     }
 
-    /* ── Progress ───────────────────────────────────────────────────────────── */
+    /* â”€â”€ Progress â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     #progress-card { display: none; }
 
     .progress-label {
@@ -149,7 +149,7 @@
       width: 0%;
     }
 
-    /* ── Summary chips ──────────────────────────────────────────────────────── */
+    /* â”€â”€ Summary chips â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     #summary-row {
       display: none;
       gap: 10px;
@@ -170,7 +170,7 @@
     .chip-fail  { color: #f87171; border-color: #f87171; }
     .chip-total { color: #818cf8; border-color: #818cf8; }
 
-    /* ── Log ────────────────────────────────────────────────────────────────── */
+    /* â”€â”€ Log â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     #log-card { display: none; }
 
     .log-header {
@@ -212,7 +212,7 @@
       overflow-y: auto;
     }
 
-    /* ── Log token colours ──────────────────────────────────────────────────── */
+    /* â”€â”€ Log token colours â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .log-sep    { color: #2d3148; }
     .log-id     { color: #818cf8; font-weight: 700; }
     .log-label  { color: #f8fafc; font-weight: 600; }
@@ -253,7 +253,7 @@
 
 <header>
   <h1>Test Runner</h1>
-  <p>Runs <code>test_cases.json</code> through Google Gemini and compares scores against expected values.</p>
+  <p>Runs <code>test_cases.json</code> through Mistral and compares scores against expected values.</p>
 </header>
 
 <!-- Controls -->
@@ -264,20 +264,7 @@
 
     <div class="field grow">
       <label>Model</label>
-      <select id="model-select">
-        <optgroup label="Gemma — free · higher RPM">
-          <option value="gemma-4-31b-it" selected>gemma-4-31b-it (Gemma 4 31B)</option>
-          <option value="gemma-4-26b-a4b-it">gemma-4-26b-a4b-it (Gemma 4 26B — stable)</option>
-        </optgroup>
-        <optgroup label="Gemini 2.5 Flash — free · 20 RPM">
-          <option value="gemini-2.5-flash">gemini-2.5-flash (stable)</option>
-          <option value="gemini-2.5-flash-preview-05-20">gemini-2.5-flash-preview-05-20</option>
-        </optgroup>
-        <optgroup label="Gemini 2.5 Pro — free · 5 RPM">
-          <option value="gemini-2.5-pro">gemini-2.5-pro (stable)</option>
-          <option value="gemini-2.5-pro-preview-05-06">gemini-2.5-pro-preview-05-06</option>
-        </optgroup>
-      </select>
+      <select id="model-select"><optgroup label="Mistral"><option value="mistral-large-latest" selected>mistral-large-latest</option><option value="mistral-small-latest">mistral-small-latest</option></optgroup></select>
     </div>
 
     <div class="field mid">
@@ -306,7 +293,7 @@
 
   </div>
 
-  <div id="load-status">Loading test_cases.json…</div>
+  <div id="load-status">Loading test_cases.jsonâ€¦</div>
   <div id="summary-row"></div>
 </div>
 
@@ -331,7 +318,7 @@
 </div>
 
 <script>
-// ── System prompts (loaded from markdown files) ───────────────────────────────
+// â”€â”€ System prompts (loaded from markdown files) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 let BEHAVIORAL_RUBRIC_MD = "";
 let NON_BEHAVIORAL_RUBRIC_MD = "";
@@ -382,15 +369,11 @@ Return only this JSON, no extra text:
 }`;
 }
 
-// ── Gemini / Gemma API call ───────────────────────────────────────────────────
-
-// responseMimeType:"application/json" is Gemini-only; Gemma returns a plain
-// text response that may be wrapped in markdown fences — strip them here.
+// Mistral API call through the local pipeline server.
 function extractJson(text) {
   const cleaned = text.replace(/^\s*[*-]\s+/gm, "");
   const fenced = cleaned.match(/```(?:json)?\s*([\s\S]*?)```/);
   if (fenced) return fenced[1].trim();
-  // Fallback: find the first balanced { ... } JSON object.
   const start = cleaned.indexOf("{");
   if (start !== -1) {
     let depth = 0;
@@ -406,98 +389,65 @@ function extractJson(text) {
   return cleaned.trim();
 }
 
-async function callGemini(apiKey, model, systemPrompt, userMsg) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-
-  const isGemma = model.startsWith("gemma-");
-  const generationConfig = { temperature: 0.15 };
-  if (!isGemma) generationConfig.responseMimeType = "application/json";
-
-  // Gemma models do not support system_instruction — prepend to user message.
-  const body = isGemma
-    ? {
-        contents: [{
-          role: "user",
-          parts: [{ text: `${systemPrompt}\n\n---\n\n${userMsg}` }]
-        }],
-        generationConfig
-      }
-    : {
-        system_instruction: { parts: [{ text: systemPrompt }] },
-        contents: [{ role: "user", parts: [{ text: userMsg }] }],
-        generationConfig
-      };
-
-  const res = await fetch(url, {
+async function callMistral(model, systemPrompt, userMsg) {
+  const res = await fetch("/mistral/evaluate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body)
+    body: JSON.stringify({
+      model,
+      system_prompt: systemPrompt,
+      user_message: userMsg
+    })
   });
 
   if (!res.ok) {
     let msg = `HTTP ${res.status}`;
-    try { msg = (await res.json()).error?.message || msg; } catch (_) {}
+    try {
+      const json = await res.json();
+      msg = json?.message || json?.error?.message || msg;
+    } catch (_) {}
     throw new Error(msg);
   }
 
   const data = await res.json();
-  const parts = data?.candidates?.[0]?.content?.parts ?? [];
-  const visibleParts = parts.filter(
-    p => !p?.thought && typeof p?.text === "string" && p.text.trim()
-  );
-  const text =
-    visibleParts[visibleParts.length - 1]?.text ??
-    parts[parts.length - 1]?.text;
-  if (!text) throw new Error("Empty response from API.");
-  return isGemma ? extractJson(text) : text;
+  if (!data?.content) throw new Error("Empty response from Mistral API.");
+  return data.content;
 }
-
-// ── Model → recommended delay map ────────────────────────────────────────────
 
 const MODEL_DELAYS = {
-
-  "gemma-4-26b-a4b-it":             3000,
-  "gemini-2.5-flash":               7000,
-  "gemini-2.5-flash-preview-05-20": 7000,
-  "gemini-2.5-pro":                 13000,
-  "gemini-2.5-pro-preview-05-06":   13000,
+  "mistral-large-latest": 1000,
+  "mistral-small-latest": 1000,
 };
 
-// ── Rate-limit retry helpers ──────────────────────────────────────────────────
-
-// Extract the suggested retry delay from a Gemini quota error message.
-// e.g. "Please retry in 11.565148934s." → 14065 ms (+ 2.5 s buffer)
 function parseRetryMs(msg) {
-  const m = msg.match(/retry in ([\d.]+)s/i);
+  const m = String(msg || "").match(/retry in ([\d.]+)s/i);
   if (m) return Math.ceil(parseFloat(m[1]) * 1000) + 2500;
-  return 65000; // safe fallback if no hint found
+  return 65000;
 }
 
-// Sleep while updating a DOM element with a live countdown.
 async function sleepCountdown(ms, el) {
   const end = Date.now() + ms;
   while (Date.now() < end && !cancelled) {
     const secs = Math.ceil((end - Date.now()) / 1000);
-    el.textContent = `Rate limited — waiting ${secs}s…`;
+    el.textContent = `Rate limited - waiting ${secs}s...`;
     await new Promise(r => setTimeout(r, Math.min(1000, end - Date.now())));
   }
 }
 
-// Wraps callGemini with up to 2 automatic retries on rate-limit errors.
-async function callGeminiWithRetry(apiKey, model, prompt, userMsg, spinner) {
+async function callMistralWithRetry(model, prompt, userMsg, spinner) {
   const label = spinner.querySelector("span:last-child");
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      if (attempt > 0) label.textContent = "Retrying…";
-      return await callGemini(apiKey, model, prompt, userMsg);
+      if (attempt > 0) label.textContent = "Retrying...";
+      return await callMistral(model, prompt, userMsg);
     } catch (err) {
+      const msg = String(err?.message || err || "");
       const isRateLimit =
-        err.message.includes("quota") ||
-        err.message.includes("429")   ||
-        err.message.includes("RESOURCE_EXHAUSTED") ||
-        err.message.toLowerCase().includes("retry in");
+        msg.includes("429") ||
+        msg.toLowerCase().includes("rate limit") ||
+        msg.toLowerCase().includes("retry in");
       if (!isRateLimit || attempt >= 2) throw err;
-      await sleepCountdown(parseRetryMs(err.message), label);
+      await sleepCountdown(parseRetryMs(msg), label);
     }
   }
 }
@@ -517,44 +467,17 @@ function tryParseModelJson(rawText) {
   return JSON.parse(candidate);
 }
 
-// Handles model instability and non-JSON outputs:
-// 1) normal call
-// 2) if Gemma-4 internal error -> fallback to Gemma-4-26b
-// 3) if JSON parse fails -> retry once with stricter JSON-only prompt
-async function evaluateCase(apiKey, model, prompt, userMsg, spinner) {
-  let modelUsed = model;
-  let raw;
-
+async function evaluateCase(model, prompt, userMsg, spinner) {
+  const raw = await callMistralWithRetry(model, prompt, userMsg, spinner);
   try {
-    raw = await callGeminiWithRetry(apiKey, modelUsed, prompt, userMsg, spinner);
-  } catch (err) {
-    const internal = String(err.message || err).toLowerCase().includes("internal error");
-    if (model === "gemma-4-31b-it" && internal) {
-      modelUsed = "gemma-4-26b-a4b-it";
-      const label = spinner.querySelector("span:last-child");
-      label.textContent = "Gemma-4 unstable, falling back to Gemma-4-26b…";
-      raw = await callGeminiWithRetry(apiKey, modelUsed, prompt, userMsg, spinner);
-    } else {
-      throw err;
-    }
-  }
-
-  try {
-    return { parsed: tryParseModelJson(raw), modelUsed };
+    return { parsed: tryParseModelJson(raw), modelUsed: model };
   } catch (_) {
     const label = spinner.querySelector("span:last-child");
-    label.textContent = "Repairing format (JSON-only retry)…";
-    const rawRetry = await callGeminiWithRetry(
-      apiKey,
-      modelUsed,
-      strictJsonPrompt(prompt),
-      userMsg,
-      spinner
-    );
-    return { parsed: tryParseModelJson(rawRetry), modelUsed };
+    label.textContent = "Repairing format (JSON-only retry)...";
+    const rawRetry = await callMistralWithRetry(model, strictJsonPrompt(prompt), userMsg, spinner);
+    return { parsed: tryParseModelJson(rawRetry), modelUsed: model };
   }
 }
-
 function getCaseRubricType(tc) {
   return tc.rubric_type === "non_behavioral" ? "non_behavioral" : "behavioral";
 }
@@ -649,35 +572,18 @@ function normalizeBatchEvaluations(parsedObj, batchCases) {
   return byId;
 }
 
-async function evaluateBatch(apiKey, model, prompt, batchCases, spinner) {
-  let modelUsed = model;
+async function evaluateBatch(model, prompt, batchCases, spinner) {
   const rubricType = getCaseRubricType(batchCases[0]);
   const batchMsg = buildBatchUserMessage(batchCases, rubricType);
-  let raw;
-
-  try {
-    raw = await callGeminiWithRetry(apiKey, modelUsed, prompt, batchMsg, spinner);
-  } catch (err) {
-    const internal = String(err.message || err).toLowerCase().includes("internal error");
-    if (model === "gemma-4-31b-it" && internal) {
-      modelUsed = "gemma-4-26b-a4b-it";
-      const label = spinner.querySelector("span:last-child");
-      label.textContent = "Gemma-4 unstable, falling back to Gemma-4-26b…";
-      raw = await callGeminiWithRetry(apiKey, modelUsed, prompt, batchMsg, spinner);
-    } else {
-      throw err;
-    }
-  }
-
+  const raw = await callMistralWithRetry(model, prompt, batchMsg, spinner);
   let parsed;
   try {
     parsed = tryParseModelJson(raw);
   } catch (_) {
     const label = spinner.querySelector("span:last-child");
-    label.textContent = "Repairing batch format (JSON-only retry)…";
-    const rawRetry = await callGeminiWithRetry(
-      apiKey,
-      modelUsed,
+    label.textContent = "Repairing batch format (JSON-only retry)â€¦";
+    const rawRetry = await callMistralWithRetry(
+      model,
       strictJsonPrompt(prompt),
       batchMsg,
       spinner
@@ -686,12 +592,12 @@ async function evaluateBatch(apiKey, model, prompt, batchCases, spinner) {
   }
 
   return {
-    modelUsed,
+    modelUsed: model,
     evaluationsById: normalizeBatchEvaluations(parsed, batchCases),
   };
 }
 
-// ── Dimension helpers ─────────────────────────────────────────────────────────
+// â”€â”€ Dimension helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const STAR_DIMS = ["filler", "context", "action", "result"];
 const NB_DIMS   = ["clarity", "relevance", "specificity", "self_awareness"];
@@ -708,7 +614,7 @@ function getDims(tc, parsed) {
   return STAR_DIMS;
 }
 
-// ── Client-side overall formula (deterministic) ───────────────────────────────
+// â”€â”€ Client-side overall formula (deterministic) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function computeOverall(parsed, tc) {
   if (tc.rubric_type === "non_behavioral") {
@@ -724,7 +630,7 @@ function computeOverall(parsed, tc) {
   return +((f * 0.10 + c * 0.20 + a * 0.40 + r * 0.30) * 2).toFixed(1);
 }
 
-// ── Score formatting helpers ──────────────────────────────────────────────────
+// â”€â”€ Score formatting helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function dimLabel(d) {
   const short = { filler: "fil", context: "ctx", action: "act", result: "res",
@@ -743,7 +649,7 @@ function deltaLine(parsed, tc, dims) {
     const a = parsed[d]?.score ?? 0;
     const diff = a - e;
     const cls  = diff === 0 ? "d-exact" : Math.abs(diff) === 1 ? "d-near" : "d-far";
-    const sym  = diff === 0 ? "·" : diff > 0 ? `+${diff}` : `${diff}`;
+    const sym  = diff === 0 ? "Â·" : diff > 0 ? `+${diff}` : `${diff}`;
     return `<span class="${cls}">${dimLabel(d)}:${sym}</span>`;
   }).join("  ");
 }
@@ -751,34 +657,34 @@ function deltaLine(parsed, tc, dims) {
 function overallDeltaHtml(actOv, expOv) {
   const diff = +(actOv - expOv).toFixed(1);
   const cls  = diff === 0 ? "d-exact" : Math.abs(diff) <= 1 ? "d-near" : "d-far";
-  const sym  = diff === 0 ? "·" : diff > 0 ? `+${diff}` : `${diff}`;
+  const sym  = diff === 0 ? "Â·" : diff > 0 ? `+${diff}` : `${diff}`;
   return `<span class="${cls}">overall:${sym}</span>`;
 }
 
-// ── State ─────────────────────────────────────────────────────────────────────
+// â”€â”€ State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 let allCases  = [];
 let cancelled = false;
 
-// ── Load ──────────────────────────────────────────────────────────────────────
+// â”€â”€ Load â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 async function loadCases() {
   const status = document.getElementById("load-status");
   try {
     const [casesRes, behRes, nbRes] = await Promise.all([
       fetch("./test_cases.json"),
-      fetch("./behavioral_rubric.md"),
-      fetch("./non_behavioral_rubric.md"),
+      fetch("../docs/behavioral_rubric.md"),
+      fetch("../docs/non_behavioral_rubric.md"),
     ]);
     if (!casesRes.ok) throw new Error(`test_cases.json HTTP ${casesRes.status}`);
-    if (!behRes.ok) throw new Error(`behavioral_rubric.md HTTP ${behRes.status}`);
-    if (!nbRes.ok) throw new Error(`non_behavioral_rubric.md HTTP ${nbRes.status}`);
+    if (!behRes.ok) throw new Error(`../docs/behavioral_rubric.md HTTP ${behRes.status}`);
+    if (!nbRes.ok) throw new Error(`../docs/non_behavioral_rubric.md HTTP ${nbRes.status}`);
 
     allCases = await casesRes.json();
     BEHAVIORAL_RUBRIC_MD = await behRes.text();
     NON_BEHAVIORAL_RUBRIC_MD = await nbRes.text();
 
-    status.textContent = `${allCases.length} test cases loaded. Enter your API key to run.`;
+    status.textContent = `${allCases.length} test cases loaded.`;
     checkReady();
   } catch (err) {
     status.innerHTML = `<span class="error-text">Failed to load required files: ${err.message}. Serve via http.server, not file://.</span>`;
@@ -786,12 +692,11 @@ async function loadCases() {
 }
 
 function checkReady() {
-  const key = (window.GEMINI_API_KEY || "").trim();
-  const ready = allCases.length > 0 && key.length > 10;
+  const ready = allCases.length > 0;
   document.getElementById("run-btn").disabled = !ready;
 }
 
-// ── Logging helpers ───────────────────────────────────────────────────────────
+// â”€â”€ Logging helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const logEl = () => document.getElementById("log-output");
 
@@ -815,35 +720,35 @@ function appendRaw(text) {
   logEl().scrollTop = logEl().scrollHeight;
 }
 
-// ── Progress ──────────────────────────────────────────────────────────────────
+// â”€â”€ Progress â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function setProgress(n, total, label) {
   const pct = total ? Math.round((n / total) * 100) : 0;
   document.getElementById("progress-label").textContent =
-    `Case ${n} / ${total}${label ? "  —  " + label : ""}`;
+    `Case ${n} / ${total}${label ? "  â€”  " + label : ""}`;
   document.getElementById("progress-pct").textContent = `${pct}%`;
   const fill = document.getElementById("progress-fill");
   fill.style.width = `${pct}%`;
   fill.style.background = n === total ? "#34d399" : "#6366f1";
 }
 
-// ── Stop ──────────────────────────────────────────────────────────────────────
+// â”€â”€ Stop â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function stopRun() {
   cancelled = true;
   document.getElementById("stop-btn").disabled = true;
 }
 
-// ── Summary chips ─────────────────────────────────────────────────────────────
+// â”€â”€ Summary chips â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function renderSummary(exact, near, far, errors, total) {
   const row = document.getElementById("summary-row");
   row.style.display = "flex";
   row.innerHTML = `
     <span class="chip chip-total">Total: ${total}</span>
-    <span class="chip chip-pass">Exact (Δ=0): ${exact}</span>
-    <span class="chip chip-warn">Near (|Δ|≤1): ${near}</span>
-    <span class="chip chip-fail">Off (|Δ|≥2): ${far}</span>
+    <span class="chip chip-pass">Exact (Î”=0): ${exact}</span>
+    <span class="chip chip-warn">Near (|Î”|â‰¤1): ${near}</span>
+    <span class="chip chip-fail">Off (|Î”|â‰¥2): ${far}</span>
     ${errors ? `<span class="chip chip-fail">Errors: ${errors}</span>` : ""}
   `;
 }
@@ -859,16 +764,11 @@ function formatDurationMs(ms) {
   return `${m}m ${s}s`;
 }
 
-// ── Main runner ───────────────────────────────────────────────────────────────
+// â”€â”€ Main runner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function runAll() {
-  const apiKey = (window.GEMINI_API_KEY || "").trim();
-  if (!apiKey) {
-    alert("Missing API key. Set window.GEMINI_API_KEY in config.js.");
-    return;
-  }
 
   const model   = document.getElementById("model-select").value;
   const delay   = parseInt(document.getElementById("delay-input").value, 10) || 6000;
@@ -895,14 +795,14 @@ async function runAll() {
 
   logEl().innerHTML = "";
   const runStart = new Date();
-  appendText("log-done", `Gemini ${model}   delay: ${delay} ms   batch_size: ${batchSize}   cases: ${total}   started: ${formatTs(runStart)}\n\n`);
+  appendText("log-done", `Mistral ${model}   delay: ${delay} ms   batch_size: ${batchSize}   cases: ${total}   started: ${formatTs(runStart)}\n\n`);
 
   let succeeded = 0, errors = 0;
   let exactAll = 0, nearAll = 0, farAll = 0;
 
   for (let i = 0; i < total;) {
     if (cancelled) {
-      appendText("log-error", `\n⏹ Stopped at case ${i + 1} of ${total}.\n`);
+      appendText("log-error", `\nâ¹ Stopped at case ${i + 1} of ${total}.\n`);
       break;
     }
 
@@ -914,36 +814,36 @@ async function runAll() {
     const batchStartTs = new Date();
 
     setProgress(Math.min(batchEnd, total), total, `Batch ${i + 1}-${batchEnd}`);
-    appendText("log-sep", "═".repeat(70) + "\n");
+    appendText("log-sep", "â•".repeat(70) + "\n");
     appendText("log-done", `Batch ${i + 1}-${batchEnd} (${batchTypeLabel}) start: ${formatTs(batchStartTs)}\n`);
 
     // One spinner for the whole batch call
     const spinner = document.createElement("span");
-    spinner.innerHTML = `<span class="spinner"></span><span style="color:#475569">Evaluating batch ${i + 1}-${batchEnd}…</span>`;
+    spinner.innerHTML = `<span class="spinner"></span><span style="color:#475569">Evaluating batch ${i + 1}-${batchEnd}â€¦</span>`;
     logEl().appendChild(spinner);
     logEl().scrollTop = logEl().scrollHeight;
 
     try {
-      const { evaluationsById, modelUsed } = await evaluateBatch(apiKey, model, prompt, batchCases, spinner);
+      const { evaluationsById, modelUsed } = await evaluateBatch(model, prompt, batchCases, spinner);
       spinner.remove();
 
       if (modelUsed !== model) {
-        appendText("log-raw", `↳ Auto-fallback model: ${modelUsed}\n`);
+        appendText("log-raw", `â†³ Auto-fallback model: ${modelUsed}\n`);
       }
 
       for (const tc of batchCases) {
-        appendText("log-sep", "─".repeat(70) + "\n");
+        appendText("log-sep", "â”€".repeat(70) + "\n");
         appendText("log-id",    `[${String(tc.id).padStart(2, "0")}] `);
         appendText("log-label", tc.label);
         appendText("log-type",  `  (${batchTypeLabel})\n`);
         appendText("log-q",     `Q: ${tc.question}\n`);
 
         const expDims = getDims(tc, null);
-        appendText("log-expect", `✓ Expect:  ${scoresLine(tc.expected, expDims)}\n`);
+        appendText("log-expect", `âœ“ Expect:  ${scoresLine(tc.expected, expDims)}\n`);
 
         const parsed = evaluationsById.get(tc.id);
         if (!parsed || typeof parsed !== "object") {
-          appendText("log-error", `↳ ERROR: Missing evaluation for case id ${tc.id} in batch response.\n`);
+          appendText("log-error", `â†³ ERROR: Missing evaluation for case id ${tc.id} in batch response.\n`);
           errors++;
           appendRaw("\n");
           continue;
@@ -952,18 +852,18 @@ async function runAll() {
         parsed._overall = computeOverall(parsed, tc);
         const actDims = getDims(tc, parsed);
 
-        appendText("log-actual", `↳ Actual:  ${scoresLine(parsed, actDims)}`);
+        appendText("log-actual", `â†³ Actual:  ${scoresLine(parsed, actDims)}`);
         appendHtml(`  <span class="badge-calc">overall: ${parsed._overall}/10 [calc]</span>\n`);
 
         const dHtml = deltaLine(parsed, tc, actDims);
         const oHtml = overallDeltaHtml(parsed._overall, tc.expected.overall.score);
-        appendHtml(`   Δ  <span class="delta-row">${dHtml}  ${oHtml}</span>\n`);
+        appendHtml(`   Î”  <span class="delta-row">${dHtml}  ${oHtml}</span>\n`);
 
         const expFlags = tc.expected.flags ?? [];
         const actFlags = parsed.flags ?? [];
         if (expFlags.length || actFlags.length) {
-          if (expFlags.length) appendText("log-expect", `   ✓ Expected flags: ${expFlags.map(f => f.split(":")[0]).join(" | ")}\n`);
-          if (actFlags.length) appendText("log-actual",  `   ↳ Model flags:    ${actFlags.map(f => f.split(":")[0]).join(" | ")}\n`);
+          if (expFlags.length) appendText("log-expect", `   âœ“ Expected flags: ${expFlags.map(f => f.split(":")[0]).join(" | ")}\n`);
+          if (actFlags.length) appendText("log-actual",  `   â†³ Model flags:    ${actFlags.map(f => f.split(":")[0]).join(" | ")}\n`);
         }
 
         const ovDiff = Math.abs(+(parsed._overall - tc.expected.overall.score).toFixed(1));
@@ -976,16 +876,16 @@ async function runAll() {
       }
     } catch (err) {
       spinner.remove();
-      appendText("log-error", `↳ BATCH ERROR (${i + 1}-${batchEnd}): ${err.message || err}\n`);
+      appendText("log-error", `â†³ BATCH ERROR (${i + 1}-${batchEnd}): ${err.message || err}\n`);
       for (const tc of batchCases) {
-        appendText("log-sep", "─".repeat(70) + "\n");
+        appendText("log-sep", "â”€".repeat(70) + "\n");
         appendText("log-id",    `[${String(tc.id).padStart(2, "0")}] `);
         appendText("log-label", tc.label);
         appendText("log-type",  `  (${batchTypeLabel})\n`);
         appendText("log-q",     `Q: ${tc.question}\n`);
         const expDims = getDims(tc, null);
-        appendText("log-expect", `✓ Expect:  ${scoresLine(tc.expected, expDims)}\n`);
-        appendText("log-error", `↳ ERROR: Batch failed before case-level parse.\n`);
+        appendText("log-expect", `âœ“ Expect:  ${scoresLine(tc.expected, expDims)}\n`);
+        appendText("log-error", `â†³ ERROR: Batch failed before case-level parse.\n`);
         errors++;
         appendRaw("\n");
       }
@@ -1003,14 +903,14 @@ async function runAll() {
 
   // Finish
   setProgress(total, total, "Done");
-  appendText("log-sep", "─".repeat(70) + "\n");
+  appendText("log-sep", "â”€".repeat(70) + "\n");
   const runEnd = new Date();
   appendText("log-done",
-    `Finished — ${succeeded} evaluated, ${errors} errors. ended: ${formatTs(runEnd)}  elapsed: ${formatDurationMs(runEnd - runStart)}\n`
+    `Finished â€” ${succeeded} evaluated, ${errors} errors. ended: ${formatTs(runEnd)}  elapsed: ${formatDurationMs(runEnd - runStart)}\n`
   );
   if (succeeded) {
     appendText("log-done",
-      `Overall delta — exact: ${exactAll}  near (≤1): ${nearAll}  off (≥2): ${farAll}\n`
+      `Overall delta â€” exact: ${exactAll}  near (â‰¤1): ${nearAll}  off (â‰¥2): ${farAll}\n`
     );
   }
 
@@ -1019,7 +919,7 @@ async function runAll() {
   document.getElementById("stop-btn").disabled = true;
 }
 
-// ── Copy log ──────────────────────────────────────────────────────────────────
+// â”€â”€ Copy log â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function copyLog() {
   navigator.clipboard.writeText(logEl().innerText).then(() => {
@@ -1030,7 +930,7 @@ function copyLog() {
   });
 }
 
-// ── Init ──────────────────────────────────────────────────────────────────────
+// â”€â”€ Init â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 // auto-set delay when model changes
 document.getElementById("model-select").addEventListener("change", () => {
@@ -1045,3 +945,6 @@ loadCases();
 
 </body>
 </html>
+
+
+

@@ -1,6 +1,6 @@
 (function() {
   function extractJson(text) {
-    const cleaned = text.replace(/^\s*[*-]\s+/gm, "");
+    const cleaned = String(text || "").replace(/^\s*[*-]\s+/gm, "");
     const fenced = cleaned.match(/```(?:json)?\s*([\s\S]*?)```/);
     if (fenced) return fenced[1].trim();
     const start = cleaned.indexOf("{");
@@ -19,7 +19,7 @@
   }
 
   function parseRetryMs(msg) {
-    const m = msg.match(/retry in ([\d.]+)s/i);
+    const m = String(msg || "").match(/retry in ([\d.]+)s/i);
     if (m) return Math.ceil(parseFloat(m[1]) * 1000) + 2500;
     return 65000;
   }
@@ -49,8 +49,8 @@ CRITICAL OUTPUT RULES:
     return JSON.parse(candidate);
   }
 
-  async function callGemini(apiKey, model, systemPrompt, userMsg, signal, traceRun, traceCtx, attemptCtx) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+  async function callMistral(model, systemPrompt, userMsg, signal, traceRun, traceCtx, attemptCtx) {
+    const url = "/mistral/evaluate";
     const requestStarted = Date.now();
     Analytics.addEvent(traceRun, {
       eventType: "request_start",
@@ -58,32 +58,19 @@ CRITICAL OUTPUT RULES:
       caseId: traceCtx?.caseId,
       attempt: attemptCtx?.attempt,
       attemptId: attemptCtx?.attemptId,
+      provider: "mistral",
       model,
       url
     });
 
-    const isGemma = model.startsWith("gemma-");
-    const generationConfig = { temperature: 0.15 };
-    if (!isGemma) generationConfig.responseMimeType = "application/json";
-
-    const body = isGemma
-      ? {
-          contents: [{
-            role: "user",
-            parts: [{ text: `${systemPrompt}\n\n---\n\n${userMsg}` }]
-          }],
-          generationConfig
-        }
-      : {
-          system_instruction: { parts: [{ text: systemPrompt }] },
-          contents: [{ role: "user", parts: [{ text: userMsg }] }],
-          generationConfig
-        };
-
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+      body: JSON.stringify({
+        model,
+        system_prompt: systemPrompt,
+        user_message: userMsg
+      }),
       signal
     });
 
@@ -92,7 +79,7 @@ CRITICAL OUTPUT RULES:
       let apiErrorPayload = "";
       try {
         const json = await res.json();
-        msg = json?.error?.message || msg;
+        msg = json?.message || json?.error?.message || msg;
         apiErrorPayload = JSON.stringify(json);
       } catch (_) {}
       Analytics.addEvent(traceRun, {
@@ -101,6 +88,7 @@ CRITICAL OUTPUT RULES:
         caseId: traceCtx?.caseId,
         attempt: attemptCtx?.attempt,
         attemptId: attemptCtx?.attemptId,
+        provider: "mistral",
         model,
         httpStatus: res.status,
         durationMs: Date.now() - requestStarted,
@@ -112,36 +100,30 @@ CRITICAL OUTPUT RULES:
     }
 
     const data = await res.json();
-    const parts = data?.candidates?.[0]?.content?.parts ?? [];
-    const visibleParts = parts.filter(
-      p => !p?.thought && typeof p?.text === "string" && p.text.trim()
-    );
-    const text =
-      visibleParts[visibleParts.length - 1]?.text ??
-      parts[parts.length - 1]?.text;
-    if (!text) throw new Error("Empty response from API.");
+    if (!data?.content) throw new Error("Empty response from Mistral API.");
     Analytics.addEvent(traceRun, {
       eventType: "request_success",
       traceId: traceCtx?.traceId,
       caseId: traceCtx?.caseId,
       attempt: attemptCtx?.attempt,
       attemptId: attemptCtx?.attemptId,
-      model,
+      provider: "mistral",
+      model: data.model || model,
       httpStatus: res.status,
       durationMs: Date.now() - requestStarted
     });
-    return isGemma ? extractJson(text) : text;
+    return data.content;
   }
 
-  async function callGeminiWithRetry(apiKey, model, prompt, userMsg, statusEl, signal, traceRun, traceCtx, debugMode, logEl) {
+  async function callMistralWithRetry(model, prompt, userMsg, statusEl, signal, traceRun, traceCtx, debugMode, logEl) {
     for (let attempt = 0; attempt < 3; attempt++) {
       const attemptCtx = Analytics.nextAttempt(traceCtx);
       try {
         if (signal?.aborted) throw new Error("Batch stopped by user.");
-        if (attempt > 0) statusEl.textContent = "Retrying...";
-        else statusEl.innerHTML = '<span class="spinner"></span> Calling model...';
-        Analytics.verboseLog(debugMode, logEl, `trace=${traceCtx.traceId} case=${traceCtx.caseId} attempt=${attemptCtx.attempt} request_start model=${model}`);
-        return await callGemini(apiKey, model, prompt, userMsg, signal, traceRun, traceCtx, attemptCtx);
+        if (attempt > 0) statusEl.textContent = "Retrying Mistral...";
+        else statusEl.innerHTML = '<span class="spinner"></span> Calling Mistral...';
+        Analytics.verboseLog(debugMode, logEl, `trace=${traceCtx.traceId} case=${traceCtx.caseId} attempt=${attemptCtx.attempt} request_start provider=mistral model=${model}`);
+        return await callMistral(model, prompt, userMsg, signal, traceRun, traceCtx, attemptCtx);
       } catch (err) {
         if (signal?.aborted || err?.name === "AbortError") {
           Analytics.addEvent(traceRun, {
@@ -150,17 +132,19 @@ CRITICAL OUTPUT RULES:
             caseId: traceCtx?.caseId,
             attempt: attemptCtx?.attempt,
             attemptId: attemptCtx?.attemptId,
+            provider: "mistral",
             model,
             errorCode: "aborted",
             errorMessage: "Batch stopped by user."
           });
           throw new Error("Batch stopped by user.");
         }
+        const msg = String(err?.message || err || "");
         const isRateLimit =
-          err.message.includes("quota") ||
-          err.message.includes("429") ||
-          err.message.includes("RESOURCE_EXHAUSTED") ||
-          err.message.toLowerCase().includes("retry in");
+          msg.includes("quota") ||
+          msg.includes("429") ||
+          msg.toLowerCase().includes("rate limit") ||
+          msg.toLowerCase().includes("retry in");
         const normalized = Analytics.classifyError(err);
         Analytics.addEvent(traceRun, {
           eventType: "attempt_error",
@@ -168,6 +152,7 @@ CRITICAL OUTPUT RULES:
           caseId: traceCtx?.caseId,
           attempt: attemptCtx?.attempt,
           attemptId: attemptCtx?.attemptId,
+          provider: "mistral",
           model,
           errorCode: normalized.code,
           errorMessage: normalized.message,
@@ -179,13 +164,14 @@ CRITICAL OUTPUT RULES:
           `trace=${traceCtx.traceId} case=${traceCtx.caseId} attempt=${attemptCtx.attempt} errorCode=${normalized.code} msg=${normalized.message}`
         );
         if (!isRateLimit || attempt >= 2) throw err;
-        const retryMs = parseRetryMs(err.message);
+        const retryMs = parseRetryMs(msg);
         Analytics.addEvent(traceRun, {
           eventType: "retry_scheduled",
           traceId: traceCtx?.traceId,
           caseId: traceCtx?.caseId,
           attempt: attemptCtx?.attempt,
           attemptId: attemptCtx?.attemptId,
+          provider: "mistral",
           model,
           retryInMs: retryMs
         });
@@ -194,12 +180,10 @@ CRITICAL OUTPUT RULES:
     }
   }
 
-  async function evaluateCase(apiKey, model, prompt, userMsg, statusEl, signal, traceRun, traceCtx, debugMode, logEl) {
-    let modelUsed = model;
+  async function evaluateCase(model, prompt, userMsg, statusEl, signal, traceRun, traceCtx, debugMode, logEl) {
     let raw;
-
     try {
-      raw = await callGeminiWithRetry(apiKey, modelUsed, prompt, userMsg, statusEl, signal, traceRun, traceCtx, debugMode, logEl);
+      raw = await callMistralWithRetry(model, prompt, userMsg, statusEl, signal, traceRun, traceCtx, debugMode, logEl);
     } catch (err) {
       const normalized = Analytics.classifyError(err);
       Analytics.addFailure(traceRun, {
@@ -216,19 +200,19 @@ CRITICAL OUTPUT RULES:
     }
 
     try {
-      return { parsed: tryParseModelJson(raw), modelUsed };
+      return { parsed: tryParseModelJson(raw), modelUsed: model };
     } catch (_) {
       Analytics.addEvent(traceRun, {
         eventType: "json_repair_retry",
         traceId: traceCtx?.traceId,
         caseId: traceCtx?.caseId,
-        model: modelUsed,
+        provider: "mistral",
+        model,
         payloadSnippet: Analytics.sanitizeSnippet(raw)
       });
       statusEl.textContent = "Repairing format (JSON-only retry)...";
-      const rawRetry = await callGeminiWithRetry(
-        apiKey,
-        modelUsed,
+      const rawRetry = await callMistralWithRetry(
+        model,
         strictJsonPrompt(prompt),
         userMsg,
         statusEl,
@@ -238,11 +222,11 @@ CRITICAL OUTPUT RULES:
         debugMode,
         logEl
       );
-      return { parsed: tryParseModelJson(rawRetry), modelUsed };
+      return { parsed: tryParseModelJson(rawRetry), modelUsed: model };
     }
   }
 
-  window.GeminiClient = {
+  window.MistralClient = {
     evaluateCase
   };
 })();

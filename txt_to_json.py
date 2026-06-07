@@ -49,17 +49,33 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlencode, urlparse
 from urllib import error, request
-from agent2_connection import Agent2Bridge, resolve_pipeline_log_path
+from agent2_connection import Agent2Bridge, resolve_pipeline_log_path, write_json_response
 from patterns import SPEAKER_RE, NON_QUESTION_PATTERNS, BEHAVIORAL_PATTERNS, FOLLOW_UP_PATTERNS, CLARIFYING_PATTERNS, DEEPENING_PATTERNS
 
 
 LOGGER = logging.getLogger(__name__)
 EVALUATOR_PORT = 3000
 AGENT2_BRIDGE = Agent2Bridge()
+DEFAULT_MISTRAL_MODEL = "mistral-large-latest"
+DEFAULT_MISTRAL_API_BASE = "https://api.mistral.ai/v1"
 
 
 def utc_timestamp() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def load_dotenv(path: Path = Path(".env")) -> None:
+    if not path.exists():
+        return
+    for raw_line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key and key not in os.environ:
+            os.environ[key] = value
 
 
 def log_path_for_input(input_path: Path) -> Path:
@@ -550,6 +566,69 @@ def start_http_server_if_needed(port: int) -> int:
     return server_port
 
 
+def extract_mistral_content(payload: dict[str, Any]) -> str:
+    message = payload.get("choices", [{}])[0].get("message", {})
+    content = message.get("content", "")
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        chunks = []
+        for item in content:
+            if isinstance(item, dict) and isinstance(item.get("text"), str):
+                chunks.append(item["text"])
+            elif isinstance(item, str):
+                chunks.append(item)
+        return "\n".join(chunks)
+    return ""
+
+
+def call_mistral_evaluator(system_prompt: str, user_message: str, model: str | None = None) -> dict[str, Any]:
+    load_dotenv()
+    api_key = os.environ.get("MISTRAL_API_KEY")
+    if not api_key:
+        raise RuntimeError("MISTRAL_API_KEY is not set in .env or the environment.")
+
+    selected_model = model or os.environ.get("MISTRAL_EVALUATOR_MODEL", DEFAULT_MISTRAL_MODEL)
+    api_base = os.environ.get("MISTRAL_API_BASE", DEFAULT_MISTRAL_API_BASE).rstrip("/")
+    timeout = float(os.environ.get("MISTRAL_EVALUATOR_TIMEOUT_SECONDS", "180"))
+    body = {
+        "model": selected_model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_message},
+        ],
+        "temperature": 0.15,
+        "response_format": {"type": "json_object"},
+    }
+    req = request.Request(
+        f"{api_base}/chat/completions",
+        data=json.dumps(body).encode("utf-8"),
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with request.urlopen(req, timeout=timeout) as resp:
+            response_payload = json.loads(resp.read().decode("utf-8"))
+    except error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"Mistral API HTTP {exc.code}: {detail}") from exc
+    except error.URLError as exc:
+        raise RuntimeError(f"Mistral API request failed: {exc}") from exc
+
+    content = extract_mistral_content(response_payload)
+    if not content:
+        raise RuntimeError("Empty response from Mistral API.")
+    return {
+        "model": selected_model,
+        "content": content,
+        "raw": response_payload,
+    }
+
+
 class PipelineHTTPRequestHandler(SimpleHTTPRequestHandler):
     server_version = "TranscriptEvaluatorPipeline/1.0"
 
@@ -570,6 +649,9 @@ class PipelineHTTPRequestHandler(SimpleHTTPRequestHandler):
         if self.path == "/agent2/handoff":
             port = int(getattr(self.server, "server_port", EVALUATOR_PORT))
             AGENT2_BRIDGE.handle_handoff(self, port)
+            return
+        if self.path == "/mistral/evaluate":
+            self.handle_mistral_evaluate()
             return
         if self.path != "/pipeline-log":
             self.send_error(HTTPStatus.NOT_FOUND, "Unknown endpoint")
@@ -593,6 +675,21 @@ class PipelineHTTPRequestHandler(SimpleHTTPRequestHandler):
 
     def handle_agent2_websocket(self) -> None:
         AGENT2_BRIDGE.handle_websocket(self)
+
+    def handle_mistral_evaluate(self) -> None:
+        try:
+            content_length = int(self.headers.get("Content-Length", "0"))
+            body = self.rfile.read(content_length).decode("utf-8")
+            payload = json.loads(body)
+            system_prompt = str(payload.get("system_prompt", ""))
+            user_message = str(payload.get("user_message", ""))
+            model = str(payload.get("model", "")).strip() or None
+            if not system_prompt or not user_message:
+                raise ValueError("missing system_prompt or user_message")
+            result = call_mistral_evaluator(system_prompt, user_message, model)
+            write_json_response(self, HTTPStatus.OK, result)
+        except Exception as exc:
+            write_json_response(self, HTTPStatus.BAD_REQUEST, {"status": "error", "message": str(exc)})
 
 
 def run_pipeline_server(port: int) -> None:

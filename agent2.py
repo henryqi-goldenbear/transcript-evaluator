@@ -55,9 +55,15 @@ def logs_dir() -> Path:
     return path
 
 
+def agent2_logs_dir() -> Path:
+    path = logs_dir() / "agent2"
+    path.mkdir(parents=True, exist_ok=True)
+    return path
+
+
 def append_agent_log(message: str) -> None:
     line = f"{datetime.now(timezone.utc).isoformat()} {message}\n"
-    (logs_dir() / "agent2.log").open("a", encoding="utf-8").write(line)
+    (agent2_logs_dir() / "agent2.log").open("a", encoding="utf-8").write(line)
 
 
 def redact(value: str | None) -> str:
@@ -248,7 +254,7 @@ def extract_text(response: dict[str, Any]) -> str:
 
 def write_report(response: dict[str, Any], source_name: str = "handoff") -> Path:
     report_text = extract_text(response) or json.dumps(response, indent=2)
-    report_path = logs_dir() / f"agent2_report_{utc_stamp()}.md"
+    report_path = agent2_logs_dir() / f"agent2_report_{utc_stamp()}.md"
     conversation_id = response.get("conversation_id")
     header = f"# Agent 2 Report\n\nSource: {source_name}\n"
     if conversation_id:
@@ -272,7 +278,7 @@ def run(ws_url: str | None, prompt: str | None, dry_run: bool) -> tuple[Path, st
         source_name = "playground prompt"
 
     if dry_run:
-        report_path = logs_dir() / f"agent2_prompt_{utc_stamp()}.txt"
+        report_path = agent2_logs_dir() / f"agent2_prompt_{utc_stamp()}.txt"
         report_path.write_text(built_prompt, encoding="utf-8")
         append_agent_log(f"Wrote dry-run prompt to {report_path}")
         return report_path, built_prompt
