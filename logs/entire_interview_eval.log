@@ -1653,3 +1653,322 @@
 [pdf] Evaluation report PDF downloaded.
 [result] {"status":"done","inputFile":"input data/entire_interview.json","model":"mistral-small-latest","batchSize":5,"total":24,"success":24,"failed":0,"completedAll":true,"finishedAt":"19:55:52"}
 [agent2] queued: evaluation log, input text, and input JSON queued for Agent 2 websocket delivery
+20:01:27 INFO [__main__] Starting convert and evaluate task; logging to logs\entire_interview_eval.log
+20:01:27 INFO [__main__] input=input data\entire_interview.txt batch_size=5
+20:01:27 INFO [__main__] Parsing transcript: input=input data\entire_interview.txt chars=20942 classifier=heuristic-only
+20:01:27 INFO [__main__] Parsed transcript into 24 cases
+20:01:27 INFO [__main__] Detected 24 evaluator cases
+20:01:27 INFO [__main__] Question/answer pair 1: started_at=20:01:27 finished_at=20:01:27 question_chars=295 answer_chars=17 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 2: started_at=20:01:27 finished_at=20:01:27 question_chars=94 answer_chars=699 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 3: started_at=20:01:27 finished_at=20:01:27 question_chars=161 answer_chars=1107 follow_ups=1
+20:01:27 INFO [__main__] Question/answer pair 4: started_at=20:01:27 finished_at=20:01:27 question_chars=94 answer_chars=452 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 5: started_at=20:01:27 finished_at=20:01:27 question_chars=89 answer_chars=218 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 6: started_at=20:01:27 finished_at=20:01:27 question_chars=52 answer_chars=585 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 7: started_at=20:01:27 finished_at=20:01:27 question_chars=85 answer_chars=806 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 8: started_at=20:01:27 finished_at=20:01:27 question_chars=111 answer_chars=772 follow_ups=1
+20:01:27 INFO [__main__] Question/answer pair 9: started_at=20:01:27 finished_at=20:01:27 question_chars=89 answer_chars=920 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 10: started_at=20:01:27 finished_at=20:01:27 question_chars=56 answer_chars=655 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 11: started_at=20:01:27 finished_at=20:01:27 question_chars=62 answer_chars=805 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 12: started_at=20:01:27 finished_at=20:01:27 question_chars=74 answer_chars=710 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 13: started_at=20:01:27 finished_at=20:01:27 question_chars=44 answer_chars=241 follow_ups=1
+20:01:27 INFO [__main__] Question/answer pair 14: started_at=20:01:27 finished_at=20:01:27 question_chars=62 answer_chars=337 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 15: started_at=20:01:27 finished_at=20:01:27 question_chars=90 answer_chars=567 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 16: started_at=20:01:27 finished_at=20:01:27 question_chars=31 answer_chars=580 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 17: started_at=20:01:27 finished_at=20:01:27 question_chars=65 answer_chars=258 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 18: started_at=20:01:27 finished_at=20:01:27 question_chars=87 answer_chars=675 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 19: started_at=20:01:27 finished_at=20:01:27 question_chars=76 answer_chars=665 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 20: started_at=20:01:27 finished_at=20:01:27 question_chars=87 answer_chars=612 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 21: started_at=20:01:27 finished_at=20:01:27 question_chars=58 answer_chars=279 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 22: started_at=20:01:27 finished_at=20:01:27 question_chars=432 answer_chars=133 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 23: started_at=20:01:27 finished_at=20:01:27 question_chars=256 answer_chars=157 follow_ups=0
+20:01:27 INFO [__main__] Question/answer pair 24: started_at=20:01:27 finished_at=20:01:27 question_chars=2868 answer_chars=0 follow_ups=0
+20:01:27 INFO [__main__] Finished conversion: input=input data\entire_interview.txt output=input data\entire_interview.json started_at=20:01:27 finished_at=20:01:27 input_chars=20942 cases=24 batch_size=5
+20:01:27 INFO [__main__] Reusing existing pipeline server on port 3000
+20:01:27 INFO [__main__] Opening evaluator HTML: http://localhost:3000/evaluator.html?v=mistral-small-1&input=input+data%2Fentire_interview.json&batch_size=5&log_file=logs%2Fentire_interview_eval.log
+[pipeline] Evaluator run started at 20:01:28
+[ok] #1 Auto case 1 | non_behavioral | model=mistral-small-latest | overall=skip
+     breakdown: scorable=false | path=skip
+     - scorable_reasoning: The candidate's response is a simple agreement without any scorable content or dimensions to evaluate.
+     - base: n/a | Not applicable for unscorable turn.
+     - personal_contribution: n/a | Not applicable for unscorable turn.
+     - real_example: n/a | Not applicable for unscorable turn.
+     - outcome: n/a | Not applicable for unscorable turn.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe present.
+     - overall: n/a | Turn is unscorable due to lack of content.
+     start=20:01:28 | end=20:01:30 | duration=1.76s
+[result] {"status":"ok","id":1,"label":"Auto case 1","rubric_type":"non_behavioral","overall":null,"overallDisplay":"skip","durationMs":1765,"startedAt":"20:01:28","endedAt":"20:01:30","parsed":{"scorable":{"value":false,"reasoning":"The candidate's response is a simple agreement without any scorable content or dimensions to evaluate."},"path":"skip","base":{"score":null,"reasoning":"Not applicable for unscorable turn."},"personal_contribution":{"score":null,"reasoning":"Not applicable for unscorable turn."},"real_example":{"score":null,"reasoning":"Not applicable for unscorable turn."},"outcome":{"score":null,"reasoning":"Not applicable for unscorable turn."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe present."},"flags":[],"overall":{"score":null,"reasoning":"Turn is unscorable due to lack of content."}}}
+[ok] #5 Auto case 5 | non_behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response directly addresses the question about resume gaps with a clear explanation.
+     - base: 5 | The response is concise, relevant, and provides a clear explanation for the resume gap.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 5 | The response effectively addresses the question with a clear, relevant explanation.
+     start=20:01:28 | end=20:01:30 | duration=1.80s
+[result] {"status":"ok","id":5,"label":"Auto case 5","rubric_type":"non_behavioral","overall":5,"overallDisplay":5,"durationMs":1803,"startedAt":"20:01:28","endedAt":"20:01:30","parsed":{"scorable":{"value":true,"reasoning":"The response directly addresses the question about resume gaps with a clear explanation."},"path":"non_behavioral","base":{"score":5,"reasoning":"The response is concise, relevant, and provides a clear explanation for the resume gap."},"personal_contribution":null,"real_example":null,"outcome":null,"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":5,"reasoning":"The response effectively addresses the question with a clear, relevant explanation."}}}
+[ok] #4 Auto case 4 | non_behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response directly addresses the technical distinction between reconciliation and settlement systems.
+     - base: 5 | Provides a clear, accurate, and detailed technical explanation of the two systems and their interaction.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - technical_accuracy: 5 | Demonstrates deep understanding of reconciliation, settlement, and event-driven architecture.
+     - system_ownership: 4 | Mentions ownership but focuses more on technical details than leadership context.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 5 | Exceptional technical clarity and depth with minimal room for improvement.
+     start=20:01:28 | end=20:01:30 | duration=2.12s
+[result] {"status":"ok","id":4,"label":"Auto case 4","rubric_type":"non_behavioral","overall":5,"overallDisplay":5,"durationMs":2116,"startedAt":"20:01:28","endedAt":"20:01:30","parsed":{"scorable":{"value":true,"reasoning":"The response directly addresses the technical distinction between reconciliation and settlement systems."},"path":"non_behavioral","base":{"score":5,"reasoning":"Provides a clear, accurate, and detailed technical explanation of the two systems and their interaction."},"type_specific_dimensions":[{"name":"technical_accuracy","score":5,"reasoning":"Demonstrates deep understanding of reconciliation, settlement, and event-driven architecture."},{"name":"system_ownership","score":4,"reasoning":"Mentions ownership but focuses more on technical details than leadership context."}],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":5,"reasoning":"Exceptional technical clarity and depth with minimal room for improvement."}}}
+[ok] #2 Auto case 2 | non_behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response is directly relevant to the broad, non-behavioral question.
+     - base: 5 | The response is concise, relevant, and provides a clear professional narrative within the time constraint.
+     - personal_contribution: n/a | Not applicable for non-behavioral path.
+     - real_example: n/a | Not applicable for non-behavioral path.
+     - outcome: n/a | Not applicable for non-behavioral path.
+     - clarity: 5 | The response is well-structured and easy to follow.
+     - relevance: 5 | The response directly addresses the question and highlights key experiences.
+     - succinctness: 5 | The response stays within the implied two-minute limit and is concise.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present.
+     - overall: 5 | The response is highly effective for a broad, non-behavioral introduction.
+     start=20:01:28 | end=20:01:31 | duration=2.45s
+[result] {"status":"ok","id":2,"label":"Auto case 2","rubric_type":"non_behavioral","overall":5,"overallDisplay":5,"durationMs":2454,"startedAt":"20:01:28","endedAt":"20:01:31","parsed":{"scorable":{"value":true,"reasoning":"The response is directly relevant to the broad, non-behavioral question."},"path":"non_behavioral","base":{"score":5,"reasoning":"The response is concise, relevant, and provides a clear professional narrative within the time constraint."},"personal_contribution":{"score":null,"reasoning":"Not applicable for non-behavioral path."},"real_example":{"score":null,"reasoning":"Not applicable for non-behavioral path."},"outcome":{"score":null,"reasoning":"Not applicable for non-behavioral path."},"type_specific_dimensions":[{"name":"clarity","score":5,"reasoning":"The response is well-structured and easy to follow."},{"name":"relevance","score":5,"reasoning":"The response directly addresses the question and highlights key experiences."},{"name":"succinctness","score":5,"reasoning":"The response stays within the implied two-minute limit and is concise."}],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present."},"flags":[],"overall":{"score":5,"reasoning":"The response is highly effective for a broad, non-behavioral introduction."}}}
+[ok] #3 Auto case 3 | non_behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response directly addresses the chronological resume walkthrough question with relevant technical details.
+     - base: 5 | The response provides a clear, structured, and chronological overview of the candidate's education and career progression with relevant technical context.
+     - personal_contribution: 5 | The candidate explicitly highlights their roles, responsibilities, and technical decisions in each position, demonstrating ownership.
+     - real_example: 5 | The response includes a concrete example (PayLoom webhook scaling) with specific metrics and outcomes, adding credibility.
+     - outcome: 5 | The candidate quantifies the impact of their work (p99 latency improvement from 4s to 800ms) and ties it to a proudest project.
+     - follow_up: present=true | probe=deepening | impact=positive_signal | The candidate provided additional technical depth and specificity in response to the follow-up, reinforcing their credibility.
+     - overall: 5 | The response is highly structured, technically detailed, and demonstrates strong ownership and impact, with a positive signal from the follow-up.
+     start=20:01:28 | end=20:01:31 | duration=2.54s
+[result] {"status":"ok","id":3,"label":"Auto case 3","rubric_type":"non_behavioral","overall":5,"overallDisplay":5,"durationMs":2539,"startedAt":"20:01:28","endedAt":"20:01:31","parsed":{"scorable":{"value":true,"reasoning":"The response directly addresses the chronological resume walkthrough question with relevant technical details."},"path":"non_behavioral","base":{"score":5,"reasoning":"The response provides a clear, structured, and chronological overview of the candidate's education and career progression with relevant technical context."},"personal_contribution":{"score":5,"reasoning":"The candidate explicitly highlights their roles, responsibilities, and technical decisions in each position, demonstrating ownership."},"real_example":{"score":5,"reasoning":"The response includes a concrete example (PayLoom webhook scaling) with specific metrics and outcomes, adding credibility."},"outcome":{"score":5,"reasoning":"The candidate quantifies the impact of their work (p99 latency improvement from 4s to 800ms) and ties it to a proudest project."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"deepening","impact":"positive_signal","reasoning":"The candidate provided additional technical depth and specificity in response to the follow-up, reinforcing their credibility."},"flags":[],"overall":{"score":5,"reasoning":"The response is highly structured, technically detailed, and demonstrates strong ownership and impact, with a positive signal from the follow-up."}}}
+[ok] #10 Auto case 10 | behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response describes a specific conflict scenario with clear details about actions and outcomes.
+     - base: 5 | The response is clear, structured, and directly addresses the question with relevant context.
+     - personal_contribution: 4 | The candidate highlights their role in initiating the one-on-one and proposing the hybrid test strategy.
+     - real_example: 5 | The example is specific, recent (mid-2022), and includes concrete details about the conflict and resolution.
+     - outcome: 5 | The outcome is measurable (no adjustment-related incidents in the first two months) and directly tied to the resolution.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 5 | The response is highly scorable, with strong specificity, personal contribution, and a clear positive outcome.
+     start=20:01:31 | end=20:01:33 | duration=2.17s
+[result] {"status":"ok","id":10,"label":"Auto case 10","rubric_type":"behavioral","overall":5,"overallDisplay":5,"durationMs":2172,"startedAt":"20:01:31","endedAt":"20:01:33","parsed":{"scorable":{"value":true,"reasoning":"The response describes a specific conflict scenario with clear details about actions and outcomes."},"path":"behavioral","base":{"score":5,"reasoning":"The response is clear, structured, and directly addresses the question with relevant context."},"personal_contribution":{"score":4,"reasoning":"The candidate highlights their role in initiating the one-on-one and proposing the hybrid test strategy."},"real_example":{"score":5,"reasoning":"The example is specific, recent (mid-2022), and includes concrete details about the conflict and resolution."},"outcome":{"score":5,"reasoning":"The outcome is measurable (no adjustment-related incidents in the first two months) and directly tied to the resolution."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":5,"reasoning":"The response is highly scorable, with strong specificity, personal contribution, and a clear positive outcome."}}}
+[ok] #9 Auto case 9 | behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response clearly describes a past situation involving persuasion of a skeptical stakeholder with specific details.
+     - base: 5 | The response is highly structured, relevant, and directly addresses the question with clear context and outcome.
+     - personal_contribution: 5 | The candidate explicitly describes their role in creating the doc, presenting it, and addressing concerns, demonstrating direct personal involvement.
+     - real_example: 5 | The response includes a concrete, verifiable example with specific incidents, metrics, and outcomes.
+     - outcome: 5 | The outcome is clearly positive and measurable, with a tangible business impact (reduced recovery time during a critical incident).
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 5 | The response is a strong behavioral example with all dimensions scored at the highest level, demonstrating clear persuasion, stakeholder management, and measurable impact.
+     start=20:01:31 | end=20:01:33 | duration=2.30s
+[result] {"status":"ok","id":9,"label":"Auto case 9","rubric_type":"behavioral","overall":5,"overallDisplay":5,"durationMs":2300,"startedAt":"20:01:31","endedAt":"20:01:33","parsed":{"scorable":{"value":true,"reasoning":"The response clearly describes a past situation involving persuasion of a skeptical stakeholder with specific details."},"path":"behavioral","base":{"score":5,"reasoning":"The response is highly structured, relevant, and directly addresses the question with clear context and outcome."},"personal_contribution":{"score":5,"reasoning":"The candidate explicitly describes their role in creating the doc, presenting it, and addressing concerns, demonstrating direct personal involvement."},"real_example":{"score":5,"reasoning":"The response includes a concrete, verifiable example with specific incidents, metrics, and outcomes."},"outcome":{"score":5,"reasoning":"The outcome is clearly positive and measurable, with a tangible business impact (reduced recovery time during a critical incident)."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":5,"reasoning":"The response is a strong behavioral example with all dimensions scored at the highest level, demonstrating clear persuasion, stakeholder management, and measurable impact."}}}
+[ok] #6 Auto case 6 | non_behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response directly addresses the question with specific, relevant details about Northline and the role.
+     - base: 5 | The response is clear, concise, and directly answers the question with two well-articulated reasons.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - alignment_with_company: 5 | The candidate demonstrates strong alignment with Northline's technical focus (event-sourced ledger) and values (owning production systems).
+     - role_motivation: 5 | The candidate explains why this role fits their career goals (avoiding feature factory, seeking core system ownership).
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was needed; the response was complete and informative.
+     - overall: 5 | The response is highly relevant, specific, and demonstrates strong motivation and alignment with the role and company.
+     start=20:01:31 | end=20:01:33 | duration=2.42s
+[result] {"status":"ok","id":6,"label":"Auto case 6","rubric_type":"non_behavioral","overall":5,"overallDisplay":5,"durationMs":2422,"startedAt":"20:01:31","endedAt":"20:01:33","parsed":{"scorable":{"value":true,"reasoning":"The response directly addresses the question with specific, relevant details about Northline and the role."},"path":"non_behavioral","base":{"score":5,"reasoning":"The response is clear, concise, and directly answers the question with two well-articulated reasons."},"personal_contribution":null,"real_example":null,"outcome":null,"type_specific_dimensions":[{"name":"alignment_with_company","score":5,"reasoning":"The candidate demonstrates strong alignment with Northline's technical focus (event-sourced ledger) and values (owning production systems)."},{"name":"role_motivation","score":5,"reasoning":"The candidate explains why this role fits their career goals (avoiding feature factory, seeking core system ownership)."}],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was needed; the response was complete and informative."},"flags":[],"overall":{"score":5,"reasoning":"The response is highly relevant, specific, and demonstrates strong motivation and alignment with the role and company."}}}
+[ok] #8 Auto case 8 | behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response directly addresses the behavioral question with a clear project example under a tight deadline.
+     - base: 5 | The response is highly structured, concise, and immediately relevant to the question.
+     - personal_contribution: 5 | The candidate explicitly describes their direct actions, including taking ownership of the riskiest component.
+     - real_example: 5 | A detailed, specific example with clear timeline, team size, and technical context is provided.
+     - outcome: 5 | The outcome is quantified (two days early, zero exceptions) and tied to business impact (regulatory cutoff, Sev-1 risk).
+     - follow_up: present=true | probe=deepening | impact=positive_signal | The candidate added new technical detail (idempotent replay logic, chaos testing) that strengthened credibility.
+     - overall: 5 | The response is a strong behavioral example with clear personal contribution, real-world context, and measurable outcomes.
+     start=20:01:31 | end=20:01:34 | duration=2.65s
+[result] {"status":"ok","id":8,"label":"Auto case 8","rubric_type":"behavioral","overall":5,"overallDisplay":5,"durationMs":2651,"startedAt":"20:01:31","endedAt":"20:01:34","parsed":{"scorable":{"value":true,"reasoning":"The response directly addresses the behavioral question with a clear project example under a tight deadline."},"path":"behavioral","base":{"score":5,"reasoning":"The response is highly structured, concise, and immediately relevant to the question."},"personal_contribution":{"score":5,"reasoning":"The candidate explicitly describes their direct actions, including taking ownership of the riskiest component."},"real_example":{"score":5,"reasoning":"A detailed, specific example with clear timeline, team size, and technical context is provided."},"outcome":{"score":5,"reasoning":"The outcome is quantified (two days early, zero exceptions) and tied to business impact (regulatory cutoff, Sev-1 risk)."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"deepening","impact":"positive_signal","reasoning":"The candidate added new technical detail (idempotent replay logic, chaos testing) that strengthened credibility."},"flags":[],"overall":{"score":5,"reasoning":"The response is a strong behavioral example with clear personal contribution, real-world context, and measurable outcomes."}}}
+[ok] #7 Auto case 7 | non_behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response directly addresses the question about Go production usage and service structuring.
+     - base: 5 | The response provides a clear, detailed, and structured explanation of Go service architecture and production practices.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - service_structure: 5 | Explicitly describes cmd/, internal/, and service layer separation with clear reasoning.
+     - concurrency_patterns: 5 | Demonstrates disciplined use of errgroup, context, and goroutine management with a concrete incident example.
+     - testing_approach: 4 | Mentions table-driven tests and interface-based fakes but lacks depth on test coverage or mocking strategies.
+     - observability: 4 | References structured logging and trace ID propagation but does not elaborate on metrics or monitoring.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the evaluation context.
+     - overall: 5 | The response is highly detailed, technically sound, and demonstrates deep practical experience with Go in production.
+     start=20:01:31 | end=20:01:34 | duration=2.76s
+[result] {"status":"ok","id":7,"label":"Auto case 7","rubric_type":"non_behavioral","overall":5,"overallDisplay":5,"durationMs":2761,"startedAt":"20:01:31","endedAt":"20:01:34","parsed":{"scorable":{"value":true,"reasoning":"The response directly addresses the question about Go production usage and service structuring."},"path":"non_behavioral","base":{"score":5,"reasoning":"The response provides a clear, detailed, and structured explanation of Go service architecture and production practices."},"type_specific_dimensions":[{"name":"service_structure","score":5,"reasoning":"Explicitly describes cmd/, internal/, and service layer separation with clear reasoning."},{"name":"concurrency_patterns","score":5,"reasoning":"Demonstrates disciplined use of errgroup, context, and goroutine management with a concrete incident example."},{"name":"testing_approach","score":4,"reasoning":"Mentions table-driven tests and interface-based fakes but lacks depth on test coverage or mocking strategies."},{"name":"observability","score":4,"reasoning":"References structured logging and trace ID propagation but does not elaborate on metrics or monitoring."}],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the evaluation context."},"flags":[],"overall":{"score":5,"reasoning":"The response is highly detailed, technically sound, and demonstrates deep practical experience with Go in production."}}}
+[ok] #15 Auto case 15 | non_behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response provides specific context about the mentoring situation, including location, timing, and the candidate's role.
+     - base: 5 | The response is highly detailed, specific, and directly addresses the question with clear context.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was needed as the response fully addressed the question.
+     - overall: 5 | The response is comprehensive, specific, and provides strong context, warranting the highest score.
+     start=20:01:34 | end=20:01:35 | duration=1.68s
+[result] {"status":"ok","id":15,"label":"Auto case 15","rubric_type":"non_behavioral","overall":5,"overallDisplay":5,"durationMs":1680,"startedAt":"20:01:34","endedAt":"20:01:35","parsed":{"scorable":{"value":true,"reasoning":"The response provides specific context about the mentoring situation, including location, timing, and the candidate's role."},"path":"non_behavioral","base":{"score":5,"reasoning":"The response is highly detailed, specific, and directly addresses the question with clear context."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was needed as the response fully addressed the question."},"flags":[],"overall":{"score":5,"reasoning":"The response is comprehensive, specific, and provides strong context, warranting the highest score."}}}
+[ok] #14 Auto case 14 | behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response directly answers the behavioral question with a clear example.
+     - base: 5 | The response is clear, structured, and directly addresses the question.
+     - personal_contribution: 5 | The candidate explicitly describes their actions (code reviews, assignments) and their impact.
+     - real_example: 5 | A specific, verifiable example with timeframe, actions, and outcome is provided.
+     - outcome: 5 | The outcome is measurable (minimal review needed, promotion) and clearly linked to the candidate's efforts.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was needed; the response was complete and detailed.
+     - overall: 5 | The response is a strong behavioral example with clear personal contribution, real example, and outcome.
+     start=20:01:34 | end=20:01:36 | duration=2.09s
+[result] {"status":"ok","id":14,"label":"Auto case 14","rubric_type":"behavioral","overall":5,"overallDisplay":5,"durationMs":2092,"startedAt":"20:01:34","endedAt":"20:01:36","parsed":{"scorable":{"value":true,"reasoning":"The response directly answers the behavioral question with a clear example."},"path":"behavioral","base":{"score":5,"reasoning":"The response is clear, structured, and directly addresses the question."},"personal_contribution":{"score":5,"reasoning":"The candidate explicitly describes their actions (code reviews, assignments) and their impact."},"real_example":{"score":5,"reasoning":"A specific, verifiable example with timeframe, actions, and outcome is provided."},"outcome":{"score":5,"reasoning":"The outcome is measurable (minimal review needed, promotion) and clearly linked to the candidate's efforts."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was needed; the response was complete and detailed."},"flags":[],"overall":{"score":5,"reasoning":"The response is a strong behavioral example with clear personal contribution, real example, and outcome."}}}
+[ok] #11 Auto case 11 | behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response clearly describes a past failure with specific details, actions, and outcomes.
+     - base: 5 | The response provides a clear, structured narrative with context, actions, and outcome.
+     - personal_contribution: 5 | The candidate explicitly states their ownership of the issue, on-call role, and postmortem responsibility.
+     - real_example: 5 | The example is highly specific, including dates, numbers, and technical details.
+     - outcome: 4 | The outcome is positive (no repeat incidents) but could emphasize the impact of the manual repair script more.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 5 | The response is detailed, credible, and demonstrates strong accountability and learning from failure.
+     start=20:01:34 | end=20:01:36 | duration=2.11s
+[result] {"status":"ok","id":11,"label":"Auto case 11","rubric_type":"behavioral","overall":5,"overallDisplay":5,"durationMs":2114,"startedAt":"20:01:34","endedAt":"20:01:36","parsed":{"scorable":{"value":true,"reasoning":"The response clearly describes a past failure with specific details, actions, and outcomes."},"path":"behavioral","base":{"score":5,"reasoning":"The response provides a clear, structured narrative with context, actions, and outcome."},"personal_contribution":{"score":5,"reasoning":"The candidate explicitly states their ownership of the issue, on-call role, and postmortem responsibility."},"real_example":{"score":5,"reasoning":"The example is highly specific, including dates, numbers, and technical details."},"outcome":{"score":4,"reasoning":"The outcome is positive (no repeat incidents) but could emphasize the impact of the manual repair script more."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":5,"reasoning":"The response is detailed, credible, and demonstrates strong accountability and learning from failure."}}}
+[ok] #12 Auto case 12 | behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response directly addresses the behavioral question with a clear example of receiving and acting on tough feedback.
+     - base: 5 | The response is clear, structured, and directly relevant to the question.
+     - personal_contribution: 5 | The candidate explicitly describes their actions (asking for examples, switching formats, sending pre-reads) and their role in the outcome.
+     - real_example: 5 | The example is specific, detailed, and includes context (settlement migration, director's feedback, steering meeting recording).
+     - outcome: 5 | The outcome is measurable (20 minutes → 12 minutes, sign-off achieved) and demonstrates a positive impact.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 5 | The response is a strong behavioral example with clear personal contribution, real example, and measurable outcome.
+     start=20:01:34 | end=20:01:36 | duration=2.18s
+[result] {"status":"ok","id":12,"label":"Auto case 12","rubric_type":"behavioral","overall":5,"overallDisplay":5,"durationMs":2176,"startedAt":"20:01:34","endedAt":"20:01:36","parsed":{"scorable":{"value":true,"reasoning":"The response directly addresses the behavioral question with a clear example of receiving and acting on tough feedback."},"path":"behavioral","base":{"score":5,"reasoning":"The response is clear, structured, and directly relevant to the question."},"personal_contribution":{"score":5,"reasoning":"The candidate explicitly describes their actions (asking for examples, switching formats, sending pre-reads) and their role in the outcome."},"real_example":{"score":5,"reasoning":"The example is specific, detailed, and includes context (settlement migration, director's feedback, steering meeting recording)."},"outcome":{"score":5,"reasoning":"The outcome is measurable (20 minutes → 12 minutes, sign-off achieved) and demonstrates a positive impact."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":5,"reasoning":"The response is a strong behavioral example with clear personal contribution, real example, and measurable outcome."}}}
+[ok] #13 Auto case 13 | behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response directly addresses the behavioral question with a clear process improvement example.
+     - base: 5 | The response is clear, concise, and directly answers the question about process improvement.
+     - personal_contribution: 5 | The candidate explicitly states they wrote the script themselves and rolled it out to the team.
+     - real_example: 5 | The example includes specific details about the manual steps, the script's functionality, and measurable outcomes.
+     - outcome: 5 | The response quantifies the time saved (45 to 12 minutes) and the reduction in failed promotes (1 in 4 to near zero).
+     - follow_up: present=true | probe=deepening | impact=positive_signal | The candidate provided additional specific details and deeper context in response to the follow-up.
+     - overall: 5 | The response is highly detailed, specific, and demonstrates strong personal contribution and measurable outcomes.
+     start=20:01:34 | end=20:01:36 | duration=2.22s
+[result] {"status":"ok","id":13,"label":"Auto case 13","rubric_type":"behavioral","overall":5,"overallDisplay":5,"durationMs":2221,"startedAt":"20:01:34","endedAt":"20:01:36","parsed":{"scorable":{"value":true,"reasoning":"The response directly addresses the behavioral question with a clear process improvement example."},"path":"behavioral","base":{"score":5,"reasoning":"The response is clear, concise, and directly answers the question about process improvement."},"personal_contribution":{"score":5,"reasoning":"The candidate explicitly states they wrote the script themselves and rolled it out to the team."},"real_example":{"score":5,"reasoning":"The example includes specific details about the manual steps, the script's functionality, and measurable outcomes."},"outcome":{"score":5,"reasoning":"The response quantifies the time saved (45 to 12 minutes) and the reduction in failed promotes (1 in 4 to near zero)."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"deepening","impact":"positive_signal","reasoning":"The candidate provided additional specific details and deeper context in response to the follow-up."},"flags":[],"overall":{"score":5,"reasoning":"The response is highly detailed, specific, and demonstrates strong personal contribution and measurable outcomes."}}}
+[ok] #17 Auto case 17 | non_behavioral | model=mistral-small-latest | overall=4
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response directly addresses the question with a structured approach.
+     - base: 4 | The response provides a clear, logical framework for handling competing priorities.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - clarity: 5 | The response is well-structured and easy to follow.
+     - practicality: 4 | The approach is actionable but lacks specific examples of past application.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 4 | The response demonstrates a strong, structured approach to handling competing priorities but lacks real-world examples.
+     start=20:01:36 | end=20:01:38 | duration=2.04s
+[result] {"status":"ok","id":17,"label":"Auto case 17","rubric_type":"non_behavioral","overall":4,"overallDisplay":4,"durationMs":2037,"startedAt":"20:01:36","endedAt":"20:01:38","parsed":{"scorable":{"value":true,"reasoning":"The response directly addresses the question with a structured approach."},"path":"non_behavioral","base":{"score":4,"reasoning":"The response provides a clear, logical framework for handling competing priorities."},"personal_contribution":null,"real_example":null,"outcome":null,"type_specific_dimensions":[{"name":"clarity","score":5,"reasoning":"The response is well-structured and easy to follow."},{"name":"practicality","score":4,"reasoning":"The approach is actionable but lacks specific examples of past application."}],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":4,"reasoning":"The response demonstrates a strong, structured approach to handling competing priorities but lacks real-world examples."}}}
+[ok] #18 Auto case 18 | non_behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response provides a clear past example addressing the framework's application.
+     - base: 5 | The response is highly structured, detailed, and directly answers the question with clear context and timeline.
+     - personal_contribution: 5 | The candidate explicitly describes their direct role in triaging, resolving, and delegating tasks.
+     - real_example: 5 | A concrete, time-bound example with specific actions, outcomes, and external validation (finance verification) is provided.
+     - outcome: 5 | All three priorities were successfully addressed with no negative consequences mentioned.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 5 | The response is a strong behavioral example demonstrating framework application with clear personal contribution and successful outcomes.
+     start=20:01:36 | end=20:01:38 | duration=2.45s
+[result] {"status":"ok","id":18,"label":"Auto case 18","rubric_type":"non_behavioral","overall":5,"overallDisplay":5,"durationMs":2448,"startedAt":"20:01:36","endedAt":"20:01:38","parsed":{"scorable":{"value":true,"reasoning":"The response provides a clear past example addressing the framework's application."},"path":"behavioral","base":{"score":5,"reasoning":"The response is highly structured, detailed, and directly answers the question with clear context and timeline."},"personal_contribution":{"score":5,"reasoning":"The candidate explicitly describes their direct role in triaging, resolving, and delegating tasks."},"real_example":{"score":5,"reasoning":"A concrete, time-bound example with specific actions, outcomes, and external validation (finance verification) is provided."},"outcome":{"score":5,"reasoning":"All three priorities were successfully addressed with no negative consequences mentioned."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":5,"reasoning":"The response is a strong behavioral example demonstrating framework application with clear personal contribution and successful outcomes."}}}
+[ok] #19 Auto case 19 | behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response clearly describes a past situation with leadership actions, outcomes, and context.
+     - base: 5 | The response provides a clear context, actions, and outcome with specific details.
+     - personal_contribution: 5 | The candidate explicitly describes their direct actions (e.g., starting a shared doc, assigning tracks, keeping the room focused).
+     - real_example: 5 | A concrete, recent example (November 2023) with specific details (payout latency, feature flag rollout, 40-minute resolution).
+     - outcome: 5 | The outcome is measurable (40-minute rollback) and impactful (adopted pre-flight checklist).
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the evaluation.
+     - overall: 5 | The response demonstrates strong leadership, clear personal contribution, and tangible outcomes with high specificity.
+     start=20:01:36 | end=20:01:38 | duration=2.52s
+[result] {"status":"ok","id":19,"label":"Auto case 19","rubric_type":"behavioral","overall":5,"overallDisplay":5,"durationMs":2517,"startedAt":"20:01:36","endedAt":"20:01:38","parsed":{"scorable":{"value":true,"reasoning":"The response clearly describes a past situation with leadership actions, outcomes, and context."},"path":"behavioral","base":{"score":5,"reasoning":"The response provides a clear context, actions, and outcome with specific details."},"personal_contribution":{"score":5,"reasoning":"The candidate explicitly describes their direct actions (e.g., starting a shared doc, assigning tracks, keeping the room focused)."},"real_example":{"score":5,"reasoning":"A concrete, recent example (November 2023) with specific details (payout latency, feature flag rollout, 40-minute resolution)."},"outcome":{"score":5,"reasoning":"The outcome is measurable (40-minute rollback) and impactful (adopted pre-flight checklist)."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the evaluation."},"flags":[],"overall":{"score":5,"reasoning":"The response demonstrates strong leadership, clear personal contribution, and tangible outcomes with high specificity."}}}
+[ok] #20 Auto case 20 | non_behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response provides a concrete, real-world pattern of collaboration with a product manager, including specific actions and outcomes.
+     - base: 5 | The response clearly describes a real, repeatable pattern of working with a product manager, not just an idealized approach.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - specificity: 5 | The response includes detailed examples of collaboration methods, edge-case handling, and a concrete outcome (sub-minute vs. hourly reconciliation).
+     - real_example: 5 | The candidate provides a specific, recent example (real-time reconciliation prototype) with measurable results and tradeoffs.
+     - outcome_orientation: 5 | The response explicitly ties actions to outcomes (prototype proving sub-minute matching wasn't worth the cost, leading to hourly SLA).
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 5 | The response is highly specific, outcome-oriented, and provides a clear real-world example of collaboration with a product manager.
+     start=20:01:36 | end=20:01:38 | duration=2.53s
+[result] {"status":"ok","id":20,"label":"Auto case 20","rubric_type":"non_behavioral","overall":5,"overallDisplay":5,"durationMs":2530,"startedAt":"20:01:36","endedAt":"20:01:38","parsed":{"scorable":{"value":true,"reasoning":"The response provides a concrete, real-world pattern of collaboration with a product manager, including specific actions and outcomes."},"path":"non_behavioral","base":{"score":5,"reasoning":"The response clearly describes a real, repeatable pattern of working with a product manager, not just an idealized approach."},"type_specific_dimensions":[{"name":"specificity","score":5,"reasoning":"The response includes detailed examples of collaboration methods, edge-case handling, and a concrete outcome (sub-minute vs. hourly reconciliation)."},{"name":"real_example","score":5,"reasoning":"The candidate provides a specific, recent example (real-time reconciliation prototype) with measurable results and tradeoffs."},{"name":"outcome_orientation","score":5,"reasoning":"The response explicitly ties actions to outcomes (prototype proving sub-minute matching wasn't worth the cost, leading to hourly SLA)."}],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":5,"reasoning":"The response is highly specific, outcome-oriented, and provides a clear real-world example of collaboration with a product manager."}}}
+[ok] #16 Auto case 16 | non_behavioral | model=mistral-small-latest | overall=4
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response addresses the question directly and provides specific details about a weakness and its management.
+     - base: 5 | The response clearly identifies a weakness and provides context for its occurrence.
+     - personal_contribution: 4 | The candidate acknowledges their role in the weakness (taking on too many reviews) but could emphasize their proactive steps more.
+     - real_example: 5 | The candidate provides a concrete example (settlement migration) with clear details about the impact.
+     - outcome: 4 | The candidate describes improvements (pairing juniors, redistributing work) and measurable outcomes (review SLA met), but the outcome is not fully quantified.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 4 | The response is strong with a clear weakness, example, and outcome, but could benefit from slightly more emphasis on personal accountability and quantified results.
+     start=20:01:36 | end=20:01:38 | duration=2.56s
+[result] {"status":"ok","id":16,"label":"Auto case 16","rubric_type":"non_behavioral","overall":4,"overallDisplay":4,"durationMs":2560,"startedAt":"20:01:36","endedAt":"20:01:38","parsed":{"scorable":{"value":true,"reasoning":"The response addresses the question directly and provides specific details about a weakness and its management."},"path":"behavioral","base":{"score":5,"reasoning":"The response clearly identifies a weakness and provides context for its occurrence."},"personal_contribution":{"score":4,"reasoning":"The candidate acknowledges their role in the weakness (taking on too many reviews) but could emphasize their proactive steps more."},"real_example":{"score":5,"reasoning":"The candidate provides a concrete example (settlement migration) with clear details about the impact."},"outcome":{"score":4,"reasoning":"The candidate describes improvements (pairing juniors, redistributing work) and measurable outcomes (review SLA met), but the outcome is not fully quantified."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":4,"reasoning":"The response is strong with a clear weakness, example, and outcome, but could benefit from slightly more emphasis on personal accountability and quantified results."}}}
+[ok] #24 Auto case 24 | non_behavioral | model=mistral-small-latest | overall=skip
+     breakdown: scorable=false | path=skip
+     - scorable_reasoning: The candidate response is a greeting, not a scorable turn.
+     - base: n/a
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - follow_up: present=false | probe=none | impact=none
+     - overall: n/a | Non-scorable turn (greeting).
+     start=20:01:38 | end=20:01:40 | duration=1.59s
+[result] {"status":"ok","id":24,"label":"Auto case 24","rubric_type":"non_behavioral","overall":null,"overallDisplay":"skip","durationMs":1589,"startedAt":"20:01:38","endedAt":"20:01:40","parsed":{"scorable":{"value":false,"reasoning":"The candidate response is a greeting, not a scorable turn."},"path":"skip","base":{"score":null,"reasoning":null},"personal_contribution":{"score":null,"reasoning":null},"real_example":{"score":null,"reasoning":null},"outcome":{"score":null,"reasoning":null},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":null},"flags":[],"overall":{"score":null,"reasoning":"Non-scorable turn (greeting)."}}}
+[ok] #23 Auto case 23 | non_behavioral | model=mistral-small-latest | overall=skip
+     breakdown: scorable=false | path=skip
+     - scorable_reasoning: The candidate's response is a polite acknowledgment without scorable content related to the question.
+     - base: n/a
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - follow_up: present=false | probe=none | impact=none
+     - overall: n/a | Response is not scorable as it lacks evaluative content.
+     start=20:01:38 | end=20:01:40 | duration=1.85s
+[result] {"status":"ok","id":23,"label":"Auto case 23","rubric_type":"non_behavioral","overall":null,"overallDisplay":"skip","durationMs":1852,"startedAt":"20:01:38","endedAt":"20:01:40","parsed":{"scorable":{"value":false,"reasoning":"The candidate's response is a polite acknowledgment without scorable content related to the question."},"path":"skip","base":{"score":null,"reasoning":null},"personal_contribution":{"score":null,"reasoning":null},"real_example":{"score":null,"reasoning":null},"outcome":{"score":null,"reasoning":null},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":null},"flags":[],"overall":{"score":null,"reasoning":"Response is not scorable as it lacks evaluative content."}}}
+[ok] #22 Auto case 22 | non_behavioral | model=mistral-small-latest | overall=4
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response directly addresses the question about the RFC process and the first ninety days, providing a relevant follow-up.
+     - base: 4 | The response is clear, concise, and directly relevant to the question, covering the main points and adding a thoughtful follow-up.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - follow_up: present=true | probe=clarifying | impact=neutral | The candidate added a clarifying question about the scope of work, which is relevant but does not deepen the discussion.
+     - overall: 4 | The response is well-structured, relevant, and adds value with a clarifying question, warranting a high score.
+     start=20:01:38 | end=20:01:41 | duration=2.31s
+[result] {"status":"ok","id":22,"label":"Auto case 22","rubric_type":"non_behavioral","overall":4,"overallDisplay":4,"durationMs":2315,"startedAt":"20:01:38","endedAt":"20:01:41","parsed":{"scorable":{"value":true,"reasoning":"The response directly addresses the question about the RFC process and the first ninety days, providing a relevant follow-up."},"path":"non_behavioral","base":{"score":4,"reasoning":"The response is clear, concise, and directly relevant to the question, covering the main points and adding a thoughtful follow-up."},"personal_contribution":null,"real_example":null,"outcome":null,"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"clarifying","impact":"neutral","reasoning":"The candidate added a clarifying question about the scope of work, which is relevant but does not deepen the discussion."},"flags":[],"overall":{"score":4,"reasoning":"The response is well-structured, relevant, and adds value with a clarifying question, warranting a high score."}}}
+[ok] #21 Auto case 21 | non_behavioral | model=mistral-small-latest | overall=5
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response is directly relevant to the question and provides specific, actionable inquiries.
+     - base: 5 | The response is clear, concise, and addresses multiple relevant aspects of the role and team dynamics.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - schema_collaboration: 5 | The question about platform partnering with fraud engineering on schema changes demonstrates depth in understanding workflow integration.
+     - success_metrics: 5 | The inquiry about success in the first ninety days shows a focus on measurable outcomes and alignment with expectations.
+     - on_call_structure: 5 | The question about on-call load, rotation size, and weekend coverage reflects practical concerns about team sustainability and workload.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 5 | The candidate demonstrated strong initiative, clarity, and strategic thinking in their questions, covering critical operational and team dynamics.
+     start=20:01:38 | end=20:01:41 | duration=2.65s
+[result] {"status":"ok","id":21,"label":"Auto case 21","rubric_type":"non_behavioral","overall":5,"overallDisplay":5,"durationMs":2645,"startedAt":"20:01:38","endedAt":"20:01:41","parsed":{"scorable":{"value":true,"reasoning":"The response is directly relevant to the question and provides specific, actionable inquiries."},"path":"non_behavioral","base":{"score":5,"reasoning":"The response is clear, concise, and addresses multiple relevant aspects of the role and team dynamics."},"type_specific_dimensions":[{"name":"schema_collaboration","score":5,"reasoning":"The question about platform partnering with fraud engineering on schema changes demonstrates depth in understanding workflow integration."},{"name":"success_metrics","score":5,"reasoning":"The inquiry about success in the first ninety days shows a focus on measurable outcomes and alignment with expectations."},{"name":"on_call_structure","score":5,"reasoning":"The question about on-call load, rotation size, and weekend coverage reflects practical concerns about team sustainability and workload."}],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":5,"reasoning":"The candidate demonstrated strong initiative, clarity, and strategic thinking in their questions, covering critical operational and team dynamics."}}}
+[pdf] Evaluation report PDF downloaded.
+[result] {"status":"done","inputFile":"input data/entire_interview.json","model":"mistral-small-latest","batchSize":5,"total":24,"success":24,"failed":0,"completedAll":true,"finishedAt":"20:01:41"}
+[agent2] queued: evaluation log, input text, and input JSON queued for Agent 2 websocket delivery
