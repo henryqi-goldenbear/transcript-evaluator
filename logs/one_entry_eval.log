@@ -1,0 +1,39 @@
+2026-06-06 17:01:57,974 INFO [__main__] Starting convert and evaluate task; logging to logs\one_entry_eval.log
+2026-06-06 17:01:57,974 INFO [__main__] input=input data\one_entry.txt batch_size=1
+2026-06-06 17:01:57,974 INFO [__main__] Parsing transcript: input=input data\one_entry.txt chars=312 classifier=heuristic-only
+2026-06-06 17:01:57,974 INFO [__main__] Parsed transcript into 1 cases
+2026-06-06 17:01:57,975 INFO [__main__] Detected 1 evaluator cases
+2026-06-06 17:01:57,978 INFO [__main__] Finished conversion: input=input data\one_entry.txt output=input data\one_entry.json started_at=2026-06-07T00:01:57.974401+00:00 finished_at=2026-06-07T00:01:57.978128+00:00 input_chars=312 cases=1 batch_size=1
+2026-06-06 17:01:58,030 INFO [__main__] Reusing existing pipeline server on port 3001
+2026-06-06 17:01:58,032 INFO [__main__] Opening evaluator HTML: http://localhost:3001/evaluator.html?input=input+data%2Fone_entry.json&batch_size=1&log_file=logs%2Fone_entry_eval.log
+[pipeline] Evaluator run started at 2026-06-07T00:01:58.561Z
+[ok] #1 Auto case 1 | behavioral | overall=3
+     start=17:01:58 | end=17:02:35 | duration=36.72s
+[result] {"status":"ok","id":1,"label":"Auto case 1","rubric_type":"behavioral","overall":3,"overallDisplay":3,"durationMs":36724,"startedAtIso":"2026-06-07T00:01:58.614Z","endedAtIso":"2026-06-07T00:02:35.338Z","parsed":{"scorable":{"value":true,"reasoning":"The candidate provides a specific past experience with a clear action and result."},"path":"behavioral","base":{"score":3,"reasoning":"The response is direct and answers the prompt clearly."},"personal_contribution":{"score":4,"reasoning":"The candidate explicitly identifies their role in writing and testing the script."},"real_example":{"score":3,"reasoning":"A specific scenario is provided, though it lacks technical depth."},"outcome":{"score":2,"reasoning":"The result is mentioned but is vague and lacks quantifiable metrics."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up question was provided in the input."},"flags":[],"overall":{"score":3,"reasoning":"The candidate demonstrates individual impact but provides a shallow description with vague outcomes."}}}
+[pdf] Evaluation report PDF downloaded.
+[result] {"status":"done","inputFile":"input data/one_entry.json","model":"gemma-4-26b-a4b-it","batchSize":1,"total":1,"success":1,"failed":0,"completedAll":true,"finishedAtIso":"2026-06-07T00:02:35.363Z"}
+[agent2-err] Agent 2 handoff HTTP 404
+2026-06-06 17:12:07,418 INFO [__main__] Starting convert and evaluate task; logging to logs\one_entry_eval.log
+2026-06-06 17:12:07,418 INFO [__main__] input=input data\one_entry.txt batch_size=1
+2026-06-06 17:12:07,419 INFO [__main__] Parsing transcript: input=input data\one_entry.txt chars=312 classifier=heuristic-only
+2026-06-06 17:12:07,419 INFO [__main__] Parsed transcript into 1 cases
+2026-06-06 17:12:07,419 INFO [__main__] Detected 1 evaluator cases
+2026-06-06 17:12:07,443 INFO [__main__] Finished conversion: input=input data\one_entry.txt output=input data\one_entry.json started_at=2026-06-07T00:12:07.419646+00:00 finished_at=2026-06-07T00:12:07.443655+00:00 input_chars=312 cases=1 batch_size=1
+2026-06-06 17:12:10,989 INFO [__main__] Started pipeline server on port 3000
+2026-06-06 17:12:10,992 INFO [__main__] Opening evaluator HTML: http://localhost:3000/evaluator.html?input=input+data%2Fone_entry.json&batch_size=1&log_file=logs%2Fone_entry_eval.log
+2026-06-06 17:13:16,110 INFO [__main__] Starting convert and evaluate task; logging to logs\one_entry_eval.log
+2026-06-06 17:13:16,111 INFO [__main__] input=input data\one_entry.txt batch_size=1
+2026-06-06 17:13:16,111 INFO [__main__] Parsing transcript: input=input data\one_entry.txt chars=312 classifier=heuristic-only
+2026-06-06 17:13:16,111 INFO [__main__] Parsed transcript into 1 cases
+2026-06-06 17:13:16,111 INFO [__main__] Detected 1 evaluator cases
+2026-06-06 17:13:16,112 INFO [__main__] Question/answer pair 1: started_at=2026-06-07T00:13:16.112619+00:00 finished_at=2026-06-07T00:13:16.112619+00:00 question_chars=44 answer_chars=241 follow_ups=0
+2026-06-06 17:13:16,112 INFO [__main__] Finished conversion: input=input data\one_entry.txt output=input data\one_entry.json started_at=2026-06-07T00:13:16.111620+00:00 finished_at=2026-06-07T00:13:16.112619+00:00 input_chars=312 cases=1 batch_size=1
+2026-06-06 17:13:19,711 INFO [__main__] Started pipeline server on port 3000
+2026-06-06 17:13:19,712 INFO [__main__] Opening evaluator HTML: http://localhost:3000/evaluator.html?input=input+data%2Fone_entry.json&batch_size=1&log_file=logs%2Fone_entry_eval.log
+[pipeline] Evaluator run started at 2026-06-07T00:17:05.621Z
+[ok] #1 Auto case 1 | behavioral | overall=3
+     start=17:17:06 | end=17:17:39 | duration=33.32s
+[result] {"status":"ok","id":1,"label":"Auto case 1","rubric_type":"behavioral","overall":3,"overallDisplay":3,"durationMs":33324,"startedAtIso":"2026-06-07T00:17:06.045Z","endedAtIso":"2026-06-07T00:17:39.369Z","parsed":{"scorable":{"value":true,"reasoning":"The candidate provided a complete response to a behavioral question."},"path":"behavioral","base":{"score":3,"reasoning":"The candidate follows a logical structure to answer the prompt."},"personal_contribution":{"score":4,"reasoning":"The candidate clearly outlines their specific actions in the process."},"real_example":{"score":3,"reasoning":"A specific scenario is provided, though it lacks technical depth."},"outcome":{"score":2,"reasoning":"The result is mentioned but lacks quantifiable metrics or specific impact."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":null},"flags":[],"overall":{"score":3,"reasoning":"The candidate provided a clear example of personal contribution, but the lack of detail and quantifiable outcomes limits the score."}}}
+[pdf] Evaluation report PDF downloaded.
+[result] {"status":"done","inputFile":"input data/one_entry.json","model":"gemma-4-26b-a4b-it","batchSize":1,"total":1,"success":1,"failed":0,"completedAll":true,"finishedAtIso":"2026-06-07T00:17:39.407Z"}
+[agent2] queued: evaluation log, input text, and input JSON queued for Agent 2 websocket delivery

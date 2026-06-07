@@ -89,6 +89,7 @@
     runBtn.disabled = true;
     stopBtn.disabled = false;
     logEl.textContent = "";
+    LogUtils.appendPipelineLog(`[pipeline] Evaluator run started at ${new Date().toISOString()}\n`);
 
     let cases;
     try {
@@ -125,7 +126,7 @@
       for (let i = 0; i < total; i += batchSize) {
         if (stopBatch) {
           batchStatusEl.textContent = `Stopped. Processed: ${results.length + failures}/${total}, Success: ${results.length}, Failed: ${failures}`;
-          logEl.textContent += "[stop] Batch run stopped by user.\n";
+          LogUtils.appendBatchLog(logEl, "[stop] Batch run stopped by user.\n");
           stopped = true;
           return;
         }
@@ -189,8 +190,20 @@
                 startedAtIso: LogUtils.formatIso(startedMs),
                 endedAtIso: LogUtils.formatIso(endedMs)
               });
-              logEl.textContent += `[ok] #${tc.id} ${tc.label} | ${tc.rubric_type} | overall=${overallDisplay}\n`;
-              logEl.textContent += `     start=${LogUtils.formatTimeOnly(startedMs)} | end=${LogUtils.formatTimeOnly(endedMs)} | duration=${LogUtils.formatMs(durationMs)}\n`;
+              LogUtils.appendBatchLog(logEl, `[ok] #${tc.id} ${tc.label} | ${tc.rubric_type} | overall=${overallDisplay}\n`);
+              LogUtils.appendBatchLog(logEl, `     start=${LogUtils.formatTimeOnly(startedMs)} | end=${LogUtils.formatTimeOnly(endedMs)} | duration=${LogUtils.formatMs(durationMs)}\n`);
+              LogUtils.appendPipelineResult({
+                status: "ok",
+                id: tc.id,
+                label: tc.label,
+                rubric_type: tc.rubric_type,
+                overall,
+                overallDisplay,
+                durationMs,
+                startedAtIso: LogUtils.formatIso(startedMs),
+                endedAtIso: LogUtils.formatIso(endedMs),
+                parsed
+              });
               Analytics.verboseLog(debugMode, logEl, `trace=${traceCtx.traceId} case=${tc.id} completed overall=${overallDisplay}`);
               updateBatchProgress(batchStatusEl, total, results, failures, batchSize, Math.min(i + batchSize, total));
               return { status: "fulfilled" };
@@ -201,7 +214,14 @@
               }
               failures += 1;
               failureItems.push({ caseRef: String(tc.id ?? "?"), error: msg });
-              logEl.textContent += `[err] case failed: ${msg}\n`;
+              LogUtils.appendBatchLog(logEl, `[err] case failed: ${msg}\n`);
+              LogUtils.appendPipelineResult({
+                status: "error",
+                id: tc.id ?? "?",
+                label: tc.label,
+                rubric_type: tc.rubric_type,
+                error: msg
+              });
               Analytics.addFailure(traceRun, {
                 traceId: traceCtx.traceId,
                 caseId: tc.id ?? "?",
@@ -216,7 +236,7 @@
 
         if (stopBatch) {
           batchStatusEl.textContent = `Stopped. Processed: ${results.length + failures}/${total}, Success: ${results.length}, Failed: ${failures}`;
-          logEl.textContent += "[stop] Batch run stopped by user.\n";
+          LogUtils.appendBatchLog(logEl, "[stop] Batch run stopped by user.\n");
           stopped = true;
           return;
         }
@@ -232,7 +252,7 @@
     } catch (err) {
       if (stopBatch) {
         batchStatusEl.textContent = `Stopped. Processed: ${results.length + failures}/${total}, Success: ${results.length}, Failed: ${failures}`;
-        logEl.textContent += "[stop] Batch run stopped by user.\n";
+        LogUtils.appendBatchLog(logEl, "[stop] Batch run stopped by user.\n");
         stopped = true;
       } else {
         batchStatusEl.innerHTML = `<span class="error-text">Batch error: ${LogUtils.escapeHtml(String(err.message || err))}</span>`;
@@ -263,10 +283,10 @@
             successItems: results,
             failureItems
           });
-          logEl.textContent += "[pdf] Evaluation report PDF downloaded.\n";
+          LogUtils.appendBatchLog(logEl, "[pdf] Evaluation report PDF downloaded.\n");
           batchStatusEl.textContent = summaryAtEntry || "Done";
         } else {
-          logEl.textContent += "[pdf] Skipped PDF export (run not fully successful).\n";
+          LogUtils.appendBatchLog(logEl, "[pdf] Skipped PDF export (run not fully successful).\n");
         }
         if (failures > 0 && !stopped) {
           Analytics.addEvent(traceRun, {
@@ -274,12 +294,34 @@
             failures
           });
           Analytics.exportDebugReport(traceRun);
-          logEl.textContent += "[dbg] Exported debug_trace JSON for failures.\n";
+          LogUtils.appendBatchLog(logEl, "[dbg] Exported debug_trace JSON for failures.\n");
         }
       } catch (pdfErr) {
         const msg = String(pdfErr?.message || pdfErr || "Unknown PDF error");
-        logEl.textContent += `[pdf-err] Failed to generate PDF: ${msg}\n`;
+        LogUtils.appendBatchLog(logEl, `[pdf-err] Failed to generate PDF: ${msg}\n`);
         batchStatusEl.innerHTML = `<span class="error-text">PDF generation failed: ${LogUtils.escapeHtml(msg)}</span>`;
+      }
+
+      LogUtils.appendPipelineResult({
+        status: stopped ? "stopped" : "done",
+        inputFile: requestedFile,
+        model,
+        batchSize,
+        total,
+        success: results.length,
+        failed: failures,
+        completedAll: results.length + failures === total,
+        finishedAtIso: new Date().toISOString()
+      });
+
+      try {
+        const agent2 = await LogUtils.sendToAgent2(requestedFile);
+        if (agent2?.status) {
+          LogUtils.appendBatchLog(logEl, `[agent2] ${agent2.status}: ${agent2.message || "handoff complete"}\n`);
+        }
+      } catch (agentErr) {
+        const msg = String(agentErr?.message || agentErr || "Unknown Agent 2 error");
+        LogUtils.appendBatchLog(logEl, `[agent2-err] ${msg}\n`);
       }
 
       runBtn.disabled = false;

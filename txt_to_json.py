@@ -43,15 +43,19 @@ import sys
 import time
 import webbrowser
 from datetime import datetime, timezone
+from http import HTTPStatus
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 from urllib import error, request
+from agent2_connection import Agent2Bridge, resolve_pipeline_log_path
 from patterns import SPEAKER_RE, NON_QUESTION_PATTERNS, BEHAVIORAL_PATTERNS, FOLLOW_UP_PATTERNS, CLARIFYING_PATTERNS, DEEPENING_PATTERNS
 
 
 LOGGER = logging.getLogger(__name__)
 EVALUATOR_PORT = 3000
+AGENT2_BRIDGE = Agent2Bridge()
 
 
 def utc_timestamp() -> str:
@@ -59,7 +63,7 @@ def utc_timestamp() -> str:
 
 
 def log_path_for_input(input_path: Path) -> Path:
-    return Path("logs") / f"{input_path.stem}.log"
+    return Path("logs") / f"{input_path.stem}_eval.log"
 
 
 def configure_file_logging(log_file: Path) -> Path:
@@ -447,6 +451,9 @@ def log_parsed_cases(cases: list[dict[str, Any]]) -> None:
             case.get("id"),
             pair_started_at,
             pair_finished_at,
+            len(question),
+            len(response),
+            len(case.get("follow_ups", []) or []),
         )
 
 
@@ -454,20 +461,22 @@ def run_evaluator_html(
     json_path: Path,
     batch_size: int,
     evaluator_html_path: str = "evaluator.html",
+    log_file: Path | None = None,
 ) -> str:
     evaluator_html = Path(evaluator_html_path)
     if not evaluator_html.exists():
         raise FileNotFoundError(f"Missing evaluator HTML file: {evaluator_html}")
 
-    start_http_server_if_needed(EVALUATOR_PORT)
+    server_port = start_http_server_if_needed(EVALUATOR_PORT)
     query_input = json_path_for_browser(json_path)
-    query = urlencode(
-        {
-            "input": query_input,
-            "batch_size": batch_size,
-        }
-    )
-    evaluator_url = f"http://localhost:{EVALUATOR_PORT}/{evaluator_html.as_posix()}?{query}"
+    query_args = {
+        "input": query_input,
+        "batch_size": batch_size,
+    }
+    if log_file is not None:
+        query_args["log_file"] = log_path_for_browser(log_file)
+    query = urlencode(query_args)
+    evaluator_url = f"http://localhost:{server_port}/{evaluator_html.as_posix()}?{query}"
 
     LOGGER.info("Opening evaluator HTML: %s", evaluator_url)
     webbrowser.open(evaluator_url)
@@ -485,23 +494,116 @@ def json_path_for_browser(json_path: Path) -> str:
         return json_path.as_posix()
 
 
-def start_http_server_if_needed(port: int) -> None:
+def log_path_for_browser(log_file: Path) -> str:
+    try:
+        return log_file.resolve().relative_to(Path.cwd().resolve()).as_posix()
+    except ValueError:
+        LOGGER.warning(
+            "Log file is outside the project folder and may not be writable from evaluator: %s",
+            log_file,
+        )
+        return log_file.as_posix()
+
+
+def pipeline_server_is_available(port: int) -> bool:
+    try:
+        with request.urlopen(f"http://127.0.0.1:{port}/pipeline-log/health", timeout=1) as resp:
+            return resp.status == HTTPStatus.NO_CONTENT
+    except (error.URLError, TimeoutError):
+        return False
+
+
+def port_is_open(port: int) -> bool:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.settimeout(0.5)
-        if sock.connect_ex(("127.0.0.1", port)) == 0:
-            LOGGER.info("Reusing existing local server on port %s", port)
-            return
+        return sock.connect_ex(("127.0.0.1", port)) == 0
+
+
+def find_pipeline_server_port(preferred_port: int) -> int:
+    for offset in range(20):
+        candidate = preferred_port + offset
+        if pipeline_server_is_available(candidate):
+            LOGGER.info("Reusing existing pipeline server on port %s", candidate)
+            return candidate
+        if not port_is_open(candidate):
+            return candidate
+    raise RuntimeError("Could not find an available local server port.")
+
+
+def start_http_server_if_needed(port: int) -> int:
+    server_port = find_pipeline_server_port(port)
+    if pipeline_server_is_available(server_port):
+        return server_port
 
     creationflags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
     subprocess.Popen(
-        [sys.executable, "-m", "http.server", str(port)],
+        [sys.executable, str(Path(__file__).resolve()), "--serve-internal", str(server_port)],
         cwd=Path.cwd(),
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
         creationflags=creationflags,
     )
     time.sleep(1)
-    LOGGER.info("Started local server on port %s", port)
+    if not pipeline_server_is_available(server_port):
+        raise RuntimeError(f"Pipeline server did not start on port {server_port}.")
+    LOGGER.info("Started pipeline server on port %s", server_port)
+    return server_port
+
+
+class PipelineHTTPRequestHandler(SimpleHTTPRequestHandler):
+    server_version = "TranscriptEvaluatorPipeline/1.0"
+
+    def log_message(self, format: str, *args: Any) -> None:
+        LOGGER.info("server %s - %s", self.address_string(), format % args)
+
+    def do_GET(self) -> None:
+        if urlparse(self.path).path == "/agent2-ws":
+            self.handle_agent2_websocket()
+            return
+        if self.path == "/pipeline-log/health":
+            self.send_response(HTTPStatus.NO_CONTENT)
+            self.end_headers()
+            return
+        super().do_GET()
+
+    def do_POST(self) -> None:
+        if self.path == "/agent2/handoff":
+            port = int(getattr(self.server, "server_port", EVALUATOR_PORT))
+            AGENT2_BRIDGE.handle_handoff(self, port)
+            return
+        if self.path != "/pipeline-log":
+            self.send_error(HTTPStatus.NOT_FOUND, "Unknown endpoint")
+            return
+
+        try:
+            content_length = int(self.headers.get("Content-Length", "0"))
+            body = self.rfile.read(content_length).decode("utf-8")
+            payload = json.loads(body)
+            log_file = resolve_pipeline_log_path(str(payload.get("log_file", "")))
+            text = str(payload.get("text", ""))
+            if not text:
+                raise ValueError("missing text")
+            log_file.parent.mkdir(parents=True, exist_ok=True)
+            with log_file.open("a", encoding="utf-8", newline="") as f:
+                f.write(text)
+            self.send_response(HTTPStatus.NO_CONTENT)
+            self.end_headers()
+        except Exception as exc:
+            self.send_error(HTTPStatus.BAD_REQUEST, str(exc))
+
+    def handle_agent2_websocket(self) -> None:
+        AGENT2_BRIDGE.handle_websocket(self)
+
+
+def run_pipeline_server(port: int) -> None:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
+        encoding="utf-8",
+    )
+    server = ThreadingHTTPServer(("127.0.0.1", port), PipelineHTTPRequestHandler)
+    LOGGER.info("Serving transcript evaluator pipeline on http://127.0.0.1:%s", port)
+    server.serve_forever()
 
 
 def main() -> None:
@@ -539,7 +641,16 @@ def main() -> None:
         default=os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434"),
         help="Ollama host URL (default: http://127.0.0.1:11434).",
     )
+    parser.add_argument(
+        "--serve-internal",
+        type=int,
+        help=argparse.SUPPRESS,
+    )
     args = parser.parse_args()
+
+    if args.serve_internal:
+        run_pipeline_server(args.serve_internal)
+        return
 
     input_path = get_input_path(args.input)
     batch_size = get_batch_size(args.batch_size)
@@ -592,7 +703,7 @@ def main() -> None:
     print(f"Wrote JSON to: {output_path}")
     print(f"Cases: {len(parsed_cases)}")
     print(f"Classifier: {classifier_mode}")
-    evaluator_url = run_evaluator_html(output_path, batch_size, args.evaluator_html)
+    evaluator_url = run_evaluator_html(output_path, batch_size, args.evaluator_html, log_file)
     print(f"Opened evaluator: {evaluator_url}")
 
 
