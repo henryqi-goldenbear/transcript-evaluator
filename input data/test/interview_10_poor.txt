@@ -1,0 +1,174 @@
+# Interview transcript fixture
+# Role: Data Engineer, Analytics Platform @ Quanta Logistics
+# Quality target: poor candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hi Devon, I’m Renee from the Analytics Platform team. Thanks for joining me today—how’s your week been so far?
+
+CANDIDATE:
+Hey, it’s fine. Pretty busy, you know.
+
+INTERVIEWER:
+Got it. Well, let’s start with a quick walk through your resume. Can you give me the two-minute version of your background and what led you to apply for this role?
+
+CANDIDATE:
+Sure. I’ve been a data engineer for about four years. Mostly worked at mid-sized companies doing ETL stuff. I’ve used Spark, Airflow, some dbt—pretty standard tools. I applied here because I saw the job posting and it seemed like a good fit.
+
+INTERVIEWER:
+What specifically about Quanta’s analytics platform or the problems we’re solving caught your interest?
+
+CANDIDATE:
+I mean, logistics is a big industry, right? And data is important everywhere. I figured it’d be a good place to work with data at scale.
+
+INTERVIEWER:
+Got it. Let’s dig into one of your past projects. Can you tell me about a time you built or improved a data pipeline? Walk me through the situation, your role, and the outcome.
+
+CANDIDATE:
+Yeah, so at my last job, we had this pipeline that moved data from our app into a warehouse. It was kind of slow, so I helped make it faster. I used Spark to process the data in batches, and it worked better after that.
+
+INTERVIEWER:
+What was the scale of the data, and how much faster did it get?
+
+CANDIDATE:
+I don’t remember the exact numbers. It was a lot of data, though. And it was definitely faster—like, noticeably.
+
+INTERVIEWER:
+What challenges did you face while optimizing it?
+
+CANDIDATE:
+Oh, you know, the usual stuff. Like, Spark can be tricky sometimes. But I figured it out.
+
+INTERVIEWER:
+Let’s talk about Airflow. How have you used it in your work, and what’s one thing you’d improve about your current setup?
+
+CANDIDATE:
+I’ve used Airflow to schedule jobs. It’s fine, I guess. I don’t really have any complaints. Maybe if it was easier to debug, but it’s not a big deal.
+
+INTERVIEWER:
+Can you describe a time you had to debug a failing Airflow DAG? What was the issue, and how did you resolve it?
+
+CANDIDATE:
+Yeah, once a DAG failed because of a timeout. I just increased the timeout and it worked. Not much else to it.
+
+INTERVIEWER:
+Got it. Let’s shift to dbt. How have you used it to model data in your warehouse?
+
+CANDIDATE:
+I’ve used dbt to transform data. Like, I’d write models to clean up the data and make it usable for analytics. It’s pretty straightforward.
+
+INTERVIEWER:
+Can you give me an example of a complex transformation you implemented in dbt? What problem were you solving?
+
+CANDIDATE:
+I don’t know if it was that complex. I had to join a few tables together. It wasn’t a big deal—just wrote a SQL query and put it in dbt.
+
+INTERVIEWER:
+What testing or validation did you put in place for that model?
+
+CANDIDATE:
+I didn’t really do much testing. I just ran it and checked if the output looked right.
+
+INTERVIEWER:
+Let’s talk about collaboration. Can you tell me about a time you had to work with a stakeholder—like an analyst or product team—to deliver a data solution?
+
+CANDIDATE:
+Yeah, I worked with an analyst once. They needed some data for a report, so I gave it to them. They were happy with it.
+
+INTERVIEWER:
+What was the ask, and how did you ensure the data met their needs?
+
+CANDIDATE:
+They wanted a CSV of customer data. I pulled it from the warehouse and sent it over. They didn’t have any issues, so I guess it was fine.
+
+INTERVIEWER:
+Have you ever had a disagreement with a stakeholder about data quality or requirements? How did you handle it?
+
+CANDIDATE:
+Not really. Most people just trust me to get it right.
+
+INTERVIEWER:
+Let’s talk about leadership. Can you share an example of a time you mentored or guided a junior engineer?
+
+CANDIDATE:
+I haven’t really mentored anyone. I mean, I’ve shown people how to do things if they asked, but that’s about it.
+
+INTERVIEWER:
+What about process improvements? Have you ever identified a bottleneck or inefficiency in your team’s workflow and proposed a solution?
+
+CANDIDATE:
+I don’t think so. We had processes in place, and they worked okay. I didn’t see a need to change anything.
+
+INTERVIEWER:
+Let’s talk about failure. Can you tell me about a time a project you worked on didn’t go as planned? What happened, and what did you learn?
+
+CANDIDATE:
+Hmm. I guess once a pipeline broke because of a schema change. It was an easy fix—I just updated the schema and reran it. Not a big deal.
+
+INTERVIEWER:
+What steps did you take to prevent similar issues in the future?
+
+CANDIDATE:
+I don’t know. I just made sure to check the schema next time.
+
+INTERVIEWER:
+Let’s do a quick technical deep dive. How would you design a streaming pipeline to handle real-time logistics data, like shipment tracking?
+
+CANDIDATE:
+I’d use Kafka for the streaming part and Spark to process it. Then write it to a database. Pretty simple.
+
+INTERVIEWER:
+What considerations would you make for scalability or fault tolerance in that pipeline?
+
+CANDIDATE:
+I guess you’d want to make sure it doesn’t crash. Maybe have some backups or something.
+
+INTERVIEWER:
+How would you handle late-arriving data in that streaming pipeline?
+
+CANDIDATE:
+I don’t know. Maybe just ignore it? Or update the record later?
+
+INTERVIEWER:
+Let’s talk about prioritization. How do you decide what to work on when you have multiple competing deadlines?
+
+CANDIDATE:
+I just do what my manager tells me to do first. If it’s urgent, I’ll do that. Otherwise, I just work through the list.
+
+INTERVIEWER:
+Have you ever had to push back on a request because it wasn’t feasible or aligned with team priorities?
+
+CANDIDATE:
+Not really. If someone asks for something, I just do it.
+
+INTERVIEWER:
+What’s one technical skill or area you’re actively trying to improve right now?
+
+CANDIDATE:
+I guess I could learn more about cloud stuff. Like AWS or something. But I haven’t really had time.
+
+INTERVIEWER:
+What’s a weakness you’ve identified in your work, and how are you addressing it?
+
+CANDIDATE:
+I don’t know. I’m pretty good at what I do. Maybe I could be faster at debugging, but it’s not a big issue.
+
+INTERVIEWER:
+Alright, that’s most of my questions. Do you have any questions for me about the role or the team?
+
+CANDIDATE:
+Uh, what’s the team like? Like, how many people are on it?
+
+INTERVIEWER:
+We’re a team of about 10 engineers, split between platform and analytics. Anything else you’d like to know?
+
+CANDIDATE:
+No, I think that’s it.
+
+INTERVIEWER:
+Great. Well, thanks for your time today, Devon. We’ll be in touch soon.
+
+CANDIDATE:
+Cool, thanks. Bye.

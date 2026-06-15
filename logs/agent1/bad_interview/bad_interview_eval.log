@@ -1,0 +1,385 @@
+23:28:35 INFO [__main__] Starting convert and evaluate task; logging to logs\bad_interview_eval.log
+23:28:35 INFO [__main__] input=input data\bad_interview.txt batch_size=5
+23:28:35 INFO [__main__] Parsing transcript: input=input data\bad_interview.txt chars=5902 classifier=ministral:ministral-3b-latest
+23:28:53 INFO [__main__] Parsed transcript into 14 cases
+23:28:53 INFO [__main__] Detected 14 evaluator cases
+23:28:53 INFO [__main__] Question/answer pair 1: started_at=23:28:53 finished_at=23:28:53 question_chars=83 answer_chars=228 follow_ups=0
+23:28:53 INFO [__main__] Question/answer pair 2: started_at=23:28:53 finished_at=23:28:53 question_chars=44 answer_chars=176 follow_ups=0
+23:28:53 INFO [__main__] Question/answer pair 3: started_at=23:28:53 finished_at=23:28:53 question_chars=35 answer_chars=170 follow_ups=0
+23:28:53 INFO [__main__] Question/answer pair 4: started_at=23:28:53 finished_at=23:28:53 question_chars=62 answer_chars=173 follow_ups=1
+23:28:53 INFO [__main__] Question/answer pair 5: started_at=23:28:53 finished_at=23:28:53 question_chars=71 answer_chars=174 follow_ups=1
+23:28:53 INFO [__main__] Question/answer pair 6: started_at=23:28:53 finished_at=23:28:53 question_chars=56 answer_chars=230 follow_ups=1
+23:28:53 INFO [__main__] Question/answer pair 7: started_at=23:28:53 finished_at=23:28:53 question_chars=62 answer_chars=133 follow_ups=1
+23:28:53 INFO [__main__] Question/answer pair 8: started_at=23:28:53 finished_at=23:28:53 question_chars=74 answer_chars=202 follow_ups=0
+23:28:53 INFO [__main__] Question/answer pair 9: started_at=23:28:53 finished_at=23:28:53 question_chars=44 answer_chars=142 follow_ups=1
+23:28:53 INFO [__main__] Question/answer pair 10: started_at=23:28:53 finished_at=23:28:53 question_chars=62 answer_chars=120 follow_ups=0
+23:28:53 INFO [__main__] Question/answer pair 11: started_at=23:28:53 finished_at=23:28:53 question_chars=31 answer_chars=115 follow_ups=0
+23:28:53 INFO [__main__] Question/answer pair 12: started_at=23:28:53 finished_at=23:28:53 question_chars=65 answer_chars=142 follow_ups=1
+23:28:53 INFO [__main__] Question/answer pair 13: started_at=23:28:53 finished_at=23:28:53 question_chars=77 answer_chars=110 follow_ups=1
+23:28:53 INFO [__main__] Question/answer pair 14: started_at=23:28:53 finished_at=23:28:53 question_chars=48 answer_chars=178 follow_ups=0
+23:28:53 INFO [__main__] Finished conversion: input=input data\bad_interview.txt output=input data\bad_interview.json started_at=23:28:35 finished_at=23:28:53 input_chars=5902 cases=14 batch_size=5
+23:28:53 INFO [__main__] Reusing existing pipeline server on port 3000
+23:28:53 INFO [__main__] Opening evaluator HTML: http://localhost:3000/evaluator.html?v=mistral-small-1&input=input+data%2Fbad_interview.json&batch_size=5&log_file=logs%2Fbad_interview_eval.log
+[pipeline] Evaluator run started at 23:28:54
+[ok] #1 Auto case 1 | non_behavioral | model=mistral-small-latest | overall=2
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response provides a high-level overview of the candidate's work experience, which is relevant to the question.
+     - base: 2 | The response lacks detail, structure, and specificity about roles or achievements.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - flags: vague, lacks_detail
+     - overall: 2 | The response is too generic and does not provide meaningful insight into the candidate's relevant experience.
+     start=23:28:55 | end=23:28:56 | duration=1.59s
+[result] {"status":"ok","id":1,"label":"Auto case 1","rubric_type":"non_behavioral","overall":2,"overallDisplay":2,"durationMs":1595,"startedAt":"23:28:55","endedAt":"23:28:56","parsed":{"scorable":{"value":true,"reasoning":"The response provides a high-level overview of the candidate's work experience, which is relevant to the question."},"path":"non_behavioral","base":{"score":2,"reasoning":"The response lacks detail, structure, and specificity about roles or achievements."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":["vague","lacks_detail"],"overall":{"score":2,"reasoning":"The response is too generic and does not provide meaningful insight into the candidate's relevant experience."}}}
+[ok] #2 Auto case 2 | non_behavioral | model=mistral-small-latest | overall=3
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response is directly relevant to the question and provides a clear, albeit brief, answer.
+     - base: 3 | The response is generic and lacks specificity about why Northline or the role is appealing.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the evaluation context.
+     - flags: lacks specificity
+     - overall: 3 | The response is relevant but too generic to demonstrate strong interest or alignment with the role/company.
+     start=23:28:55 | end=23:28:56 | duration=1.76s
+[result] {"status":"ok","id":2,"label":"Auto case 2","rubric_type":"non_behavioral","overall":3,"overallDisplay":3,"durationMs":1757,"startedAt":"23:28:55","endedAt":"23:28:56","parsed":{"scorable":{"value":true,"reasoning":"The response is directly relevant to the question and provides a clear, albeit brief, answer."},"path":"non_behavioral","base":{"score":3,"reasoning":"The response is generic and lacks specificity about why Northline or the role is appealing."},"personal_contribution":null,"real_example":null,"outcome":null,"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the evaluation context."},"flags":["lacks specificity"],"overall":{"score":3,"reasoning":"The response is relevant but too generic to demonstrate strong interest or alignment with the role/company."}}}
+[ok] #5 Auto case 5 | behavioral | model=mistral-small-latest | overall=2
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response attempts to address the behavioral question with a vague example.
+     - base: 2 | Response lacks specificity and structure, making it hard to evaluate.
+     - personal_contribution: 2 | Claim of being good at communication is unsupported by concrete action.
+     - real_example: 1 | Example is vague, lacks project context, and does not clearly demonstrate persuasion.
+     - outcome: 2 | Outcome is unclear and minimally described.
+     - follow_up: present=true | probe=deepening | impact=credibility_risk | Follow-up did not yield a stronger example, increasing skepticism about the claim.
+     - flags: vague_response, lack_of_concrete_example
+     - overall: 2 | Response fails to provide a compelling or specific example of persuasion.
+     start=23:28:55 | end=23:28:57 | duration=2.23s
+[result] {"status":"ok","id":5,"label":"Auto case 5","rubric_type":"behavioral","overall":2,"overallDisplay":2,"durationMs":2228,"startedAt":"23:28:55","endedAt":"23:28:57","parsed":{"scorable":{"value":true,"reasoning":"The response attempts to address the behavioral question with a vague example."},"path":"behavioral","base":{"score":2,"reasoning":"Response lacks specificity and structure, making it hard to evaluate."},"personal_contribution":{"score":2,"reasoning":"Claim of being good at communication is unsupported by concrete action."},"real_example":{"score":1,"reasoning":"Example is vague, lacks project context, and does not clearly demonstrate persuasion."},"outcome":{"score":2,"reasoning":"Outcome is unclear and minimally described."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"deepening","impact":"credibility_risk","reasoning":"Follow-up did not yield a stronger example, increasing skepticism about the claim."},"flags":["vague_response","lack_of_concrete_example"],"overall":{"score":2,"reasoning":"Response fails to provide a compelling or specific example of persuasion."}}}
+[ok] #3 Auto case 3 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response attempts to address the question about Go usage in production, though it lacks concrete evidence.
+     - base: 2 | The response is vague and does not demonstrate clear understanding or experience with Go in production.
+     - personal_contribution: 1 | The candidate admits limited hands-on experience with Go, indicating minimal personal contribution.
+     - real_example: 1 | No real example of Go usage in production is provided.
+     - outcome: 1 | No outcome or result of Go usage is mentioned.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was presented in the response.
+     - flags: lacks concrete experience, vague claims
+     - overall: 1 | The response fails to provide any meaningful evidence of Go usage in production.
+     start=23:28:55 | end=23:28:57 | duration=2.35s
+[result] {"status":"ok","id":3,"label":"Auto case 3","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":2345,"startedAt":"23:28:55","endedAt":"23:28:57","parsed":{"scorable":{"value":true,"reasoning":"The response attempts to address the question about Go usage in production, though it lacks concrete evidence."},"path":"behavioral","base":{"score":2,"reasoning":"The response is vague and does not demonstrate clear understanding or experience with Go in production."},"personal_contribution":{"score":1,"reasoning":"The candidate admits limited hands-on experience with Go, indicating minimal personal contribution."},"real_example":{"score":1,"reasoning":"No real example of Go usage in production is provided."},"outcome":{"score":1,"reasoning":"No outcome or result of Go usage is mentioned."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was presented in the response."},"flags":["lacks concrete experience","vague claims"],"overall":{"score":1,"reasoning":"The response fails to provide any meaningful evidence of Go usage in production."}}}
+[ok] #4 Auto case 4 | behavioral | model=mistral-small-latest | overall=2
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response addresses a past experience with a project under a tight deadline, which is a scorable behavioral turn.
+     - base: 2 | The response lacks specificity about the project context, timeline, or the candidate's role, making it vague.
+     - personal_contribution: 2 | The candidate mentions 'helped the team' but does not clearly articulate their personal ownership or contributions.
+     - real_example: 1 | The example is too generic ('something with an internal tool') and lacks concrete details about the project.
+     - outcome: 2 | The outcome is mentioned as 'delivered it' but lacks specifics about the result, impact, or how the deadline was met.
+     - follow_up: present=true | probe=clarifying | impact=downgrade_specificity_or_outcome | The follow-up question prompted a slightly more detailed response, but the candidate still did not provide clear ownership or specific contributions.
+     - flags: vague_example, lack_of_ownership_clarity
+     - overall: 2 | The response is too generic and lacks concrete details about the project, the candidate's role, or the outcome, resulting in a low score.
+     start=23:28:55 | end=23:28:57 | duration=2.52s
+[result] {"status":"ok","id":4,"label":"Auto case 4","rubric_type":"behavioral","overall":2,"overallDisplay":2,"durationMs":2517,"startedAt":"23:28:55","endedAt":"23:28:57","parsed":{"scorable":{"value":true,"reasoning":"The response addresses a past experience with a project under a tight deadline, which is a scorable behavioral turn."},"path":"behavioral","base":{"score":2,"reasoning":"The response lacks specificity about the project context, timeline, or the candidate's role, making it vague."},"personal_contribution":{"score":2,"reasoning":"The candidate mentions 'helped the team' but does not clearly articulate their personal ownership or contributions."},"real_example":{"score":1,"reasoning":"The example is too generic ('something with an internal tool') and lacks concrete details about the project."},"outcome":{"score":2,"reasoning":"The outcome is mentioned as 'delivered it' but lacks specifics about the result, impact, or how the deadline was met."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"clarifying","impact":"downgrade_specificity_or_outcome","reasoning":"The follow-up question prompted a slightly more detailed response, but the candidate still did not provide clear ownership or specific contributions."},"flags":["vague_example","lack_of_ownership_clarity"],"overall":{"score":2,"reasoning":"The response is too generic and lacks concrete details about the project, the candidate's role, or the outcome, resulting in a low score."}}}
+[ok] #8 Auto case 8 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response attempts to address the behavioral question but lacks specificity and a concrete example.
+     - base: 2 | The response is vague and does not provide a clear, structured answer to the question.
+     - personal_contribution: 1 | The candidate does not demonstrate personal action or reflection in response to the feedback.
+     - real_example: 1 | The candidate explicitly states they do not have a specific story to share.
+     - outcome: 1 | No outcome or result is described due to the lack of a concrete example.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was provided by the candidate.
+     - flags: lacks_concrete_example, vague_response
+     - overall: 1 | The response fails to meet the behavioral question's requirements due to absence of a real example and personal contribution.
+     start=23:28:57 | end=23:28:59 | duration=2.21s
+[result] {"status":"ok","id":8,"label":"Auto case 8","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":2215,"startedAt":"23:28:57","endedAt":"23:28:59","parsed":{"scorable":{"value":true,"reasoning":"The response attempts to address the behavioral question but lacks specificity and a concrete example."},"path":"behavioral","base":{"score":2,"reasoning":"The response is vague and does not provide a clear, structured answer to the question."},"personal_contribution":{"score":1,"reasoning":"The candidate does not demonstrate personal action or reflection in response to the feedback."},"real_example":{"score":1,"reasoning":"The candidate explicitly states they do not have a specific story to share."},"outcome":{"score":1,"reasoning":"No outcome or result is described due to the lack of a concrete example."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was provided by the candidate."},"flags":["lacks_concrete_example","vague_response"],"overall":{"score":1,"reasoning":"The response fails to meet the behavioral question's requirements due to absence of a real example and personal contribution."}}}
+[ok] #6 Auto case 6 | behavioral | model=mistral-small-latest | overall=2
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response addresses a past conflict, though minimally.
+     - base: 2 | The response is vague and lacks structure or detail.
+     - personal_contribution: 3 | The candidate acknowledges their role in addressing the issue.
+     - real_example: 2 | The example is minimal and lacks depth or context.
+     - outcome: 2 | The outcome is unclear and not well-defined.
+     - follow_up: present=true | probe=deepening | impact=credibility_risk | The candidate did not elaborate further on the conflict or their actions.
+     - flags: vague_response, lack_of_detail
+     - overall: 2 | The response is too superficial to assess behavioral competencies effectively.
+     start=23:28:57 | end=23:28:59 | duration=2.30s
+[result] {"status":"ok","id":6,"label":"Auto case 6","rubric_type":"behavioral","overall":2,"overallDisplay":2,"durationMs":2297,"startedAt":"23:28:57","endedAt":"23:28:59","parsed":{"scorable":{"value":true,"reasoning":"The response addresses a past conflict, though minimally."},"path":"behavioral","base":{"score":2,"reasoning":"The response is vague and lacks structure or detail."},"personal_contribution":{"score":3,"reasoning":"The candidate acknowledges their role in addressing the issue."},"real_example":{"score":2,"reasoning":"The example is minimal and lacks depth or context."},"outcome":{"score":2,"reasoning":"The outcome is unclear and not well-defined."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"deepening","impact":"credibility_risk","reasoning":"The candidate did not elaborate further on the conflict or their actions."},"flags":["vague_response","lack_of_detail"],"overall":{"score":2,"reasoning":"The response is too superficial to assess behavioral competencies effectively."}}}
+[ok] #10 Auto case 10 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response attempts to address the behavioral question but lacks depth and specificity.
+     - base: 2 | The response is vague and does not clearly describe a specific mentoring experience.
+     - personal_contribution: 2 | The candidate mentions answering questions but does not demonstrate active mentorship or growth facilitation.
+     - real_example: 1 | No concrete example of mentoring or growth is provided.
+     - outcome: 1 | No measurable or observable outcome of mentoring is described.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - flags: vague_response, lack_of_specificity
+     - overall: 1 | The response fails to provide a meaningful or scorable behavioral example of mentoring.
+     start=23:28:57 | end=23:29:00 | duration=2.49s
+[result] {"status":"ok","id":10,"label":"Auto case 10","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":2492,"startedAt":"23:28:57","endedAt":"23:29:00","parsed":{"scorable":{"value":true,"reasoning":"The response attempts to address the behavioral question but lacks depth and specificity."},"path":"behavioral","base":{"score":2,"reasoning":"The response is vague and does not clearly describe a specific mentoring experience."},"personal_contribution":{"score":2,"reasoning":"The candidate mentions answering questions but does not demonstrate active mentorship or growth facilitation."},"real_example":{"score":1,"reasoning":"No concrete example of mentoring or growth is provided."},"outcome":{"score":1,"reasoning":"No measurable or observable outcome of mentoring is described."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":["vague_response","lack_of_specificity"],"overall":{"score":1,"reasoning":"The response fails to provide a meaningful or scorable behavioral example of mentoring."}}}
+[ok] #7 Auto case 7 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response attempts to address the behavioral question, though it is vague and lacks concrete detail.
+     - base: 2 | The response is overly vague and does not provide a clear example of failure or mistake.
+     - personal_contribution: 1 | The candidate deflects responsibility by stating they do not remember if it was their code.
+     - real_example: 1 | The example provided is minimal, lacks specificity, and does not clearly demonstrate a failure or mistake.
+     - outcome: 1 | The outcome described is trivial (rolling back a release) and does not reflect a meaningful lesson or impact.
+     - follow_up: present=true | probe=clarifying | impact=downgrade_specificity_or_outcome | The candidate did not recover with a more detailed or meaningful example.
+     - flags: lacks accountability, avoids responsibility
+     - overall: 1 | The response fails to provide a credible or meaningful example of failure, with minimal detail and no personal accountability.
+     start=23:28:57 | end=23:29:00 | duration=2.53s
+[result] {"status":"ok","id":7,"label":"Auto case 7","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":2529,"startedAt":"23:28:57","endedAt":"23:29:00","parsed":{"scorable":{"value":true,"reasoning":"The response attempts to address the behavioral question, though it is vague and lacks concrete detail."},"path":"behavioral","base":{"score":2,"reasoning":"The response is overly vague and does not provide a clear example of failure or mistake."},"personal_contribution":{"score":1,"reasoning":"The candidate deflects responsibility by stating they do not remember if it was their code."},"real_example":{"score":1,"reasoning":"The example provided is minimal, lacks specificity, and does not clearly demonstrate a failure or mistake."},"outcome":{"score":1,"reasoning":"The outcome described is trivial (rolling back a release) and does not reflect a meaningful lesson or impact."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"clarifying","impact":"downgrade_specificity_or_outcome","reasoning":"The candidate did not recover with a more detailed or meaningful example."},"flags":["lacks accountability","avoids responsibility"],"overall":{"score":1,"reasoning":"The response fails to provide a credible or meaningful example of failure, with minimal detail and no personal accountability."}}}
+[ok] #9 Auto case 9 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response addresses a past experience, though vaguely.
+     - base: 2 | The response lacks specificity about the process or the candidate's role.
+     - personal_contribution: 2 | The candidate mentions suggesting improvements but does not clearly articulate their direct involvement.
+     - real_example: 1 | The example provided is too vague (deployment process, automation suggestion) with no concrete details.
+     - outcome: 1 | No measurable outcome or result is described; uncertainty about implementation.
+     - follow_up: present=true | probe=deepening | impact=credibility_risk | The candidate could not provide specifics when probed, raising credibility concerns.
+     - flags: vague_example, lack_of_outcome
+     - overall: 1 | The response fails to meet the behavioral criteria due to lack of detail, personal contribution, and outcome.
+     start=23:28:57 | end=23:29:00 | duration=3.20s
+[result] {"status":"ok","id":9,"label":"Auto case 9","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":3204,"startedAt":"23:28:57","endedAt":"23:29:00","parsed":{"scorable":{"value":true,"reasoning":"The response addresses a past experience, though vaguely."},"path":"behavioral","base":{"score":2,"reasoning":"The response lacks specificity about the process or the candidate's role."},"personal_contribution":{"score":2,"reasoning":"The candidate mentions suggesting improvements but does not clearly articulate their direct involvement."},"real_example":{"score":1,"reasoning":"The example provided is too vague (deployment process, automation suggestion) with no concrete details."},"outcome":{"score":1,"reasoning":"No measurable outcome or result is described; uncertainty about implementation."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"deepening","impact":"credibility_risk","reasoning":"The candidate could not provide specifics when probed, raising credibility concerns."},"flags":["vague_example","lack_of_outcome"],"overall":{"score":1,"reasoning":"The response fails to meet the behavioral criteria due to lack of detail, personal contribution, and outcome."}}}
+[ok] #14 Auto case 14 | non_behavioral | model=mistral-small-latest | overall=3
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response addresses the question directly and provides a clear, albeit brief, description of the candidate's approach.
+     - base: 3 | The response is relevant but lacks depth or specificity in describing the working relationship with product managers.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - overall: 3 | The response is basic and lacks detail, resulting in a moderate score for relevance and clarity.
+     start=23:29:00 | end=23:29:02 | duration=1.99s
+[result] {"status":"ok","id":14,"label":"Auto case 14","rubric_type":"non_behavioral","overall":3,"overallDisplay":3,"durationMs":1987,"startedAt":"23:29:00","endedAt":"23:29:02","parsed":{"scorable":{"value":true,"reasoning":"The response addresses the question directly and provides a clear, albeit brief, description of the candidate's approach."},"path":"non_behavioral","base":{"score":3,"reasoning":"The response is relevant but lacks depth or specificity in describing the working relationship with product managers."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":[],"overall":{"score":3,"reasoning":"The response is basic and lacks detail, resulting in a moderate score for relevance and clarity."}}}
+[ok] #11 Auto case 11 | non_behavioral | model=mistral-small-latest | overall=2
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response is directly answering the question and provides scorable content.
+     - base: 2 | The response is generic and clichéd without demonstrating self-awareness or specificity.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was provided or needed.
+     - flags: lacks specificity, clichéd response
+     - overall: 2 | The response is weak due to its generic nature and lack of depth.
+     start=23:29:00 | end=23:29:03 | duration=2.24s
+[result] {"status":"ok","id":11,"label":"Auto case 11","rubric_type":"non_behavioral","overall":2,"overallDisplay":2,"durationMs":2241,"startedAt":"23:29:00","endedAt":"23:29:03","parsed":{"scorable":{"value":true,"reasoning":"The response is directly answering the question and provides scorable content."},"path":"non_behavioral","base":{"score":2,"reasoning":"The response is generic and clichéd without demonstrating self-awareness or specificity."},"personal_contribution":null,"real_example":null,"outcome":null,"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was provided or needed."},"flags":["lacks specificity","clichéd response"],"overall":{"score":2,"reasoning":"The response is weak due to its generic nature and lack of depth."}}}
+[ok] #12 Auto case 12 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response attempts to address the behavioral question with a general approach and a follow-up attempt.
+     - base: 2 | The response is vague and lacks structure or clarity in addressing the question.
+     - personal_contribution: 1 | The response does not clearly articulate the candidate's specific role or actions in handling priorities.
+     - real_example: 1 | The candidate fails to provide a concrete past example, relying on a vague and non-specific response.
+     - outcome: 1 | No measurable or tangible outcome is described for the tradeoff made.
+     - follow_up: present=true | probe=deepening | impact=credibility_risk | The candidate could not provide a specific example despite the deepening probe, raising credibility concerns.
+     - flags: lacks concrete example, vague response to follow-up
+     - overall: 1 | The response is too generic, lacks personal contribution, real example, and outcome, with a failed deepening probe.
+     start=23:29:00 | end=23:29:03 | duration=2.62s
+[result] {"status":"ok","id":12,"label":"Auto case 12","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":2617,"startedAt":"23:29:00","endedAt":"23:29:03","parsed":{"scorable":{"value":true,"reasoning":"The response attempts to address the behavioral question with a general approach and a follow-up attempt."},"path":"behavioral","base":{"score":2,"reasoning":"The response is vague and lacks structure or clarity in addressing the question."},"personal_contribution":{"score":1,"reasoning":"The response does not clearly articulate the candidate's specific role or actions in handling priorities."},"real_example":{"score":1,"reasoning":"The candidate fails to provide a concrete past example, relying on a vague and non-specific response."},"outcome":{"score":1,"reasoning":"No measurable or tangible outcome is described for the tradeoff made."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"deepening","impact":"credibility_risk","reasoning":"The candidate could not provide a specific example despite the deepening probe, raising credibility concerns."},"flags":["lacks concrete example","vague response to follow-up"],"overall":{"score":1,"reasoning":"The response is too generic, lacks personal contribution, real example, and outcome, with a failed deepening probe."}}}
+[ok] #13 Auto case 13 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response attempts to address the behavioral question with a leadership example, though it lacks specificity.
+     - base: 2 | The response is vague and lacks concrete details about the situation or outcome.
+     - personal_contribution: 3 | The candidate claims to speak up and influence decisions, but the contribution is not clearly demonstrated.
+     - real_example: 1 | The example provided is too generic and lacks specific context, actions, or results.
+     - outcome: 1 | The candidate admits they do not remember what happened after their input, making the outcome unclear.
+     - follow_up: present=true | probe=clarifying | impact=downgrade_specificity_or_outcome | The candidate could not provide a concrete situation despite the follow-up, weakening the example's credibility.
+     - flags: vague_example, missing_outcome
+     - overall: 1 | The response lacks specificity, real example, and outcome, making it difficult to assess leadership impact.
+     start=23:29:00 | end=23:29:03 | duration=2.63s
+[result] {"status":"ok","id":13,"label":"Auto case 13","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":2625,"startedAt":"23:29:00","endedAt":"23:29:03","parsed":{"scorable":{"value":true,"reasoning":"The response attempts to address the behavioral question with a leadership example, though it lacks specificity."},"path":"behavioral","base":{"score":2,"reasoning":"The response is vague and lacks concrete details about the situation or outcome."},"personal_contribution":{"score":3,"reasoning":"The candidate claims to speak up and influence decisions, but the contribution is not clearly demonstrated."},"real_example":{"score":1,"reasoning":"The example provided is too generic and lacks specific context, actions, or results."},"outcome":{"score":1,"reasoning":"The candidate admits they do not remember what happened after their input, making the outcome unclear."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"clarifying","impact":"downgrade_specificity_or_outcome","reasoning":"The candidate could not provide a concrete situation despite the follow-up, weakening the example's credibility."},"flags":["vague_example","missing_outcome"],"overall":{"score":1,"reasoning":"The response lacks specificity, real example, and outcome, making it difficult to assess leadership impact."}}}
+[pdf] Evaluation report PDF downloaded.
+[result] {"status":"done","inputFile":"input data/bad_interview.json","model":"mistral-small-latest","batchSize":5,"total":14,"success":14,"failed":0,"completedAll":true,"finishedAt":"23:29:03"}
+[agent2] queued: evaluation log, input text, and input JSON queued for Agent 2 websocket delivery
+23:33:29 INFO [__main__] Starting convert and evaluate task; logging to logs\bad_interview_eval.log
+23:33:29 INFO [__main__] input=input data\bad_interview.txt batch_size=5
+23:33:29 INFO [__main__] Parsing transcript: input=input data\bad_interview.txt chars=5902 classifier=ministral:ministral-3b-latest
+23:33:45 INFO [__main__] Parsed transcript into 14 cases
+23:33:45 INFO [__main__] Detected 14 evaluator cases
+23:33:45 INFO [__main__] Question/answer pair 1: started_at=23:33:45 finished_at=23:33:45 question_chars=83 answer_chars=228 follow_ups=0
+23:33:45 INFO [__main__] Question/answer pair 2: started_at=23:33:45 finished_at=23:33:45 question_chars=44 answer_chars=176 follow_ups=0
+23:33:45 INFO [__main__] Question/answer pair 3: started_at=23:33:45 finished_at=23:33:45 question_chars=35 answer_chars=170 follow_ups=0
+23:33:45 INFO [__main__] Question/answer pair 4: started_at=23:33:45 finished_at=23:33:45 question_chars=62 answer_chars=173 follow_ups=1
+23:33:45 INFO [__main__] Question/answer pair 5: started_at=23:33:45 finished_at=23:33:45 question_chars=71 answer_chars=174 follow_ups=1
+23:33:45 INFO [__main__] Question/answer pair 6: started_at=23:33:45 finished_at=23:33:45 question_chars=56 answer_chars=230 follow_ups=1
+23:33:45 INFO [__main__] Question/answer pair 7: started_at=23:33:45 finished_at=23:33:45 question_chars=62 answer_chars=133 follow_ups=1
+23:33:45 INFO [__main__] Question/answer pair 8: started_at=23:33:45 finished_at=23:33:45 question_chars=74 answer_chars=202 follow_ups=0
+23:33:45 INFO [__main__] Question/answer pair 9: started_at=23:33:45 finished_at=23:33:45 question_chars=44 answer_chars=142 follow_ups=1
+23:33:45 INFO [__main__] Question/answer pair 10: started_at=23:33:45 finished_at=23:33:45 question_chars=62 answer_chars=120 follow_ups=0
+23:33:45 INFO [__main__] Question/answer pair 11: started_at=23:33:45 finished_at=23:33:45 question_chars=31 answer_chars=115 follow_ups=0
+23:33:45 INFO [__main__] Question/answer pair 12: started_at=23:33:45 finished_at=23:33:45 question_chars=65 answer_chars=142 follow_ups=1
+23:33:45 INFO [__main__] Question/answer pair 13: started_at=23:33:45 finished_at=23:33:45 question_chars=77 answer_chars=110 follow_ups=1
+23:33:45 INFO [__main__] Question/answer pair 14: started_at=23:33:45 finished_at=23:33:45 question_chars=48 answer_chars=178 follow_ups=0
+23:33:45 INFO [__main__] Finished conversion: input=input data\bad_interview.txt output=input data\bad_interview.json started_at=23:33:29 finished_at=23:33:45 input_chars=5902 cases=14 batch_size=5
+23:33:45 INFO [__main__] Reusing existing pipeline server on port 3000
+23:33:45 INFO [__main__] Opening evaluator HTML: http://localhost:3000/evaluator.html?v=mistral-small-1&input=input+data%2Fbad_interview.json&batch_size=5&log_file=logs%2Fbad_interview_eval.log
+[pipeline] Evaluator run started at 23:33:46
+[ok] #1 Auto case 1 | non_behavioral | model=mistral-small-latest | overall=2
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response provides a high-level overview of the candidate's work experience, which is relevant to the question.
+     - base: 2 | The response lacks specificity and detail about roles, responsibilities, or achievements.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was provided or needed.
+     - flags: vague_response
+     - overall: 2 | The response is too generic and lacks depth or concrete examples.
+     start=23:33:47 | end=23:33:48 | duration=1.76s
+[result] {"status":"ok","id":1,"label":"Auto case 1","rubric_type":"non_behavioral","overall":2,"overallDisplay":2,"durationMs":1763,"startedAt":"23:33:47","endedAt":"23:33:48","parsed":{"scorable":{"value":true,"reasoning":"The response provides a high-level overview of the candidate's work experience, which is relevant to the question."},"path":"non_behavioral","base":{"score":2,"reasoning":"The response lacks specificity and detail about roles, responsibilities, or achievements."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was provided or needed."},"flags":["vague_response"],"overall":{"score":2,"reasoning":"The response is too generic and lacks depth or concrete examples."}}}
+[ok] #3 Auto case 3 | behavioral | model=mistral-small-latest | overall=skip
+     breakdown: scorable=false | path=skip
+     - scorable_reasoning: The response does not provide any concrete examples or direct experience with Go in production.
+     - base: n/a | N/A
+     - personal_contribution: n/a | N/A
+     - real_example: n/a | N/A
+     - outcome: n/a | N/A
+     - follow_up: present=false | probe=none | impact=none | N/A
+     - flags: no_production_experience
+     - overall: n/a | Response is not scorable due to lack of concrete experience or examples.
+     start=23:33:47 | end=23:33:49 | duration=1.91s
+[result] {"status":"ok","id":3,"label":"Auto case 3","rubric_type":"behavioral","overall":null,"overallDisplay":"skip","durationMs":1910,"startedAt":"23:33:47","endedAt":"23:33:49","parsed":{"scorable":{"value":false,"reasoning":"The response does not provide any concrete examples or direct experience with Go in production."},"path":"skip","base":{"score":null,"reasoning":"N/A"},"personal_contribution":{"score":null,"reasoning":"N/A"},"real_example":{"score":null,"reasoning":"N/A"},"outcome":{"score":null,"reasoning":"N/A"},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"N/A"},"flags":["no_production_experience"],"overall":{"score":null,"reasoning":"Response is not scorable due to lack of concrete experience or examples."}}}
+[ok] #2 Auto case 2 | non_behavioral | model=mistral-small-latest | overall=2
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response addresses the question directly, though it lacks depth.
+     - base: 2 | The response is generic and does not provide specific reasons for interest in the role or company.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was present in the response.
+     - flags: lacks specificity
+     - overall: 2 | The response is too vague and does not demonstrate genuine interest or alignment with the role or company.
+     start=23:33:47 | end=23:33:49 | duration=1.96s
+[result] {"status":"ok","id":2,"label":"Auto case 2","rubric_type":"non_behavioral","overall":2,"overallDisplay":2,"durationMs":1957,"startedAt":"23:33:47","endedAt":"23:33:49","parsed":{"scorable":{"value":true,"reasoning":"The response addresses the question directly, though it lacks depth."},"path":"non_behavioral","base":{"score":2,"reasoning":"The response is generic and does not provide specific reasons for interest in the role or company."},"personal_contribution":null,"real_example":null,"outcome":null,"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was present in the response."},"flags":["lacks specificity"],"overall":{"score":2,"reasoning":"The response is too vague and does not demonstrate genuine interest or alignment with the role or company."}}}
+[ok] #5 Auto case 5 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response attempts to address the behavioral question, though weakly.
+     - base: 2 | Response lacks specificity and concrete details about the situation.
+     - personal_contribution: 2 | Claim of being 'good at communication' is unsupported by a real example.
+     - real_example: 1 | Example is vague, lacks project context, and does not clearly demonstrate persuasion.
+     - outcome: 2 | Outcome is unclear and minimally described ('accepted it eventually').
+     - follow_up: present=true | probe=deepening | impact=credibility_risk | Follow-up did not yield a meaningful example, raising credibility concerns.
+     - flags: vague_response, lack_of_concrete_example
+     - overall: 1 | Response fails to provide a credible, specific example of persuasion, despite follow-up.
+     start=23:33:47 | end=23:33:49 | duration=2.52s
+[result] {"status":"ok","id":5,"label":"Auto case 5","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":2523,"startedAt":"23:33:47","endedAt":"23:33:49","parsed":{"scorable":{"value":true,"reasoning":"The response attempts to address the behavioral question, though weakly."},"path":"behavioral","base":{"score":2,"reasoning":"Response lacks specificity and concrete details about the situation."},"personal_contribution":{"score":2,"reasoning":"Claim of being 'good at communication' is unsupported by a real example."},"real_example":{"score":1,"reasoning":"Example is vague, lacks project context, and does not clearly demonstrate persuasion."},"outcome":{"score":2,"reasoning":"Outcome is unclear and minimally described ('accepted it eventually')."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"deepening","impact":"credibility_risk","reasoning":"Follow-up did not yield a meaningful example, raising credibility concerns."},"flags":["vague_response","lack_of_concrete_example"],"overall":{"score":1,"reasoning":"Response fails to provide a credible, specific example of persuasion, despite follow-up."}}}
+[ok] #4 Auto case 4 | behavioral | model=mistral-small-latest | overall=2
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response addresses a past experience with a project under a tight deadline, making it scorable.
+     - base: 2 | The response lacks specificity about the project, timeline, or context.
+     - personal_contribution: 2 | The candidate mentions helping the team but does not clearly articulate their personal ownership or contributions.
+     - real_example: 1 | The example is vague and lacks concrete details about the project or their role.
+     - outcome: 2 | The outcome is mentioned as delivery but lacks specifics about success, impact, or metrics.
+     - follow_up: present=true | probe=clarifying | impact=downgrade_specificity_or_outcome | The follow-up did not recover the lack of specificity; the response remained vague about personal ownership.
+     - flags: vague_example, lack_of_ownership_clarity
+     - overall: 2 | The response is too generic and lacks concrete details, making it difficult to assess the candidate's leadership or impact.
+     start=23:33:47 | end=23:33:49 | duration=2.59s
+[result] {"status":"ok","id":4,"label":"Auto case 4","rubric_type":"behavioral","overall":2,"overallDisplay":2,"durationMs":2589,"startedAt":"23:33:47","endedAt":"23:33:49","parsed":{"scorable":{"value":true,"reasoning":"The response addresses a past experience with a project under a tight deadline, making it scorable."},"path":"behavioral","base":{"score":2,"reasoning":"The response lacks specificity about the project, timeline, or context."},"personal_contribution":{"score":2,"reasoning":"The candidate mentions helping the team but does not clearly articulate their personal ownership or contributions."},"real_example":{"score":1,"reasoning":"The example is vague and lacks concrete details about the project or their role."},"outcome":{"score":2,"reasoning":"The outcome is mentioned as delivery but lacks specifics about success, impact, or metrics."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"clarifying","impact":"downgrade_specificity_or_outcome","reasoning":"The follow-up did not recover the lack of specificity; the response remained vague about personal ownership."},"flags":["vague_example","lack_of_ownership_clarity"],"overall":{"score":2,"reasoning":"The response is too generic and lacks concrete details, making it difficult to assess the candidate's leadership or impact."}}}
+[ok] #9 Auto case 9 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response addresses a past experience, albeit vaguely.
+     - base: 2 | The response lacks specificity and structure.
+     - personal_contribution: 3 | The candidate mentions suggesting an improvement but does not detail their direct role.
+     - real_example: 1 | The example is too vague and lacks concrete details.
+     - outcome: 1 | No measurable or clear outcome is provided.
+     - follow_up: present=true | probe=deepening | impact=credibility_risk | The candidate could not provide specifics about the implementation or outcome.
+     - flags: vague_example, lack_of_outcome
+     - overall: 1 | The response fails to demonstrate a concrete, impactful process improvement with clear personal contribution and outcome.
+     start=23:33:49 | end=23:33:52 | duration=2.33s
+[result] {"status":"ok","id":9,"label":"Auto case 9","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":2330,"startedAt":"23:33:49","endedAt":"23:33:52","parsed":{"scorable":{"value":true,"reasoning":"The response addresses a past experience, albeit vaguely."},"path":"behavioral","base":{"score":2,"reasoning":"The response lacks specificity and structure."},"personal_contribution":{"score":3,"reasoning":"The candidate mentions suggesting an improvement but does not detail their direct role."},"real_example":{"score":1,"reasoning":"The example is too vague and lacks concrete details."},"outcome":{"score":1,"reasoning":"No measurable or clear outcome is provided."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"deepening","impact":"credibility_risk","reasoning":"The candidate could not provide specifics about the implementation or outcome."},"flags":["vague_example","lack_of_outcome"],"overall":{"score":1,"reasoning":"The response fails to demonstrate a concrete, impactful process improvement with clear personal contribution and outcome."}}}
+[ok] #8 Auto case 8 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response attempts to address the behavioral question but lacks specificity.
+     - base: 2 | The response is vague and does not provide a clear example or context.
+     - personal_contribution: 1 | No clear personal action or reflection is described.
+     - real_example: 1 | The candidate explicitly states they do not have a specific story.
+     - outcome: 1 | No outcome or result of the feedback is mentioned.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was provided by the candidate.
+     - flags: lacks specificity, no concrete example
+     - overall: 1 | The response fails to meet the behavioral question requirements due to vagueness and lack of detail.
+     start=23:33:49 | end=23:33:52 | duration=2.34s
+[result] {"status":"ok","id":8,"label":"Auto case 8","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":2336,"startedAt":"23:33:49","endedAt":"23:33:52","parsed":{"scorable":{"value":true,"reasoning":"The response attempts to address the behavioral question but lacks specificity."},"path":"behavioral","base":{"score":2,"reasoning":"The response is vague and does not provide a clear example or context."},"personal_contribution":{"score":1,"reasoning":"No clear personal action or reflection is described."},"real_example":{"score":1,"reasoning":"The candidate explicitly states they do not have a specific story."},"outcome":{"score":1,"reasoning":"No outcome or result of the feedback is mentioned."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was provided by the candidate."},"flags":["lacks specificity","no concrete example"],"overall":{"score":1,"reasoning":"The response fails to meet the behavioral question requirements due to vagueness and lack of detail."}}}
+[ok] #6 Auto case 6 | behavioral | model=mistral-small-latest | overall=2
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response addresses a past conflict scenario, making it scorable.
+     - base: 3 | The response is somewhat vague and lacks structure, but it does address the question.
+     - personal_contribution: 2 | The candidate mentions their role in addressing the issue but does not elaborate on their actions or decisions.
+     - real_example: 3 | A specific example is provided, but details are minimal and lack depth.
+     - outcome: 2 | The outcome is mentioned but lacks clarity on the impact or resolution.
+     - follow_up: present=true | probe=clarifying | impact=downgrade_specificity_or_outcome | The follow-up response did not add meaningful detail or clarity to the initial answer.
+     - flags: vague_details, minimal_outcome
+     - overall: 2 | The response lacks depth, specificity, and a clear outcome, resulting in a low score.
+     start=23:33:49 | end=23:33:52 | duration=2.35s
+[result] {"status":"ok","id":6,"label":"Auto case 6","rubric_type":"behavioral","overall":2,"overallDisplay":2,"durationMs":2354,"startedAt":"23:33:49","endedAt":"23:33:52","parsed":{"scorable":{"value":true,"reasoning":"The response addresses a past conflict scenario, making it scorable."},"path":"behavioral","base":{"score":3,"reasoning":"The response is somewhat vague and lacks structure, but it does address the question."},"personal_contribution":{"score":2,"reasoning":"The candidate mentions their role in addressing the issue but does not elaborate on their actions or decisions."},"real_example":{"score":3,"reasoning":"A specific example is provided, but details are minimal and lack depth."},"outcome":{"score":2,"reasoning":"The outcome is mentioned but lacks clarity on the impact or resolution."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"clarifying","impact":"downgrade_specificity_or_outcome","reasoning":"The follow-up response did not add meaningful detail or clarity to the initial answer."},"flags":["vague_details","minimal_outcome"],"overall":{"score":2,"reasoning":"The response lacks depth, specificity, and a clear outcome, resulting in a low score."}}}
+[ok] #10 Auto case 10 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response attempts to address the behavioral question about mentoring or helping someone grow.
+     - base: 2 | The response is vague and lacks specificity about the mentoring process or outcomes.
+     - personal_contribution: 1 | The candidate does not demonstrate active personal contribution beyond answering questions.
+     - real_example: 1 | No concrete example of mentoring or growth is provided.
+     - outcome: 1 | No measurable or observable outcome is mentioned.
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was attempted by the candidate.
+     - flags: vague_response, lack_of_concrete_example
+     - overall: 1 | The response fails to provide a meaningful or scorable example of mentoring or growth.
+     start=23:33:49 | end=23:33:52 | duration=2.58s
+[result] {"status":"ok","id":10,"label":"Auto case 10","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":2584,"startedAt":"23:33:49","endedAt":"23:33:52","parsed":{"scorable":{"value":true,"reasoning":"The response attempts to address the behavioral question about mentoring or helping someone grow."},"path":"behavioral","base":{"score":2,"reasoning":"The response is vague and lacks specificity about the mentoring process or outcomes."},"personal_contribution":{"score":1,"reasoning":"The candidate does not demonstrate active personal contribution beyond answering questions."},"real_example":{"score":1,"reasoning":"No concrete example of mentoring or growth is provided."},"outcome":{"score":1,"reasoning":"No measurable or observable outcome is mentioned."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was attempted by the candidate."},"flags":["vague_response","lack_of_concrete_example"],"overall":{"score":1,"reasoning":"The response fails to provide a meaningful or scorable example of mentoring or growth."}}}
+[ok] #7 Auto case 7 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response attempts to address the behavioral question about failure, though it is vague and lacks a clear example.
+     - base: 2 | The response is vague and does not provide a clear or specific example of failure.
+     - personal_contribution: 1 | The candidate does not take ownership of the failure and deflects responsibility.
+     - real_example: 1 | The example provided is minimal, unclear, and lacks detail about the candidate's role.
+     - outcome: 2 | The outcome is minimal (bug rollback) and does not demonstrate learning or improvement.
+     - follow_up: present=true | probe=deepening | impact=credibility_risk | The follow-up did not yield a meaningful example, raising credibility concerns about the candidate's ability to reflect on failure.
+     - flags: lack_of_ownership, vague_response
+     - overall: 1 | The response fails to provide a meaningful example of failure, lacks ownership, and does not demonstrate growth or learning.
+     start=23:33:49 | end=23:33:52 | duration=2.63s
+[result] {"status":"ok","id":7,"label":"Auto case 7","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":2632,"startedAt":"23:33:49","endedAt":"23:33:52","parsed":{"scorable":{"value":true,"reasoning":"The response attempts to address the behavioral question about failure, though it is vague and lacks a clear example."},"path":"behavioral","base":{"score":2,"reasoning":"The response is vague and does not provide a clear or specific example of failure."},"personal_contribution":{"score":1,"reasoning":"The candidate does not take ownership of the failure and deflects responsibility."},"real_example":{"score":1,"reasoning":"The example provided is minimal, unclear, and lacks detail about the candidate's role."},"outcome":{"score":2,"reasoning":"The outcome is minimal (bug rollback) and does not demonstrate learning or improvement."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"deepening","impact":"credibility_risk","reasoning":"The follow-up did not yield a meaningful example, raising credibility concerns about the candidate's ability to reflect on failure."},"flags":["lack_of_ownership","vague_response"],"overall":{"score":1,"reasoning":"The response fails to provide a meaningful example of failure, lacks ownership, and does not demonstrate growth or learning."}}}
+[ok] #14 Auto case 14 | non_behavioral | model=mistral-small-latest | overall=3
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response addresses the question directly and provides a clear, albeit brief, description of the candidate's interaction with product managers.
+     - base: 3 | The response is relevant but lacks depth or detail about the working process.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was provided or needed.
+     - overall: 3 | The response is basic and lacks specificity or examples, resulting in a moderate score.
+     start=23:33:52 | end=23:33:54 | duration=1.80s
+[result] {"status":"ok","id":14,"label":"Auto case 14","rubric_type":"non_behavioral","overall":3,"overallDisplay":3,"durationMs":1797,"startedAt":"23:33:52","endedAt":"23:33:54","parsed":{"scorable":{"value":true,"reasoning":"The response addresses the question directly and provides a clear, albeit brief, description of the candidate's interaction with product managers."},"path":"non_behavioral","base":{"score":3,"reasoning":"The response is relevant but lacks depth or detail about the working process."},"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was provided or needed."},"flags":[],"overall":{"score":3,"reasoning":"The response is basic and lacks specificity or examples, resulting in a moderate score."}}}
+[ok] #11 Auto case 11 | non_behavioral | model=mistral-small-latest | overall=2
+     breakdown: scorable=true | path=non_behavioral
+     - scorable_reasoning: The response addresses the question directly, though it is a clichéd answer.
+     - base: 2 | The response is generic and lacks specificity or authenticity.
+     - personal_contribution: n/a
+     - real_example: n/a
+     - outcome: n/a
+     - follow_up: present=false | probe=none | impact=none | No follow-up probe was presented.
+     - overall: 2 | The response is a common cliché with no depth or personal insight.
+     start=23:33:52 | end=23:33:54 | duration=1.82s
+[result] {"status":"ok","id":11,"label":"Auto case 11","rubric_type":"non_behavioral","overall":2,"overallDisplay":2,"durationMs":1825,"startedAt":"23:33:52","endedAt":"23:33:54","parsed":{"scorable":{"value":true,"reasoning":"The response addresses the question directly, though it is a clichéd answer."},"path":"non_behavioral","base":{"score":2,"reasoning":"The response is generic and lacks specificity or authenticity."},"personal_contribution":null,"real_example":null,"outcome":null,"type_specific_dimensions":[],"follow_up":{"present":false,"probe_type":null,"impact":null,"reasoning":"No follow-up probe was presented."},"flags":[],"overall":{"score":2,"reasoning":"The response is a common cliché with no depth or personal insight."}}}
+[ok] #13 Auto case 13 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response attempts to address the behavioral question with a vague example.
+     - base: 2 | The response lacks structure and specificity, making it hard to follow.
+     - personal_contribution: 3 | The candidate mentions speaking up, but the contribution is not clearly defined.
+     - real_example: 1 | The example is too vague and lacks concrete details.
+     - outcome: 1 | No outcome or impact is described.
+     - follow_up: present=true | probe=clarifying | impact=downgrade_specificity_or_outcome | The candidate could not provide details about the situation or outcome.
+     - flags: vague_example, no_outcome
+     - overall: 1 | The response is too generic and lacks concrete leadership demonstration.
+     start=23:33:52 | end=23:33:54 | duration=2.34s
+[result] {"status":"ok","id":13,"label":"Auto case 13","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":2339,"startedAt":"23:33:52","endedAt":"23:33:54","parsed":{"scorable":{"value":true,"reasoning":"The response attempts to address the behavioral question with a vague example."},"path":"behavioral","base":{"score":2,"reasoning":"The response lacks structure and specificity, making it hard to follow."},"personal_contribution":{"score":3,"reasoning":"The candidate mentions speaking up, but the contribution is not clearly defined."},"real_example":{"score":1,"reasoning":"The example is too vague and lacks concrete details."},"outcome":{"score":1,"reasoning":"No outcome or impact is described."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"clarifying","impact":"downgrade_specificity_or_outcome","reasoning":"The candidate could not provide details about the situation or outcome."},"flags":["vague_example","no_outcome"],"overall":{"score":1,"reasoning":"The response is too generic and lacks concrete leadership demonstration."}}}
+[ok] #12 Auto case 12 | behavioral | model=mistral-small-latest | overall=1
+     breakdown: scorable=true | path=behavioral
+     - scorable_reasoning: The response addresses the behavioral question with a past example attempt, though vague.
+     - base: 2 | Response is generic and lacks structure or specificity about handling competing priorities.
+     - personal_contribution: 1 | No clear indication of the candidate's individual actions or decision-making process.
+     - real_example: 1 | Follow-up response fails to provide a concrete example, relying on vague memory.
+     - outcome: 1 | No measurable or verifiable outcome described for the tradeoff situation.
+     - follow_up: present=true | probe=deepening | impact=credibility_risk | Candidate could not recall a specific example despite the deepening probe, raising credibility concerns.
+     - flags: vague_example, lack_of_specificity
+     - overall: 1 | Response lacks concrete details, personal contribution, and a verifiable example, with credibility risk from the follow-up.
+     start=23:33:52 | end=23:33:54 | duration=2.40s
+[result] {"status":"ok","id":12,"label":"Auto case 12","rubric_type":"behavioral","overall":1,"overallDisplay":1,"durationMs":2404,"startedAt":"23:33:52","endedAt":"23:33:54","parsed":{"scorable":{"value":true,"reasoning":"The response addresses the behavioral question with a past example attempt, though vague."},"path":"behavioral","base":{"score":2,"reasoning":"Response is generic and lacks structure or specificity about handling competing priorities."},"personal_contribution":{"score":1,"reasoning":"No clear indication of the candidate's individual actions or decision-making process."},"real_example":{"score":1,"reasoning":"Follow-up response fails to provide a concrete example, relying on vague memory."},"outcome":{"score":1,"reasoning":"No measurable or verifiable outcome described for the tradeoff situation."},"type_specific_dimensions":[],"follow_up":{"present":true,"probe_type":"deepening","impact":"credibility_risk","reasoning":"Candidate could not recall a specific example despite the deepening probe, raising credibility concerns."},"flags":["vague_example","lack_of_specificity"],"overall":{"score":1,"reasoning":"Response lacks concrete details, personal contribution, and a verifiable example, with credibility risk from the follow-up."}}}
+[pdf] Evaluation report PDF downloaded.
+[result] {"status":"done","inputFile":"input data/bad_interview.json","model":"mistral-small-latest","batchSize":5,"total":14,"success":14,"failed":0,"completedAll":true,"finishedAt":"23:33:54"}
+[agent2] queued: evaluation log, input text, and input JSON queued for Agent 2 websocket delivery

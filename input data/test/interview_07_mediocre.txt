@@ -1,0 +1,160 @@
+# Interview transcript fixture
+# Role: Backend Software Engineer, Platform team @ Northline Financial
+# Quality target: mediocre candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+INTERVIEWER:
+Hi Morgan, thanks for joining me today. I’m Hassan, I lead the Platform team here at Northline. How are you doing?
+
+CANDIDATE:
+Hey Hassan, I’m good, thanks. A little nervous, but excited to chat.
+
+INTERVIEWER:
+Great to hear. Let’s start with a quick walkthrough of your resume—could you give me a high-level overview of your experience, maybe focusing on the last few years?
+
+CANDIDATE:
+Sure. So, I’ve been a backend engineer for about six years now. I started at a smaller fintech startup called PayFlow, where I worked on their payment processing system. That was mostly in Java, but I also did some Go there. Then I moved to CloudPay, where I’ve been for the last three years. There, I worked on their ledger system and some microservices for transaction processing. Mostly Go and Postgres, which I know is relevant for this role.
+
+INTERVIEWER:
+Got it. What drew you to Northline specifically, and the Platform team in particular?
+
+CANDIDATE:
+I’ve heard really good things about Northline’s engineering culture—like, how much ownership teams have. The Platform team stood out to me because it seems like you work on the core systems that power everything else. At CloudPay, I worked on a lot of the foundational stuff too, like the ledger, so I think I’d be a good fit. Plus, I’ve always wanted to work at a company that’s more established but still moves fast.
+
+INTERVIEWER:
+That makes sense. Let’s dig into a technical area. You mentioned working on ledger systems at CloudPay. Can you walk me through how you designed or improved the consistency model for a high-throughput ledger there?
+
+CANDIDATE:
+Yeah, so at CloudPay, we had this ledger service that was handling a ton of transactions per second. Initially, it was using a pretty basic approach—like, just writing to Postgres and hoping for the best. But we started seeing issues with double-spending and race conditions. So, I worked on adding a locking mechanism. We used Postgres advisory locks to make sure that when a transaction was being processed, no other process could touch the same account. It wasn’t perfect, but it reduced the errors by like 80% or something.
+
+INTERVIEWER:
+Interesting. How did you handle cases where the lock acquisition failed or timed out? And did you consider any alternatives to advisory locks?
+
+CANDIDATE:
+Oh, right. So if the lock failed, we’d just retry the transaction after a short delay. It wasn’t super sophisticated, but it worked most of the time. As for alternatives, we talked about using a distributed lock manager like Redis, but we didn’t end up going that route because it would’ve added more complexity. Postgres was already there, so it was easier to stick with what we had.
+
+INTERVIEWER:
+Got it. Let’s switch gears to a behavioral question. Can you tell me about a time when you had to push back on a technical decision or requirement from a stakeholder? How did you handle it?
+
+CANDIDATE:
+Yeah, that’s happened a few times. At CloudPay, there was this one time when the product team wanted to add a new feature that would let users split payments into installments. The problem was, they wanted it done in like two weeks, and the way they designed it would’ve required a ton of changes to the ledger. I pushed back and said it wasn’t feasible in that timeline. I showed them some data on how long similar changes had taken in the past, and I proposed a simpler version of the feature that we could build faster. They weren’t super happy at first, but they ended up agreeing to the phased approach.
+
+INTERVIEWER:
+How did you present the data to them? Did you have to do any extra work to make your case?
+
+CANDIDATE:
+I just pulled some Jira tickets from past projects and showed them the cycle times. It wasn’t anything fancy—I didn’t even make a slide deck or anything. I think they appreciated that I had the numbers, though. The product manager was pretty reasonable once she saw the data.
+
+INTERVIEWER:
+What about a time when you had to deal with a conflict within your team? Maybe a disagreement over a technical approach or priorities?
+
+CANDIDATE:
+Oh, yeah. There was this one time at CloudPay where two of my teammates were arguing over how to handle retries for failed transactions. One guy wanted to use an exponential backoff, and the other wanted to just retry immediately a few times and then fail. They were both pretty stubborn about it. I kind of stepped in and suggested we test both approaches in a staging environment to see which one performed better. We ended up going with the exponential backoff because it reduced the load on the database during peak times. It wasn’t a huge deal, but it felt good to help resolve it.
+
+INTERVIEWER:
+How did you get both of them to agree to the testing approach?
+
+CANDIDATE:
+I just asked them if they’d be open to trying both and seeing what the data said. Neither of them had a super strong reason for their approach—it was more like gut feelings. Once I framed it as a low-risk experiment, they were fine with it.
+
+INTERVIEWER:
+Let’s talk about mentorship. Have you ever had to mentor a junior engineer or help someone on your team grow technically?
+
+CANDIDATE:
+Yeah, I’ve done that a few times. At CloudPay, I was paired with this new grad who was really smart but didn’t have much experience with distributed systems. I helped him get up to speed by walking him through some of our code and explaining how our ledger service worked. I also did a few pair programming sessions with him when he was working on his first big project. He ended up doing a good job, and I think he learned a lot.
+
+INTERVIEWER:
+What was the most challenging part of mentoring him?
+
+CANDIDATE:
+I guess the hardest part was figuring out how much to explain versus letting him figure things out on his own. Like, sometimes I’d start explaining something, and he’d already know it, so I’d feel like I was wasting his time. Other times, I’d assume he knew something, and then he’d be totally lost. It took a while to find the right balance.
+
+INTERVIEWER:
+Can you tell me about a time when you failed at something? Maybe a project that didn’t go as planned or a mistake you made.
+
+CANDIDATE:
+Oh, man. There was this one time at PayFlow where I was working on a feature to add support for recurring payments. I thought I had it all figured out, but I didn’t test it thoroughly enough. When we deployed it, it caused a bunch of duplicate transactions because I had a bug in the logic that checked for existing subscriptions. It wasn’t a total disaster, but we had to roll back the feature and fix it, which took a couple of days. My manager was pretty understanding, but it was embarrassing.
+
+INTERVIEWER:
+What did you learn from that experience?
+
+CANDIDATE:
+I learned to test more thoroughly, obviously. But I also realized that I should’ve gotten more eyes on the code before deploying. I was in a rush to get it done, and I didn’t ask for a code review from anyone else on the team. Now, I always make sure to get at least one other person to look at my changes before they go out.
+
+INTERVIEWER:
+How do you prioritize your work when you have multiple competing deadlines or requests from different teams?
+
+CANDIDATE:
+That’s a good question. I usually try to figure out what’s most urgent or what has the biggest impact. At CloudPay, I’d talk to my manager and the product team to get a sense of what was most important. If I was still unsure, I’d just pick the thing that seemed like it would take the longest and start there. It’s not a perfect system, but it usually works out.
+
+INTERVIEWER:
+Have you ever identified a process or tool that was slowing your team down? How did you go about improving it?
+
+CANDIDATE:
+Yeah, at CloudPay, our CI pipeline was really slow. It would take like 20 minutes to run the full test suite, which was annoying when you were trying to merge a small change. I did some digging and found that a lot of the tests were redundant or could be parallelized. I proposed splitting the test suite into smaller chunks and running them in parallel. It took a few weeks to get it all set up, but it cut the CI time down to like 8 minutes. The team was pretty happy about it.
+
+INTERVIEWER:
+How did you get buy-in for that change? Did you have to convince anyone?
+
+CANDIDATE:
+I just showed them the data on how much time we were wasting waiting for CI. I also did a proof of concept to show that the parallelized tests worked. My manager was on board pretty quickly, and the rest of the team was happy to have faster feedback.
+
+INTERVIEWER:
+Let’s talk about weaknesses. What’s an area where you feel like you’ve had to improve, or where you’re still working on growing?
+
+CANDIDATE:
+I’d say I’m still working on being more proactive about seeking feedback. Like, I’ll do a good job on a project, but I don’t always ask for feedback unless someone offers it. I’ve been trying to get better at that by asking my manager and teammates for input more regularly. It’s not always easy, but I think it’s helped me grow.
+
+INTERVIEWER:
+What about a time when you had to persuade someone to adopt a new tool or technology? How did you make your case?
+
+CANDIDATE:
+At CloudPay, we were using this old monitoring tool that wasn’t very good. I wanted to switch to something like Prometheus, but some of the team was hesitant because they were used to the old tool. I put together a demo of Prometheus and showed how it could give us better insights into our systems. I also pointed out that it was open-source, so we wouldn’t have to pay for it. Eventually, the team agreed to try it out, and it worked out well.
+
+INTERVIEWER:
+How did you handle the pushback from the team members who were hesitant?
+
+CANDIDATE:
+I just tried to listen to their concerns and address them one by one. Some people were worried about the learning curve, so I offered to help them get up to speed. Others were concerned about the migration effort, so I broke down the steps and showed them it wouldn’t be as bad as they thought. It took a few conversations, but I think they appreciated that I took their concerns seriously.
+
+INTERVIEWER:
+Last technical question: You mentioned working with Postgres a lot. Can you walk me through how you’ve optimized queries or schema design for performance in a high-throughput system?
+
+CANDIDATE:
+Yeah, so at CloudPay, we had this one table that was getting hit really hard—it was storing transaction records. The queries were getting slow because the table was huge, and we were doing a lot of full scans. I added some indexes on the columns we were filtering by most often, like account ID and timestamp. That helped a lot. I also denormalized some of the data to reduce joins, which made the queries faster. It wasn’t a silver bullet, but it made a noticeable difference.
+
+INTERVIEWER:
+Did you run into any trade-offs with those changes? Like, write performance or storage costs?
+
+CANDIDATE:
+Oh, yeah. The indexes made writes a little slower, but it was worth it because reads were the bottleneck. The denormalization also increased storage a bit, but storage is cheap, so it wasn’t a big deal. We did have to be careful about keeping the denormalized data in sync, though. We ended up adding some triggers to handle that.
+
+INTERVIEWER:
+Alright, Morgan, that’s all the questions I have for you. Do you have any questions for me about the role or the team?
+
+CANDIDATE:
+Yeah, a couple. What’s the biggest technical challenge the Platform team is facing right now?
+
+INTERVIEWER:
+Great question. We’re currently dealing with scaling our ledger system to handle higher transaction volumes while maintaining consistency. It’s a tricky balance, and we’re exploring some new approaches to sharding and caching.
+
+CANDIDATE:
+Got it. And what’s the team’s approach to on-call or incident response?
+
+INTERVIEWER:
+We have a rotating on-call schedule, and the Platform team owns the core systems, so we’re usually the first responders for any major incidents. We try to keep the on-call burden reasonable, though—like, no more than one week every couple of months.
+
+CANDIDATE:
+That sounds fair. One last question—how does the team balance technical debt with new feature work?
+
+INTERVIEWER:
+We try to allocate about 20% of our time to technical debt and improvements. It’s not always perfect, but we’ve found that dedicating some time upfront saves us pain down the road. We also do regular architecture reviews to identify areas that need attention.
+
+CANDIDATE:
+Cool, that makes sense. Thanks for answering my questions.
+
+INTERVIEWER:
+Of course. Thanks for your time today, Morgan. We’ll be in touch soon with next steps. Have a great day!
+
+CANDIDATE:
+Thanks, Hassan. You too!

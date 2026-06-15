@@ -1,0 +1,218 @@
+[
+  {
+    "id": 1,
+    "label": "Auto case 1",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a specific past example (two-minute version of background)",
+    "question": "Got it. Well, let\u2019s start with a quick walk through your resume. Can you give me the two-minute version of your background and what led you to apply for this role?",
+    "response": "Sure. I\u2019ve been a data engineer for about four years. Mostly worked at mid-sized companies doing ETL stuff. I\u2019ve used Spark, Airflow, some dbt\u2014pretty standard tools. I applied here because I saw the job posting and it seemed like a good fit.",
+    "follow_ups": [
+      {
+        "question": "What specifically about Quanta\u2019s analytics platform or the problems we\u2019re solving caught your interest?",
+        "response": "I mean, logistics is a big industry, right? And data is important everywhere. I figured it\u2019d be a good place to work with data at scale.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 2,
+    "label": "Auto case 2",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Directly prompts for a past example with clear structure (situation, role, outcome)",
+    "question": "Got it. Let\u2019s dig into one of your past projects. Can you tell me about a time you built or improved a data pipeline? Walk me through the situation, your role, and the outcome.",
+    "response": "Yeah, so at my last job, we had this pipeline that moved data from our app into a warehouse. It was kind of slow, so I helped make it faster. I used Spark to process the data in batches, and it worked better after that.",
+    "follow_ups": [
+      {
+        "question": "What was the scale of the data, and how much faster did it get?",
+        "response": "I don\u2019t remember the exact numbers. It was a lot of data, though. And it was definitely faster\u2014like, noticeably.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      },
+      {
+        "question": "What challenges did you face while optimizing it?",
+        "response": "Oh, you know, the usual stuff. Like, Spark can be tricky sometimes. But I figured it out.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 3,
+    "label": "Auto case 3",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "agent2-structure-review",
+    "classification_reasoning": "This follow-up question is independent and should be its own case.",
+    "question": "Can you describe a time you had to debug a failing Airflow DAG? What was the issue, and how did you resolve it?",
+    "response": "Yeah, once a DAG failed because of a timeout. I just increased the timeout and it worked. Not much else to it.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 4,
+    "label": "Auto case 4",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "agent2-structure-review",
+    "classification_reasoning": "This follow-up question is independent and should be its own case.",
+    "question": "Let\u2019s talk about Airflow. How have you used it in your work, and what\u2019s one thing you\u2019d improve about your current setup?",
+    "response": "I\u2019ve used Airflow to schedule jobs. It\u2019s fine, I guess. I don\u2019t really have any complaints. Maybe if it was easier to debug, but it\u2019s not a big deal.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 5,
+    "label": "Auto case 5",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Asks for a specific past example of dbt usage",
+    "question": "Got it. Let\u2019s shift to dbt. How have you used it to model data in your warehouse?",
+    "response": "I\u2019ve used dbt to transform data. Like, I\u2019d write models to clean up the data and make it usable for analytics. It\u2019s pretty straightforward.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 6,
+    "label": "Auto case 6",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a specific past example of dbt implementation and problem context",
+    "question": "Can you give me an example of a complex transformation you implemented in dbt? What problem were you solving?",
+    "response": "I don\u2019t know if it was that complex. I had to join a few tables together. It wasn\u2019t a big deal\u2014just wrote a SQL query and put it in dbt.",
+    "follow_ups": [
+      {
+        "question": "What testing or validation did you put in place for that model?",
+        "response": "I didn\u2019t really do much testing. I just ran it and checked if the output looked right.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 7,
+    "label": "Auto case 7",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example of collaboration with stakeholders",
+    "question": "Let\u2019s talk about collaboration. Can you tell me about a time you had to work with a stakeholder\u2014like an analyst or product team\u2014to deliver a data solution?",
+    "response": "Yeah, I worked with an analyst once. They needed some data for a report, so I gave it to them. They were happy with it.",
+    "follow_ups": [
+      {
+        "question": "What was the ask, and how did you ensure the data met their needs?",
+        "response": "They wanted a CSV of customer data. I pulled it from the warehouse and sent it over. They didn\u2019t have any issues, so I guess it was fine.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      },
+      {
+        "question": "Have you ever had a disagreement with a stakeholder about data quality or requirements? How did you handle it?",
+        "response": "Not really. Most people just trust me to get it right.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 8,
+    "label": "Auto case 8",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Directly asks for a past example of mentoring/junior engineer experience",
+    "question": "Let\u2019s talk about leadership. Can you share an example of a time you mentored or guided a junior engineer?",
+    "response": "I haven\u2019t really mentored anyone. I mean, I\u2019ve shown people how to do things if they asked, but that\u2019s about it.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 9,
+    "label": "Auto case 9",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Asks for a past example of process improvement, requiring a concrete experience.",
+    "question": "What about process improvements? Have you ever identified a bottleneck or inefficiency in your team\u2019s workflow and proposed a solution?",
+    "response": "I don\u2019t think so. We had processes in place, and they worked okay. I didn\u2019t see a need to change anything.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 10,
+    "label": "Auto case 10",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Directly prompts for a past example with specific details (what happened, what was learned).",
+    "question": "Let\u2019s talk about failure. Can you tell me about a time a project you worked on didn\u2019t go as planned? What happened, and what did you learn?",
+    "response": "Hmm. I guess once a pipeline broke because of a schema change. It was an easy fix\u2014I just updated the schema and reran it. Not a big deal.",
+    "follow_ups": [
+      {
+        "question": "What steps did you take to prevent similar issues in the future?",
+        "response": "I don\u2019t know. I just made sure to check the schema next time.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 11,
+    "label": "Auto case 11",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example or concrete design approach for a streaming pipeline",
+    "question": "Let\u2019s do a quick technical deep dive. How would you design a streaming pipeline to handle real-time logistics data, like shipment tracking?",
+    "response": "I\u2019d use Kafka for the streaming part and Spark to process it. Then write it to a database. Pretty simple.",
+    "follow_ups": [
+      {
+        "question": "What considerations would you make for scalability or fault tolerance in that pipeline?",
+        "response": "I guess you\u2019d want to make sure it doesn\u2019t crash. Maybe have some backups or something.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      },
+      {
+        "question": "How would you handle late-arriving data in that streaming pipeline?",
+        "response": "I don\u2019t know. Maybe just ignore it? Or update the record later?",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 12,
+    "label": "Auto case 12",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "agent2-structure-review",
+    "classification_reasoning": "This follow-up question is independent and should be its own case.",
+    "question": "Have you ever had to push back on a request because it wasn\u2019t feasible or aligned with team priorities?",
+    "response": "Not really. If someone asks for something, I just do it.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 13,
+    "label": "Auto case 13",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "agent2-structure-review",
+    "classification_reasoning": "This follow-up question is independent and should be its own case.",
+    "question": "Let\u2019s talk about prioritization. How do you decide what to work on when you have multiple competing deadlines?",
+    "response": "I just do what my manager tells me to do first. If it\u2019s urgent, I\u2019ll do that. Otherwise, I just work through the list.",
+    "follow_ups": [],
+    "expected": {}
+  }
+]

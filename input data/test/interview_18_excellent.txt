@@ -1,0 +1,109 @@
+# Interview transcript fixture
+# Role: Site Reliability Engineer, Core Infrastructure @ Mesa Cloud
+# Quality target: excellent candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+INTERVIEWER:
+Hey Avery, welcome! How’s your day going so far?
+
+CANDIDATE:
+Thanks, Marcus—it’s going well! Just wrapped up a quick walk to clear my head before this, so I’m feeling sharp and ready to chat.
+
+INTERVIEWER:
+Great to hear. Let’s start with a quick walk through your resume—could you give me the two-minute version of your journey, hitting the highlights that led you to apply for this role?
+
+CANDIDATE:
+Absolutely. I started at Stripe as an SRE on the storage team, where I owned the migration of our MySQL fleet from bare metal to Kubernetes—cutting operational overhead by 40% and improving failover times from 15 minutes to under 2. From there, I joined Datadog’s observability platform team, where I led the SLO initiative for our metrics pipeline. We reduced false-positive alerts by 65% and improved error budget burn detection from 30 minutes to under 5. Most recently, I’ve been at Roblox, where I’ve been focused on capacity planning for our global edge network—saving $1.2M annually in cloud spend by optimizing pod density and right-sizing node pools. The Mesa Cloud role really resonates with me because it’s an opportunity to work on core infrastructure at scale, with a focus on reliability and observability—two areas I’m deeply passionate about.
+
+INTERVIEWER:
+That’s a strong trajectory. What specifically about Mesa Cloud’s core infrastructure challenges excites you the most?
+
+CANDIDATE:
+Two things stand out. First, the scale—Mesa’s multi-region Kubernetes clusters serving millions of RPS is exactly the kind of environment where reliability engineering gets interesting. At Roblox, I dealt with similar scale, but the edge network had different constraints. Here, the opportunity to work on the *core* infrastructure—like optimizing etcd performance or reducing tail latency in the control plane—is really compelling. Second, the focus on SLOs and error budgets. At Datadog, I saw how SLOs can transform a team’s relationship with reliability, and I’d love to bring that rigor to Mesa’s infrastructure. For example, I noticed in your engineering blog that you’re experimenting with adaptive SLOs based on traffic patterns—that’s the kind of forward-thinking work I’d love to contribute to.
+
+INTERVIEWER:
+Let’s dive into a technical area. You mentioned etcd—what’s your approach to monitoring and maintaining etcd in a large-scale Kubernetes environment?
+
+CANDIDATE:
+Great question. Etcd is the single point of failure for the control plane, so monitoring needs to be both comprehensive and actionable. At Roblox, we focused on three pillars: performance, stability, and capacity. For performance, we tracked p99 latency for key operations like `Put` and `Range`—anything over 50ms was a red flag, and we’d investigate disk I/O or network saturation. For stability, we monitored leader elections and lease expirations; unexpected leader changes often indicated network partitions or node failures. We also set up alerts for `etcd_db_total_size_in_bytes`—if it grew beyond 8GB, we’d trigger a defrag to avoid performance degradation. On the capacity side, we modeled etcd’s memory usage based on the number of objects in the cluster, which helped us preemptively scale the etcd nodes before hitting OOM kills. One lesson we learned the hard way: etcd’s default 2GB space quota is *not* enough for large clusters. We bumped it to 8GB and saw a 30% reduction in defrag operations.
+
+INTERVIEWER:
+That’s a thorough answer. Let’s shift gears to a behavioral scenario. Tell me about a time you had to persuade a team to adopt a reliability practice they were initially resistant to.
+
+CANDIDATE:
+Sure. At Datadog, I pushed for adopting error budgets as a way to balance velocity and reliability. The metrics pipeline team was skeptical—they saw it as a way for leadership to “blame” them for outages. To win them over, I started by framing the problem: we were spending 20% of our sprints firefighting incidents, which was unsustainable. I then proposed a pilot: we’d define an SLO for our pipeline’s data freshness (99.9% of metrics delivered within 30 seconds) and track the error budget over a quarter. If the budget was exhausted, we’d halt feature work until reliability improved. The key was making it *collaborative*—I worked with the team to define the SLO thresholds and even let them choose the “punishment” for burning the budget. After the pilot, we saw a 40% reduction in incidents, and the team actually *asked* to expand the program to other services. The turning point was when a senior engineer said, “I used to dread deployments, but now I feel like we’re in control.”
+
+INTERVIEWER:
+That’s a great example of influencing without authority. What was the biggest tradeoff you had to make in that process?
+
+CANDIDATE:
+The biggest tradeoff was between precision and simplicity. The team wanted to define SLOs for every possible failure mode—latency, availability, correctness—but that would’ve made the error budget too noisy to be actionable. We ended up focusing on *one* critical SLO (data freshness) and using it as a proxy for overall reliability. This meant we occasionally missed edge cases, like a bug that caused incorrect aggregations but didn’t affect freshness. We addressed this by adding a secondary “correctness” SLO later, but the tradeoff was worth it because it kept the team focused on the most impactful work. It’s a lesson I’ve carried forward: start with the 20% of SLOs that give you 80% of the reliability benefit.
+
+INTERVIEWER:
+Let’s talk about failure. Tell me about a time you made a mistake that caused an outage or degraded service.
+
+CANDIDATE:
+At Stripe, I was responsible for a major version upgrade of our Kubernetes clusters. I’d tested the upgrade in staging, but I missed a critical difference: staging used a smaller etcd cluster with fewer objects. When I rolled out the upgrade to production, etcd’s memory usage spiked, causing leader elections and a 5-minute control plane outage. The root cause was that the new etcd version had a more aggressive compaction strategy, which interacted poorly with our high object churn. The incident affected API availability, and we had to roll back. Postmortem, I owned the mistake—I should’ve tested with a production-like etcd dataset and monitored memory usage more closely. We added a new pre-upgrade check to compare etcd object counts between staging and production, and I also pushed for a canary upgrade process for etcd. It was a humbling experience, but it reinforced the importance of testing in production-like conditions.
+
+INTERVIEWER:
+How did you rebuild trust with the team after that?
+
+CANDIDATE:
+I focused on transparency and action. First, I wrote a detailed postmortem that didn’t sugarcoat my role in the incident. I also volunteered to lead the effort to implement the canary upgrade process, which gave me a chance to show I’d learned from the mistake. But the biggest thing was *listening*—I held a retro with the team to understand their concerns, and I made sure to incorporate their feedback into the new process. For example, one engineer suggested adding a “dry run” mode to the upgrade tool, which we implemented. It took a few months, but eventually, the team saw that I’d taken the failure seriously and used it to improve our processes.
+
+INTERVIEWER:
+Let’s switch to mentorship. Tell me about a time you mentored someone who later became a high performer.
+
+CANDIDATE:
+At Roblox, I mentored a junior engineer named Priya who joined the team from a frontend background. She was sharp but lacked experience with distributed systems. I started by pairing with her on a capacity planning project—we modeled the memory usage of our edge pods and identified a 15% over-provisioning issue. I made sure to explain the “why” behind each step, like why we used p99 values instead of averages for sizing. Over time, I gave her more ownership, like leading the effort to right-size our node pools. She ended up saving the team $500K annually in cloud costs and became the go-to person for capacity questions. The proudest moment was when she presented her work to leadership—she’d gone from asking basic questions to teaching others.
+
+INTERVIEWER:
+What’s your approach to prioritizing work when everything feels urgent?
+
+CANDIDATE:
+I use a framework I call “impact vs. effort vs. risk.” First, I categorize tasks by their potential impact on reliability, cost, or velocity. For example, a flaky alert that pages the team at 3 AM has high impact but might be low effort to fix. Next, I assess effort—some tasks, like automating a manual process, take time upfront but pay dividends later. Finally, I consider risk: is this a change that could take down the service? At Roblox, we had a situation where our edge pods were hitting memory limits, but we also had a critical security patch to deploy. The memory issue was causing sporadic outages, but the security patch was zero-day. I prioritized the patch because the risk of exploitation was higher than the risk of an outage. To mitigate the memory issue, I worked with the team to implement a temporary workaround (scaling up pods) while we designed a long-term fix. The key is to make the tradeoffs explicit and get buy-in from stakeholders.
+
+INTERVIEWER:
+You’ve mentioned SLOs a few times. How do you handle situations where the business demands features but the error budget is exhausted?
+
+CANDIDATE:
+This is where SLOs become a forcing function for collaboration. At Datadog, we had a quarter where the metrics pipeline burned through its error budget due to a surge in traffic. The product team wanted to ship a new feature, but the SLO contract was clear: no feature work until reliability improved. Instead of saying “no,” I worked with the PM to find a middle ground. We identified a subset of the feature that could be shipped with minimal risk, and we also agreed to a “reliability sprint” to address the underlying issues. This included optimizing our batch processing pipeline and adding circuit breakers to prevent cascading failures. The key was framing it as a partnership: “We can ship this feature, but only if we also fix the reliability debt.” It turned a potential conflict into a shared goal.
+
+INTERVIEWER:
+Let’s talk about process improvement. Tell me about a time you identified a gap in your team’s processes and fixed it.
+
+CANDIDATE:
+At Stripe, I noticed that our incident response process was too reactive. We’d scramble during outages, and postmortems often focused on blame rather than systemic fixes. I proposed a “premortem” process—before launching a major feature, we’d brainstorm potential failure modes and mitigations. For example, before migrating a service to Kubernetes, we held a premortem and identified that our liveness probes were too aggressive, which could cause cascading pod restarts. We adjusted the probes and avoided a potential outage. The premortem process reduced our incident rate by 25% in the first six months. It also improved psychological safety—teams felt more comfortable discussing failures before they happened.
+
+INTERVIEWER:
+What’s a weakness you’ve had to work on in your career?
+
+CANDIDATE:
+Early in my career, I was overly focused on technical perfection. I’d spend days tweaking a script or optimizing a query, even when the marginal gain was minimal. At Datadog, I realized this was holding me back—I was missing the bigger picture. For example, I spent a week optimizing a Prometheus query to reduce its cardinality, but the real issue was that we were collecting too many metrics in the first place. I’ve since adopted a “good enough” mindset for most tasks, focusing on the 20% of effort that delivers 80% of the value. I still catch myself over-engineering sometimes, but now I ask: “Is this the highest-leverage use of my time?” It’s been a game-changer for my productivity.
+
+INTERVIEWER:
+Let’s wrap up with your questions for me. What’s on your mind?
+
+CANDIDATE:
+Thanks, Marcus. I’ve got a few. First, Mesa’s engineering blog mentions that you’re experimenting with adaptive SLOs. Can you share more about the challenges you’re facing with that? For example, how do you balance the complexity of dynamic thresholds with the need for predictability?
+
+INTERVIEWER:
+That’s a great question. The biggest challenge is avoiding “SLO whiplash”—where the thresholds change too frequently, making it hard for teams to plan. We’re testing a hybrid approach: static SLOs for critical paths and adaptive thresholds for less critical ones. It’s still early, but we’re seeing promising results in reducing false positives.
+
+CANDIDATE:
+Interesting. Second, how does the core infrastructure team collaborate with product teams on reliability? For example, do you embed SREs into product teams, or is it more of a consultative relationship?
+
+INTERVIEWER:
+It’s a mix. For high-risk services, we embed SREs into the product team for the first few months post-launch. After that, it shifts to a consultative model, with the product team owning reliability and SREs providing guidance. We’ve found this balances ownership with expertise.
+
+CANDIDATE:
+Makes sense. Last one: what’s the most exciting project the core infrastructure team is working on right now?
+
+INTERVIEWER:
+We’re building a new multi-region control plane for our Kubernetes clusters. The goal is to reduce failover times from minutes to seconds, which is a huge challenge given our scale. It’s a greenfield project, so there’s a lot of room for innovation.
+
+CANDIDATE:
+That sounds amazing—I’d love to contribute to something like that. Thanks for the time, Marcus. Really enjoyed the conversation.
+
+INTERVIEWER:
+Likewise, Avery. We’ll be in touch soon. Have a great day!

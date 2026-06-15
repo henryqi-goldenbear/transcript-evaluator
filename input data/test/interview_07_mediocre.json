@@ -1,0 +1,201 @@
+[
+  {
+    "id": 1,
+    "label": "Auto case 1",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a specific past example (last few years) to provide a high-level overview.",
+    "question": "Great to hear. Let\u2019s start with a quick walkthrough of your resume\u2014could you give me a high-level overview of your experience, maybe focusing on the last few years?",
+    "response": "Sure. So, I\u2019ve been a backend engineer for about six years now. I started at a smaller fintech startup called PayFlow, where I worked on their payment processing system. That was mostly in Java, but I also did some Go there. Then I moved to CloudPay, where I\u2019ve been for the last three years. There, I worked on their ledger system and some microservices for transaction processing. Mostly Go and Postgres, which I know is relevant for this role.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 2,
+    "label": "Auto case 2",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Asks for a specific past example (drawn to the company and team)",
+    "question": "Got it. What drew you to Northline specifically, and the Platform team in particular?",
+    "response": "I\u2019ve heard really good things about Northline\u2019s engineering culture\u2014like, how much ownership teams have. The Platform team stood out to me because it seems like you work on the core systems that power everything else. At CloudPay, I worked on a lot of the foundational stuff too, like the ledger, so I think I\u2019d be a good fit. Plus, I\u2019ve always wanted to work at a company that\u2019s more established but still moves fast.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 3,
+    "label": "Auto case 3",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "agent2-structure-review",
+    "classification_reasoning": "Technical question attached as a follow-up to a behavioral question.",
+    "question": "That makes sense. Let\u2019s dig into a technical area. You mentioned working on ledger systems at CloudPay. Can you walk me through how you designed or improved the consistency model for a high-throughput ledger there?",
+    "response": "Yeah, so at CloudPay, we had this ledger service that was handling a ton of transactions per second. Initially, it was using a pretty basic approach\u2014like, just writing to Postgres and hoping for the best. But we started seeing issues with double-spending and race conditions. So, I worked on adding a locking mechanism. We used Postgres advisory locks to make sure that when a transaction was being processed, no other process could touch the same account. It wasn\u2019t perfect, but it reduced the errors by like 80% or something.",
+    "follow_ups": [
+      {
+        "question": "Interesting. How did you handle cases where the lock acquisition failed or timed out? And did you consider any alternatives to advisory locks?",
+        "response": "Oh, right. So if the lock failed, we\u2019d just retry the transaction after a short delay. It wasn\u2019t super sophisticated, but it worked most of the time. As for alternatives, we talked about using a distributed lock manager like Redis, but we didn\u2019t end up going that route because it would\u2019ve added more complexity. Postgres was already there, so it was easier to stick with what we had.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 4,
+    "label": "Auto case 4",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Directly prompts for a past example of pushing back on a technical decision",
+    "question": "Got it. Let\u2019s switch gears to a behavioral question. Can you tell me about a time when you had to push back on a technical decision or requirement from a stakeholder? How did you handle it?",
+    "response": "Yeah, that\u2019s happened a few times. At CloudPay, there was this one time when the product team wanted to add a new feature that would let users split payments into installments. The problem was, they wanted it done in like two weeks, and the way they designed it would\u2019ve required a ton of changes to the ledger. I pushed back and said it wasn\u2019t feasible in that timeline. I showed them some data on how long similar changes had taken in the past, and I proposed a simpler version of the feature that we could build faster. They weren\u2019t super happy at first, but they ended up agreeing to the phased approach.",
+    "follow_ups": [
+      {
+        "question": "How did you present the data to them? Did you have to do any extra work to make your case?",
+        "response": "I just pulled some Jira tickets from past projects and showed them the cycle times. It wasn\u2019t anything fancy\u2014I didn\u2019t even make a slide deck or anything. I think they appreciated that I had the numbers, though. The product manager was pretty reasonable once she saw the data.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 5,
+    "label": "Auto case 5",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "agent2-structure-review",
+    "classification_reasoning": "Independent question attached as a follow-up.",
+    "question": "What about a time when you had to deal with a conflict within your team? Maybe a disagreement over a technical approach or priorities?",
+    "response": "Oh, yeah. There was this one time at CloudPay where two of my teammates were arguing over how to handle retries for failed transactions. One guy wanted to use an exponential backoff, and the other wanted to just retry immediately a few times and then fail. They were both pretty stubborn about it. I kind of stepped in and suggested we test both approaches in a staging environment to see which one performed better. We ended up going with the exponential backoff because it reduced the load on the database during peak times. It wasn\u2019t a huge deal, but it felt good to help resolve it.",
+    "follow_ups": [
+      {
+        "question": "How did you get both of them to agree to the testing approach?",
+        "response": "I just asked them if they\u2019d be open to trying both and seeing what the data said. Neither of them had a super strong reason for their approach\u2014it was more like gut feelings. Once I framed it as a low-risk experiment, they were fine with it.",
+        "probe_type": "deepening",
+        "classification_source": "agent2-structure-review"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 6,
+    "label": "Auto case 6",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Directly prompts for a past example of mentorship experience",
+    "question": "Let\u2019s talk about mentorship. Have you ever had to mentor a junior engineer or help someone on your team grow technically?",
+    "response": "Yeah, I\u2019ve done that a few times. At CloudPay, I was paired with this new grad who was really smart but didn\u2019t have much experience with distributed systems. I helped him get up to speed by walking him through some of our code and explaining how our ledger service worked. I also did a few pair programming sessions with him when he was working on his first big project. He ended up doing a good job, and I think he learned a lot.",
+    "follow_ups": [
+      {
+        "question": "What was the most challenging part of mentoring him?",
+        "response": "I guess the hardest part was figuring out how much to explain versus letting him figure things out on his own. Like, sometimes I\u2019d start explaining something, and he\u2019d already know it, so I\u2019d feel like I was wasting his time. Other times, I\u2019d assume he knew something, and then he\u2019d be totally lost. It took a while to find the right balance.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 7,
+    "label": "Auto case 7",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Directly prompts for a past example of failure",
+    "question": "Can you tell me about a time when you failed at something? Maybe a project that didn\u2019t go as planned or a mistake you made.",
+    "response": "Oh, man. There was this one time at PayFlow where I was working on a feature to add support for recurring payments. I thought I had it all figured out, but I didn\u2019t test it thoroughly enough. When we deployed it, it caused a bunch of duplicate transactions because I had a bug in the logic that checked for existing subscriptions. It wasn\u2019t a total disaster, but we had to roll back the feature and fix it, which took a couple of days. My manager was pretty understanding, but it was embarrassing.",
+    "follow_ups": [
+      {
+        "question": "What did you learn from that experience?",
+        "response": "I learned to test more thoroughly, obviously. But I also realized that I should\u2019ve gotten more eyes on the code before deploying. I was in a rush to get it done, and I didn\u2019t ask for a code review from anyone else on the team. Now, I always make sure to get at least one other person to look at my changes before they go out.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      },
+      {
+        "question": "How did you get buy-in for that change? Did you have to convince anyone?",
+        "response": "I just showed them the data on how much time we were wasting waiting for CI. I also did a proof of concept to show that the parallelized tests worked. My manager was on board pretty quickly, and the rest of the team was happy to have faster feedback.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 8,
+    "label": "Auto case 8",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "agent2-structure-review",
+    "classification_reasoning": "Follow-up is a separate behavioral question.",
+    "question": "Have you ever identified a process or tool that was slowing your team down? How did you go about improving it?",
+    "response": "Yeah, at CloudPay, our CI pipeline was really slow. It would take like 20 minutes to run the full test suite, which was annoying when you were trying to merge a small change. I did some digging and found that a lot of the tests were redundant or could be parallelized. I proposed splitting the test suite into smaller chunks and running them in parallel. It took a few weeks to get it all set up, but it cut the CI time down to like 8 minutes. The team was pretty happy about it.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 9,
+    "label": "Auto case 9",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "agent2-structure-review",
+    "classification_reasoning": "Independent question attached as a follow-up.",
+    "question": "Let\u2019s talk about weaknesses. What\u2019s an area where you feel like you\u2019ve had to improve, or where you\u2019re still working on growing?",
+    "response": "I\u2019d say I\u2019m still working on being more proactive about seeking feedback. Like, I\u2019ll do a good job on a project, but I don\u2019t always ask for feedback unless someone offers it. I\u2019ve been trying to get better at that by asking my manager and teammates for input more regularly. It\u2019s not always easy, but I think it\u2019s helped me grow.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 10,
+    "label": "Auto case 10",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "agent2-structure-review",
+    "classification_reasoning": "Independent question attached as a follow-up.",
+    "question": "How do you prioritize your work when you have multiple competing deadlines or requests from different teams?",
+    "response": "That\u2019s a good question. I usually try to figure out what\u2019s most urgent or what has the biggest impact. At CloudPay, I\u2019d talk to my manager and the product team to get a sense of what was most important. If I was still unsure, I\u2019d just pick the thing that seemed like it would take the longest and start there. It\u2019s not a perfect system, but it usually works out.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 11,
+    "label": "Auto case 11",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example and details about persuasion process",
+    "question": "What about a time when you had to persuade someone to adopt a new tool or technology? How did you make your case?",
+    "response": "At CloudPay, we were using this old monitoring tool that wasn\u2019t very good. I wanted to switch to something like Prometheus, but some of the team was hesitant because they were used to the old tool. I put together a demo of Prometheus and showed how it could give us better insights into our systems. I also pointed out that it was open-source, so we wouldn\u2019t have to pay for it. Eventually, the team agreed to try it out, and it worked out well.",
+    "follow_ups": [
+      {
+        "question": "How did you handle the pushback from the team members who were hesitant?",
+        "response": "I just tried to listen to their concerns and address them one by one. Some people were worried about the learning curve, so I offered to help them get up to speed. Others were concerned about the migration effort, so I broke down the steps and showed them it wouldn\u2019t be as bad as they thought. It took a few conversations, but I think they appreciated that I took their concerns seriously.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 12,
+    "label": "Auto case 12",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a specific past example of query optimization or schema design in a high-throughput system",
+    "question": "Last technical question: You mentioned working with Postgres a lot. Can you walk me through how you\u2019ve optimized queries or schema design for performance in a high-throughput system?",
+    "response": "Yeah, so at CloudPay, we had this one table that was getting hit really hard\u2014it was storing transaction records. The queries were getting slow because the table was huge, and we were doing a lot of full scans. I added some indexes on the columns we were filtering by most often, like account ID and timestamp. That helped a lot. I also denormalized some of the data to reduce joins, which made the queries faster. It wasn\u2019t a silver bullet, but it made a noticeable difference.",
+    "follow_ups": [
+      {
+        "question": "Did you run into any trade-offs with those changes? Like, write performance or storage costs?",
+        "response": "Oh, yeah. The indexes made writes a little slower, but it was worth it because reads were the bottleneck. The denormalization also increased storage a bit, but storage is cheap, so it wasn\u2019t a big deal. We did have to be careful about keeping the denormalized data in sync, though. We ended up adding some triggers to handle that.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  }
+]

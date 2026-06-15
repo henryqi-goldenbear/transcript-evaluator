@@ -1,0 +1,153 @@
+# Interview transcript fixture
+# Role: Senior Product Manager, Marketplace team @ Hearthside
+# Quality target: mediocre candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hi Devon, thanks for joining me today! How’s your week going so far?
+
+CANDIDATE:
+Hey Renee, it’s going pretty well. Just been juggling a few things but excited to be here.
+
+INTERVIEWER:
+Great to hear. Let’s start with a quick walkthrough of your resume—could you give me the two-minute version of your career journey so far?
+
+CANDIDATE:
+Sure! So I started out at a smaller startup called Homie, where I was a PM for their rental marketplace. I worked on a bunch of features like the booking flow and reviews system. Then I moved to DoorDash, where I was on the merchant side for about two years. I led a few projects there, like improving the onboarding experience for restaurants. And now I’m at Stripe, working on their platform products, mostly around billing and subscriptions.
+
+INTERVIEWER:
+Got it. What drew you to apply for this role at Hearthside specifically?
+
+CANDIDATE:
+I’ve always been interested in two-sided marketplaces, and Hearthside’s focus on home services is a really interesting space. I like that it’s not just about transactions but also about trust and quality, which is something I’ve thought a lot about in my past roles. Plus, I’ve heard great things about the culture here.
+
+INTERVIEWER:
+That makes sense. Let’s dig into some of your experience. Can you tell me about a time you had to make a tough tradeoff in your roadmap? How did you decide what to prioritize?
+
+CANDIDATE:
+Yeah, at DoorDash we had this situation where we were getting a lot of feedback from restaurants about how the order management system was clunky. At the same time, our growth team was pushing for a big marketing campaign to attract more customers. I had to decide whether to focus on fixing the merchant experience or doubling down on customer acquisition. I ended up going with the merchant experience because I felt like if we didn’t fix that, we’d lose restaurants, which would hurt the customer side too. It was a tough call, but the data showed that merchant churn was a bigger risk.
+
+INTERVIEWER:
+How did you measure the impact of that decision?
+
+CANDIDATE:
+We tracked merchant retention rates and saw a slight improvement after we rolled out the changes. It wasn’t a huge jump, but it was enough to justify the decision. We also got some positive feedback from restaurants in surveys, which was nice.
+
+INTERVIEWER:
+Got it. Let’s switch gears a bit. Can you walk me through how you’ve approached experimentation in your past roles? Maybe give an example of an experiment you ran and what you learned.
+
+CANDIDATE:
+Sure. At Stripe, we were testing a new pricing model for our subscription product. We wanted to see if offering a discount for annual billing would increase conversions. We ran an A/B test where one group saw the standard monthly pricing, and the other saw the discounted annual option. The results were kind of mixed—we saw an increase in annual sign-ups, but the overall revenue per customer went down because of the discount. So we ended up not rolling it out widely, but it was a good learning experience.
+
+INTERVIEWER:
+What was the biggest challenge you faced in running that experiment?
+
+CANDIDATE:
+Honestly, it was just getting the data clean enough to make a decision. There were a lot of edge cases, like customers who started on monthly but then switched to annual later. It took a while to figure out how to attribute the revenue correctly. I think we could’ve done a better job planning the experiment upfront to avoid some of those issues.
+
+INTERVIEWER:
+Let’s talk about leadership. Can you share a time you had to influence a team or stakeholder to get buy-in for an idea?
+
+CANDIDATE:
+Yeah, at DoorDash, I was working on a project to improve the onboarding flow for restaurants. The design team wanted to go with a really minimalist approach, but I felt like we needed to include more guidance to reduce support tickets. I ended up pulling together some data from other marketplaces and showed how a more guided flow had better completion rates. I also did a few mockups to show what I was thinking. Eventually, they agreed to test both versions, and my version ended up performing better.
+
+INTERVIEWER:
+How did you handle the pushback from the design team?
+
+CANDIDATE:
+I just tried to listen to their concerns and show them that I understood where they were coming from. I think they appreciated that I wasn’t just dismissing their ideas. It helped that I had data to back up my point, so it wasn’t just my opinion against theirs.
+
+INTERVIEWER:
+Can you tell me about a time you failed or made a mistake in your work? What happened, and how did you handle it?
+
+CANDIDATE:
+Oh man, there’s a few. One that comes to mind is at Homie. We launched a new feature for renters to schedule maintenance requests, but we didn’t do enough testing with property managers. Turns out, the way we designed it didn’t fit their workflow at all, and they ended up ignoring it. We had to go back and redo a lot of the work. It was frustrating, but I learned to involve stakeholders earlier in the process.
+
+INTERVIEWER:
+What did you do to recover from that failure?
+
+CANDIDATE:
+We did a lot of user interviews with property managers to understand their pain points. Then we rebuilt the feature with their input. It took longer than we expected, but the second version was way more successful. I also made sure to set clearer expectations with leadership about the timeline.
+
+INTERVIEWER:
+Let’s talk about process. Can you give an example of a time you improved a process on your team?
+
+CANDIDATE:
+At Stripe, our sprint planning meetings were kind of a mess. People would show up unprepared, and we’d spend a lot of time just figuring out what we were supposed to be working on. I suggested we start sending out a pre-read with the agenda and any relevant data ahead of time. It wasn’t a huge change, but it made the meetings more efficient. We also started doing a quick retro at the end of each sprint to talk about what went well and what didn’t.
+
+INTERVIEWER:
+How did you get the team to adopt that change?
+
+CANDIDATE:
+I just brought it up in a team meeting and explained why I thought it would help. Most people were on board, but a few were resistant. I think they were just used to the old way. I ended up pairing with one of the engineers to show how it could save time, and that helped get the rest of the team on board.
+
+INTERVIEWER:
+Can you tell me about a time you had to mentor or coach someone on your team?
+
+CANDIDATE:
+Yeah, at DoorDash, I was working with an associate PM who was really smart but struggled with prioritization. They would get really excited about ideas but then get overwhelmed when it came to execution. I started having weekly check-ins with them to go over their priorities and help them break down big projects into smaller tasks. It took a few months, but they got a lot better at managing their workload.
+
+INTERVIEWER:
+What was the most challenging part of mentoring them?
+
+CANDIDATE:
+I think it was just figuring out how to give feedback in a way that didn’t feel critical. I wanted to make sure they felt supported, not like I was micromanaging them. I tried to focus on asking questions rather than telling them what to do.
+
+INTERVIEWER:
+Let’s talk about conflict. Can you share a time you had a disagreement with someone on your team? How did you resolve it?
+
+CANDIDATE:
+At Homie, I had a disagreement with one of the engineers about the timeline for a feature. I wanted to launch it in phases, but they thought we should wait until the whole thing was done. We went back and forth for a while, but eventually, we compromised. We launched a smaller version first to get feedback and then iterated from there. It ended up working out, but it was a little tense for a while.
+
+INTERVIEWER:
+How did you handle the tension during that disagreement?
+
+CANDIDATE:
+I tried to stay calm and focus on the problem, not the person. I also made sure to listen to their concerns and acknowledge that they had valid points. It helped that we had a good relationship outside of work, so we could be honest with each other.
+
+INTERVIEWER:
+Let’s switch to a technical question. How do you think about balancing supply and demand in a two-sided marketplace like Hearthside’s?
+
+CANDIDATE:
+It’s all about making sure both sides are happy. If you have too many service providers and not enough customers, the providers get frustrated because they’re not getting jobs. If you have too many customers and not enough providers, the customers get frustrated because they can’t find someone to do the work. I think the key is to monitor the metrics on both sides and adjust as needed. For example, if you’re seeing a lot of demand but not enough supply, you might need to invest in recruiting more providers.
+
+INTERVIEWER:
+What metrics would you look at to diagnose an imbalance?
+
+CANDIDATE:
+I’d look at things like the number of bookings per provider, the wait time for customers, and the cancellation rate. If providers are getting a lot of bookings but customers are canceling because they can’t find someone, that’s a sign of supply constraints. On the other hand, if providers aren’t getting enough bookings, that’s a sign of demand constraints.
+
+INTERVIEWER:
+Got it. One last behavioral question—what’s a weakness you’ve identified in your own work, and how have you tried to improve it?
+
+CANDIDATE:
+I think I can sometimes be too focused on the short-term. I get really excited about launching something quickly, but I don’t always think enough about the long-term implications. I’ve been working on that by forcing myself to write down the long-term goals for a project before I start working on it. It’s helped me stay more aligned with the bigger picture.
+
+INTERVIEWER:
+That’s a great reflection. Alright, Devon, I think we’ve covered a lot. Do you have any questions for me about the role or the team?
+
+CANDIDATE:
+Yeah, a couple. First, what’s the biggest challenge the Marketplace team is facing right now?
+
+INTERVIEWER:
+Great question. We’re really focused on improving the quality of service providers on the platform. We’ve seen some issues with inconsistent experiences, and we’re working on ways to better vet and support our providers.
+
+CANDIDATE:
+Got it. And how does the team measure success for this role?
+
+INTERVIEWER:
+We look at a mix of metrics—provider satisfaction, customer retention, and the overall health of the marketplace. But we also value things like cross-functional collaboration and how well you can drive alignment across teams.
+
+CANDIDATE:
+Makes sense. Last one—what’s the team culture like?
+
+INTERVIEWER:
+It’s a pretty collaborative group. We’re all working toward the same goal, but we also value autonomy and ownership. There’s a lot of trust, and people are encouraged to take initiative.
+
+CANDIDATE:
+That sounds great. Thanks for answering my questions, Renee.
+
+INTERVIEWER:
+Of course! Thanks for your time today, Devon. We’ll be in touch soon.

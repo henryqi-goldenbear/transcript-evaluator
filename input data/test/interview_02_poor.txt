@@ -1,0 +1,168 @@
+# Interview transcript fixture
+# Role: Data Engineer, Analytics Platform @ Quanta Logistics
+# Quality target: poor candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hey Casey, welcome! How’s your day going so far?
+
+CANDIDATE:
+Hi Hassan, it’s going okay. Just a little nervous, you know how these things are.
+
+INTERVIEWER:
+Totally get that. Before we dive in, could you walk me through your resume—just hit the highlights and what you think is most relevant for this role?
+
+CANDIDATE:
+Sure, so I’ve been a data engineer for about three years now. I started at a small startup where I did a little bit of everything—ETL, some SQL, and even a little bit of dashboarding. Then I moved to my current job at TechFlow, where I work on data pipelines. I mostly use Spark and Airflow, and I’ve touched dbt a few times. I think that’s pretty much it.
+
+INTERVIEWER:
+Got it. What drew you to this role specifically at Quanta Logistics?
+
+CANDIDATE:
+Well, I saw the job posting and it seemed like a good fit. I’ve worked with logistics data before, so I thought it would be a smooth transition. Plus, Quanta seems like a big company with a lot of opportunities, so I figured why not?
+
+INTERVIEWER:
+Makes sense. Let’s talk about some of your work. Can you walk me through a time when you built or optimized a data pipeline? What was the impact?
+
+CANDIDATE:
+Yeah, so at TechFlow, we had this pipeline that was running really slow. It was pulling data from a bunch of different sources and loading it into our warehouse. I rewrote some of the SQL queries and switched a few things around in Spark. It ran faster after that, but I’m not sure by how much. It was just kind of a general improvement.
+
+INTERVIEWER:
+Got it. Did you measure the performance before and after? Like runtime or resource usage?
+
+CANDIDATE:
+Uh, not really. I mean, it was definitely faster, but we didn’t track the exact numbers. It was more of a "feels faster" kind of thing.
+
+INTERVIEWER:
+Fair enough. Let’s switch gears a bit. Can you tell me about a time when you had to work with a difficult stakeholder? How did you handle it?
+
+CANDIDATE:
+Oh man, stakeholders can be tough. There was this one time where a product manager kept changing their mind about what they wanted from a report. I just kind of went with it and kept updating the query. It was frustrating, but I didn’t really push back or anything. I just did what they asked.
+
+INTERVIEWER:
+Did you ever try to align on requirements upfront or set expectations?
+
+CANDIDATE:
+Not really. I mean, I asked them what they wanted, but they kept changing it, so I just rolled with it. I figured it was easier to just do the work than argue about it.
+
+INTERVIEWER:
+Got it. Let’s talk about dbt. How have you used it in your current role?
+
+CANDIDATE:
+I’ve used dbt a little bit. Mostly for transforming data in our warehouse. I wrote a few models to clean up some tables, but nothing too fancy. It’s pretty straightforward, so I didn’t run into any big issues.
+
+INTERVIEWER:
+Have you ever set up dbt tests or documentation for your models?
+
+CANDIDATE:
+Tests? No, not really. I think we had some basic ones set up by someone else, but I didn’t write any myself. Documentation, yeah, I added a few comments in the code, but that’s about it.
+
+INTERVIEWER:
+Got it. Let’s talk about a time when you had to debug a failing pipeline. Walk me through your process.
+
+CANDIDATE:
+Oh, debugging is the worst. There was this one time where a pipeline just stopped running. I checked the logs, but they weren’t super helpful. I ended up just restarting the job a few times, and eventually it worked. I’m not sure what the issue was, but it fixed itself, I guess.
+
+INTERVIEWER:
+Did you try to reproduce the issue or dig deeper into the logs?
+
+CANDIDATE:
+Not really. The logs were kind of confusing, and I didn’t want to spend too much time on it. Restarting it worked, so I just moved on.
+
+INTERVIEWER:
+Fair enough. Let’s talk about collaboration. Can you give me an example of a time when you mentored or helped a junior teammate?
+
+CANDIDATE:
+Yeah, I’ve helped a few people out. There was this one guy who was new to SQL, so I showed him how to write a basic query. He seemed to get it after that, so I think it helped.
+
+INTERVIEWER:
+Did you do any formal mentoring or follow-up with him?
+
+CANDIDATE:
+Not really. I just answered his questions when he had them. I figured he’d ask if he needed more help.
+
+INTERVIEWER:
+Got it. Let’s talk about prioritization. How do you decide what to work on when you have multiple competing deadlines?
+
+CANDIDATE:
+Oh, that’s tough. Usually, I just do whatever my manager tells me to do first. If there’s nothing assigned, I just pick whatever seems easiest and go from there. Sometimes I ask my teammates what they think, but mostly I just wing it.
+
+INTERVIEWER:
+Have you ever had to push back on a deadline or ask for more time?
+
+CANDIDATE:
+Not really. I mean, I’ve asked for help if I was stuck, but I don’t think I’ve ever said no to a deadline. I just try to get it done, even if it means working late.
+
+INTERVIEWER:
+Got it. Let’s talk about a time when you had to persuade someone to adopt a new tool or process. How did you approach that?
+
+CANDIDATE:
+Oh, I don’t think I’ve really done that. At my current job, we mostly use the tools that are already in place. I’ve suggested a few things, but nothing ever really stuck. People just kind of do what they’re used to.
+
+INTERVIEWER:
+Fair enough. Let’s talk about a failure or mistake you made. What happened, and what did you learn?
+
+CANDIDATE:
+Hmm, I guess there was this one time where I accidentally deleted a table in production. It wasn’t a huge deal because we had backups, but it was still pretty embarrassing. I learned to double-check before running any commands, I guess.
+
+INTERVIEWER:
+Did you put any safeguards in place to prevent it from happening again?
+
+CANDIDATE:
+Not really. I just try to be more careful now. I think we had some permissions changed after that, but I’m not sure.
+
+INTERVIEWER:
+Got it. Let’s talk about Airflow. How do you structure your DAGs to make them maintainable?
+
+CANDIDATE:
+Oh, Airflow is pretty straightforward. I usually just put all the tasks in one DAG and call it a day. If it gets too big, I might split it up, but mostly I just keep it simple.
+
+INTERVIEWER:
+Do you use any patterns like task groups or subDAGs to organize your workflows?
+
+CANDIDATE:
+Not really. I’ve heard of those, but I’ve never used them. My DAGs are usually pretty simple, so I don’t think I need them.
+
+INTERVIEWER:
+Got it. Let’s talk about streaming data. Have you ever worked with real-time pipelines?
+
+CANDIDATE:
+A little bit. At my last job, we had a Kafka topic that we pulled data from, but it was mostly batch processing. I didn’t really do much with the streaming part of it.
+
+INTERVIEWER:
+What challenges did you face with that setup?
+
+CANDIDATE:
+Oh, it was fine. The data was already in Kafka, so I just wrote a Spark job to read from it. It worked, so I didn’t really have any issues.
+
+INTERVIEWER:
+Got it. Let’s talk about warehouse modeling. How do you approach designing a new schema or table?
+
+CANDIDATE:
+I usually just look at the data and figure out what columns we need. If it’s a fact table, I’ll join a few dimension tables to it. It’s pretty straightforward—just make sure the data is clean and usable.
+
+INTERVIEWER:
+Do you follow any specific modeling methodologies, like star schema or data vault?
+
+CANDIDATE:
+Not really. I’ve heard of those, but I don’t think we used them at my current job. I just kind of wing it based on what the data looks like.
+
+INTERVIEWER:
+Got it. Let’s wrap up with a few questions from you. What would you like to know about the role or the team?
+
+CANDIDATE:
+Uh, I guess I don’t really have any questions. I think the job description covered most of it. Maybe, like, what’s the team culture like?
+
+INTERVIEWER:
+Sure, the team is pretty collaborative. We have a mix of senior and junior engineers, and we try to pair on complex problems when we can. Anything else?
+
+CANDIDATE:
+No, I think that’s it. Thanks for the info.
+
+INTERVIEWER:
+No problem. Thanks for coming in, Casey. We’ll be in touch soon.
+
+CANDIDATE:
+Sounds good. Have a great day!

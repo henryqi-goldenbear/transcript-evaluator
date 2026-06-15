@@ -1,0 +1,3 @@
+11:16:27 INFO [__main__] Starting convert and evaluate task; logging to logs\agent1\bad_interview\entry_timing\bad_interview_entry_timing.log
+11:16:27 INFO [__main__] input=input data\bad_interview.txt batch_size=1
+11:16:27 INFO [__main__] Parsing transcript: input=input data\bad_interview.txt chars=5902 classifier=ministral:ministral-3b-latest

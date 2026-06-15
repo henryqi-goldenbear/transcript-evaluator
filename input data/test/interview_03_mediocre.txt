@@ -1,0 +1,176 @@
+# Interview transcript fixture
+# Role: Frontend Engineer, Growth team @ Brightlane
+# Quality target: mediocre candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hey Sam, welcome! How’s your day going so far?
+
+CANDIDATE:
+Hey Marcus, it’s going alright. A little nervous, but excited to chat.
+
+INTERVIEWER:
+Totally normal to feel that way. Let’s start light—could you walk me through your resume, maybe highlight a couple of projects or experiences that feel most relevant to this role?
+
+CANDIDATE:
+Sure! So, I’ve been a frontend engineer for about four years now. Most recently, I worked at ShopNest, where I built a lot of the consumer-facing product pages. I used React and TypeScript pretty heavily there. Before that, I was at a smaller startup called QuickCart, where I worked on the entire frontend stack, from the homepage to the checkout flow.
+
+At ShopNest, one of the bigger projects I worked on was redesigning the product detail page to improve conversion rates. We A/B tested a few different layouts and ended up increasing conversions by like 5%. It wasn’t a huge lift, but it was cool to see the impact.
+
+INTERVIEWER:
+That’s great. I’m curious—what drew you to apply for this role on the Growth team at Brightlane?
+
+CANDIDATE:
+Yeah, so I’ve always been interested in growth engineering. At ShopNest, I worked closely with the growth team on a few experiments, and I really liked the fast-paced nature of it. I also saw that Brightlane has a strong focus on data-driven decisions, which is something I want to get better at. Plus, I’ve heard good things about the culture here, so I thought it’d be a good fit.
+
+INTERVIEWER:
+Makes sense. Let’s dig into a technical area. You mentioned A/B testing at ShopNest—could you walk me through how you set up and measured an experiment there? What tools or frameworks did you use?
+
+CANDIDATE:
+Yeah, so we used Optimizely for most of our A/B tests. The process was pretty straightforward: the growth team would come up with a hypothesis, like “moving the CTA button higher on the page will increase conversions.” Then I’d implement the variant in React, making sure the changes were isolated to the experiment group.
+
+For measurement, we’d track clicks on the CTA and the final conversion event, like adding to cart. Optimizely handled the randomization and reporting, so we could just look at the results after a couple of weeks. The product detail page test I mentioned earlier was one of those—we saw a 5% lift in conversions, which was solid.
+
+INTERVIEWER:
+Got it. How did you ensure the experiment was statistically valid? Did you run into any issues with sample size or duration?
+
+CANDIDATE:
+Honestly, I didn’t handle the stats side of things too much. The growth team had a data scientist who would calculate the sample size and duration beforehand. I think they used a tool for that—maybe Evan’s Awesome A/B Tools or something? As for issues, sometimes the test would run longer than expected if the traffic was low, but that was about it.
+
+INTERVIEWER:
+Fair enough. Let’s switch gears to a behavioral question. Can you tell me about a time you had to push back on a stakeholder or teammate? How did you handle it?
+
+CANDIDATE:
+Oh, yeah, that’s happened a few times. At ShopNest, the marketing team wanted to add a bunch of pop-ups to the product pages to promote a sale. They thought it would drive urgency, but I was worried it would hurt the user experience and slow down the page.
+
+I pushed back by showing them some data from past experiments where pop-ups had actually decreased conversions. I also suggested we test it first, so we could see the impact before rolling it out everywhere. They weren’t super happy about it at first, but they agreed to the test. In the end, the pop-ups did hurt conversions, so they dropped the idea.
+
+INTERVIEWER:
+That’s a good example. How did you approach the conversation to make sure it didn’t turn into a conflict?
+
+CANDIDATE:
+I tried to keep it collaborative. Instead of saying “no” outright, I framed it as “let’s test it and see what happens.” I also made sure to listen to their concerns and acknowledge that they were trying to drive sales. I think that helped keep things from getting tense.
+
+INTERVIEWER:
+Makes sense. Let’s talk about performance optimization. Can you walk me through a time you improved the performance of a frontend application? What metrics did you focus on, and how did you measure success?
+
+CANDIDATE:
+Yeah, at QuickCart, our homepage was loading really slowly, and users were bouncing before the page even finished rendering. I ran a Lighthouse audit and saw that the biggest issues were large image files and render-blocking JavaScript.
+
+I started by lazy-loading the images below the fold and compressing the ones above it. For the JavaScript, I split the bundle into smaller chunks and deferred non-critical scripts. After those changes, the Lighthouse score went from like 45 to 75, and the bounce rate dropped by about 10%. It wasn’t a huge technical challenge, but it made a difference.
+
+INTERVIEWER:
+That’s solid. Did you run into any trade-offs while making those changes? For example, did you have to sacrifice anything in terms of functionality or user experience?
+
+CANDIDATE:
+Not really. The lazy-loading didn’t affect the user experience because the images still loaded before the user scrolled to them. The JavaScript changes were a little trickier—I had to make sure the deferred scripts didn’t break any functionality, but we tested it pretty thoroughly before deploying.
+
+INTERVIEWER:
+Got it. Let’s talk about a time you failed at something. What happened, and what did you learn?
+
+CANDIDATE:
+Oh man, there’s a few. One that stands out was at ShopNest. We were rolling out a new feature that let users save items to a “favorites” list. I was responsible for the frontend, and I underestimated how complex the state management would be. I used React context for it, but as the feature grew, it got really messy and slow.
+
+We ended up having to rewrite it using Redux, which took way longer than expected. I learned that I should’ve thought more about scalability upfront. It was a good lesson in not over-engineering but also not under-engineering.
+
+INTERVIEWER:
+How did you handle the rewrite? Did you own it, or did someone else step in?
+
+CANDIDATE:
+I owned it. My manager was pretty understanding, but I knew it was on me to fix it. I worked with a senior engineer to design the Redux store properly, and we got it done in a couple of sprints. It was a little embarrassing, but I think my team appreciated that I took responsibility for it.
+
+INTERVIEWER:
+That’s fair. Let’s talk about collaboration. Can you give me an example of a time you mentored a junior engineer or helped a teammate grow?
+
+CANDIDATE:
+Yeah, at ShopNest, I worked with a junior engineer who was struggling with React hooks. They kept mixing up useState and useEffect, which was causing some bugs in their code. I set up a few pair programming sessions with them to walk through the basics and show them how I debug those kinds of issues.
+
+It wasn’t anything formal, but they seemed to get the hang of it after a few sessions. I also pointed them to some resources, like the React docs and a couple of YouTube tutorials. They ended up shipping a feature on their own after that, which was cool to see.
+
+INTERVIEWER:
+That’s great. How did you measure whether your mentoring was effective?
+
+CANDIDATE:
+Honestly, I didn’t really measure it. I just kind of went by their confidence and whether they were able to complete tasks on their own. If they were asking fewer questions and shipping code without my help, I figured it was working.
+
+INTERVIEWER:
+Got it. Let’s talk about prioritization. Can you walk me through a time you had to juggle multiple competing priorities? How did you decide what to focus on?
+
+CANDIDATE:
+Oh, that happens all the time. At ShopNest, I was working on a redesign of the product page, but then the growth team came to me with an urgent request to implement a new A/B test for a holiday sale. The test was supposed to go live in a week, but I was already behind on the redesign.
+
+I talked to my manager, and we decided to put the redesign on hold for a few days so I could focus on the test. The sale was a big revenue driver, so it made sense to prioritize that. I ended up finishing the test on time, and then I caught up on the redesign afterward.
+
+INTERVIEWER:
+How did you communicate that trade-off to the stakeholders involved?
+
+CANDIDATE:
+I just explained the situation to my manager and the growth team. I said, “I can either finish the redesign or work on the test, but not both at the same time.” They understood and agreed that the test was more urgent. It wasn’t a big deal, but I made sure to keep everyone in the loop.
+
+INTERVIEWER:
+Makes sense. Let’s talk about TypeScript. How do you approach typing a complex React component? Can you walk me through an example?
+
+CANDIDATE:
+Sure. Let’s say I have a component that fetches data from an API and displays it. I’d start by defining an interface for the data shape. For example, if it’s a user profile, I’d create an interface like `interface User { id: string; name: string; email: string; }`.
+
+Then, for the component props, I’d use that interface. If the component has internal state, I’d type that too. For example, `const [user, setUser] = useState<User | null>(null)`. I’d also type any event handlers, like `onClick: (id: string) => void`.
+
+It’s pretty straightforward, but it helps catch errors early. I’ve definitely had cases where I forgot to type something and ended up with a runtime error, so I try to be consistent now.
+
+INTERVIEWER:
+Got it. What about typing a component that uses children? How do you handle that?
+
+CANDIDATE:
+Oh, right. For components that take children, I usually use `React.ReactNode` for the children prop. For example, `interface Props { children: React.ReactNode; title: string; }`. That covers most cases, like strings, JSX, or fragments.
+
+INTERVIEWER:
+Cool. Let’s wrap up with a question about process improvement. Can you tell me about a time you identified a bottleneck in your team’s workflow and suggested a change to fix it?
+
+CANDIDATE:
+Yeah, at QuickCart, our PR review process was really slow. It would take days for someone to review your code, which was frustrating. I noticed that a lot of the delays were because people were waiting for the same two or three senior engineers to review everything.
+
+I suggested we try a round-robin system where everyone on the team was assigned a PR to review each week. That way, the load was more evenly distributed. My manager liked the idea, and we gave it a shot. It didn’t fix everything, but it did speed things up a bit. Reviews went from taking 2-3 days to more like 1-2 days.
+
+INTERVIEWER:
+How did you measure the success of that change?
+
+CANDIDATE:
+I didn’t really measure it formally. I just kind of went by how long it took to get my own PRs reviewed. It felt faster, but I didn’t track any metrics or anything.
+
+INTERVIEWER:
+Got it. Alright, last question for you: what’s a weakness you’re actively working on improving?
+
+CANDIDATE:
+I’d say my biggest weakness is that I sometimes get too focused on the details and lose sight of the bigger picture. For example, I’ll spend a lot of time perfecting a small part of a feature, even if it’s not that important. I’ve been working on that by setting clearer goals at the start of a project and checking in with my manager more often to make sure I’m on the right track.
+
+INTERVIEWER:
+That’s a good one. Alright, Sam, I think that’s all the time we have. Do you have any questions for me about the role or the team?
+
+CANDIDATE:
+Yeah, a couple. What’s the biggest challenge the Growth team is facing right now?
+
+INTERVIEWER:
+Great question. We’re actually in the middle of a pretty big push to improve our experimentation velocity. Right now, it takes too long to get an experiment from idea to production, and we’re losing out on potential wins because of it. We’re looking for someone who can help streamline that process.
+
+CANDIDATE:
+Got it. And what’s the team’s culture like? How do people usually collaborate?
+
+INTERVIEWER:
+The team is pretty collaborative. We do a lot of pair programming and code reviews, and we have a strong culture of feedback. That said, we’re also pretty autonomous—people own their projects and are expected to drive them forward. It’s a good mix of support and ownership.
+
+CANDIDATE:
+Cool, that sounds like a good fit. One last question—what’s the onboarding process like for new engineers?
+
+INTERVIEWER:
+We have a pretty structured onboarding process. The first week is mostly about getting set up and meeting the team. After that, you’ll pair with a mentor for a few weeks to get up to speed on our codebase and processes. We also have a lot of documentation to help you ramp up.
+
+CANDIDATE:
+Awesome, that sounds great. Thanks for answering my questions!
+
+INTERVIEWER:
+No problem. Thanks for coming in, Sam. We’ll be in touch soon with next steps.
+
+CANDIDATE:
+Sounds good. Thanks, Marcus! Have a great day.

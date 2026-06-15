@@ -1,0 +1,178 @@
+# Interview transcript fixture
+# Role: Machine Learning Engineer, Recommendations team @ TideStream
+# Quality target: very_poor candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+INTERVIEWER:
+Hi Alex, I’m Kira from the Recommendations team. Thanks for joining me today—how’s your morning going so far?
+
+CANDIDATE:
+Fine.
+
+INTERVIEWER:
+Great. Let’s start with a quick walk through your resume. Can you give me a high-level overview of your last role at DataFlow and what you worked on there?
+
+CANDIDATE:
+I was an ML engineer. Did some models.
+
+INTERVIEWER:
+Got it. What kind of models, and what was your specific contribution?
+
+CANDIDATE:
+Recommendation stuff. I built them.
+
+INTERVIEWER:
+Can you tell me more about the architecture or the data pipeline you used?
+
+CANDIDATE:
+It was normal. You know, data in, model out.
+
+INTERVIEWER:
+I see. What about feature stores—did you use one, and if so, which one?
+
+CANDIDATE:
+Yeah, we had one. I don’t remember the name.
+
+INTERVIEWER:
+Fair enough. Why are you interested in TideStream and this role on the Recommendations team?
+
+CANDIDATE:
+I need a job. The pay looks good.
+
+INTERVIEWER:
+I appreciate the honesty. What excites you about working on recommendation systems specifically?
+
+CANDIDATE:
+They’re fine. I’ve done them before.
+
+INTERVIEWER:
+Let’s shift to a technical question. Can you explain how you’d design an offline evaluation pipeline for a new recommendation model?
+
+CANDIDATE:
+You just run it and see if it works.
+
+INTERVIEWER:
+What metrics would you track, and how would you validate them?
+
+CANDIDATE:
+Accuracy, I guess. And other stuff.
+
+INTERVIEWER:
+How would you handle the cold-start problem in a recommendation system?
+
+CANDIDATE:
+You just use default values.
+
+INTERVIEWER:
+Can you walk me through a time you had to debug a model that was underperforming in production?
+
+CANDIDATE:
+It was slow. I fixed it.
+
+INTERVIEWER:
+What was the root cause, and how did you identify it?
+
+CANDIDATE:
+I don’t remember. It was a while ago.
+
+INTERVIEWER:
+Let’s talk about collaboration. Can you describe a time you had to work with a difficult teammate or stakeholder?
+
+CANDIDATE:
+People are annoying sometimes.
+
+INTERVIEWER:
+What was the situation, and how did you handle it?
+
+CANDIDATE:
+I just did my own thing.
+
+INTERVIEWER:
+How did that impact the project?
+
+CANDIDATE:
+It was fine.
+
+INTERVIEWER:
+Tell me about a time you failed at something at work. What happened, and what did you learn?
+
+CANDIDATE:
+I don’t fail.
+
+INTERVIEWER:
+Everyone has setbacks. Can you think of a time things didn’t go as planned?
+
+CANDIDATE:
+No.
+
+INTERVIEWER:
+Let’s try a different angle. How do you prioritize tasks when you have multiple deadlines?
+
+CANDIDATE:
+I do whatever’s easiest first.
+
+INTERVIEWER:
+What if the easiest task isn’t the most important?
+
+CANDIDATE:
+Then I do that one later.
+
+INTERVIEWER:
+Can you give me an example of a time you improved a process on your team?
+
+CANDIDATE:
+I don’t know.
+
+INTERVIEWER:
+What about mentoring—have you ever helped a junior engineer grow?
+
+CANDIDATE:
+No, they should figure it out themselves.
+
+INTERVIEWER:
+What’s a technical weakness you’ve had to work on?
+
+CANDIDATE:
+I don’t have any.
+
+INTERVIEWER:
+If you had to pick one area to improve, what would it be?
+
+CANDIDATE:
+I don’t know.
+
+INTERVIEWER:
+Let’s talk about model serving. How would you deploy a new recommendation model to production with minimal downtime?
+
+CANDIDATE:
+You just push it.
+
+INTERVIEWER:
+What about A/B testing—how would you design an experiment to measure the impact of your model?
+
+CANDIDATE:
+You split the users.
+
+INTERVIEWER:
+How would you ensure the test is statistically valid?
+
+CANDIDATE:
+I don’t know.
+
+INTERVIEWER:
+What’s one thing you’d want to learn or improve in this role if you joined TideStream?
+
+CANDIDATE:
+I don’t know.
+
+INTERVIEWER:
+Do you have any questions for me about the team or the role?
+
+CANDIDATE:
+No.
+
+INTERVIEWER:
+Alright, thanks for your time, Alex. We’ll be in touch.
+
+CANDIDATE:
+Okay.

@@ -1,112 +1,142 @@
-# Behavioral Interview Evaluation Rubric
+# Unified Interview Evaluation Rubric
 
-## Scoring Dimensions
+<!-- RUBRIC_PROMPT_START -->
 
-### 1. Filler & Repetition (Weight: 10%)
+Use this rubric for all interview questions. Do not force every answer into STAR. Some questions are motivational, technical, reflective, or collaborative rather than behavioral.
 
-| Score | Criteria |
+Rate only evidence that appears in the candidate answer and follow-up response. Do not give credit for what the candidate probably meant.
+
+Use this descriptive rating scale for every dimension and the overall judgment:
+
+| Rating | Meaning |
+|--------|---------|
+| excellent | Strong evidence, clear ownership, and no meaningful gaps for this dimension. |
+| good | Solid evidence with only minor gaps or imprecision. |
+| average | Adequate but incomplete, uneven, generic, or only partly supported. |
+| poor | Weak, vague, poorly supported, or only loosely responsive. |
+| very poor | Non-responsive, incoherent, unsupported, or credibility-collapsed. |
+
+## Dimensions
+
+### 1. Clarity
+
+How directly and coherently the candidate communicates.
+
+| Rating | Criteria |
 |-------|----------|
-| 5 | No filler words; responses are concise and deliberate with no repeated content |
-| 4 | Occasional filler ("um", "uh") but does not disrupt flow; minimal repetition |
-| 3 | Noticeable filler words or some repetition; slightly impacts clarity |
-| 2 | Frequent filler words or circling back to the same points; noticeably rambling |
-| 1 | Constant filler, heavy repetition, or incoherent delivery that obscures the answer |
+| excellent | Direct, organized, concise, and easy to follow. The answer has a clear point and no distracting filler or rambling. |
+| good | Mostly clear and organized, with minor filler, hedging, or extra detail that does not obscure meaning. |
+| average | Understandable but uneven, wordy, circular, or mildly hard to follow. |
+| poor | Disorganized, evasive, or hard to follow; the listener must infer the main point. |
+| very poor | Incoherent, mostly non-responsive, or so fragmented that the answer cannot be evaluated. |
 
----
+### 2. Relevance
 
-### 2. Context Definition (Weight: 20%)
+How well the answer addresses the question asked.
 
-| Score | Criteria |
+| Rating | Criteria |
 |-------|----------|
-| 5 | Situation is highly specific: includes company/team, timeframe, scope, and why it was significant |
-| 4 | Clear situation with most specifics present; scope and stakes are understandable |
-| 3 | General situation provided but missing key details (e.g. no timeframe or unclear stakes) |
-| 2 | Vague or generic context ("at my last job...") with little to anchor the story |
-| 1 | No context provided; story floats without any grounding in a real situation |
+| excellent | Fully answers the question and stays focused on the prompt's intent. |
+| good | Mostly answers the question, with minor omissions or small digressions. |
+| average | Partially answers the question but misses an important part of the prompt. |
+| poor | Only loosely related; relies on generic claims, reframing, or partial topic overlap. |
+| very poor | Does not answer the question or substitutes an unrelated answer. |
 
----
+### 3. Specificity
 
-### 3. Action Definition (Weight: 40%)
+How much concrete evidence, context, detail, and support the answer provides.
 
-| Score | Criteria |
+| Rating | Criteria |
 |-------|----------|
-| 5 | Uses "I" consistently; specific steps described in detail; demonstrates clear judgment about *why* this approach was chosen over alternatives |
-| 4 | Mostly "I"-driven with clear actions; some reasoning present but not fully articulated |
-| 3 | Mix of "I" and "we"; actions described but lacking specificity or rationale |
-| 2 | Predominantly "we"-based; individual contribution is unclear; steps are surface-level |
-| 1 | No personal ownership; actions are vague or entirely attributed to the team or circumstance |
+| excellent | Richly specific: includes concrete context, role, actions, tradeoffs, examples, metrics, or outcomes appropriate to the question. |
+| good | Strong detail with a few missing specifics, such as exact scope, metric, role boundary, or outcome. |
+| average | Some concrete detail, but the answer remains partly generic, thin, or under-supported. |
+| poor | Vague and lightly evidenced; few anchors such as company, timeframe, personal role, technical detail, or result. |
+| very poor | Almost no concrete evidence; mostly abstractions, platitudes, or unsupported claims. |
 
----
+### 4. Self-Awareness
 
-### 4. Result (Weight: 30%)
+How well the candidate understands their own role, judgment, growth, limitations, and impact.
 
-| Score | Criteria |
+| Rating | Criteria |
 |-------|----------|
-| 5 | Concrete, quantified outcome directly tied to candidate's actions; includes reflection or learning |
-| 4 | Clear outcome present; mostly tied to candidate's actions; may lack quantification |
-| 3 | Result mentioned but vague or loosely connected to what the candidate did |
-| 2 | Minimal result; story ends without a clear outcome or the outcome is attributed to others |
-| 1 | No result provided; answer trails off or is explicitly incomplete |
+| excellent | Shows honest reflection, clear ownership, judgment, learning, and awareness of impact or tradeoffs. |
+| good | Shows good ownership or reflection, with minor gaps in depth or accountability. |
+| average | Some reflection, but it is surface-level, mostly descriptive, or light on personal responsibility. |
+| poor | Limited self-awareness; deflects, overuses "we", minimizes problems, or gives rehearsed answers. |
+| very poor | No meaningful self-awareness; avoids ownership, blames others, contradicts evidence, or refuses to engage. |
 
----
+For purely factual/technical questions, self-awareness still applies as judgment and ownership: why the candidate chose an approach, what they know or do not know, and how they reason about tradeoffs.
 
-### 5. Answer Completeness Without Prompting (Weight: redistributed 15–20%)
+## Follow-Up Handling
 
-| Score | Criteria |
-|-------|----------|
-| 5 | Full STAR answer volunteered unprompted in the first response |
-| 4 | Mostly complete first response; minor clarification follow-up needed, candidate recovers well |
-| 3 | Clarifying follow-up required; candidate fills in the gap adequately when prompted |
-| 2 | Multiple follow-ups needed before a complete picture emerges; answer required significant extraction |
-| 1 | Even after follow-ups, the answer remains incomplete or incoherent |
+Follow-ups are evidence, not a separate rating system. Use them to adjust the four dimensions.
 
----
+### Clarifying Follow-Ups
 
-## Follow-Up Question Analysis
+A clarifying probe asks for missing context, role, metric, timeline, or concrete detail.
 
-> Follow-up questions are evaluated as meta-signals about the quality and authenticity of the original answer.
+| Follow-Up Outcome | Rating Impact |
+|-------------------|--------------|
+| Candidate fills the gap clearly | Usually neutral; may raise specificity if the final answer is now well supported. |
+| Candidate partially fills the gap | Keep or slightly lower specificity/self-awareness depending on the missing evidence. |
+| Candidate stays vague | Lower specificity and possibly relevance. |
 
-### Classifying Follow-Ups
+### Deepening Follow-Ups
 
-| Follow-Up Type | Likely Signal | Dimension Implicated |
-|----------------|--------------|----------------------|
-| "What was your specific role?" | Action dimension weak — too much "we" | Action Definition |
-| "What happened after that?" | Result incomplete | Result |
-| "Can you be more specific?" | Context was vague | Context Definition |
-| "That's interesting, how did you..." | Positive probe — answer was strong so far | Credibility check |
-| No follow-up / "Let's move on" | Either time pressure or answer was sufficient | — |
+A deepening probe tests whether the candidate can go below the surface into reasoning, tradeoffs, consequences, or lessons.
 
-### Scoring Follow-Up Outcomes
+| Follow-Up Outcome | Rating Impact |
+|-------------------|--------------|
+| Candidate adds new, credible detail | May improve specificity and self-awareness. |
+| Candidate repeats the original answer | Lower specificity; note shallow depth. |
+| Candidate deflects, contradicts, or cannot substantiate | Apply credibility risk. |
 
-| Situation | Score Impact |
-|-----------|-------------|
-| No follow-up needed — full STAR volunteered | Positive |
-| Clarifying follow-up needed, candidate recovers well | Neutral / slight negative |
-| Clarifying follow-up needed, candidate still vague | Negative |
-| Positive probe, candidate goes deeper with new detail | Positive |
-| **Positive probe, candidate fails or deflects** | **Strong negative — credibility risk (score: 1)** |
+## Credibility Risk
 
-### Credibility Risk Flag
+Raise a credibility risk flag when the answer sounds strong at first but collapses under follow-up.
 
-A **credibility risk** flag should be raised when a candidate fails to substantiate their answer after a positive probe. This is a stronger negative signal than a weak original answer because it suggests the story was rehearsed at a surface level rather than genuinely experienced.
+Credibility risk indicators:
 
-**Flag format:** *"Candidate failed to substantiate after positive probe on [topic] — credibility risk."*
+- Candidate repeats the same claim without new detail.
+- Candidate becomes vague after initially sounding specific.
+- Candidate pivots to a different example.
+- Candidate contradicts the original answer.
+- Candidate reveals that the team, not the candidate, owned the key work.
+- Candidate cannot explain a claimed technical decision, tradeoff, outcome, or personal contribution.
 
-Indicators of a failed positive probe:
-- Repeats the same content from the original answer in different words
-- Becomes suddenly vague after having been specific
-- Deflects ("the team handled most of it")
-- Pivots to a different example entirely
-- Noticeably shorter, thinner response after a rich original answer
+When credibility risk is present:
 
----
+- Cap specificity at poor unless the candidate later provides concrete support.
+- Cap self-awareness at poor if the candidate deflects, minimizes, or avoids ownership.
+- Cap overall at average for mild credibility risk.
+- Cap overall at poor for clear contradiction, deflection, or inability to substantiate a central claim.
 
-## Weighted Score Calculation
+Flag format:
 
+```text
+Credibility risk: candidate failed to substantiate [claim/topic] after follow-up.
 ```
-Final Score = (Filler × 0.10) + (Context × 0.20) + (Action × 0.40) + (Result × 0.30)
+
+## Overall Rating
+
+Overall rating is a calibrated descriptive judgment, not a simple average. Use this weighting as guidance:
+
+```text
+clarity: 20%
+relevance: 25%
+specificity: 35%
+self_awareness: 20%
 ```
 
-> Note: Answer Completeness Without Prompting is factored into per-dimension scores rather than as a standalone dimension. A credibility risk flag overrides the Action and Result scores to a maximum of 2 for the affected answer.
+Calibration:
 
-**Overall candidate score** = average of all per-question weighted scores, reported as X / 10.
+- excellent: Strong across all dimensions, with concrete evidence and credible ownership.
+- good: Good answer with minor gaps.
+- average: Adequate but incomplete, generic, or uneven.
+- poor: Weak, vague, poorly supported, or only partially responsive.
+- very poor: Non-responsive, incoherent, unsupported, or credibility-collapsed.
+
+Do not inflate ratings because an answer is fluent. A clear but generic answer should rate low on relevance and specificity.
+
+<!-- RUBRIC_PROMPT_END -->

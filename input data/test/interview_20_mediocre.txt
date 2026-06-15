@@ -1,0 +1,117 @@
+# Interview transcript fixture
+# Role: Machine Learning Engineer, Recommendations team @ TideStream
+# Quality target: mediocre candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hey Quinn, thanks for joining today. How’s your week been so far?
+
+CANDIDATE:
+Hey Marcus, it’s been pretty good. Just wrapping up some projects at my current job, so a little busy but nothing too crazy.
+
+INTERVIEWER:
+Great to hear. Let’s start with a quick walkthrough of your resume—maybe pick one or two projects that you think best align with what we do here at TideStream on the Recommendations team.
+
+CANDIDATE:
+Sure, so I’ve worked on a few recommendation systems in my current role at DataFlow. One of the bigger ones was a content recommendation engine for our streaming platform. We used collaborative filtering as the base model, and then added some contextual features like time of day and device type. It was a pretty standard setup, but it worked well enough to get a 5% lift in watch time.
+
+INTERVIEWER:
+That’s a solid start. What was the most challenging part of that project for you?
+
+CANDIDATE:
+Hmm, I’d say the feature engineering was tricky. We had a lot of raw data, but figuring out which features actually mattered took some trial and error. We ended up using a feature store to manage everything, which helped a bit, but it was still a lot of work to get the right signals.
+
+INTERVIEWER:
+Got it. Why are you interested in moving to TideStream specifically? What about our Recommendations team caught your eye?
+
+CANDIDATE:
+Well, I’ve heard good things about TideStream’s scale—you guys have a lot more users than what I’m working with now, so I think it’d be a good challenge. Also, I saw that you use a lot of online experimentation, which is something I’ve only dabbled in. I’d like to get more hands-on with A/B testing and real-time metrics.
+
+INTERVIEWER:
+Makes sense. Let’s dig into some technical details. Can you walk me through how you’d design an offline evaluation pipeline for a new recommendation model?
+
+CANDIDATE:
+Yeah, so I’d start by splitting the data into train, validation, and test sets. Then I’d pick a few metrics—like precision@k or recall@k—to compare the new model against the old one. We’d also look at some business metrics, like click-through rate, to make sure it’s not just performing well on paper. I’ve used tools like MLflow to track everything, so that’s usually part of the process too.
+
+INTERVIEWER:
+What about handling data leakage in that pipeline? How do you ensure your offline metrics actually translate to online performance?
+
+CANDIDATE:
+Oh, right, leakage is always a risk. We usually try to make sure the test set is from a different time period than the training data, so that helps. But honestly, sometimes it’s hard to catch everything. I remember one time we had a feature that was leaking future information, and it took us a while to figure out why the offline metrics looked so good but the online results were terrible.
+
+INTERVIEWER:
+That’s a good example. Let’s switch gears a bit—tell me about a time you had to persuade a stakeholder to adopt a technical solution they weren’t initially on board with.
+
+CANDIDATE:
+Sure, so at DataFlow, we wanted to switch from batch processing to real-time feature updates for our recommendations. The product team was worried about the complexity and potential downtime. I put together a presentation showing how much faster we could react to user behavior, and I included some back-of-the-envelope calculations on how much engagement we might lose if we didn’t make the change. They eventually agreed, but it took a few meetings to get there.
+
+INTERVIEWER:
+How did you measure the success of that change after it was implemented?
+
+CANDIDATE:
+We tracked the usual metrics—click-through rate, watch time—but honestly, we didn’t see a huge jump right away. I think part of the issue was that the product team didn’t fully buy into the change, so they didn’t push it as hard as they could have. Looking back, I probably should’ve involved them more in the planning phase.
+
+INTERVIEWER:
+That’s a fair reflection. Let’s talk about a time you failed at something—what happened, and what did you learn?
+
+CANDIDATE:
+Yeah, so one time I was working on a model to predict user churn, and I got really focused on improving the AUC score. I spent weeks tweaking the model, but when we deployed it, the business impact was minimal. Turns out, the problem wasn’t the model—it was that the product team didn’t have a clear plan for how to act on the predictions. I learned that it’s not just about the technical performance; you have to think about the end-to-end use case.
+
+INTERVIEWER:
+That’s a common pitfall. How do you prioritize your work when you have multiple competing deadlines?
+
+CANDIDATE:
+I usually try to talk to my manager and the stakeholders to figure out what’s most urgent. If there’s a tight deadline for a feature the product team really wants, I’ll focus on that first. But sometimes it’s hard to say no to other requests, so I end up juggling a few things at once. It’s not ideal, but it’s how things usually go.
+
+INTERVIEWER:
+Have you ever mentored or helped onboard a junior engineer? What was that experience like?
+
+CANDIDATE:
+Yeah, I’ve done a bit of that. There was one intern who joined our team, and I showed them how to use our feature store and run basic experiments. They were pretty quick to pick things up, but I think I could’ve done a better job of explaining the bigger picture—like why we do things a certain way. Sometimes I get too focused on the technical details and forget to zoom out.
+
+INTERVIEWER:
+Let’s talk about process improvements. Can you give an example of a time you identified a bottleneck in your team’s workflow and how you addressed it?
+
+CANDIDATE:
+Sure, so at DataFlow, our model deployment process was really slow because we had to manually run a bunch of scripts to push updates. I suggested we automate some of it using CI/CD pipelines, and I even set up a basic prototype. It didn’t get fully adopted, though, because the team was worried about breaking something. I think if I’d pushed harder or shown more concrete results, it might’ve gone better.
+
+INTERVIEWER:
+That’s a good effort. What’s one technical skill or area you’ve been actively trying to improve recently?
+
+CANDIDATE:
+I’ve been trying to get better at online experimentation. I’ve read a few papers and taken some courses, but I haven’t had much hands-on experience yet. I know it’s important for recommendations, so I’m hoping to learn more on the job.
+
+INTERVIEWER:
+Last behavioral question: Tell me about a time you had a conflict with a teammate. How did you handle it?
+
+CANDIDATE:
+Oh, there was this one time when a data scientist on my team kept changing the requirements for a project last minute. It was frustrating because it meant redoing a lot of work. I talked to them about it, and they said they didn’t realize how much extra work it was causing. We ended up setting up a weekly sync to align on priorities, which helped a bit. It wasn’t perfect, but it got better over time.
+
+INTERVIEWER:
+Alright, let’s wrap up with a quick technical question. How would you design a feature store for a high-scale recommendation system like TideStream’s?
+
+CANDIDATE:
+So, I’d probably start with something like Redis or DynamoDB for the online store, since you need low latency. For the offline store, I’d use something like S3 or BigQuery, depending on the scale. The key would be making sure the features are consistent between offline and online, so I’d set up a pipeline to sync them. I’ve also heard good things about Feast, so maybe we could use that as the orchestration layer.
+
+INTERVIEWER:
+That’s a reasonable approach. Do you have any questions for me about the team or the role?
+
+CANDIDATE:
+Yeah, what’s the biggest challenge the Recommendations team is facing right now?
+
+INTERVIEWER:
+Great question. We’re actually in the middle of migrating our feature store to a new architecture to handle our growing scale, and it’s been a bit of a lift. There’s also a push to improve our online experimentation framework to get faster feedback on model changes.
+
+CANDIDATE:
+Got it. And what’s the team culture like? Is it more collaborative or independent?
+
+INTERVIEWER:
+It’s a mix, but we definitely lean toward collaboration. There’s a lot of cross-team work, especially with the product and data science teams, so being able to communicate well is key.
+
+CANDIDATE:
+Cool, that sounds good. I think that’s all I’ve got—thanks for your time!
+
+INTERVIEWER:
+Thanks for coming in, Quinn. We’ll be in touch soon. Have a great day!

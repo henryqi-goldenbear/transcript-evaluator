@@ -1,0 +1,178 @@
+# Interview transcript fixture
+# Role: Data Engineer, Analytics Platform @ Quanta Logistics
+# Quality target: very_poor candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+INTERVIEWER:
+Hey Sam, welcome! How’s your day going so far?
+
+CANDIDATE:
+Fine.
+
+INTERVIEWER:
+Great. So, I see you’ve got about three years of experience in data engineering. Could you walk me through your resume and highlight the parts most relevant to this role?
+
+CANDIDATE:
+Uh, yeah. So I worked at TechCorp for two years. Did some data stuff. Then I moved to DataFlow Solutions. Also did data stuff. That’s about it.
+
+INTERVIEWER:
+Got it. What kind of "data stuff" did you focus on at those places? Anything with Spark, Airflow, or dbt?
+
+CANDIDATE:
+Yeah, I used Spark a little. Airflow too, I guess. Not sure about dbt. I mostly just ran queries.
+
+INTERVIEWER:
+Interesting. What motivated you to apply for this role at Quanta Logistics?
+
+CANDIDATE:
+I dunno. I needed a job. The pay looked okay.
+
+INTERVIEWER:
+Fair enough. Let’s talk about a project where you built or optimized a data pipeline. Can you walk me through one of those?
+
+CANDIDATE:
+I don’t really remember specifics. It was just a pipeline. I made it work.
+
+INTERVIEWER:
+What challenges did you face while building it?
+
+CANDIDATE:
+I don’t know. Stuff broke sometimes. I fixed it.
+
+INTERVIEWER:
+How did you measure the success of that pipeline?
+
+CANDIDATE:
+It ran. That’s about it.
+
+INTERVIEWER:
+Got it. Let’s switch gears a bit. Can you tell me about a time you had to work with a difficult stakeholder or teammate?
+
+CANDIDATE:
+Yeah, there was this one guy. He was annoying. Kept asking for changes.
+
+INTERVIEWER:
+How did you handle that?
+
+CANDIDATE:
+I just did what he asked. Not much else to do.
+
+INTERVIEWER:
+Did you ever push back or try to understand his concerns better?
+
+CANDIDATE:
+No. He was the boss, so I just did it.
+
+INTERVIEWER:
+I see. What about a time you failed at something? Maybe a project that didn’t go as planned?
+
+CANDIDATE:
+Uh, I don’t really fail. Things just don’t always work out.
+
+INTERVIEWER:
+Can you give me an example of a time things didn’t work out?
+
+CANDIDATE:
+There was this one time the pipeline broke. I fixed it eventually.
+
+INTERVIEWER:
+What did you learn from that experience?
+
+CANDIDATE:
+Not to let it break again, I guess.
+
+INTERVIEWER:
+Got it. Let’s talk about prioritization. How do you decide what to work on when everything seems urgent?
+
+CANDIDATE:
+I just do what my manager tells me.
+
+INTERVIEWER:
+What if your manager isn’t around?
+
+CANDIDATE:
+Then I wait.
+
+INTERVIEWER:
+Interesting. Have you ever mentored or helped onboard a junior teammate?
+
+CANDIDATE:
+No, not really. I don’t like teaching.
+
+INTERVIEWER:
+Why not?
+
+CANDIDATE:
+It’s just not my thing.
+
+INTERVIEWER:
+Let’s talk tech for a minute. How do you handle late-arriving data in a batch pipeline?
+
+CANDIDATE:
+I don’t know. I just rerun the job.
+
+INTERVIEWER:
+What about in a streaming context?
+
+CANDIDATE:
+I don’t do streaming.
+
+INTERVIEWER:
+You mentioned Spark earlier. Can you explain how you’d optimize a slow Spark job?
+
+CANDIDATE:
+I don’t know. I just add more nodes.
+
+INTERVIEWER:
+What about partitioning or caching?
+
+CANDIDATE:
+I don’t really do that.
+
+INTERVIEWER:
+Got it. Have you ever improved a process or workflow on your team?
+
+CANDIDATE:
+Not really. I just do what I’m told.
+
+INTERVIEWER:
+What’s a weakness you’ve had to work on in your career?
+
+CANDIDATE:
+I don’t know. I’m fine at my job.
+
+INTERVIEWER:
+No areas you’ve had to improve?
+
+CANDIDATE:
+Not really.
+
+INTERVIEWER:
+Alright. Let’s say you’re building a new data model for a logistics dashboard. How would you approach that?
+
+CANDIDATE:
+I’d just make a table. Put some data in it.
+
+INTERVIEWER:
+How would you ensure it’s performant and scalable?
+
+CANDIDATE:
+I don’t know. It’s just a table.
+
+INTERVIEWER:
+Got it. Last question: Do you have any questions for me about the role or the team?
+
+CANDIDATE:
+No.
+
+INTERVIEWER:
+Nothing at all?
+
+CANDIDATE:
+Nah.
+
+INTERVIEWER:
+Alright, Sam. Thanks for coming in today. We’ll be in touch.
+
+CANDIDATE:
+Cool.

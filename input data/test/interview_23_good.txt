@@ -1,0 +1,153 @@
+# Interview transcript fixture
+# Role: Senior Product Manager, Marketplace team @ Hearthside
+# Quality target: good candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hi Riley, I’m Kira—great to meet you. How’s your day going so far?
+
+CANDIDATE:
+Hi Kira, nice to meet you too! My day’s been good—just finished a quick coffee before hopping on this call. How about you?
+
+INTERVIEWER:
+Doing well, thanks! So, I’d love to start by having you walk me through your resume—just hit the highlights, maybe 2-3 minutes, with a focus on the parts that feel most relevant to this role.
+
+CANDIDATE:
+Sure! I’ve spent the last six years in product management, with the last four focused on marketplace and platform products. At my current role at Storied, I’m a Senior PM on the Creator Marketplace team, where I own the strategy and roadmap for our two-sided marketplace connecting independent creators with brands for sponsorships. Before that, I was at ShopHop, where I led a cross-functional team to redesign the seller onboarding flow, which improved conversion by 22% and reduced support tickets by 30%. I started my PM career at a smaller SaaS company, where I wore a lot of hats but really cut my teeth on experimentation and A/B testing—something I know is core to Hearthside’s approach.
+
+I’m particularly excited about this role because of the focus on marketplace dynamics and the emphasis on data-driven decision-making. I’ve spent a lot of time thinking about how to balance supply and demand, and I’d love to bring that experience to Hearthside.
+
+INTERVIEWER:
+That’s great context—thanks for that. You mentioned the seller onboarding project at ShopHop. Can you walk me through that in a bit more detail? What was the problem, what did you do, and what was the outcome?
+
+CANDIDATE:
+Absolutely. When I joined ShopHop, our seller onboarding flow was a major pain point. We had a 40% drop-off rate during the process, and the sellers who did complete it were taking an average of 12 days to go live. This was hurting our supply side, which directly impacted demand—fewer sellers meant fewer listings, which meant fewer buyers. The problem was twofold: the flow was too long and cumbersome, and it wasn’t clear to sellers what the value was at each step.
+
+I started by digging into the data to identify where the biggest drop-offs were happening. We found that the tax ID verification step was a huge hurdle—sellers were abandoning because they didn’t have their documents ready or didn’t understand why we needed them. I also ran a survey with sellers who had dropped off to understand their pain points better. The feedback was clear: they wanted a simpler, more transparent process with clear milestones.
+
+I proposed a redesign that broke the flow into smaller, more digestible steps, with clear progress indicators and tooltips explaining why each piece of information was necessary. We also introduced a “save and continue later” feature, which was a big ask from sellers. To validate the changes, we ran an A/B test with 10% of new sellers. The test showed a 22% increase in conversion and a 15% reduction in time to go live. We also saw a 30% drop in support tickets related to onboarding, which was a huge win for our customer support team.
+
+The rollout was a bit bumpy—we had to coordinate with engineering, legal, and customer support to make sure everyone was aligned—but ultimately, it was a success. The key was keeping the seller’s perspective front and center and using data to drive decisions.
+
+INTERVIEWER:
+That’s a really strong example. I’m curious—how did you handle the pushback from legal on the tax ID verification step? I imagine they were hesitant to make any changes there.
+
+CANDIDATE:
+Great question. Legal was definitely concerned about compliance, and rightfully so. Their initial stance was that we couldn’t remove or simplify the tax ID step because it was a regulatory requirement. I approached this by first acknowledging their concerns and then framing the conversation around the *how* rather than the *what*. Instead of asking if we could remove the step, I asked if we could explore ways to make it less painful for sellers while still meeting compliance needs.
+
+I worked with them to understand the exact requirements and then brainstormed solutions. One idea was to move the tax ID step later in the flow, after sellers had already seen some value—like setting up their storefront or listing their first product. This way, they’d be more invested in completing the process. Legal was open to testing this as long as we maintained the same level of verification. We also added a clear explanation of why the tax ID was necessary and how it would be used, which helped reduce confusion.
+
+In the end, the A/B test showed that moving the step later in the flow didn’t increase drop-off at that stage, and it actually improved overall conversion. Legal was happy because compliance wasn’t compromised, and sellers were happier because the process felt smoother. It was a win-win.
+
+INTERVIEWER:
+That’s a great example of navigating stakeholder concerns. Shifting gears a bit—Hearthside’s marketplace is all about connecting homeowners with local service providers. Can you talk about a time when you had to make a tough trade-off between supply and demand? How did you approach it?
+
+CANDIDATE:
+Sure. At Storied, we had a situation where our demand side—brands looking for creators—was growing much faster than our supply side. We had a backlog of brand requests, but we didn’t have enough creators in certain niches to fulfill them. This was creating a lot of frustration on both sides: brands were threatening to churn because they couldn’t find the right creators, and creators were feeling overwhelmed by the volume of requests.
+
+I had to make a call on where to focus our resources. One option was to double down on creator acquisition—running targeted campaigns, improving onboarding, and offering incentives to creators in high-demand niches. The other option was to temporarily limit brand access to certain niches until we could build up supply. This was a tough trade-off because limiting brand access could hurt revenue and growth in the short term, but it would also prevent brand churn and ensure a better experience for creators.
+
+I decided to go with a hybrid approach. We temporarily limited brand access to the most oversubscribed niches while simultaneously ramping up creator acquisition efforts. We also introduced a “waitlist” feature for brands, which gave them visibility into when they could expect to connect with creators in their niche. This helped manage expectations and reduced churn.
+
+To measure the impact, we tracked a few key metrics: brand churn rate, creator satisfaction scores, and the time it took for brands to get matched with creators. After three months, we saw a 15% reduction in brand churn, and creator satisfaction scores improved by 10 points. The waitlist also gave us valuable data on which niches to prioritize for creator acquisition.
+
+It wasn’t a perfect solution—some brands were still frustrated—but it was the right trade-off for the long-term health of the marketplace. The key was being transparent with both sides and using data to guide the decision.
+
+INTERVIEWER:
+That’s a really thoughtful approach. I’m curious—how did you communicate this decision to the brands? I imagine that was a delicate conversation.
+
+CANDIDATE:
+It was definitely delicate. We started by segmenting the brands based on their impact and potential churn risk. For our high-value brands, we set up 1:1 calls with their account managers to explain the situation and the steps we were taking to address it. For the broader group, we sent a transparent email outlining the changes, the reasons behind them, and the timeline for when they could expect access to creators in their niche.
+
+The email was key because it set the tone. We framed it as a temporary measure to improve the overall experience for both brands and creators. We also highlighted the waitlist feature as a way to give them visibility and control. The feedback was mixed—some brands were understanding, while others were frustrated—but the transparency helped a lot. We also made sure to follow up with regular updates on our progress, which kept them engaged.
+
+INTERVIEWER:
+That makes sense. Let’s talk about experimentation. Can you walk me through a time when an experiment you ran didn’t go as planned? What did you learn from it?
+
+CANDIDATE:
+Sure. At Storied, we ran an experiment to test a new pricing model for our creator marketplace. The idea was to introduce a tiered pricing structure based on creator engagement metrics, with the goal of increasing revenue while incentivizing creators to be more active on the platform. We hypothesized that creators who were more engaged would be willing to pay a higher fee for premium features, like advanced analytics and priority matching with brands.
+
+We rolled out the experiment to 20% of our creator base and tracked a few key metrics: revenue per creator, creator retention, and brand satisfaction. The results were… not what we expected. Revenue per creator did increase, but creator retention dropped by 12%, and brand satisfaction scores fell because fewer creators were available for matching.
+
+The issue was that we hadn’t fully considered the impact on the supply side. The tiered pricing model created a perception of inequality among creators—those in the lower tiers felt like they were being penalized for not being “engaged enough,” even if they were still providing value to the platform. We also underestimated how much brands relied on a diverse pool of creators, not just the top-tier ones.
+
+We ended up rolling back the experiment and went back to the drawing board. The key lesson was to always pressure-test assumptions with both sides of the marketplace. We also realized that we needed to do more qualitative research—surveys and interviews—to understand the emotional and psychological impact of changes, not just the quantitative metrics.
+
+From there, we pivoted to a different approach: introducing optional premium features that creators could opt into, rather than a mandatory tiered structure. This gave creators more control and reduced the perception of inequality. The next experiment we ran with this approach showed much better results—revenue increased without hurting retention or brand satisfaction.
+
+INTERVIEWER:
+That’s a great example of learning from failure. Shifting gears a bit—can you tell me about a time when you had to mentor or coach someone on your team? What was the situation, and how did you approach it?
+
+CANDIDATE:
+Absolutely. At ShopHop, I had a junior PM on my team who was really talented but struggled with prioritization. She had a tendency to take on too many projects at once and would get overwhelmed, which led to missed deadlines and a lot of stress for her and the team. I noticed this early on and wanted to help her develop this skill.
+
+I started by setting up a 1:1 to understand her perspective. She shared that she felt pressure to say “yes” to everything because she didn’t want to disappoint anyone. I validated her feelings but also explained how this was impacting her ability to deliver high-quality work. We then worked together to create a framework for prioritization. I introduced her to the Eisenhower Matrix—urgent vs. important—and we practiced applying it to her current projects.
+
+I also encouraged her to start saying “no” or “not now” more often, and I modeled this behavior in my own work. For example, when she came to me with a new request, I’d ask her to walk me through how it fit into her current priorities and what she’d deprioritize to make room for it. Over time, she got more comfortable with this.
+
+To make it more concrete, I also had her present her prioritization decisions in our team meetings. This gave her a chance to practice articulating her thought process and get feedback from the broader team. It also helped build her confidence.
+
+After a few months, she was much better at managing her workload. She even started mentoring other junior team members on prioritization, which was a great sign of her growth. The key for me was to approach it as a coaching opportunity rather than a criticism. I wanted her to feel supported, not judged.
+
+INTERVIEWER:
+That’s a really thoughtful approach to mentorship. I’m curious—how do you think about balancing short-term execution with long-term strategy in your roadmap planning?
+
+CANDIDATE:
+It’s a constant tension, but I think the key is to create a roadmap that’s flexible enough to accommodate both. At Storied, we use a framework where we allocate a percentage of our resources to short-term execution (like bug fixes, small feature improvements, and quick wins) and a percentage to long-term strategy (like platform investments, new product lines, or large-scale experiments).
+
+For example, we might allocate 60% of our resources to short-term execution and 40% to long-term strategy. The exact split depends on the company’s goals and the stage of the product. The important thing is to be intentional about it and to communicate the rationale to the team. If everyone understands why we’re making these trade-offs, they’re more likely to buy into the roadmap.
+
+I also think it’s important to regularly revisit the roadmap to make sure it’s still aligned with the company’s goals. At Storied, we do a quarterly roadmap review where we assess our progress, reprioritize as needed, and make sure we’re still investing in the right things. This helps us stay agile and adapt to changes in the market or the business.
+
+INTERVIEWER:
+That makes sense. Can you give me an example of a time when you had to adjust your roadmap mid-quarter? What prompted the change, and how did you handle it?
+
+CANDIDATE:
+Sure. At Storied, we were midway through a quarter when we noticed a sharp decline in engagement from our top-tier creators. This was a big problem because these creators drove a significant portion of our revenue. We dug into the data and found that a recent algorithm change—meant to improve content discovery—was actually making it harder for top creators to get visibility. Their posts were being buried in favor of newer or less established creators.
+
+This was a major issue, so we had to act fast. I called an emergency roadmap review with my team and key stakeholders. We decided to deprioritize a few lower-impact projects to free up resources for a quick fix. The engineering team was able to roll back the algorithm change within a week, and we saw an immediate improvement in engagement from top creators.
+
+At the same time, we launched a deeper investigation into the root cause of the issue. We realized that the algorithm change had been made without fully considering the impact on our top creators. To prevent this from happening again, we introduced a new process where any changes to the algorithm or content discovery system would require a cross-functional review, including input from the creator success team.
+
+The key takeaway for me was the importance of being agile and willing to reprioritize when the data tells you something isn’t working. It’s not always easy to deprioritize work that the team has already invested in, but it’s necessary to keep the product healthy.
+
+INTERVIEWER:
+That’s a great example of being data-driven and agile. Let’s talk about weaknesses. What’s an area you’ve had to work on improving over the past year or so?
+
+CANDIDATE:
+One area I’ve been focused on is delegation. Early in my career, I had a tendency to take on too much myself because I wanted to ensure things were done “right.” Over time, I realized that this wasn’t scalable and that it was actually holding back my team’s growth. I’ve been working on delegating more effectively by setting clear expectations, providing the right level of support, and trusting my team to deliver.
+
+For example, at Storied, I started delegating more ownership of experiments to my junior PMs. I’d set the high-level goals and then let them run with the execution. This was uncomfortable at first—I wanted to be involved in every detail—but I quickly saw the benefits. Not only did it free up my time to focus on higher-level strategy, but it also helped my team develop their skills and confidence.
+
+I still have room to grow here, but I’ve made a lot of progress. I’ve also found that delegation is a skill that gets easier with practice, and I’m always looking for opportunities to delegate more.
+
+INTERVIEWER:
+That’s a great self-awareness. Last question before we wrap up: What questions do you have for me about the role or Hearthside?
+
+CANDIDATE:
+Thanks, Kira! I do have a few questions. First, can you tell me more about the biggest challenges the Marketplace team is facing right now? I’m particularly interested in how you’re thinking about balancing supply and demand in the current market.
+
+Second, how does the team approach experimentation and A/B testing? I noticed that’s a big focus in the job description, and I’d love to hear more about how you measure success and iterate on experiments.
+
+Finally, what’s the culture like on the Marketplace team? I thrive in collaborative environments where people are open to feedback and willing to challenge each other’s ideas—does that align with how the team operates?
+
+INTERVIEWER:
+Those are all great questions. To your first one, the biggest challenge we’re facing is scaling our supply side—specifically, attracting and retaining high-quality service providers in a competitive market. We’re experimenting with a few different incentives and onboarding improvements to address this, but it’s an ongoing effort.
+
+On experimentation, we’re very data-driven. We run A/B tests on almost everything—from small UI changes to larger feature rollouts. Success is measured by a mix of quantitative metrics (like conversion, retention, and revenue) and qualitative feedback from users. We also have a strong culture of learning from experiments, even when they don’t go as planned.
+
+As for culture, I’d say it’s exactly what you described. The team is collaborative, open to feedback, and not afraid to challenge each other. We have a strong “disagree and commit” culture, which I think is really healthy.
+
+CANDIDATE:
+That’s really helpful—thank you. One last question: What’s one thing you’d love to see the new hire accomplish in their first 90 days?
+
+INTERVIEWER:
+Great question. I’d love to see the new hire take ownership of one of our key marketplace health metrics—like service provider retention or job completion rate—and drive a measurable improvement. This would involve digging into the data, identifying opportunities, and working with the team to implement changes. It’s a great way to get up to speed and make an impact early on.
+
+CANDIDATE:
+That sounds like a fantastic opportunity. I’m really excited about the possibility of joining the team and contributing to those efforts.
+
+INTERVIEWER:
+Awesome. Well, Riley,

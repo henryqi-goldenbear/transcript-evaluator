@@ -1,0 +1,164 @@
+# Interview transcript fixture
+# Role: Site Reliability Engineer, Core Infrastructure @ Mesa Cloud
+# Quality target: good candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+INTERVIEWER:
+Hey Alex, welcome! Thanks for making time today. How’s your week been so far?
+
+CANDIDATE:
+Thanks, Marcus—good to be here. Week’s been busy but productive. Just wrapped up a major incident post-mortem at my current gig, so it’s nice to shift gears a bit.
+
+INTERVIEWER:
+Glad to hear it. Let’s start with a quick walk through your resume. I see you’ve been at Horizon Systems for the last three years as an SRE. Can you give me the high-level arc of what you’ve worked on there?
+
+CANDIDATE:
+Sure. When I joined, Horizon was in the middle of migrating from bare-metal to Kubernetes. My first big project was designing the cluster autoscaler setup to handle our batch workloads without over-provisioning. We cut cloud costs by about 22% while keeping p99 latency under 200ms for our analytics pipeline.
+
+After that, I took ownership of our observability stack—migrating from Prometheus to a managed Thanos setup, adding structured logging with Loki, and building a custom SLO dashboard that tied into our incident response workflow. That reduced our mean time to detect by 35%.
+
+More recently, I’ve been leading a small team focused on capacity planning and right-sizing. We built a predictive model that uses historical usage patterns and upcoming feature launches to recommend node pools. That’s helped us avoid about $180k in unnecessary spend over the last six months.
+
+INTERVIEWER:
+That’s a solid progression. What drew you to Mesa Cloud specifically? We’re a bit different from Horizon—more cloud-native from the start, and our scale is larger in some dimensions.
+
+CANDIDATE:
+I’ve followed Mesa’s growth for a while, especially how you’ve handled the shift to multi-region deployments. The blog post about your SLO-based rollout strategy for the new data plane was really impressive—using error budgets to gate feature releases instead of just reacting to incidents.
+
+At Horizon, we’re still catching up on some of those practices, and I’d love to work somewhere where reliability is truly a first-class concern, not just an afterthought. I’m also excited about the opportunity to work on core infrastructure that supports so many different teams. At Horizon, I often felt siloed in the analytics org, and I’d love to have broader impact.
+
+INTERVIEWER:
+Makes sense. Let’s dig into a technical area. You mentioned Thanos—can you walk me through how you’d design a high-availability observability stack for a multi-cluster Kubernetes environment? Assume we’re starting from scratch, and we care about cost, reliability, and ease of debugging.
+
+CANDIDATE:
+Sure. First, I’d start with the data sources. For metrics, I’d deploy Prometheus in each cluster with a remote write configuration to a central Thanos Receive component. That gives us durability and avoids the single point of failure of a single Prometheus instance. I’d use the Thanos Sidecar for long-term storage, but I’d also set up a separate Thanos Store gateway for querying historical data.
+
+For logs, I’d go with Loki, deployed in each cluster with a similar remote write setup to a central Loki instance. I’d use the Promtail agent to collect logs from pods and nodes. For traces, I’d use Tempo, again with a central collector.
+
+For high availability, I’d deploy the central components (Thanos Receive, Loki, Tempo) in a multi-AZ setup, with replication for the object storage backends. I’d also set up a separate “observability cluster” to run these central components, so they’re not competing for resources with production workloads.
+
+On the cost side, I’d implement retention policies—maybe 30 days for raw metrics, 90 days for downsampled data, and a year for logs. I’d also use object storage with lifecycle policies to move older data to cold storage.
+
+For debugging, I’d build a unified interface—maybe Grafana—that can query across all three data sources. I’d also set up some synthetic monitoring to test the observability stack itself, so we know if something’s broken before we need it.
+
+INTERVIEWER:
+That’s a thoughtful approach. One follow-up: how would you handle the case where a cluster goes offline and you lose the local Prometheus instance? How do you ensure you don’t lose critical metrics during an outage?
+
+CANDIDATE:
+Great question. The remote write setup to Thanos Receive helps here—metrics are sent to the central store in real-time, so even if the local Prometheus goes down, the data up to that point is already safe. The gap would be the time between the local Prometheus failing and the cluster coming back online.
+
+To mitigate that, I’d set up a buffer in the Prometheus remote write configuration—maybe 10-15 minutes of local storage. That way, if the network is flaky or the central store is temporarily unavailable, we don’t lose data. I’d also set up alerts for remote write failures, so we know if we’re not getting data into the central store.
+
+For truly critical metrics, I’d consider a secondary write path—maybe a lightweight agent that writes directly to the central store, bypassing the local Prometheus. It’s more expensive, but for metrics that are essential for incident response, it might be worth it.
+
+INTERVIEWER:
+Makes sense. Let’s shift gears to behavioral questions. Can you tell me about a time you had to persuade a team to adopt a new reliability practice? Walk me through the situation, what you did, and how it turned out.
+
+CANDIDATE:
+Sure. About a year ago, I noticed that our incident post-mortems were becoming a bit of a checkbox exercise. Teams would write them up, file them away, and not much would change. We had a major outage where a misconfigured canary release took down our payment processing for 45 minutes, and the post-mortem identified the same root cause as an incident from six months prior.
+
+I knew we needed to change how we handled post-mortems, but the engineering org was pretty resistant to process changes. So I started by gathering data—I pulled all the post-mortems from the last year and categorized the action items. I found that about 60% of them were either never completed or were “best effort” with no clear owner.
+
+I presented this data to the engineering leadership team, framing it in terms of risk and cost. I also proposed a new process: every post-mortem action item would have a DRI (directly responsible individual), a due date, and a link to the relevant Jira ticket. We’d also start tracking “post-mortem completion rate” as a KPI for each team.
+
+To get buy-in, I worked with a few influential engineers to pilot the new process. We picked a recent incident and ran the post-mortem using the new format. The pilot went well—the action items were completed on time, and the team felt more accountable.
+
+After the pilot, I presented the results to the broader org, and we rolled out the new process. Over the next six months, our post-mortem completion rate went from 40% to 85%, and we had fewer repeat incidents. It wasn’t perfect—some teams still dragged their feet—but it was a big improvement.
+
+INTERVIEWER:
+That’s a great example of driving change. What was the hardest part of that process for you?
+
+CANDIDATE:
+The hardest part was dealing with the pushback from teams that saw this as extra bureaucracy. Some engineers felt like post-mortems were already time-consuming, and adding more structure would make it worse. I had to really listen to their concerns and adjust the process to make it as lightweight as possible.
+
+For example, one team complained that the new format required too much detail. So I worked with them to simplify the template and focus on the essentials—root cause, impact, and action items. I also made sure to highlight the benefits: fewer repeat incidents, less time spent in fire-fighting mode, and more time for feature work.
+
+INTERVIEWER:
+Let’s talk about a time you failed. Can you share an example where something you worked on didn’t go as planned, and what you learned from it?
+
+CANDIDATE:
+Sure. Early on in the Kubernetes migration at Horizon, I was responsible for designing the logging pipeline. I decided to use Fluentd as the log collector, with Elasticsearch as the backend. I set up a single Elasticsearch cluster and configured Fluentd to forward logs from all our Kubernetes clusters to it.
+
+At first, it worked fine. But as we onboarded more teams and increased our log volume, the Elasticsearch cluster started struggling. We had frequent outages, and the query performance was terrible. It got so bad that teams started sending logs directly to S3, bypassing the pipeline entirely.
+
+Looking back, I made a few mistakes. First, I underestimated the log volume—we were generating way more logs than I anticipated. Second, I didn’t design for scalability. A single Elasticsearch cluster was never going to handle our load. And third, I didn’t involve the teams that would be using the system early enough. If I had, I might have caught some of these issues sooner.
+
+After the outage, I worked with the team to redesign the pipeline. We switched to Loki, which is more scalable and better suited for Kubernetes logs. We also set up separate Loki instances for different teams, so one team’s log volume wouldn’t impact others. And we implemented log retention policies to keep costs under control.
+
+The experience taught me the importance of designing for scale from the start, even if you don’t think you’ll need it. It also reinforced the value of involving stakeholders early and often.
+
+INTERVIEWER:
+That’s a tough lesson, but an important one. Let’s talk about mentorship. Can you share an example of how you’ve helped a more junior engineer grow in their role?
+
+CANDIDATE:
+Absolutely. About a year ago, I started working with a junior engineer named Jamie who had just joined the team. Jamie was smart and eager to learn, but they didn’t have much experience with Kubernetes or distributed systems.
+
+I started by pairing with Jamie on some smaller tasks—like debugging a failing pod or setting up a new monitoring alert. I made sure to explain my thought process and why I was doing things a certain way. I also encouraged Jamie to ask questions, even if they seemed basic.
+
+After a few weeks, I gave Jamie a bigger project: designing a new logging pipeline for one of our services. I broke the project down into smaller milestones and checked in regularly to see how things were going. I also made sure to give Jamie credit for their work in team meetings and encouraged them to present their design to the broader org.
+
+One of the biggest challenges was helping Jamie build confidence. They were hesitant to make decisions without checking with me first. So I started pushing them to make more calls on their own, even if I didn’t always agree with them. I also made sure to celebrate their wins, no matter how small.
+
+Over time, Jamie became much more independent. They took ownership of the logging pipeline and even started mentoring other junior engineers. It was really rewarding to see their growth.
+
+INTERVIEWER:
+That’s great to hear. How do you approach prioritization when you have more work than time? Can you walk me through a time when you had to make trade-offs?
+
+CANDIDATE:
+Sure. A few months ago, I was leading the capacity planning initiative at Horizon, and we were also in the middle of a major Kubernetes upgrade. Both were high-priority projects, but I only had so much time and resources.
+
+I started by listing out all the tasks for both projects and estimating their impact and effort. For the capacity planning work, we had a few high-impact, low-effort tasks—like setting up alerts for when we were approaching capacity limits. For the Kubernetes upgrade, the most critical task was testing the new version in our staging environment.
+
+I decided to focus on the high-impact, low-effort tasks first. For the capacity planning work, that meant setting up the alerts and automating some of the reporting. For the Kubernetes upgrade, it meant getting the staging environment up and running.
+
+I also looked for opportunities to combine work. For example, the Kubernetes upgrade required us to update our monitoring stack, which was also a goal for the capacity planning project. So I worked with the team to tackle both at the same time.
+
+Finally, I communicated the trade-offs to my manager and the broader team. I made it clear that some tasks would be delayed, and I explained why. I also made sure to set expectations about what we could realistically accomplish in the given timeframe.
+
+In the end, we were able to complete the most critical tasks for both projects. The capacity planning work helped us avoid a few potential outages, and the Kubernetes upgrade went smoothly. It wasn’t perfect—we had to delay some lower-priority tasks—but it was the right trade-off given the constraints.
+
+INTERVIEWER:
+That’s a solid approach. Let’s talk about a time you had to deal with conflict. Can you share an example where you disagreed with a teammate or another team, and how you handled it?
+
+CANDIDATE:
+Sure. Last year, I was working with the data engineering team on a new feature that would allow users to run custom SQL queries against our analytics data. The data engineering team wanted to deploy the feature as soon as possible, but I had concerns about the reliability and performance implications.
+
+Specifically, I was worried that the feature would put too much load on our databases, especially during peak hours. I also had concerns about the security model—the feature allowed users to run arbitrary SQL, which could be a risk if not properly sandboxed.
+
+I started by gathering data. I pulled some metrics on database load and ran some benchmarks to estimate the impact of the feature. I also looked at how other companies had implemented similar features and what risks they had encountered.
+
+Then, I set up a meeting with the data engineering team to discuss my concerns. I made sure to frame the conversation around shared goals—we all wanted the feature to be successful, but we needed to make sure it was reliable and secure.
+
+We ended up compromising. The data engineering team agreed to limit the feature to a smaller set of users initially, and they added some rate limiting to prevent abuse. They also worked with me to set up additional monitoring and alerting for the databases.
+
+In the end, the feature launched successfully, and we didn’t have any major incidents. It was a good reminder that conflict isn’t always a bad thing—it can lead to better outcomes if handled constructively.
+
+INTERVIEWER:
+That’s a great example. Let’s wrap up with a few questions from you. What would you like to know about the role or the team?
+
+CANDIDATE:
+Thanks, Marcus. I’ve got a few questions. First, can you tell me more about the team’s current priorities? What are the biggest challenges you’re facing in the next 6-12 months?
+
+INTERVIEWER:
+Great question. One of our top priorities is improving the reliability of our multi-region deployments. We’ve had a few incidents where a regional outage caused cascading failures, and we’re working on better isolation and failover strategies. We’re also investing in our observability stack—we’re moving from a patchwork of tools to a more unified platform, which should help with debugging and incident response.
+
+CANDIDATE:
+That’s really interesting. How does the team balance reliability work with feature development? Do you have a formal error budget policy, or is it more ad-hoc?
+
+INTERVIEWER:
+We do have an error budget policy, but it’s still evolving. Right now, we track error budgets at the service level, and we use them to gate feature releases. If a service is burning through its error budget, we’ll hold off on new deployments until the reliability issues are resolved. It’s not perfect—some teams are more disciplined about it than others—but it’s been a big improvement over our previous approach.
+
+CANDIDATE:
+Got it. One last question—what’s the team culture like? How do you collaborate and make decisions?
+
+INTERVIEWER:
+We’re a pretty collaborative team. We have a weekly sync where we discuss ongoing projects and any blockers, and we use Slack for day-to-day communication. For bigger decisions, we’ll often have a design doc or a proposal, and we’ll gather feedback from the team before moving forward. We also have a strong culture of blameless post-mortems—we focus on learning from incidents, not pointing fingers.
+
+CANDIDATE:
+That sounds like a great environment. Thanks for answering my questions, Marcus—I really appreciate it.
+
+INTERVIEWER:
+My pleasure, Alex. Really enjoyed the conversation today. We’ll be in touch soon with next steps.
+
+CANDIDATE:
+Sounds good. Thanks again for your time!

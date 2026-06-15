@@ -1,0 +1,216 @@
+[
+  {
+    "id": 1,
+    "label": "Auto case 1",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example of motivation for the role",
+    "question": "Got it. What drew you to this role specifically at Quanta Logistics?",
+    "response": "Well, I saw the job posting and it seemed like a good fit. I\u2019ve worked with logistics data before, so I thought it would be a smooth transition. Plus, Quanta seems like a big company with a lot of opportunities, so I figured why not?",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 2,
+    "label": "Auto case 2",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Includes a past-experience request with a clear impact question.",
+    "question": "Makes sense. Let\u2019s talk about some of your work. Can you walk me through a time when you built or optimized a data pipeline? What was the impact?",
+    "response": "Yeah, so at TechFlow, we had this pipeline that was running really slow. It was pulling data from a bunch of different sources and loading it into our warehouse. I rewrote some of the SQL queries and switched a few things around in Spark. It ran faster after that, but I\u2019m not sure by how much. It was just kind of a general improvement.",
+    "follow_ups": [
+      {
+        "question": "Got it. Did you measure the performance before and after? Like runtime or resource usage?",
+        "response": "Uh, not really. I mean, it was definitely faster, but we didn\u2019t track the exact numbers. It was more of a \"feels faster\" kind of thing.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 3,
+    "label": "Auto case 3",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Directly prompts for a past example with a specific scenario (difficult stakeholder) and asks about handling it",
+    "question": "Fair enough. Let\u2019s switch gears a bit. Can you tell me about a time when you had to work with a difficult stakeholder? How did you handle it?",
+    "response": "Oh man, stakeholders can be tough. There was this one time where a product manager kept changing their mind about what they wanted from a report. I just kind of went with it and kept updating the query. It was frustrating, but I didn\u2019t really push back or anything. I just did what they asked.",
+    "follow_ups": [
+      {
+        "question": "Did you ever try to align on requirements upfront or set expectations?",
+        "response": "Not really. I mean, I asked them what they wanted, but they kept changing it, so I just rolled with it. I figured it was easier to just do the work than argue about it.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 4,
+    "label": "Auto case 4",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Asks for a specific past example of dbt usage in the current role",
+    "question": "Got it. Let\u2019s talk about dbt. How have you used it in your current role?",
+    "response": "I\u2019ve used dbt a little bit. Mostly for transforming data in our warehouse. I wrote a few models to clean up some tables, but nothing too fancy. It\u2019s pretty straightforward, so I didn\u2019t run into any big issues.",
+    "follow_ups": [
+      {
+        "question": "Have you ever set up dbt tests or documentation for your models?",
+        "response": "Tests? No, not really. I think we had some basic ones set up by someone else, but I didn\u2019t write any myself. Documentation, yeah, I added a few comments in the code, but that\u2019s about it.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 5,
+    "label": "Auto case 5",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Asks for a specific past example of debugging a pipeline, requiring a behavioral response.",
+    "question": "Got it. Let\u2019s talk about a time when you had to debug a failing pipeline. Walk me through your process.",
+    "response": "Oh, debugging is the worst. There was this one time where a pipeline just stopped running. I checked the logs, but they weren\u2019t super helpful. I ended up just restarting the job a few times, and eventually it worked. I\u2019m not sure what the issue was, but it fixed itself, I guess.",
+    "follow_ups": [
+      {
+        "question": "Did you try to reproduce the issue or dig deeper into the logs?",
+        "response": "Not really. The logs were kind of confusing, and I didn\u2019t want to spend too much time on it. Restarting it worked, so I just moved on.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 6,
+    "label": "Auto case 6",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Asks for a past example of mentoring, which is a behavioral question.",
+    "question": "Fair enough. Let\u2019s talk about collaboration. Can you give me an example of a time when you mentored or helped a junior teammate?",
+    "response": "Yeah, I\u2019ve helped a few people out. There was this one guy who was new to SQL, so I showed him how to write a basic query. He seemed to get it after that, so I think it helped.",
+    "follow_ups": [
+      {
+        "question": "Did you do any formal mentoring or follow-up with him?",
+        "response": "Not really. I just answered his questions when he had them. I figured he\u2019d ask if he needed more help.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 7,
+    "label": "Auto case 7",
+    "turn_type": "non_behavioral",
+    "rubric_type": "non_behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Substantive question about strategic decision-making without requiring a past example.",
+    "question": "Got it. Let\u2019s talk about prioritization. How do you decide what to work on when you have multiple competing deadlines?",
+    "response": "Oh, that\u2019s tough. Usually, I just do whatever my manager tells me to do first. If there\u2019s nothing assigned, I just pick whatever seems easiest and go from there. Sometimes I ask my teammates what they think, but mostly I just wing it.",
+    "follow_ups": [
+      {
+        "question": "Have you ever had to push back on a deadline or ask for more time?",
+        "response": "Not really. I mean, I\u2019ve asked for help if I was stuck, but I don\u2019t think I\u2019ve ever said no to a deadline. I just try to get it done, even if it means working late.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 8,
+    "label": "Auto case 8",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Asks for a specific past example of persuasion, requiring concrete experience.",
+    "question": "Got it. Let\u2019s talk about a time when you had to persuade someone to adopt a new tool or process. How did you approach that?",
+    "response": "Oh, I don\u2019t think I\u2019ve really done that. At my current job, we mostly use the tools that are already in place. I\u2019ve suggested a few things, but nothing ever really stuck. People just kind of do what they\u2019re used to.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 9,
+    "label": "Auto case 9",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example and reflection on learning from failure",
+    "question": "Fair enough. Let\u2019s talk about a failure or mistake you made. What happened, and what did you learn?",
+    "response": "Hmm, I guess there was this one time where I accidentally deleted a table in production. It wasn\u2019t a huge deal because we had backups, but it was still pretty embarrassing. I learned to double-check before running any commands, I guess.",
+    "follow_ups": [
+      {
+        "question": "Did you put any safeguards in place to prevent it from happening again?",
+        "response": "Not really. I just try to be more careful now. I think we had some permissions changed after that, but I\u2019m not sure.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 10,
+    "label": "Auto case 10",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Asks for a past example of structuring DAGs for maintainability",
+    "question": "Got it. Let\u2019s talk about Airflow. How do you structure your DAGs to make them maintainable?",
+    "response": "Oh, Airflow is pretty straightforward. I usually just put all the tasks in one DAG and call it a day. If it gets too big, I might split it up, but mostly I just keep it simple.",
+    "follow_ups": [
+      {
+        "question": "Do you use any patterns like task groups or subDAGs to organize your workflows?",
+        "response": "Not really. I\u2019ve heard of those, but I\u2019ve never used them. My DAGs are usually pretty simple, so I don\u2019t think I need them.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 11,
+    "label": "Auto case 11",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Asks for a past example of experience with real-time pipelines",
+    "question": "Got it. Let\u2019s talk about streaming data. Have you ever worked with real-time pipelines?",
+    "response": "A little bit. At my last job, we had a Kafka topic that we pulled data from, but it was mostly batch processing. I didn\u2019t really do much with the streaming part of it.",
+    "follow_ups": [
+      {
+        "question": "What challenges did you face with that setup?",
+        "response": "Oh, it was fine. The data was already in Kafka, so I just wrote a Spark job to read from it. It worked, so I didn\u2019t really have any issues.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 12,
+    "label": "Auto case 12",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example or concrete approach to design schema/table",
+    "question": "Got it. Let\u2019s talk about warehouse modeling. How do you approach designing a new schema or table?",
+    "response": "I usually just look at the data and figure out what columns we need. If it\u2019s a fact table, I\u2019ll join a few dimension tables to it. It\u2019s pretty straightforward\u2014just make sure the data is clean and usable.",
+    "follow_ups": [
+      {
+        "question": "Do you follow any specific modeling methodologies, like star schema or data vault?",
+        "response": "Not really. I\u2019ve heard of those, but I don\u2019t think we used them at my current job. I just kind of wing it based on what the data looks like.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  }
+]

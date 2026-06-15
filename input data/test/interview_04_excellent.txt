@@ -1,0 +1,139 @@
+# Interview transcript fixture
+# Role: Senior Product Manager, Marketplace team @ Hearthside
+# Quality target: excellent candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hey Jordan, welcome! How’s your day going so far?
+
+CANDIDATE:
+Thanks, Marcus—really glad to be here. Day’s been great, just finished a quick sync with my current team before hopping on this call. How about you?
+
+---
+
+INTERVIEWER:
+Doing well, thanks. Let’s start with a quick walk through your resume—hit the highlights and tell me what you’re most proud of from each role.
+
+CANDIDATE:
+Sure thing. I’ll keep it concise and focus on the marketplace work. At DoorDash, I joined as the first PM on the Dasher Supply team, which was responsible for recruiting and retaining gig workers. Within my first year, I led a cross-functional squad that revamped the onboarding flow, cutting drop-off by 22% and increasing 30-day retention by 14%. We ran 17 A/B tests in parallel, using a custom Python-based experiment framework that let us segment by geography and device type. The biggest win was introducing a dynamic incentive model that adjusted payouts based on real-time demand—this reduced our cost per acquisition by 18% while maintaining Dasher satisfaction scores.
+
+After that, I moved to the Consumer Marketplace team, where I owned the pricing and promotions roadmap. I led the launch of a surge-pricing algorithm that balanced consumer wait times and Dasher earnings. We tested it in three cities first, using a difference-in-differences approach to isolate the effect of the algorithm from seasonal trends. The rollout increased order volume by 9% during peak hours with no degradation in NPS. I also spearheaded a partnership with the data science team to build a real-time anomaly detection system for promotions, which caught a $2.1M over-discounting error in its first month.
+
+Before DoorDash, I was at Instacart, where I worked on the Shopper side of the marketplace. I led a project to reduce batch cancellation rates, which were hurting customer retention. We implemented a machine learning model that predicted cancellation likelihood based on shopper behavior and order complexity. The model reduced cancellations by 31% and saved $4.5M annually in customer credits. I also mentored two associate PMs there, one of whom I later hired onto my team at DoorDash.
+
+---
+
+INTERVIEWER:
+That’s a strong track record. Let’s dig into one of those projects—tell me about a time you had to make a tough tradeoff between two sides of the marketplace. Walk me through the situation, your approach, and the outcome.
+
+CANDIDATE:
+Absolutely. At DoorDash, we were seeing a growing tension between consumers and Dashers around order assignments. Consumers wanted faster deliveries, which meant assigning orders to Dashers who were already nearby. But Dashers were complaining that this created “hotspots” where a few Dashers got all the orders, while others were left with nothing. The situation came to a head when a group of Dashers in Chicago organized a protest, threatening to deactivate if we didn’t change the algorithm.
+
+I was the PM on the Marketplace Dynamics team, so this landed squarely in my lap. My first step was to quantify the problem. We pulled data and found that in high-density areas, the top 10% of Dashers were getting 40% of the orders, while the bottom 30% were getting less than 5%. This was clearly unsustainable. At the same time, consumer wait times had increased by 12% in these areas, and we were seeing a 3% drop in order volume.
+
+I worked with our data science team to model the impact of different assignment strategies. We tested three approaches: (1) a pure proximity-based model, which optimized for consumer speed but worsened Dasher inequality; (2) a round-robin model, which distributed orders evenly but increased wait times; and (3) a hybrid model that capped the number of orders a single Dasher could receive in a 30-minute window while still prioritizing proximity.
+
+We ran a two-week A/B test in Chicago, our most contentious market. The hybrid model performed best: it reduced the Gini coefficient (a measure of inequality) among Dashers by 28%, while only increasing average wait times by 4%. Order volume actually increased by 2% because Dasher retention improved—we saw a 15% reduction in deactivations in the test group.
+
+The tradeoff was clear: we had to accept slightly longer wait times to create a fairer, more sustainable marketplace. I presented the data to our leadership team, framing it as a long-term investment in Dasher loyalty. We rolled out the hybrid model nationwide, and over the next six months, Dasher retention improved by 9%, which more than offset the marginal increase in wait times. The key was making the tradeoff explicit and backing it with data—it’s easy to optimize for one side of the marketplace, but the real work is finding the equilibrium.
+
+---
+
+INTERVIEWER:
+That’s a great example. Let’s shift gears a bit—tell me about a time you had to persuade a stakeholder to change their mind on something important. How did you approach it?
+
+CANDIDATE:
+Sure. At Instacart, I was working on a project to improve the accuracy of our estimated delivery times (EDTs). The goal was to reduce the gap between the promised delivery window and the actual delivery time, which was a major pain point for customers. My team had built a new machine learning model that incorporated real-time traffic data, shopper speed, and store congestion. The model showed a 25% improvement in EDT accuracy in our backtests.
+
+The problem was that the VP of Operations, who owned the shopper experience, was adamantly opposed to rolling it out. His concern was that the new EDTs would be too volatile—if we promised a customer a 30-minute window but then updated it to 45 minutes mid-shop, it would create more frustration than the current static estimates. He wanted to stick with the simpler, less accurate model.
+
+I knew I needed to address his concerns head-on, so I started by digging into the data. I pulled a sample of orders where the EDT had changed mid-shop and segmented them by whether the final delivery time was earlier or later than the original estimate. I found that in 60% of cases, the final delivery time was *earlier* than the original estimate, which meant customers were pleasantly surprised. In the other 40%, the delivery was later, but the average delay was only 12 minutes—still better than the current model’s average inaccuracy of 18 minutes.
+
+I also ran a survey with a subset of customers to test their tolerance for EDT changes. The results showed that customers were 3x more likely to be frustrated by a late delivery than by an updated estimate, as long as the final delivery was within the updated window. This gave me the data I needed to counter the VP’s concern about volatility.
+
+I set up a meeting with him and framed the conversation around the customer experience, not the model’s accuracy. I showed him the survey results and the segmented data, and I walked him through a few real-world examples where the new model would have improved the customer’s experience. I also proposed a compromise: we’d roll out the new model in a single market first, with a feature flag that let us revert to the old model if we saw a spike in customer complaints.
+
+He agreed to the pilot, and after two weeks, the data showed a 19% reduction in customer complaints about late deliveries, with no increase in complaints about EDT changes. He signed off on the full rollout, and we ended up improving EDT accuracy by 22% nationwide. The key was understanding his perspective, addressing his concerns with data, and meeting him halfway with a pilot.
+
+---
+
+INTERVIEWER:
+Let’s talk about experimentation. How do you design an A/B test for a feature that could have asymmetric effects on the two sides of a marketplace?
+
+CANDIDATE:
+Great question. Asymmetric effects are one of the trickiest parts of running experiments in a two-sided marketplace, because a change that benefits one side can often hurt the other. The first step is to define your primary and secondary metrics upfront, and make sure they capture the health of both sides of the marketplace.
+
+For example, when I was at DoorDash, we were testing a feature that let consumers tip Dashers *after* delivery, rather than at checkout. The hypothesis was that this would increase tips, which would improve Dasher earnings and retention. But we knew it could also create a perverse incentive for Dashers to pressure consumers for tips, which would hurt the consumer experience.
+
+We designed the experiment with three primary metrics: (1) average tip amount per order, (2) Dasher retention rate, and (3) consumer NPS. We also tracked secondary metrics like order completion rate, Dasher deactivation rate, and consumer reorder rate. To account for the asymmetry, we segmented the results by both sides of the marketplace. For consumers, we looked at NPS and reorder rate by whether they had tipped in previous orders. For Dashers, we looked at retention and deactivation rates by their average tip amount.
+
+The experiment ran for four weeks, and the results were mixed. Tip amounts increased by 12%, and Dasher retention improved by 5%. But consumer NPS dropped by 3 points, and we saw a 7% increase in customer support tickets related to Dasher behavior. The segmentation showed that the NPS drop was driven entirely by consumers who had tipped less than $2 in previous orders—these consumers were now being asked to tip more aggressively, and they were unhappy about it.
+
+We decided not to launch the feature as-is, but we didn’t scrap it entirely. Instead, we iterated on the design to address the asymmetry. We added a feature that let consumers opt out of post-delivery tipping, and we built a machine learning model to predict which consumers were likely to tip and which weren’t, so we could tailor the experience. We ran another experiment with these changes, and this time, tip amounts increased by 8%, Dasher retention improved by 4%, and consumer NPS was flat. We launched the feature, and over the next year, Dasher earnings increased by 6% with no negative impact on consumer satisfaction.
+
+The key takeaway is that you can’t treat a two-sided marketplace as a single population. You have to segment your analysis and design your experiment to capture the tradeoffs between the two sides. And sometimes, the right answer isn’t to launch or kill the feature—it’s to iterate and find the equilibrium.
+
+---
+
+INTERVIEWER:
+You’ve mentioned mentoring a few times. Tell me about a time you helped a more junior PM grow. What did you do, and how did you measure success?
+
+CANDIDATE:
+I love this question because mentoring is one of the most rewarding parts of being a PM. At DoorDash, I hired an associate PM named Priya onto my team. She was smart and eager but had never worked in a two-sided marketplace before, so she struggled with the complexity of balancing consumer and Dasher needs.
+
+My first step was to diagnose where she was getting stuck. I sat in on a few of her meetings and noticed that she was great at diving deep into data but often deferred to engineers or designers when it came to making tradeoffs. For example, she was working on a project to improve Dasher payout transparency, but she kept punting on decisions about how much detail to show Dashers, because she wasn’t sure how it would impact their behavior.
+
+I set up a weekly 1:1 with her and structured our conversations around three things: (1) what she was working on, (2) where she was stuck, and (3) what she wanted to learn. For the payout transparency project, I walked her through how I’d approach the tradeoff. We looked at data on how Dashers responded to different types of information in the past—things like surge pricing, peak pay, and delivery fees. I showed her how to segment the data by Dasher tenure and earnings to understand which groups were most sensitive to transparency. I also introduced her to a few Dashers I knew personally, so she could hear directly from them about what mattered most.
+
+To measure her progress, I set three goals: (1) she would lead a cross-functional meeting where she made a clear recommendation on a tradeoff, (2) she would present her work to leadership without me in the room, and (3) she would mentor an intern the following summer. Within two months, she was leading the payout transparency project with confidence. She made a call to show Dashers a breakdown of their earnings by order, including tips, base pay, and bonuses, and she presented the data to our VP of Product to justify the decision. She also started mentoring an intern, who later joined DoorDash as a full-time PM.
+
+Priya ended up getting promoted to PM a year later, and she’s now leading her own team. The best part was seeing her go from hesitating on tradeoffs to making them with conviction. For me, the measure of success wasn’t just her output—it was her growth as a leader.
+
+---
+
+INTERVIEWER:
+Let’s talk about failure. Tell me about a time something you launched didn’t work out. What happened, and what did you learn?
+
+CANDIDATE:
+I’ll share one that stung at the time but taught me a lot. At Instacart, I was leading a project to reduce the time it took for shoppers to find items in the store. We called it “Smart Shopping,” and the idea was to use historical data to predict where items were located and optimize the shopper’s route through the store. For example, if we knew that 90% of the time, the milk was in the back left corner, we’d send the shopper there first.
+
+We built a prototype and tested it in a single store with a small group of shoppers. The initial results were promising: we saw a 15% reduction in shopping time. We decided to roll it out to 10% of orders in three markets, with a plan to expand if the results held.
+
+The launch was a disaster. Shopping times actually *increased* by 8%, and we saw a 20% spike in order cancellations. It turned out that our model was making bad predictions in stores where the layout had changed recently—something we hadn’t accounted for in the backtesting. Shoppers were wasting time running around the store looking for items that weren’t where the app said they’d be.
+
+I had to pull the feature after two weeks and issue an apology to the affected shoppers. It was a humbling experience, especially because I’d been so confident in the backtest results. The postmortem revealed two big mistakes: (1) we hadn’t validated the model’s assumptions with real shoppers before scaling, and (2) we hadn’t built in a feedback loop to detect when the model’s predictions were wrong.
+
+The biggest lesson was the importance of *humility* in experimentation. It’s easy to get attached to your hypothesis, especially when the backtests look good. But in a marketplace, the real world is always more complex than your model. After this, I instituted a rule with my teams: no experiment scales beyond 1% of traffic without a live validation step where we watch real users interact with the feature and collect qualitative feedback. It’s slower, but it’s saved us from a few more failures since then.
+
+---
+
+INTERVIEWER:
+Let’s switch to the role here at Hearthside. What excites you about this opportunity, and how do you see yourself contributing?
+
+CANDIDATE:
+I’ve been following Hearthside for a while, and what excites me most is the opportunity to work on a marketplace that’s solving a real pain point for both sides—homeowners and contractors. The fact that you’re not just connecting supply and demand but also facilitating high-stakes, high-trust transactions is fascinating to me. At DoorDash and Instacart, I worked on marketplaces where the stakes were lower—if a delivery was late, it was annoying, but it wasn’t a $50K kitchen remodel. Here, the trust and reliability bar is much higher, and I love the challenge of designing systems that can scale that kind of trust.
+
+I also love that Hearthside is at the stage where you’re moving from product-market fit to scaling. My background is in taking early-stage marketplace features and optimizing them for growth and efficiency. For example, at DoorDash, I led the team that scaled the Dasher onboarding flow from 10K to 100K monthly signups without degrading quality. I’d love to bring that experience to Hearthside, whether it’s improving contractor retention, reducing customer acquisition costs, or designing experiments that balance speed and reliability.
+
+On a more tactical level, I’m excited about the opportunity to work on the experimentation infrastructure here. From what I’ve heard, Hearthside is still early in building out a robust A/B testing framework. At DoorDash, I worked with our data science team to build a custom experiment analysis tool that let us run multi-armed bandit tests and segment results by geography, user type, and other dimensions. I’d love to bring that kind of tooling to Hearthside to help the team move faster and make better decisions.
+
+Finally, I’m excited about the culture. I’ve talked to a few folks on the team, and it sounds like there’s a strong emphasis on ownership and collaboration. That’s exactly the kind of environment I thrive in.
+
+---
+
+INTERVIEWER:
+Let’s say you join Hearthside, and in your first 90 days, you notice that the contractor onboarding flow has a 40% drop-off rate. How would you approach diagnosing and fixing that?
+
+CANDIDATE:
+That’s a great hypothetical. A 40% drop-off rate is alarming, so my first priority would be to diagnose the root cause. Here’s how I’d approach it:
+
+**Step 1: Map the funnel and identify the drop-off points.**
+I’d start by instrumenting the onboarding flow to track where contractors are dropping off. Is it at the initial sign-up? The background check? The verification step? I’d also look at the time spent on each step—are contractors getting stuck on a particular screen?
+
+**Step 2: Segment the data.**
+Not all contractors are the same. I’d segment the drop-off rate by variables like contractor type (e.g., electricians vs. plumbers), geography, device type, and referral source. This would help me identify patterns. For example, if drop-off is higher for contractors referred by word of mouth, maybe the onboarding flow isn’t optimized for that audience.
+
+**Step 3: Talk to contractors.**
+Data

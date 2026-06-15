@@ -1,0 +1,96 @@
+# Interview transcript fixture
+# Role: Machine Learning Engineer, Recommendations team @ TideStream
+# Quality target: excellent candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hi Sasha, I’m Priya—thanks for joining me today. How’s your week going so far?
+
+CANDIDATE:
+Hi Priya, it’s great to meet you. The week’s been busy but really productive—I wrapped up a model retraining pipeline yesterday that cut our feature freshness latency by about 40%, so I’m feeling good about that.
+
+INTERVIEWER:
+That’s a solid win. Before we dive in, could you walk me through your resume in about two minutes? I’m especially curious about the transitions and what drew you to recommendation systems.
+
+CANDIDATE:
+Absolutely. I started at DataFlow as a data scientist, where I built my first production recommender for their ad marketplace—it was a simple matrix factorization model, but it taught me the importance of cold-start handling. After two years, I moved to Streamify to work on their home-feed recommendations. There, I led the migration from batch-trained models to a real-time feature store using Feast, which reduced stale recommendations by 28% and improved CTR by 12%. That’s where I really fell in love with the operational side of ML—making models work at scale, not just in notebooks. Last year, I joined ReelHub to build their short-video recommendations from scratch. I designed the offline/online evaluation framework and A/B testing pipeline, which helped us iterate faster and ultimately increased watch time by 18%. I’m here because TideStream’s focus on low-latency, high-scale recommendations feels like the perfect next challenge—especially with the work you’re doing on contextual bandits.
+
+INTERVIEWER:
+That’s a great trajectory. Let’s zoom in on the feature store work at Streamify. Can you tell me about a time you had to persuade stakeholders to adopt a new technical approach—like Feast—when they were skeptical?
+
+CANDIDATE:
+Sure. When I proposed migrating to Feast, the biggest pushback was from the infra team. They were worried about the operational overhead and the risk of adding another dependency. I started by quantifying the problem: our batch-trained models were causing a 35% drop in recommendation quality during peak hours due to stale features. I ran a small-scale experiment with Feast on a non-critical service, showing a 22% improvement in feature freshness with no increase in latency. I also created a cost-benefit analysis comparing the engineering effort to maintain our custom feature pipeline versus Feast’s managed solution. To address their concerns, I worked with the infra team to design a phased rollout, starting with a shadow deployment to monitor performance. I also volunteered to own the migration and on-call rotation for the first three months. By the end, we not only adopted Feast but also reduced our feature pipeline maintenance time by 60%. The key was framing it as a collaboration, not a mandate, and showing tangible wins early.
+
+INTERVIEWER:
+That’s a textbook example of stakeholder management. Let’s switch gears to technical depth. You mentioned offline/online evaluation at ReelHub. How did you design the framework to ensure offline metrics actually correlated with online success?
+
+CANDIDATE:
+Great question. At ReelHub, we started with the usual suspects—precision@k, recall@k, and NDCG—but we quickly realized these didn’t capture user engagement nuances like watch time or session depth. So, I introduced a two-pronged approach. First, we built an offline replay system that simulated user interactions using historical data. This let us test how models would perform under real-world conditions, like varying session lengths or device types. Second, we developed a set of proxy metrics tailored to our business goals. For example, we created “engagement-weighted NDCG,” which gave more weight to videos that users watched for longer durations. To validate the correlation, we ran A/B tests where we intentionally deployed models that performed well offline but poorly online (and vice versa), then measured the divergence. We found that our proxy metrics had a 0.82 correlation with online watch time, compared to 0.65 for standard NDCG. This gave us much more confidence in our offline evaluations. The biggest lesson was that offline metrics are only as good as the assumptions you bake into them—you have to constantly validate those assumptions with online experiments.
+
+INTERVIEWER:
+That’s a really thoughtful approach. I’m curious—what’s a time you launched an A/B test that failed, and what did you learn from it?
+
+CANDIDATE:
+Oh, I’ve had plenty of those! One that stands out was at ReelHub when we tested a new ranking model that used a transformer-based architecture. Offline, it crushed our baseline with a 15% improvement in NDCG. But when we launched the A/B test, we saw a 7% drop in watch time. It was a gut punch. We dug into the data and found that the model was over-indexing on “clickbait” content—videos with thumbnails or titles designed to grab attention but low actual engagement. The transformer was picking up on these signals more effectively than our baseline, but it wasn’t aligned with our long-term goal of user retention. We ended up rolling back the change and adding a “content quality” feature to our training data, which penalized low-engagement videos. The next iteration of the model improved watch time by 9%. The failure taught me two things: first, offline metrics can hide misalignment with business goals, and second, you need to instrument your A/B tests to track not just the primary metric but also secondary signals that might explain unexpected behavior.
+
+INTERVIEWER:
+That’s a great lesson. Let’s talk about leadership. Can you share an example of a time you mentored someone on your team and how you measured the impact of your mentorship?
+
+CANDIDATE:
+At Streamify, I mentored a junior engineer named Jamie who was struggling to transition from data analysis to production ML. Jamie was brilliant with SQL and experimentation but had no experience with model serving or feature stores. I started by setting clear, incremental goals—like deploying a simple model to our staging environment within a month. I paired with Jamie on the first few tasks, walking through the code, explaining the CI/CD pipeline, and even doing some rubber-duck debugging. To measure progress, I tracked a few things: first, the number of production deployments Jamie owned (which went from 0 to 3 in three months), second, the reduction in bugs or incidents tied to Jamie’s work (which dropped by 50% after the first month), and third, Jamie’s confidence, which I gauged through regular feedback sessions. By the end of six months, Jamie had taken ownership of a critical feature store pipeline and even presented a tech talk on model serving best practices to the team. The biggest win was seeing Jamie go from hesitant to advocate—Jamie later mentored another new hire, which was the ultimate sign of growth.
+
+INTERVIEWER:
+That’s fantastic. Shifting to process improvement, can you tell me about a time you identified a bottleneck in your team’s workflow and how you addressed it?
+
+CANDIDATE:
+At ReelHub, our model iteration cycle was painfully slow—it took about two weeks from idea to A/B test. The bottleneck was our feature engineering pipeline, which was a monolithic Airflow DAG that required manual intervention for every change. I proposed breaking it into modular, reusable components using a feature store. I started by mapping out the entire pipeline and identifying the most frequent points of failure, which were usually feature transformations. I then designed a system where features were versioned and stored in Feast, so engineers could mix and match them without rewriting the entire pipeline. To get buy-in, I ran a hackathon where teams prototyped the new workflow. The results were compelling: the new system reduced the feature engineering time from 5 days to 1 day and cut the end-to-end iteration cycle by 60%. The key was making the change incremental—we didn’t rip out the old system overnight but instead ran both in parallel until the new one proved its value.
+
+INTERVIEWER:
+That’s a huge improvement. Let’s talk about conflict. Can you share a time you disagreed with a teammate or manager on a technical decision and how you resolved it?
+
+CANDIDATE:
+At Streamify, I clashed with our product manager over the tradeoff between model accuracy and latency. The PM wanted to deploy a more complex model that improved offline metrics by 10% but would add 200ms to our p99 latency. I argued that the latency hit would outweigh the accuracy gains, especially for mobile users. To resolve it, I proposed running a small-scale A/B test to measure the impact of latency on user engagement. The PM was skeptical but agreed. We found that a 200ms increase in latency led to a 5% drop in sessions, which more than offset the accuracy gains. The PM was convinced, and we ended up deploying a lighter model with a 5% accuracy improvement but no latency impact. The lesson was that data can bridge disagreements, but you have to frame the experiment in terms of shared goals—in this case, user engagement, not just model performance.
+
+INTERVIEWER:
+That’s a great example of using data to align stakeholders. Let’s talk about weaknesses. What’s a skill or area you’ve had to actively improve, and how did you go about it?
+
+CANDIDATE:
+Early in my career, I was terrible at writing production-grade code. I’d write scripts that worked in a notebook but fell apart in production. At DataFlow, I once deployed a model that caused a 30-minute outage because I hadn’t handled edge cases in the input data. After that, I made a conscious effort to improve. I started by taking a software engineering course focused on testing and modularity. I also paired with our backend engineers to learn best practices, like writing unit tests for every function and using type hints. I even refactored some of my old code as a learning exercise. Over time, I went from being the person who caused outages to the one who caught bugs before they hit production. Today, I make sure every model I deploy has 90%+ test coverage and is reviewed by at least one other engineer. It’s still a work in progress, but I’ve come a long way.
+
+INTERVIEWER:
+That’s a great mindset. Let’s wrap up with a technical question. How would you design a feature store for TideStream’s recommendations team, given our scale and latency requirements?
+
+CANDIDATE:
+For TideStream, I’d design a feature store with three key principles in mind: low latency, high availability, and scalability. First, I’d use a hybrid online/offline architecture. For the online store, I’d go with Redis or DynamoDB to serve features with single-digit millisecond latency, using a sharded setup to handle our scale. For the offline store, I’d use S3 or BigQuery, with a metadata layer to track feature versions and lineage. Second, I’d implement a real-time feature pipeline using Flink or Spark Streaming to ensure features are fresh, especially for contextual signals like user session data. Third, I’d add a feature validation layer to catch drift or anomalies before they hit production. For example, we could use statistical tests to compare online and offline feature distributions. Finally, I’d prioritize observability—metrics like feature freshness, latency percentiles, and error rates—so we can catch issues early. The biggest challenge would be balancing feature richness with latency, so I’d start with a minimal set of high-impact features and iterate based on A/B test results.
+
+INTERVIEWER:
+That’s a really thoughtful design. Before we wrap up, do you have any questions for me about the team or the role?
+
+CANDIDATE:
+Yes, I’d love to hear more about the team’s current priorities. What’s the biggest technical challenge the Recommendations team is facing right now, and how does this role contribute to solving it?
+
+INTERVIEWER:
+Great question. Right now, our biggest challenge is reducing the latency of our contextual bandit models. We’ve seen that even a 50ms increase in latency leads to a measurable drop in engagement, but our current models are hitting that threshold. This role would own the feature store and model serving infrastructure to help us serve these models faster without sacrificing accuracy. We’re also exploring ways to make our A/B testing framework more scalable, as we’re running into bottlenecks with our current setup.
+
+CANDIDATE:
+That’s really interesting. How does the team measure success for this initiative? Are there specific latency or engagement targets you’re aiming for?
+
+INTERVIEWER:
+We’re targeting a 30% reduction in p99 latency for our bandit models, which we believe will translate to a 5% increase in watch time. We’re also looking to reduce the time it takes to launch an A/B test from two weeks to one week.
+
+CANDIDATE:
+Got it. One last question—how does the team collaborate with other functions, like product or data science? For example, do you have joint goals or shared metrics?
+
+INTERVIEWER:
+We work closely with product on defining the success metrics for our models, and we have a shared North Star of increasing user retention. With data science, we partner on feature engineering and offline evaluation, but the Recommendations team owns the productionization and serving of the models. It’s a collaborative setup, but we’re the ones responsible for making sure the models work in production.
+
+CANDIDATE:
+That makes sense. Thanks for the insights, Priya—I’m even more excited about the role after this conversation.
+
+INTERVIEWER:
+Likewise, Sasha. We’ll be in touch soon about next steps. Have a great rest of your day!
+
+CANDIDATE:
+You too—thanks again!

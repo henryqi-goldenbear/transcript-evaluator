@@ -1,6 +1,6 @@
 param(
   [string]$OpenUrl = "",
-  [string]$Python = "C:\Users\zhiha\AppData\Local\Python\pythoncore-3.14-64\python.exe",
+  [string]$Python = "python",
   [int]$Port = 3000
 )
 
@@ -25,7 +25,7 @@ if (-not (Test-PipelineServer -Port $Port)) {
   }
 
   Start-Process $Python `
-    -ArgumentList "txt_to_json.py", "--serve-internal", "$Port" `
+    -ArgumentList "-m", "src.agent1.txt_to_json", "--serve-internal", "$Port" `
     -WorkingDirectory $root `
     -WindowStyle Hidden
 

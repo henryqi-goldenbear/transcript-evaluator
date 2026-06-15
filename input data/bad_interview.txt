@@ -1,0 +1,156 @@
+# Interview transcript fixture
+# Role: Backend Software Engineer, Platform team @ Northline Financial
+# Quality target: poor candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hi Sam, thanks for joining. How is your day going?
+
+CANDIDATE:
+Good.
+
+INTERVIEWER:
+Can you give me a quick overview of your background?
+
+CANDIDATE:
+I have done software for a while. Mostly backend, some frontend, some cloud stuff. I have worked on different projects and I am pretty good at learning things quickly. I do not remember all the details, but I have been around a lot of systems.
+
+INTERVIEWER:
+Walk me through your resume and the main roles that are relevant for this position.
+
+CANDIDATE:
+Sure. I had one job where I did coding, then another job where I did more coding. There were APIs and databases. I also helped with deployments sometimes. I do not really think job titles matter that much, but I have experience.
+
+INTERVIEWER:
+What drew you to this role and to Northline?
+
+CANDIDATE:
+It seems like a good company. I am looking for a better opportunity and the role sounded interesting. I applied to a few similar companies too, so I am mostly seeing what fits.
+
+INTERVIEWER:
+How have you used Go in production?
+
+CANDIDATE:
+I have looked at Go code. I would say I understand it generally. I have not written a lot of it from scratch, but code is code. If I needed to use it, I would pick it up.
+
+INTERVIEWER:
+Tell me about a time you led a project under a tight deadline.
+
+CANDIDATE:
+There was a project that had to be done fast. I helped the team get it done. We all worked hard and delivered it. I do not remember the exact timeline, but it was stressful.
+
+INTERVIEWER:
+What was the project and what did you personally own?
+
+CANDIDATE:
+It was something with an internal tool. I was involved in meetings and helped with some implementation. The team owned most of it together, so I would not say there was one specific thing that was only mine.
+
+INTERVIEWER:
+Describe a situation where you had to persuade a skeptical stakeholder.
+
+CANDIDATE:
+I usually do not have trouble persuading people. I just explain my view and people understand. I cannot think of a specific example right now, but I am good at communication.
+
+INTERVIEWER:
+Can you give me one actual example?
+
+CANDIDATE:
+Maybe there was a time a manager did not agree with an estimate. I said it would take longer. I think they accepted it eventually. I do not remember what project it was.
+
+INTERVIEWER:
+Tell me about a time you had a conflict with a teammate.
+
+CANDIDATE:
+I try to avoid conflict. If someone disagrees with me, I usually just let it go unless it is really important. There was a teammate who wrote bad code once, and I told them it was not good. They did not like that, but I was right.
+
+INTERVIEWER:
+How did you handle that conversation?
+
+CANDIDATE:
+I put comments on the pull request. I probably said it directly. I do not like wasting time sugarcoating things. Eventually someone else fixed the code.
+
+INTERVIEWER:
+Tell me about a time you failed or made a significant mistake.
+
+CANDIDATE:
+I cannot think of a major failure. I try to be careful. Sometimes bugs happen, but that is normal and usually not one person's fault.
+
+INTERVIEWER:
+Can you give me even a small example?
+
+CANDIDATE:
+There was a bug once after a release. I do not remember if it was my code. We rolled it back and moved on.
+
+INTERVIEWER:
+Tell me about a time you received tough feedback and what you did with it.
+
+CANDIDATE:
+I have gotten feedback before. Sometimes managers say to communicate more or write more documentation. I listen to feedback, but I also think some feedback is subjective. I do not have a specific story.
+
+INTERVIEWER:
+Tell me about a time you improved a process.
+
+CANDIDATE:
+I improve processes all the time. If something is slow, I suggest making it faster or automating it. I think teams should always be improving.
+
+INTERVIEWER:
+Can you be more specific about what you improved and what changed?
+
+CANDIDATE:
+We had a deployment process, and I suggested automating it. I do not remember whether it got fully implemented, but people agreed it was a good idea.
+
+INTERVIEWER:
+Tell me about a time you mentored someone or helped them grow.
+
+CANDIDATE:
+I answer questions when junior people ask me. I do not really do formal mentoring. I think people mostly learn by doing.
+
+INTERVIEWER:
+What is your greatest weakness?
+
+CANDIDATE:
+I work too hard sometimes. I can get too focused on quality. I guess I expect other people to move as fast as I do.
+
+INTERVIEWER:
+How do you handle competing priorities when everything is urgent?
+
+CANDIDATE:
+I just try to get everything done. If needed, I work extra hours. I do not like overthinking priority because usually everything is important.
+
+INTERVIEWER:
+Can you give me a past example when you had to make that tradeoff?
+
+CANDIDATE:
+There were many times. I do not remember a specific one. I probably stayed late and finished the work.
+
+INTERVIEWER:
+Tell me about a time you showed leadership when you were not the formal lead.
+
+CANDIDATE:
+I show leadership by speaking up in meetings. If I see something wrong, I say it. I think people respect that.
+
+INTERVIEWER:
+Can you give me a concrete situation?
+
+CANDIDATE:
+There was a meeting where people were discussing an approach, and I said we should do it differently. I do not remember what happened after that.
+
+INTERVIEWER:
+How do you typically work with product managers?
+
+CANDIDATE:
+They write requirements and I build them. If requirements are unclear, I ask questions. Sometimes PMs change their minds a lot, which is frustrating, but that is part of the job.
+
+INTERVIEWER:
+What questions do you have for us?
+
+CANDIDATE:
+What is the salary range, and how soon would I know if I got the job?
+
+INTERVIEWER:
+We can cover compensation with recruiting. Thanks for taking the time today.
+
+CANDIDATE:
+Okay, thanks.

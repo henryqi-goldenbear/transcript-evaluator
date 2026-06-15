@@ -1,0 +1,14 @@
+17:59:55 INFO [__main__] Starting convert and evaluate task; logging to logs\agent1\entire_interview_truncated\entry_timing\entire_interview_truncated_entry_timing.log
+17:59:55 INFO [__main__] input=input data\entire_interview_truncated.txt batch_size=3
+17:59:55 INFO [__main__] Parsing transcript: input=input data\entire_interview_truncated.txt chars=4275 classifier=heuristic-only
+17:59:55 INFO [__main__] Agent 2 structure review disabled.
+17:59:55 INFO [__main__] Parsed transcript into 4 cases
+17:59:55 INFO [__main__] Detected 4 evaluator cases
+17:59:55 INFO [__main__] Question/answer pair 1: started_at=17:59:55 finished_at=17:59:55 question_chars=94 answer_chars=699 follow_ups=0
+17:59:55 INFO [__main__] Question/answer pair 2: started_at=17:59:55 finished_at=17:59:55 question_chars=161 answer_chars=1107 follow_ups=0
+17:59:55 INFO [__main__] Question/answer pair 3: started_at=17:59:55 finished_at=17:59:55 question_chars=96 answer_chars=621 follow_ups=0
+17:59:55 INFO [__main__] Question/answer pair 4: started_at=17:59:55 finished_at=17:59:55 question_chars=94 answer_chars=452 follow_ups=0
+17:59:55 INFO [__main__] Finished conversion: input=input data\entire_interview_truncated.txt output=input data\entire_interview_truncated.json started_at=17:59:55 finished_at=17:59:55 input_chars=4275 cases=4 batch_size=3
+17:59:55 INFO [__main__] Stored approved interview structure in SQLite: db=data\interviews.sqlite interview_id=1
+17:59:56 INFO [__main__] Reusing existing pipeline server on port 3000
+17:59:56 INFO [__main__] Opening evaluator HTML: http://localhost:3000/src/frontend/evaluator.html?v=mistral-small-1&input=input+data%2Fentire_interview_truncated.json&batch_size=3&log_file=logs%2Fagent1%2Fentire_interview_truncated%2Fentire_interview_truncated_eval.log&result_log_file=logs%2Fagent1%2Fentire_interview_truncated%2Fentire_interview_truncated.log

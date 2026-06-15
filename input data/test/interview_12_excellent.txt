@@ -1,0 +1,153 @@
+# Interview transcript fixture
+# Role: Site Reliability Engineer, Core Infrastructure @ Mesa Cloud
+# Quality target: excellent candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hi Sasha, welcome! I’m Marcus, one of the SREs on the Core Infra team here at Mesa Cloud. How’s your day going so far?
+
+CANDIDATE:
+Hi Marcus, thanks for having me! My day’s been great—just finished a quick coffee before hopping on this call, so I’m feeling energized and ready to chat.
+
+---
+
+INTERVIEWER:
+Perfect. Let’s start with a quick walk through your resume. I see you’ve been at Stripe for the last three years as an SRE on their Kubernetes platform team. Can you give me the high-level arc of what you’ve been working on there?
+
+CANDIDATE:
+Absolutely. When I joined Stripe, the Kubernetes platform was still in its early stages—about 30% of workloads were containerized, and the team was focused on scaling the control plane and improving reliability. Over the first year, I led the migration of our internal CI/CD pipelines to run on Kubernetes, which reduced build times by 40% and cut our cloud spend for CI by 25% by consolidating underutilized VMs.
+
+In my second year, I shifted to observability and SLOs. We had a major incident where a misconfigured Prometheus scrape interval caused us to miss a critical latency spike in our payment processing service. I spearheaded a project to implement adaptive scrape intervals based on pod churn, which reduced false negatives in our alerts by 60%. I also worked with our product teams to define SLOs for our Kubernetes API and etcd clusters, which became the gold standard for how we measured reliability across the org.
+
+Most recently, I’ve been focused on capacity planning and cost optimization. We built a predictive autoscaling system for our worker nodes that uses historical traffic patterns and upcoming feature launches to pre-warm clusters. This reduced our peak-hour node count by 15% while maintaining headroom for traffic spikes, saving about $1.2M annually in cloud costs.
+
+---
+
+INTERVIEWER:
+That’s a great overview. What drew you to Mesa Cloud specifically? We’re a smaller company than Stripe, and our Core Infra team is still defining a lot of the foundational reliability practices.
+
+CANDIDATE:
+I’ve been following Mesa Cloud for a while—especially your blog posts on multi-region Kubernetes deployments and how you handle observability at scale. What excites me most is the opportunity to shape reliability practices from the ground up. At Stripe, I often found myself working around legacy decisions or navigating organizational inertia when trying to implement new processes. I’m really drawn to the idea of building a culture of reliability where SLOs, incident response, and capacity planning are first-class concerns from day one.
+
+I also love that Mesa Cloud is tackling problems in the data infrastructure space. The challenges around stateful workloads, cross-region consistency, and low-latency requirements are fascinating to me, and I think my experience with Kubernetes at scale and observability tooling would translate well here. Plus, I’ve heard great things about the engineering culture—especially the emphasis on blameless postmortems and cross-team collaboration.
+
+---
+
+INTERVIEWER:
+Let’s dive into some technical depth. One of the big challenges we’re facing is around noisy neighbor problems in our Kubernetes clusters. We’ve got a mix of stateless services and stateful workloads like Kafka and databases running on the same clusters, and we’re seeing latency spikes in our critical path services when batch jobs or lower-priority workloads consume too many resources. How would you approach diagnosing and mitigating this?
+
+CANDIDATE:
+This is a classic problem, and I’ve dealt with it in a few different ways at Stripe. The first step is always observability—you can’t fix what you can’t measure. We’d want to instrument the clusters with tools like Prometheus to track CPU, memory, disk I/O, and network bandwidth at the pod, node, and namespace levels. Specifically, I’d look for metrics like:
+
+- CPU throttling events (`container_cpu_cfs_throttled_seconds_total`)
+- Memory pressure (`container_memory_working_set_bytes` vs. `container_memory_limit_bytes`)
+- Disk I/O latency and throughput (`container_fs_reads_total`, `container_fs_writes_total`)
+- Network bandwidth (`container_network_receive_bytes_total`, `container_network_transmit_bytes_total`)
+
+For stateful workloads like Kafka, we’d also want to monitor disk queue depth and fsync latency, as those can be early indicators of noisy neighbors.
+
+Once we have the data, the next step is to establish baselines and set up alerts for when resource usage deviates from expected patterns. For example, if a batch job is supposed to run at 2 AM and only use 50% of a node’s CPU, but we see it spiking to 90% and causing latency in a co-located critical service, that’s a clear signal.
+
+For mitigation, there are a few approaches I’d consider, depending on the workload:
+
+1. **Resource Requests and Limits**: This is the most straightforward fix. We’d work with the teams owning the noisy workloads to set appropriate requests and limits. For example, if a batch job is causing CPU throttling, we might set a CPU limit of 2 cores and a request of 1 core to ensure it doesn’t starve other workloads.
+
+2. **Priority Classes and Preemption**: Kubernetes has a priority class system that allows you to define which pods should be scheduled first and which can be preempted if resources are scarce. We could define a `critical` priority class for latency-sensitive services and a `batch` priority class for lower-priority workloads. This ensures that critical pods get scheduled first and can preempt batch pods if needed.
+
+3. **Node Affinity and Taints/Tolerations**: For workloads that are particularly sensitive to noisy neighbors, we could use node affinity to schedule them on dedicated nodes. For example, we might taint a set of nodes with `workload=critical` and only allow pods with the corresponding toleration to run on them. This is more of a brute-force approach, but it can be effective for workloads that are extremely sensitive to resource contention.
+
+4. **Vertical Pod Autoscaler (VPA)**: For workloads where it’s hard to predict the right resource requests, VPA can dynamically adjust requests and limits based on historical usage. This is especially useful for stateful workloads where resource needs might change over time.
+
+5. **Cluster Autoscaler with Overprovisioning**: If we’re seeing frequent resource contention, we might need to scale up the cluster. We could use the Cluster Autoscaler to add nodes when resources are scarce, and we could also overprovision the cluster with low-priority pods that can be evicted when higher-priority workloads need the resources.
+
+At Stripe, we ended up using a combination of these approaches. For example, we used priority classes for our payment processing services and taints/tolerations for our Kafka clusters. We also built a tool that automatically adjusted resource requests for batch jobs based on their historical usage patterns, which reduced manual overhead for the teams owning those jobs.
+
+---
+
+INTERVIEWER:
+That’s a really thorough answer. Let’s switch gears to behavioral questions. Can you tell me about a time when you had to persuade a team to adopt a reliability practice they were initially resistant to? Walk me through the situation, your approach, and the outcome.
+
+CANDIDATE:
+Sure. At Stripe, I was working with our payments team to implement SLOs for their services. They were initially resistant because they saw it as extra overhead—they were already stretched thin with feature work, and they didn’t see the immediate value in defining SLOs.
+
+The situation was that their service, which handles credit card tokenization, was experiencing intermittent latency spikes that weren’t being caught by their existing monitoring. These spikes were causing timeouts in our checkout flow, which led to a 2% drop in successful payments during peak hours. The team was aware of the issue but was focused on shipping a new fraud detection feature, so they weren’t prioritizing the reliability work.
+
+My approach was to frame the problem in terms of their goals. I started by gathering data on the impact of the latency spikes—how many payments were failing, how much revenue was being lost, and how it compared to the expected impact of the fraud detection feature. I presented this data to the team in a way that showed how addressing the reliability issue could actually accelerate their feature work by reducing the time they spent firefighting.
+
+I also proposed a lightweight way to implement SLOs. Instead of asking them to define SLOs for every endpoint, I suggested we start with just the critical path—the tokenization endpoint—and use existing monitoring data to set an initial SLO. I offered to help them instrument the service and set up alerts, so they wouldn’t have to do all the work themselves.
+
+To make it even easier, I created a template for defining SLOs that they could reuse for other services. I also set up a dashboard that showed their error budget burn rate in real time, so they could see the impact of their work on reliability.
+
+The outcome was that the team agreed to implement the SLO for the tokenization endpoint. Within a week, we had the SLO in place and alerts set up. The alerts started firing almost immediately, which helped the team identify and fix a misconfigured load balancer that was causing the latency spikes. The fix reduced the error rate by 90%, and the team saw an immediate improvement in their payment success rate.
+
+After that, the team became much more open to adopting SLOs for their other services. They even started proactively reaching out to me for help defining SLOs for new features. The key was showing them the tangible benefits of the reliability work and making it as easy as possible for them to adopt the practices.
+
+---
+
+INTERVIEWER:
+That’s a great example of influencing without authority. Let’s talk about a time when you failed at something. What happened, and what did you learn from it?
+
+CANDIDATE:
+One of my biggest failures was early in my time at Stripe. I was working on a project to migrate our internal logging pipeline from a homegrown solution to a managed service. The goal was to reduce operational overhead and improve reliability, but I underestimated the complexity of the migration and the impact it would have on our teams.
+
+The situation was that our homegrown logging pipeline was becoming a bottleneck. It was built on a single-tenant Kafka cluster, and as our engineering team grew, the cluster was struggling to keep up with the volume of logs. We were seeing frequent outages, and the team responsible for maintaining the pipeline was spending most of their time firefighting instead of improving the system.
+
+I proposed migrating to a managed logging service, which I thought would be a straightforward lift-and-shift. I did some initial research, picked a vendor, and put together a migration plan. The plan involved setting up the new service, migrating a few non-critical services to test it out, and then gradually migrating the rest of the services over a few weeks.
+
+The problem was that I didn’t fully understand the dependencies between our services and the logging pipeline. Some of our services were tightly coupled to the homegrown pipeline, and they relied on features that the managed service didn’t support. For example, our fraud detection service used a custom log format that the managed service couldn’t parse, and our CI/CD pipeline relied on a specific retention policy that the managed service didn’t offer.
+
+When we started the migration, we quickly ran into issues. The fraud detection service started dropping logs, which caused false positives in our fraud alerts. The CI/CD pipeline started failing because it couldn’t find the logs it needed. The migration was supposed to take a few weeks, but after a month, we were still dealing with outages and rollbacks.
+
+In the end, we had to pause the migration and go back to the drawing board. I worked with the teams that were affected to understand their requirements and find workarounds. For the fraud detection service, we built a custom log parser that could translate their logs into a format the managed service could handle. For the CI/CD pipeline, we set up a separate retention policy that matched what they needed.
+
+The migration ended up taking three months instead of the planned few weeks, and it was a lot more painful than it needed to be. The biggest lesson I learned was the importance of understanding the full scope of a project before diving in. I should have spent more time talking to the teams that would be affected by the migration and understanding their requirements. I also learned the value of starting small and iterating—if I had migrated just one non-critical service first and worked out the kinks before moving on to the rest, we could have avoided a lot of the pain.
+
+Since then, I’ve made it a habit to do a thorough discovery phase before starting any major project. I talk to all the stakeholders, document their requirements, and identify potential risks and dependencies. I also make sure to start with a small pilot and iterate based on feedback. It’s made my projects a lot smoother and more successful.
+
+---
+
+INTERVIEWER:
+That’s a really honest reflection. Let’s talk about mentorship. Can you share an example of how you’ve helped someone on your team grow technically or professionally?
+
+CANDIDATE:
+Absolutely. At Stripe, I mentored a junior engineer named Priya who had just joined the team. She was really sharp and had a strong background in distributed systems, but she was new to Kubernetes and SRE practices, so she was still getting up to speed.
+
+The situation was that Priya was assigned to a project to improve the reliability of our Kubernetes API. The API was experiencing intermittent timeouts, and the team wanted to reduce the error rate. Priya was excited about the project but wasn’t sure where to start. She had some ideas but was hesitant to voice them because she didn’t want to step on anyone’s toes.
+
+My approach was to start by giving her some quick wins to build her confidence. I paired with her to set up a local Kubernetes cluster using kind, so she could experiment with the API without worrying about breaking production. We also set up a dashboard in Grafana to monitor the API’s error rate and latency, so she could see the impact of her changes in real time.
+
+Once she was comfortable with the basics, I encouraged her to take ownership of the project. I helped her break the problem down into smaller pieces—first, we needed to understand why the timeouts were happening, then we could work on fixing them. We started by looking at the logs and metrics to identify patterns. We noticed that the timeouts were happening more frequently during peak traffic hours, which suggested a capacity issue.
+
+Priya came up with the idea of implementing horizontal pod autoscaling (HPA) for the Kubernetes API server. She did some research, tested it out in our staging environment, and presented her findings to the team. The team was impressed with her work, and we ended up implementing her solution in production. The HPA reduced the error rate by 70%, and Priya got a lot of positive feedback from the team.
+
+Beyond the technical work, I also helped Priya develop her soft skills. I encouraged her to present her findings in our team meetings and to write up a postmortem for the project. I also introduced her to some of the other SREs at Stripe, so she could build relationships across the org.
+
+The outcome was that Priya became a go-to person for Kubernetes reliability on the team. She took on more ownership, led a few other projects, and even started mentoring newer engineers herself. She also got promoted to a mid-level engineer within a year, which was a huge accomplishment.
+
+For me, the biggest takeaway was the importance of giving people the space to take ownership and make mistakes. Priya had great ideas, but she needed someone to believe in her and give her the confidence to voice them. It was really rewarding to see her grow and take on more responsibility.
+
+---
+
+INTERVIEWER:
+That’s a fantastic example. Let’s talk about prioritization. How do you decide what to work on when you have more tasks than time? Can you walk me through a time when you had to make a tough call on prioritization?
+
+CANDIDATE:
+Prioritization is always a challenge, especially in SRE where there’s no shortage of things that could be improved. I use a framework that balances impact, urgency, and effort. Impact is about how much the work will improve reliability, performance, or cost. Urgency is about whether the work is time-sensitive—like a security vulnerability or an upcoming feature launch. Effort is about how much time and resources the work will take.
+
+A good example of this was when I was working on capacity planning at Stripe. We were preparing for a major feature launch that was expected to double our traffic. At the same time, we were dealing with a series of incidents related to our etcd clusters, and we also had a backlog of cost optimization projects.
+
+The situation was that the feature launch was happening in two weeks, and we needed to ensure our clusters could handle the increased traffic. The etcd incidents were causing outages in our staging environment, and we were worried they could happen in production. The cost optimization projects were important but not urgent—they were about reducing our cloud spend by 10-15%, but they wouldn’t impact the feature launch.
+
+I started by assessing the impact and urgency of each task. The feature launch was the highest priority because it was time-sensitive and had a direct impact on revenue. The etcd incidents were also high priority because they were causing outages, but they weren’t directly tied to the feature launch. The cost optimization projects were lower priority because they weren’t urgent and their impact was more long-term.
+
+I decided to focus on the feature launch first. I worked with the team to model the expected traffic increase and identify which clusters would need to be scaled up. We also set up additional monitoring to track the health of our clusters during the launch.
+
+For the etcd incidents, I delegated the work to another engineer on the team. I gave them a clear scope—focus on the staging environment first, then apply the fixes to production—and I checked in with them regularly to make sure they had the support they needed.
+
+The cost optimization projects were put on the backlog. I made sure to document the work we had done so far and the expected impact, so we could revisit them after the feature launch.
+
+The outcome was that the feature launch went smoothly. We had some minor issues with one of our clusters, but we were able to scale it up quickly and avoid any downtime. The etcd incidents were resolved in staging, and we applied the fixes to production before the launch. The cost optimization projects were picked up again after the launch, and we ended up saving about $500K annually.
+
+The key takeaway for me was the importance of being ruthless about prioritization. It’s easy to get

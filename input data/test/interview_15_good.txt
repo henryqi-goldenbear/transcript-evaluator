@@ -1,0 +1,153 @@
+# Interview transcript fixture
+# Role: Senior Product Manager, Marketplace team @ Hearthside
+# Quality target: good candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hey Quinn, welcome! How’s your day going so far?
+
+CANDIDATE:
+Hi Hassan, it’s going well, thanks for asking. Excited to be here and chat about the role.
+
+INTERVIEWER:
+Great to hear. Let’s start with a quick walk through your resume—just hit the highlights and tell me what led you to this conversation today.
+
+CANDIDATE:
+Sure. I’ve spent the last five years at Stripe, mostly on the Connect team, which is their two-sided marketplace for platforms and sellers. I started as a PM leading the onboarding flow for sellers, where I ran experiments to reduce drop-off by 22% over six months. From there, I took over the pricing and fee structure, which was a big lever for balancing supply and demand—we ended up increasing net revenue by 15% while keeping seller churn flat. Most recently, I’ve been leading the roadmap for our regional expansion in Europe, which involved a lot of trade-off discussions between localization, compliance, and growth. Before Stripe, I was at a smaller fintech startup where I wore a lot of hats, but the marketplace dynamics there really got me hooked on this space. When I saw the role at Hearthside, it felt like a perfect fit—especially the focus on experimentation and scaling a two-sided platform.
+
+INTERVIEWER:
+That’s a strong background. What specifically about Hearthside’s marketplace excites you compared to what you’ve worked on before?
+
+CANDIDATE:
+A few things stand out. First, the vertical focus on home services is really interesting to me. At Stripe, we were horizontal, so we didn’t get to dive deep into the nuances of a specific industry. Hearthside’s focus on home services means there’s a lot of room to optimize for things like trust, repeat usage, and high-intent demand—all of which are critical for a marketplace. Second, I love that experimentation is core to your culture. I saw in your engineering blog that you’ve built some sophisticated tooling for A/B testing, which is something I’ve been passionate about. At Stripe, we had to build a lot of our own infrastructure, so I’m excited to work with a team that’s already invested in that. And third, the scale you’re at feels like a sweet spot—big enough to have meaningful data, but still early enough to shape the product’s direction.
+
+INTERVIEWER:
+Let’s dig into experimentation a bit. Can you walk me through a time when an experiment you ran led to a surprising or counterintuitive result? How did you respond?
+
+CANDIDATE:
+Absolutely. At Stripe, we were testing a new feature to let sellers set custom fee structures for their platforms. The hypothesis was that giving sellers more control would increase their satisfaction and reduce churn. We ran an A/B test where the treatment group got the custom fee UI, and the control group didn’t. The initial results were promising—sellers in the treatment group were engaging with the feature, and early surveys showed higher satisfaction. But after two weeks, we noticed that the treatment group had a 12% higher churn rate. That was the opposite of what we expected.
+
+We dug into the data and found that while sellers liked the *idea* of custom fees, the actual implementation was confusing. The UI was too complex, and sellers were accidentally setting fees that hurt their margins, which led to frustration. We paused the rollout and ran a follow-up experiment with a simplified version of the feature. This time, churn in the treatment group was flat, and satisfaction scores improved. It was a great reminder that even if a feature tests well in isolation, the real-world impact can be different. We ended up shipping the simplified version and adding more guardrails to prevent misconfigurations.
+
+INTERVIEWER:
+That’s a great example. How do you think about balancing the need for speed in experimentation with the risk of rolling out something that could harm the marketplace?
+
+CANDIDATE:
+It’s a constant tension, especially in a two-sided marketplace where changes can have ripple effects. My approach is to start by defining the risk appetite for the experiment upfront. For example, if we’re testing something that could impact revenue or churn, we’ll usually start with a small, low-risk cohort—maybe 1-2% of users—and monitor leading indicators like engagement, support tickets, and early churn signals. We also set clear guardrails for when to pause or roll back the experiment. For instance, if we see a 5% drop in a key metric like completed transactions, we’ll automatically halt the test.
+
+At the same time, I try to avoid over-optimizing for safety. If we’re too cautious, we’ll miss out on learning opportunities. For example, at Stripe, we once tested a new payout flow that had a lot of internal pushback because it was a big change. But we ran a small experiment anyway, and it ended up increasing payout success rates by 8%. The key is to have a clear framework for evaluating risk and to communicate that framework to stakeholders so they understand the trade-offs.
+
+INTERVIEWER:
+Let’s switch gears to roadmap trade-offs. Can you tell me about a time when you had to deprioritize a high-visibility project? How did you handle it?
+
+CANDIDATE:
+Sure. At Stripe, we had a big push from leadership to improve our seller onboarding flow. The goal was to reduce the time it took for sellers to go from sign-up to first payout. We had a lot of ideas—simplifying the UI, adding more guided tours, even integrating with third-party identity verification services. But about halfway through the quarter, we realized that our biggest drop-off point wasn’t in the onboarding flow itself—it was in the payout setup step. Sellers were getting stuck because they didn’t understand how to link their bank accounts, and our support team was getting flooded with tickets.
+
+We had to make a tough call: deprioritize some of the onboarding work and shift resources to improving the payout setup experience. This was unpopular with some stakeholders because the onboarding project was a high-visibility initiative, and we’d already communicated timelines to leadership. But the data was clear—fixing payouts would have a bigger impact on our north star metric of seller activation.
+
+I worked with my engineering and design partners to scope a smaller MVP for the payout flow, and we ran a quick experiment to validate the changes. The results were strong—we reduced drop-off at the payout step by 30%, which directly improved our activation rate. We then circled back with leadership to explain the trade-off and show the data. They ended up being supportive because the outcome was better than what we’d originally planned.
+
+INTERVIEWER:
+How do you approach persuading stakeholders when they disagree with your prioritization?
+
+CANDIDATE:
+I try to start by understanding their perspective. Often, disagreements come from misaligned incentives or different interpretations of the data. For example, at Stripe, our sales team was pushing for a feature that would let sellers customize their checkout pages more. They argued that this would help them close more deals with enterprise customers. But the data showed that most sellers weren’t using the customization options we already had, and the engineering effort would be significant.
+
+Instead of pushing back right away, I set up a meeting with the sales team to dig into their feedback. We realized that their real pain point wasn’t customization—it was that sellers wanted more control over branding. So we brainstormed a lighter-weight solution that gave sellers the branding control they needed without requiring a full UI overhaul. We also ran a small experiment to validate that this would actually move the needle for enterprise sales. When we presented the data and the lighter solution, the sales team was on board because we’d addressed their core concern.
+
+The key is to frame the conversation around shared goals and use data to bridge gaps. If stakeholders see that you’re trying to solve the same problem they are, they’re more likely to be open to alternative solutions.
+
+INTERVIEWER:
+You mentioned earlier that you’ve led roadmaps for regional expansion. Can you talk about a time when you had to adapt your roadmap due to unexpected challenges in a new market?
+
+CANDIDATE:
+Definitely. When we were expanding Stripe Connect into France, we initially planned to launch with a localized version of our existing onboarding flow. We’d done the research—translated the UI, added support for local payment methods, and even partnered with a local bank for faster payouts. But after we launched in beta, we noticed that our activation rates were much lower than expected. We dug into the data and found that French sellers were dropping off at the tax ID verification step. It turned out that the process for obtaining a tax ID in France was more complex than in the U.S., and our flow didn’t account for that.
+
+We had to pivot quickly. Instead of doubling down on the onboarding flow, we shifted focus to building a guided tax ID verification tool that walked sellers through the process step by step. We also partnered with a local accounting firm to provide live support for sellers who got stuck. This wasn’t something we’d planned for in the original roadmap, but it was critical for success in the market.
+
+The lesson for me was that regional expansion isn’t just about localization—it’s about understanding the unique behaviors and pain points in each market. We ended up adding more buffer time to our roadmap for unexpected challenges, and we also started doing deeper market research earlier in the process.
+
+INTERVIEWER:
+Let’s talk about leadership. Can you share an example of a time when you had to step up to lead a cross-functional team through a challenging situation?
+
+CANDIDATE:
+Sure. At Stripe, we were working on a project to integrate a new payment method that was popular in Europe. The project involved engineering, design, legal, and compliance teams, and it was a high priority because it would unlock a lot of growth in that region. But about three weeks into the project, we hit a major snag: our legal team flagged a compliance issue that would require a complete redesign of the flow. This was a big setback because we’d already communicated timelines to external partners, and we were at risk of missing a key deadline.
+
+I took the lead on getting the team back on track. First, I worked with legal to understand the exact requirements and brainstorm potential solutions. We realized that we could mitigate the risk by adding a few extra steps to the flow, but it would require close collaboration with engineering to implement quickly. I set up a daily standup with the engineering and design teams to unblock any issues in real time, and I also looped in our external partners to reset expectations.
+
+It was a stressful few weeks, but we ended up shipping the feature on time with the compliance fixes in place. The key was keeping the team focused on the shared goal and making sure everyone had the context they needed to move quickly. Afterward, I worked with the team to document the lessons learned—specifically, the importance of involving legal earlier in the process for high-risk projects.
+
+INTERVIEWER:
+That’s a great example. How do you think about mentoring or developing more junior PMs on your team?
+
+CANDIDATE:
+Mentoring is one of the most rewarding parts of being a PM. I try to take a hands-on approach by giving junior PMs ownership of meaningful projects while also providing guardrails to help them succeed. For example, at Stripe, I worked with a junior PM who was leading a project to improve our seller dashboard. She was great at gathering requirements and working with design, but she struggled with prioritization—she wanted to build everything at once.
+
+I started by helping her break the project into smaller milestones and define clear success metrics for each. We also set up a weekly sync where she could walk me through her prioritization decisions and get feedback. Over time, she got better at making trade-offs and communicating her rationale to stakeholders. By the end of the project, she was leading the roadmap discussions with confidence.
+
+I also think it’s important to create a culture where junior PMs feel comfortable asking questions. I encourage them to come to me with problems early, even if they don’t have a solution yet. That way, we can work through them together before they become bigger issues.
+
+INTERVIEWER:
+Let’s talk about failure. Can you share a time when something you worked on didn’t go as planned? How did you handle it?
+
+CANDIDATE:
+Of course. Early in my time at Stripe, I was leading a project to launch a new feature for sellers called “Instant Payouts.” The idea was to let sellers access their funds immediately instead of waiting the standard two days. We’d done the research, and it was clear that this was a highly requested feature. But after we launched, we noticed that usage was much lower than expected. We’d assumed that sellers would jump at the chance to get their money faster, but the data showed that only about 10% of eligible sellers were using it.
+
+We dug into the feedback and realized that the issue wasn’t the feature itself—it was the pricing. We’d added a small fee for instant payouts, and sellers didn’t see enough value to justify the cost. We also found that many sellers didn’t even know the feature existed because we hadn’t done a great job with the onboarding messaging.
+
+I took ownership of the missteps. First, we ran an experiment to test different pricing models, including a free tier for small transactions. We also revamped the onboarding flow to better highlight the feature. Within a few weeks, usage doubled, and we ended up rolling out the changes globally.
+
+The failure taught me the importance of validating assumptions early, even for features that seem like a no-brainer. It also reinforced the value of iterating quickly based on real-world feedback.
+
+INTERVIEWER:
+That’s a solid recovery. Let’s shift to process improvement. Can you tell me about a time when you identified a bottleneck in your team’s workflow and how you addressed it?
+
+CANDIDATE:
+Sure. At Stripe, our team was responsible for running experiments, but we kept hitting delays because of dependencies on the data science team. We’d have to wait weeks for them to analyze results, which slowed down our iteration cycle. I noticed that a lot of the analysis was repetitive—things like calculating lift, statistical significance, and segmenting results by user cohorts.
+
+I worked with our data science team to build a self-serve dashboard that automated these common analyses. The dashboard pulled data directly from our experimentation platform, so PMs could get real-time results without waiting for a data scientist. We also added guardrails to ensure that the data was being interpreted correctly—for example, flagging experiments that didn’t meet statistical significance thresholds.
+
+The dashboard reduced our time-to-insights by about 70%, and it freed up the data science team to focus on more complex analyses. It also improved collaboration because PMs and data scientists could now look at the same data in real time.
+
+INTERVIEWER:
+That’s a great example of removing friction. Let’s wrap up with a technical question. How do you think about measuring the health of a two-sided marketplace?
+
+CANDIDATE:
+Measuring the health of a two-sided marketplace is all about balancing supply and demand while ensuring both sides are getting value. I usually start with a few core metrics:
+
+1. **Liquidity**: This is the most critical metric for any marketplace. I look at things like match rate (the percentage of demand that gets fulfilled) and time-to-match (how quickly supply can meet demand). For example, at Stripe, we tracked how quickly sellers could start accepting payments after signing up, because that was a leading indicator of whether they’d stick around.
+
+2. **Retention**: For both sides of the marketplace, I look at retention curves to understand how sticky the platform is. For Hearthside, that might mean tracking how often homeowners return to book services or how many service providers stay active on the platform over time.
+
+3. **Unit economics**: This is especially important for scaling. I look at metrics like customer acquisition cost (CAC), lifetime value (LTV), and take rate (the percentage of each transaction that the platform keeps). The goal is to ensure that the marketplace is sustainable and that both sides are getting enough value to justify their participation.
+
+4. **Quality signals**: For a marketplace like Hearthside, trust is critical. I’d look at metrics like ratings and reviews, dispute rates, and response times to ensure that both homeowners and service providers are having positive experiences.
+
+5. **Growth loops**: I also think about how the marketplace grows organically. For example, do happy homeowners refer their friends? Do service providers bring their existing clients onto the platform? These loops can be powerful drivers of sustainable growth.
+
+The key is to track these metrics over time and look for leading indicators of problems. For example, if match rates start to decline, it might signal that supply is drying up, which could lead to lower retention on the demand side.
+
+INTERVIEWER:
+That’s a comprehensive answer. Before we wrap up, do you have any questions for me about the role or the team?
+
+CANDIDATE:
+Yes, I’d love to hear more about a few things. First, can you talk about the biggest challenges the Marketplace team is facing right now? I’m curious where the team is focusing its energy.
+
+Second, how does the team think about balancing short-term growth with long-term platform health? For example, are there areas where you’re consciously deprioritizing growth to avoid hurting the marketplace dynamics?
+
+And third, what’s the team’s approach to experimentation? I saw in the engineering blog that you’ve built some custom tooling—how does that influence the way PMs work?
+
+INTERVIEWER:
+Great questions. On challenges, we’re really focused on improving liquidity in a few key markets where we’ve seen supply constraints. It’s a classic chicken-and-egg problem, but we’re testing a few different levers to address it.
+
+On growth vs. health, it’s something we talk about a lot. Right now, we’re being pretty disciplined about not over-optimizing for growth at the expense of trust or quality. For example, we’ve deprioritized some performance marketing initiatives because we want to make sure we’re acquiring the right kind of demand—not just any demand.
+
+And on experimentation, we’ve definitely invested in tooling to make it easier to run tests. PMs here are expected to be hands-on with the data, and the tooling helps us move faster. That said, we’re still working on scaling our experimentation culture—it’s a work in progress.
+
+CANDIDATE:
+That’s really helpful context. Thanks for sharing. One last question: what’s the team’s biggest priority for the next 6-12 months?
+
+INTERVIEWER:
+Our top priority is scaling the marketplace while maintaining quality. We’ve

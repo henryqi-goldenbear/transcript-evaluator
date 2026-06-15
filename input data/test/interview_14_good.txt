@@ -1,0 +1,115 @@
+# Interview transcript fixture
+# Role: Machine Learning Engineer, Recommendations team @ TideStream
+# Quality target: good candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+INTERVIEWER:
+Hi Devon, I’m Priya—thanks for joining me today. To start, could you give me a quick two-minute walk through your resume, hitting the highlights that led you to apply for the ML Engineer role on the Recommendations team?
+
+CANDIDATE:
+Absolutely, Priya. I’ve been working in recommendation systems for about five years, starting at ShopSense where I built a real-time personalization engine that lifted add-to-cart rates by 12 %. After that I moved to VideoFlow, where I led the migration from batch-trained embeddings to a feature store that cut online latency from 450 ms to 90 ms and improved NDCG by 0.08. Most recently at Streamify I owned the offline-online evaluation loop for the home-feed model; I introduced a canary rollout framework that reduced bad launches by 60 % and cut the time to detect regressions from two weeks to two days. I’m excited about TideStream’s focus on low-latency, high-scale recommendations and the chance to work on both the feature store and the evaluation infrastructure.
+
+INTERVIEWER:
+That’s a great trajectory. What specifically about TideStream’s tech stack or team setup makes you want to join us?
+
+CANDIDATE:
+I’ve dug into your blog posts on the unified feature store and the shadow-A/B pipeline. At Streamify we had separate offline and online feature stores, which caused skew and delayed launches. TideStream’s single store that serves both training and inference feels like the right architecture. I also like that the Recommendations team owns the full loop—feature definition, model training, serving, and evaluation—so I can see the impact of my work end-to-end. Finally, the team’s focus on rigorous offline metrics that actually correlate with business KPIs is something I’ve been pushing for at my current job, so I’d love to help scale that here.
+
+INTERVIEWER:
+Let’s dive into one of those projects. Tell me about a time you had to persuade stakeholders to adopt a new evaluation metric or methodology.
+
+CANDIDATE:
+Sure. At Streamify, our main offline metric was AUC, but it didn’t correlate with watch time or retention. I ran an analysis showing that a 0.01 AUC gain could actually hurt long-term retention by 0.3 %. I built a prototype dashboard that plotted offline AUC against online retention for the last 20 model versions. When I showed the PM and the head of ML that the two curves diverged after version 12, they agreed to add a retention proxy metric to the offline suite. We A/B tested the new metric on three model iterations and saw a 2 % lift in 28-day retention, which convinced the whole org to adopt it.
+
+INTERVIEWER:
+Nice outcome. Walk me through the technical trade-offs you considered when you built that feature store at VideoFlow.
+
+CANDIDATE:
+We had three main options: a key-value store like DynamoDB, a time-series database like Influx, or a purpose-built feature store like Feast. DynamoDB was fast but didn’t support time-travel for training data, so we’d have to replay logs. Influx gave us time-travel but couldn’t handle the QPS we needed for online serving. Feast was still early-stage, so we forked it and added a read-through cache in Redis. The trade-off was higher operational overhead—we had to run two clusters—but we got sub-100 ms P99 latency and consistent training-serving data. We also added a background materialization job that compacted features every 15 minutes to keep Redis memory usage under control.
+
+INTERVIEWER:
+How did you measure the success of that migration?
+
+CANDIDATE:
+We tracked three metrics: online latency, training-serving skew, and model performance. Latency dropped from 450 ms to 90 ms P99. Skew, measured as the KL divergence between online and offline feature distributions, went from 0.12 to 0.01. And because the model now saw the same features at training and inference, NDCG improved by 0.08. We also measured the reduction in launch failures—before the migration, 20 % of launches had to be rolled back due to feature mismatch; after, it was 2 %.
+
+INTERVIEWER:
+Let’s switch gears. Tell me about a time you had to prioritize between two high-impact projects with conflicting deadlines.
+
+CANDIDATE:
+At Streamify, we had a hard deadline to launch a new home-feed model before the holiday season, but the same week I was also on the hook to fix a critical bug in the feature store that was causing 5 % of requests to fail. I knew the model launch would drive revenue, but the feature-store bug was affecting all models, not just the new one. I ran a quick analysis showing that the bug was costing us about 1.2 % of total watch time. I proposed a two-phase fix: first, a hot-patch that reduced the failure rate to 0.5 % in 24 hours, then a full fix after the model launch. I got buy-in from the PM and the head of infra, and we hit both deadlines without major incidents.
+
+INTERVIEWER:
+How did you handle the pushback from the PM who wanted the full fix immediately?
+
+CANDIDATE:
+I framed it in terms of risk. I said, “If we try to do the full fix now, we might miss the holiday launch, which could cost us $2 M in revenue. The hot-patch reduces the risk to 0.5 %, which is below the noise floor of our A/B tests. We can still do the full fix next week.” I also showed data from past incidents where rushed fixes introduced new bugs. The PM agreed once he saw the numbers.
+
+INTERVIEWER:
+Tell me about a time you mentored a junior engineer and how you measured the impact of that mentorship.
+
+CANDIDATE:
+I mentored a new grad, Alex, who joined the VideoFlow team. He was sharp but had never worked on large-scale distributed systems. I set up a weekly 1:1 and gave him a small project: add a new feature to the feature store and write the client library in Python and Go. I reviewed his design doc, pair-programmed the tricky parts, and helped him debug a race condition in the materialization job. After three months, he was owning features end-to-end. I measured impact by tracking the number of PRs he submitted and merged—it went from 1 per month to 4 per month—and by the reduction in review cycles, which dropped from 3.5 to 1.2. He also took over the on-call rotation for the feature store, which freed up my time to work on the migration.
+
+INTERVIEWER:
+What’s a process or tool you’ve introduced that improved your team’s productivity?
+
+CANDIDATE:
+At Streamify, we had a manual process for model launches: someone had to update a config file, restart the service, and monitor dashboards. It was error-prone and took 30 minutes per launch. I built a launch orchestrator that automated the config update, service restart, and rollback if metrics dropped. It also ran a shadow A/B test for 30 minutes before promoting the model to 100 %. Launches became one-click, and the time dropped to 5 minutes. More importantly, the number of bad launches dropped from 15 % to 2 %. The team adopted it for all models, and it’s now part of the standard ML toolkit.
+
+INTERVIEWER:
+Tell me about a time you failed and what you learned.
+
+CANDIDATE:
+Early at ShopSense, I built a real-time personalization model that used session data. I trained it on historical data and launched it without a proper canary. Within an hour, we saw a 20 % drop in add-to-cart rates. I rolled it back and found that the model was over-indexing on short sessions, which were noisy. I learned to always start with a small canary—1 % of traffic—and to monitor not just the target metric but also auxiliary metrics like session length. I also added a pre-launch checklist that includes a canary plan and a rollback plan. That failure cost us a few thousand dollars, but it saved us from bigger mistakes later.
+
+INTERVIEWER:
+Let’s talk about conflict. Tell me about a time you had a disagreement with a teammate and how you resolved it.
+
+CANDIDATE:
+At VideoFlow, I wanted to add a new feature to the feature store: user watch history aggregated by genre. My teammate, who owned the data pipeline, argued that it would double the storage cost and slow down writes. We had a heated debate in a team meeting. I proposed a compromise: we’d add the feature but only materialize it for users who had watched at least 10 videos in the last 30 days. That reduced the storage cost by 80 %. We also added a TTL to the feature so it would expire after 90 days. My teammate agreed, and we launched it without any performance issues. The feature ended up improving NDCG by 0.05.
+
+INTERVIEWER:
+How do you stay up-to-date with the latest developments in ML and recommendation systems?
+
+CANDIDATE:
+I have a few go-to sources: I read papers from RecSys, KDD, and NeurIPS, and I follow blogs from Netflix, Spotify, and DoorDash. I also attend local ML meetups and have a monthly reading group with a few friends in the field. At work, I run a bi-weekly “paper club” where we discuss a recent paper and brainstorm how we could apply it. For example, we read about retrieval-augmented recommendations and ended up prototyping a two-stage retrieval system that improved diversity without hurting relevance.
+
+INTERVIEWER:
+Let’s do a quick technical deep dive. How would you design an offline evaluation pipeline for a new recommendation model at TideStream?
+
+CANDIDATE:
+First, I’d define the business KPIs—say, watch time and retention—and map them to offline metrics like NDCG, recall@K, and a retention proxy. I’d use historical data with a time-based split to avoid leakage. For each candidate model, I’d run a replay evaluation: simulate the recommendations the model would have made and compute the metrics on held-out data. I’d also run a counterfactual evaluation to estimate the causal impact of the recommendations. To validate the offline metrics, I’d correlate them with online A/B test results from past launches. Finally, I’d set up a dashboard that shows the offline metrics for all candidate models and flags any regressions.
+
+INTERVIEWER:
+What’s one weakness you’re actively working to improve?
+
+CANDIDATE:
+I tend to dive deep into technical details, which can slow down decision-making. I’ve been working on this by setting time limits for technical deep dives—e.g., “I’ll spend two hours prototyping this, then make a call.” I’ve also started using a decision journal to document the trade-offs and the rationale behind my decisions. It’s helped me move faster without sacrificing rigor.
+
+INTERVIEWER:
+Great. Before we wrap up, do you have any questions for me about the team or the role?
+
+CANDIDATE:
+Yes, a few. First, how does the Recommendations team balance innovation with stability? For example, how often do you experiment with new model architectures versus iterating on the current one?
+
+INTERVIEWER:
+We aim for a 70-20-10 split: 70 % on iterating and scaling the current model, 20 % on incremental improvements like new features or better evaluation, and 10 % on blue-sky experiments. We’ve found that this balance keeps the system stable while still allowing us to innovate.
+
+CANDIDATE:
+That makes sense. Second, what’s the biggest technical challenge the team is facing right now?
+
+INTERVIEWER:
+We’re working on reducing the latency of our feature store. We’ve hit a wall with our current architecture, and we’re exploring options like caching, sharding, and even a custom in-memory store. It’s a tricky problem because we need to serve features for both training and inference with very low latency.
+
+CANDIDATE:
+Interesting. I’d love to brainstorm solutions if I join the team. Finally, how do you measure the success of an ML engineer on the Recommendations team?
+
+INTERVIEWER:
+We look at a mix of business impact—like improvements in watch time or retention—and technical contributions—like reducing latency, improving model performance, or building scalable infrastructure. We also value collaboration, so we look at how well you work with other teams like data engineering and product.
+
+CANDIDATE:
+Thanks, Priya. That’s really helpful. I’m excited about the opportunity and think my experience with feature stores and evaluation pipelines would be a great fit for the team.
+
+INTERVIEWER:
+Thanks, Devon. We’ll be in touch soon. Have a great day!

@@ -1,0 +1,148 @@
+# Interview transcript fixture
+# Role: Senior Product Manager, Marketplace team @ Hearthside
+# Quality target: very_poor candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+INTERVIEWER:
+Hi Avery, thanks for joining me today. I’m Priya, I lead the Marketplace team here at Hearthside. How are you doing?
+
+CANDIDATE:
+Good, thanks.
+
+INTERVIEWER:
+Great. Let’s start with a quick walk through your resume. Can you give me a high-level overview of your background and what led you to apply for this role?
+
+CANDIDATE:
+Yeah, so I’ve been a PM for a few years. Worked at a couple of companies, mostly in marketplaces. I did some stuff with growth and experiments. I thought this role sounded interesting.
+
+INTERVIEWER:
+Got it. Can you tell me more about one of those marketplace experiences? What was the product, and what was your impact?
+
+CANDIDATE:
+Uh, I worked on a platform where people could buy and sell things. I helped with some features. Not sure about the exact impact, but it was fine.
+
+INTERVIEWER:
+What specifically did you own or drive during that time?
+
+CANDIDATE:
+I don’t remember. It was a while ago. I think I worked on some experiments, but I didn’t really own anything big.
+
+INTERVIEWER:
+Let’s talk about this role. What excites you about Hearthside’s Marketplace team?
+
+CANDIDATE:
+I guess the scale? I mean, it’s a big company, so that’s cool. And I like working on marketplaces.
+
+INTERVIEWER:
+Can you dig into that a bit? What about our specific marketplace dynamics interests you?
+
+CANDIDATE:
+I don’t know, it’s two-sided, right? That’s kind of standard. I’ve done that before.
+
+INTERVIEWER:
+Got it. Let’s shift to a technical question. How do you approach designing experiments in a two-sided marketplace where supply and demand are tightly coupled?
+
+CANDIDATE:
+You just run tests. Like, A/B tests. You change something and see what happens.
+
+INTERVIEWER:
+Can you walk me through a time when you had to make a tradeoff between short-term metrics and long-term health of the marketplace?
+
+CANDIDATE:
+I don’t really think about that. You just do what the data says.
+
+INTERVIEWER:
+So you’ve never had to balance, say, driving immediate GMV growth versus ensuring supplier retention?
+
+CANDIDATE:
+No, not really. The data tells you what to do.
+
+INTERVIEWER:
+Let’s talk about leadership. Can you share an example of a time you had to influence a team without formal authority?
+
+CANDIDATE:
+I don’t know. I just tell people what to do.
+
+INTERVIEWER:
+How do you handle pushback when stakeholders disagree with your prioritization?
+
+CANDIDATE:
+They usually just agree. If not, I don’t really care.
+
+INTERVIEWER:
+Can you tell me about a time you failed and what you learned from it?
+
+CANDIDATE:
+I don’t fail. I mean, sometimes things don’t work, but it’s not my fault.
+
+INTERVIEWER:
+What about a time when a project didn’t go as planned? How did you handle it?
+
+CANDIDATE:
+I just move on. No point dwelling on it.
+
+INTERVIEWER:
+How do you mentor junior PMs or cross-functional partners?
+
+CANDIDATE:
+I don’t. They should figure it out themselves.
+
+INTERVIEWER:
+Let’s talk about process. Have you ever improved a process on your team? What was the outcome?
+
+CANDIDATE:
+No, processes are fine as they are.
+
+INTERVIEWER:
+What’s a weakness you’ve had to work on as a PM?
+
+CANDIDATE:
+I don’t have any weaknesses. I’m good at my job.
+
+INTERVIEWER:
+Can you tell me about a time you had to persuade leadership to invest in a high-risk, high-reward initiative?
+
+CANDIDATE:
+I don’t do that. Leadership just approves what I say.
+
+INTERVIEWER:
+How do you measure success for your product area?
+
+CANDIDATE:
+Metrics. Like, revenue or something.
+
+INTERVIEWER:
+Can you give me an example of a time you had to pivot your roadmap based on new data or feedback?
+
+CANDIDATE:
+I don’t pivot. The roadmap is set.
+
+INTERVIEWER:
+What’s a recent trend in marketplace dynamics that you find interesting?
+
+CANDIDATE:
+I don’t follow trends.
+
+INTERVIEWER:
+How do you stay close to your users and suppliers?
+
+CANDIDATE:
+I don’t. That’s not my job.
+
+INTERVIEWER:
+What’s one thing you’d change about how your last team operated?
+
+CANDIDATE:
+Nothing. It was fine.
+
+INTERVIEWER:
+Alright, Avery. Do you have any questions for me about the role or team?
+
+CANDIDATE:
+No, I think I’m good.
+
+INTERVIEWER:
+Great. Thanks for your time today. We’ll be in touch.
+
+CANDIDATE:
+Cool. Bye.

@@ -1,0 +1,157 @@
+# Interview transcript fixture
+# Role: Senior Product Manager, Marketplace team @ Hearthside
+# Quality target: good candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hi Devon, I’m Priya—great to meet you. How’s your day going so far?
+
+CANDIDATE:
+Hi Priya, nice to meet you too! My day’s been good—just finished a quick coffee run, so I’m feeling energized. How about you?
+
+---
+
+INTERVIEWER:
+Doing well, thanks! Let’s start with a quick walk through your resume. Could you give me the two-minute version of your journey so far, and what led you to apply for this role at Hearthside?
+
+CANDIDATE:
+Absolutely. I started my career in consulting at McKinsey, where I worked on growth strategy for retail and marketplace clients. That’s where I first got hooked on two-sided platforms—seeing how supply and demand dynamics could make or break a business. After that, I joined DoorDash as a PM on the Merchant team, where I owned the roadmap for our restaurant onboarding flow. I led a project to reduce drop-off by 30% by simplifying the sign-up process, which was a great lesson in balancing friction for both sides of the marketplace.
+
+Then I moved to Airbnb, where I worked on the Experiences team. I led a cross-functional effort to improve host retention by redesigning the payout system, which increased 90-day retention by 12%. That role really sharpened my skills in experimentation—we ran over 20 A/B tests to isolate the impact of different payout cadences and communication strategies.
+
+I’m excited about this role at Hearthside because I love the challenge of marketplace dynamics, especially in a space like home services where trust and reliability are so critical. I’ve spent a lot of time thinking about how to align incentives between service providers and customers, and I see a ton of opportunity here to apply that experience.
+
+---
+
+INTERVIEWER:
+That’s a great overview. You mentioned experimentation at Airbnb—can you walk me through a time when an experiment didn’t go as planned, and how you handled it?
+
+CANDIDATE:
+Sure. At Airbnb, we were testing a new feature that allowed hosts to set dynamic pricing for their experiences based on demand. The hypothesis was that this would increase host earnings and, in turn, improve retention. We ran a small-scale A/B test, and the initial results looked promising—hosts in the test group were setting higher prices, and their earnings were up.
+
+But when we dug deeper, we realized the higher earnings were coming at the cost of bookings. The conversion rate for experiences in the test group had dropped by 18%, which we hadn’t anticipated. It turned out that guests were less likely to book when prices fluctuated unpredictably, even if the average price wasn’t much higher.
+
+I pulled the plug on the experiment immediately and worked with the data science team to analyze the results. We found that guests were particularly sensitive to price changes for experiences that were already in the higher price range. So, we pivoted and tested a version where hosts could set a base price but had the option to offer small discounts during low-demand periods. That version actually *increased* bookings by 8% without hurting host earnings.
+
+The key takeaway for me was the importance of looking beyond the primary metric. We’d been so focused on host earnings that we missed the downstream impact on guest behavior. Now, I always make sure to define guardrail metrics upfront to catch these kinds of trade-offs.
+
+---
+
+INTERVIEWER:
+That’s a great example. Shifting gears a bit—can you tell me about a time when you had to make a tough prioritization call on your roadmap? How did you decide what to focus on, and how did you get buy-in from stakeholders?
+
+CANDIDATE:
+Absolutely. At DoorDash, we were in the middle of a major push to improve restaurant onboarding, but we also had a growing backlog of feature requests from our existing merchant base. One of the biggest asks was for a tool that would let restaurants bulk-edit their menus, which would save them a ton of time. The problem was, our engineering team was already stretched thin with the onboarding work, and leadership was pushing us to hit aggressive growth targets.
+
+I had to make a call: do we delay the onboarding improvements to build the bulk-edit tool, or do we stay the course and risk frustrating our existing merchants? I started by gathering data. I worked with our analytics team to quantify the impact of the bulk-edit tool—how many restaurants were asking for it, how much time it would save them, and whether it would actually move the needle on retention. We found that while the tool would be a huge time-saver for restaurants, it wouldn’t have a meaningful impact on retention or order volume. Meanwhile, the onboarding improvements were directly tied to our growth goals—every 1% reduction in drop-off meant thousands of new restaurants joining the platform.
+
+I also talked to our customer support team to understand the pain points. They confirmed that while the bulk-edit tool was a nice-to-have, the bigger issue was restaurants struggling to get started in the first place. So, I decided to deprioritize the bulk-edit tool and double down on the onboarding work.
+
+To get buy-in, I framed the decision in terms of our shared goals. I presented the data to leadership and explained that while the bulk-edit tool was valuable, it wasn’t the highest-leverage use of our time. I also committed to revisiting it in the next quarter if we hit our onboarding targets. That helped get everyone aligned, and we ended up reducing onboarding drop-off by 22% in that quarter.
+
+---
+
+INTERVIEWER:
+That’s a solid approach. Let’s talk about marketplace dynamics for a minute. How do you think about balancing the needs of the two sides of a marketplace, especially when they’re in conflict? Can you give me an example of a time when you had to navigate that tension?
+
+CANDIDATE:
+Balancing the needs of both sides is one of the trickiest parts of working on a marketplace, but it’s also what makes the role so interesting. The key is to find ways to align incentives so that what’s good for one side is also good for the other—or at least doesn’t harm them. At Airbnb, we faced this tension when we were redesigning the payout system for experiences. Hosts wanted faster payouts—they’d often complain that waiting 24 hours after an experience to get paid was too long, especially for hosts who relied on that income for cash flow. But from Airbnb’s perspective, faster payouts meant higher fraud risk and more operational complexity.
+
+I started by talking to hosts to understand their pain points. Many of them were small business owners who needed the cash to pay for supplies or staff for their next experience. At the same time, I worked with our fraud and operations teams to understand the constraints. The biggest concern was that faster payouts would make it harder to detect and reverse fraudulent transactions.
+
+We landed on a solution that gave hosts more control over their payout timing without increasing fraud risk. We introduced an option for hosts to request an instant payout for a small fee, while keeping the standard 24-hour payout free. This way, hosts who needed the cash immediately could get it, but the default remained the safer, slower option. We also built in safeguards, like limiting instant payouts to hosts with a strong track record and capping the amount they could withdraw instantly.
+
+The result was a win-win: host satisfaction with payouts improved by 25%, and we didn’t see any increase in fraud. It was a great example of how you can design incentives to align both sides of the marketplace.
+
+---
+
+INTERVIEWER:
+That’s a really thoughtful approach. Let’s switch to leadership. Can you tell me about a time when you had to mentor or coach someone on your team? How did you approach it, and what was the outcome?
+
+CANDIDATE:
+Sure. At DoorDash, I was managing a junior PM who was really talented but struggled with confidence, especially when presenting to leadership. She’d often second-guess her recommendations or water down her proposals to avoid pushback. I noticed this was holding her back—she had great ideas, but they weren’t getting the visibility they deserved.
+
+I started by having a one-on-one with her to understand where she was coming from. She shared that she’d had a bad experience in a previous role where her ideas were dismissed, and she was worried about repeating that. I reassured her that her perspective was valuable and that I wanted to help her build the confidence to advocate for her work.
+
+We worked on a few things together. First, I gave her more opportunities to present in lower-stakes settings, like team meetings, so she could get comfortable sharing her ideas. I also helped her frame her recommendations in a way that made the data and user insights the hero, rather than her opinion. For example, instead of saying, “I think we should do X,” she’d say, “The data shows that users are struggling with Y, so we’re proposing X as a solution.” That shift made her feel less like she was putting herself on the line.
+
+I also did some role-playing with her before big presentations. We’d practice her talking points and anticipate questions from leadership. Over time, she got more comfortable with the back-and-forth and started to see pushback as a normal part of the process, not a reflection of her abilities.
+
+The outcome was really rewarding. Within a few months, she was leading presentations to leadership with confidence, and one of her proposals—a redesign of the restaurant dashboard—ended up getting greenlit. She even started mentoring other junior PMs on the team. It was a great reminder that sometimes the best way to lead is to help others find their voice.
+
+---
+
+INTERVIEWER:
+That’s a great story. Let’s talk about conflict. Can you share an example of a time when you had a disagreement with a stakeholder or teammate? How did you handle it, and what did you learn?
+
+CANDIDATE:
+Absolutely. At Airbnb, I was working on a project to improve the discovery experience for guests browsing experiences. My team wanted to introduce a new algorithm that would personalize the experience feed based on a guest’s past bookings and interests. The engineering team, however, was concerned that the new algorithm would be too complex to build and maintain, especially given the relatively small size of the experiences marketplace compared to the core homes business.
+
+The disagreement came to a head during a roadmap planning session. The engineering lead argued that we should focus on simpler improvements, like better filtering options, rather than overhauling the algorithm. I pushed back, saying that personalization was key to driving engagement and that we couldn’t afford to fall behind competitors who were already investing in it.
+
+We were at a stalemate, so I suggested we take a step back and look at the data. I worked with our data science team to analyze user behavior and found that guests who had booked multiple experiences were significantly more likely to engage with personalized recommendations. That gave us a strong case for the project. But I also acknowledged the engineering team’s concerns about complexity. We ended up compromising: we’d start with a lightweight version of the algorithm that used existing data signals, rather than building something entirely new. That way, we could test the impact of personalization without overburdening the engineering team.
+
+The project ended up being a success—personalized recommendations increased engagement by 15%—and it was a good lesson in how to navigate conflict. I learned that it’s important to stand your ground when you believe in something, but also to be open to creative solutions that address everyone’s concerns. Since then, I’ve made it a habit to involve stakeholders early in the process, so we can align on goals before we get into the weeds.
+
+---
+
+INTERVIEWER:
+That’s a great example of turning conflict into collaboration. Let’s talk about process improvement. Can you tell me about a time when you identified a bottleneck in your team’s workflow and how you addressed it?
+
+CANDIDATE:
+Sure. At DoorDash, one of the biggest bottlenecks in our product development process was the handoff between design and engineering. Our designers would spend weeks iterating on a feature, only to have the engineering team push back because they hadn’t been involved in the early discussions. This led to a lot of rework and delays.
+
+I noticed this was happening because our design and engineering teams were operating in silos. Designers would work on high-fidelity mockups in isolation, and by the time they handed them off to engineering, there were often technical constraints they hadn’t considered. To fix this, I proposed a shift to a more collaborative process. We started holding joint brainstorming sessions at the beginning of each project, where designers and engineers could align on the problem and explore solutions together. We also introduced a “design tech review” step, where engineers would give feedback on early-stage wireframes before designers invested too much time in high-fidelity work.
+
+The impact was immediate. The number of design revisions dropped by 40%, and our time-to-launch for new features improved by about 20%. It also led to better outcomes—engineers felt more ownership over the solutions, and designers appreciated having a clearer understanding of the technical constraints. The key was making the process more iterative and collaborative, rather than treating design and engineering as separate phases.
+
+---
+
+INTERVIEWER:
+That’s a really practical improvement. Let’s talk about your weaknesses. What’s an area you’ve been working to improve, and how have you gone about it?
+
+CANDIDATE:
+One area I’ve been focused on improving is my ability to influence without authority, especially when working with teams outside my direct org. Early in my career, I’d sometimes rely too much on data or logic to make my case, without taking the time to build relationships or understand the motivations of the people I was trying to persuade. I realized this was holding me back, especially in cross-functional projects where I didn’t have a direct reporting line to the stakeholders.
+
+To work on this, I’ve been more intentional about building relationships early. For example, when I was at Airbnb, I made it a point to grab coffee with key stakeholders in engineering, marketing, and customer support before kicking off a new project. I’d ask about their priorities and pain points, and look for ways to align my work with theirs. I’ve also been working on framing my proposals in terms of shared goals, rather than just my team’s objectives. For instance, instead of saying, “We need to do X because it’s good for the product,” I’ll say, “We need to do X because it will help us hit our shared goal of Y.”
+
+I’ve seen a lot of progress here. In my last role, I led a cross-functional project to improve the onboarding flow for new hosts, and I was able to get buy-in from teams across the company by making it clear how the project would benefit them. It’s still a work in progress, but I’ve found that investing in relationships upfront makes the persuasion part a lot easier.
+
+---
+
+INTERVIEWER:
+That’s a great self-awareness. Let’s shift to the role here at Hearthside. One of the challenges we’re facing is reducing no-shows for booked services. How would you approach this problem?
+
+CANDIDATE:
+No-shows are a classic marketplace problem—they hurt both sides of the platform. Customers are left without the service they paid for, and providers lose out on earnings and time. My approach would start with understanding the root causes. Are no-shows happening because customers forget about their appointments, or because they’re not fully committed to the service? Are providers canceling last-minute because they’re overbooked or because they’re not incentivized to show up?
+
+I’d start by digging into the data. How often are no-shows happening, and are there patterns? For example, do they happen more often with certain types of services, or at certain times of day? I’d also talk to both customers and providers to understand their pain points. For customers, is the booking process too frictionless, leading to impulse bookings they later regret? For providers, are they canceling because they’re double-booked or because they’re not earning enough per job?
+
+Once I had a clearer picture, I’d look for solutions that align incentives. For example, we could introduce a small deposit at booking to increase customer commitment, or we could offer providers a bonus for showing up on time. We could also experiment with reminders—maybe a text message 24 hours before the appointment isn’t enough, and we need to add a follow-up call or a more personalized reminder.
+
+I’d also look at the provider side. Are we doing enough to help them manage their schedules? If providers are canceling because they’re overbooked, maybe we need to build better tools for them to block off time or set capacity limits. The key is to find solutions that make it easier for both sides to follow through on their commitments.
+
+---
+
+INTERVIEWER:
+That’s a really thoughtful approach. Last question for you: what’s something you’ve learned in your career that you wish you’d known earlier?
+
+CANDIDATE:
+I wish I’d learned earlier that it’s okay to not have all the answers. Early in my career, I felt like I needed to be the expert in every room, and I’d sometimes hesitate to ask questions or admit when I didn’t know something. But I’ve since realized that the best PMs are the ones who are curious and willing to learn, not the ones who pretend to know everything.
+
+One of the biggest turning points for me was when I was leading a project at Airbnb and I hit a wall. I was trying to solve a problem with our payout system, and I kept spinning my wheels because I didn’t fully understand the technical constraints. Finally, I admitted to my engineering lead that I was stuck and asked for his help. He walked me through the system, and we ended up coming up with a solution together that I never would have thought of on my own. That experience taught me that asking for help isn’t a sign of weakness—it’s a sign of strength. Now, I try to embrace the mindset that my job isn’t to have all the answers, but to ask the right questions and bring the right people together to find them.
+
+---
+
+INTERVIEWER:
+That’s a great lesson. Well, Devon, this has been a really insightful conversation. Before we wrap up, do you have any questions for me about the role or the team?
+
+CANDIDATE:
+Yes, I’d love to hear more about the team’s priorities for the next 6-12 months. What are the biggest challenges or opportunities you’re focused on right now?
+
+---
+
+INTERVIEWER:
+Great question. One of our top priorities is improving the matching algorithm to reduce the time it takes for customers to find the right provider for their needs. We’re also

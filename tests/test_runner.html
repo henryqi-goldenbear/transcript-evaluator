@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Test Runner â€” Transcript Evaluator</title>
   <!-- config.js is gitignored; Mistral requests go through the local pipeline server. -->
-  <script src="../web helpers/config.js" onerror="void 0"></script>
+  <script src="../src/frontend/web_helpers/config.js" onerror="void 0"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -271,8 +271,8 @@
       <label>Filter</label>
       <select id="filter-select">
         <option value="all">All cases</option>
-        <option value="behavioral">STAR only</option>
-        <option value="non_behavioral">Non-behavioral only</option>
+        <option value="behavioral">Behavioral cases</option>
+        <option value="non_behavioral">Non-behavioral cases</option>
       </select>
     </div>
 
@@ -320,53 +320,37 @@
 <script>
 // â”€â”€ System prompts (loaded from markdown files) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-let BEHAVIORAL_RUBRIC_MD = "";
-let NON_BEHAVIORAL_RUBRIC_MD = "";
+let UNIFIED_RUBRIC_MD = "";
 
 function buildStarPrompt() {
-  return `You are an expert behavioral interview evaluator using the STAR rubric.
+  return buildUnifiedPrompt();
+}
+
+function buildUnifiedPrompt() {
+  return `You are an expert interview evaluator using one rubric for all interview questions.
 
 Use the rubric below as the source of truth:
 
-${BEHAVIORAL_RUBRIC_MD}
+${UNIFIED_RUBRIC_MD}
 
 CALIBRATION:
 - Avoid leniency bias. Score what is explicitly present, not what might be implied.
 - Do not let fluent writing inflate weak content.
-- Score each dimension independently.
-
-Return only this JSON, no extra text:
-{
-  "filler":  { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
-  "context": { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
-  "action":  { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
-  "result":  { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
-  "flags":   [],
-  "overall": { "score": 0.0, "reasoning": "<one sentence summary>" }
-}`;
-}
-
-function buildNonBehavioralPrompt() {
-  return `You are an expert interviewer evaluator for non-behavioral prompts.
-
-Use the rubric below as the source of truth:
-
-${NON_BEHAVIORAL_RUBRIC_MD}
-
-CALIBRATION:
-- Avoid leniency bias. Score only evidence present in the response.
-- Do not inflate relevance for generic, role-agnostic answers.
-- Omit self_awareness when question type does not require it.
+- Do not force answers into STAR. Score each dimension independently.
 
 Return only this JSON, no extra text:
 {
   "clarity":        { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
   "relevance":      { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
   "specificity":    { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
-  "self_awareness": { "score": <1-5>, "reasoning": "<one clear sentence>" },
+  "self_awareness": { "score": <1-5>, "reasoning": "<one clear sentence citing specific evidence>" },
   "flags":          [],
   "overall":        { "score": 0.0, "reasoning": "<one sentence summary>" }
 }`;
+}
+
+function buildNonBehavioralPrompt() {
+  return buildUnifiedPrompt();
 }
 
 // Mistral API call through the local pipeline server.
@@ -479,7 +463,7 @@ async function evaluateCase(model, prompt, userMsg, spinner) {
   }
 }
 function getCaseRubricType(tc) {
-  return tc.rubric_type === "non_behavioral" ? "non_behavioral" : "behavioral";
+  return "unified";
 }
 
 function collectBatch(cases, startIndex, batchSize) {
@@ -493,9 +477,7 @@ function collectBatch(cases, startIndex, batchSize) {
 }
 
 function buildBatchUserMessage(batchCases, rubricType) {
-  const rubricLabel = rubricType === "non_behavioral" ? "non-behavioral" : "STAR";
-  const schema = rubricType === "non_behavioral"
-    ? `Return JSON only in this format:
+  const schema = `Return JSON only in this format:
 {
   "evaluations": [
     {
@@ -504,24 +486,6 @@ function buildBatchUserMessage(batchCases, rubricType) {
       "relevance": {"score": <1-5>, "reasoning": "<one sentence>"},
       "specificity": {"score": <1-5>, "reasoning": "<one sentence>"},
       "self_awareness": {"score": <1-5>, "reasoning": "<one sentence>"},
-      "flags": [],
-      "overall": {"score": 0.0, "reasoning": "<one sentence>"}
-    }
-  ]
-}
-Rules:
-- Include exactly one evaluation per case id.
-- Omit self_awareness when not applicable (same rule as your rubric).
-- Keep overall.score at 0.0 (it is computed externally).`
-    : `Return JSON only in this format:
-{
-  "evaluations": [
-    {
-      "id": <case id>,
-      "filler": {"score": <1-5>, "reasoning": "<one sentence>"},
-      "context": {"score": <1-5>, "reasoning": "<one sentence>"},
-      "action": {"score": <1-5>, "reasoning": "<one sentence>"},
-      "result": {"score": <1-5>, "reasoning": "<one sentence>"},
       "flags": [],
       "overall": {"score": 0.0, "reasoning": "<one sentence>"}
     }
@@ -538,7 +502,7 @@ Rules:
     return txt;
   }).join("\n\n---\n\n");
 
-  return `Evaluate these ${rubricLabel} interview cases.\n\n${schema}\n\n${casesText}`;
+  return `Evaluate these interview cases with the unified rubric.\n\n${schema}\n\n${casesText}`;
 }
 
 function normalizeBatchEvaluations(parsedObj, batchCases) {
@@ -599,42 +563,25 @@ async function evaluateBatch(model, prompt, batchCases, spinner) {
 
 // â”€â”€ Dimension helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-const STAR_DIMS = ["filler", "context", "action", "result"];
-const NB_DIMS   = ["clarity", "relevance", "specificity", "self_awareness"];
+const UNIFIED_DIMS = ["clarity", "relevance", "specificity", "self_awareness"];
 
 function getDims(tc, parsed) {
-  if (tc.rubric_type === "non_behavioral") {
-    // include self_awareness only if present in expected or returned by model
-    const base = ["clarity", "relevance", "specificity"];
-    if ("self_awareness" in tc.expected || (parsed && "self_awareness" in parsed)) {
-      base.push("self_awareness");
-    }
-    return base;
-  }
-  return STAR_DIMS;
+  return UNIFIED_DIMS;
 }
 
 // â”€â”€ Client-side overall formula (deterministic) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function computeOverall(parsed, tc) {
-  if (tc.rubric_type === "non_behavioral") {
-    const dims = ["clarity", "relevance", "specificity", "self_awareness"].filter(d => parsed[d]);
-    if (!dims.length) return 0;
-    const sum = dims.reduce((s, d) => s + (parsed[d]?.score ?? 0), 0);
-    return +(sum / dims.length / 5 * 10).toFixed(1);
-  }
-  const f = parsed.filler?.score  ?? 0;
-  const c = parsed.context?.score ?? 0;
-  const a = parsed.action?.score  ?? 0;
-  const r = parsed.result?.score  ?? 0;
-  return +((f * 0.10 + c * 0.20 + a * 0.40 + r * 0.30) * 2).toFixed(1);
+  const dims = UNIFIED_DIMS.filter(d => parsed[d]);
+  if (!dims.length) return 0;
+  const sum = dims.reduce((s, d) => s + (parsed[d]?.score ?? 0), 0);
+  return +(sum / dims.length / 5 * 10).toFixed(1);
 }
 
 // â”€â”€ Score formatting helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function dimLabel(d) {
-  const short = { filler: "fil", context: "ctx", action: "act", result: "res",
-                  clarity: "cla", relevance: "rel", specificity: "spc", self_awareness: "slf" };
+  const short = { clarity: "cla", relevance: "rel", specificity: "spc", self_awareness: "slf" };
   return short[d] || d.slice(0, 3);
 }
 
@@ -671,18 +618,15 @@ let cancelled = false;
 async function loadCases() {
   const status = document.getElementById("load-status");
   try {
-    const [casesRes, behRes, nbRes] = await Promise.all([
+    const [casesRes, rubricRes] = await Promise.all([
       fetch("./test_cases.json"),
       fetch("../docs/behavioral_rubric.md"),
-      fetch("../docs/non_behavioral_rubric.md"),
     ]);
     if (!casesRes.ok) throw new Error(`test_cases.json HTTP ${casesRes.status}`);
-    if (!behRes.ok) throw new Error(`../docs/behavioral_rubric.md HTTP ${behRes.status}`);
-    if (!nbRes.ok) throw new Error(`../docs/non_behavioral_rubric.md HTTP ${nbRes.status}`);
+    if (!rubricRes.ok) throw new Error(`../docs/behavioral_rubric.md HTTP ${rubricRes.status}`);
 
     allCases = await casesRes.json();
-    BEHAVIORAL_RUBRIC_MD = await behRes.text();
-    NON_BEHAVIORAL_RUBRIC_MD = await nbRes.text();
+    UNIFIED_RUBRIC_MD = await rubricRes.text();
 
     status.textContent = `${allCases.length} test cases loaded.`;
     checkReady();
@@ -808,9 +752,8 @@ async function runAll() {
 
     const batchCases = collectBatch(cases, i, batchSize);
     const batchEnd = i + batchCases.length;
-    const isNBBatch = getCaseRubricType(batchCases[0]) === "non_behavioral";
-    const batchTypeLabel = isNBBatch ? "non-behavioral" : "STAR";
-    const prompt = isNBBatch ? buildNonBehavioralPrompt() : buildStarPrompt();
+    const batchTypeLabel = "unified rubric";
+    const prompt = buildUnifiedPrompt();
     const batchStartTs = new Date();
 
     setProgress(Math.min(batchEnd, total), total, `Batch ${i + 1}-${batchEnd}`);

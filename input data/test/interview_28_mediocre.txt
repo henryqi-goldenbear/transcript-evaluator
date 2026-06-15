@@ -1,0 +1,154 @@
+# Interview transcript fixture
+# Role: Frontend Engineer, Growth team @ Brightlane
+# Quality target: mediocre candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hey Riley, thanks for coming in today. How’s your morning going so far?
+
+CANDIDATE:
+Hey Dana, it’s going okay. Traffic was a little rough, but I made it on time.
+
+INTERVIEWER:
+Glad to hear it. To start, could you walk me through your resume—maybe highlight the parts most relevant to this role on the Growth team?
+
+CANDIDATE:
+Sure. So, I’ve been working as a frontend engineer for about four years now. My last role was at TechFlow, where I worked on a React and TypeScript codebase. I built a few features for the user dashboard, like a notification system and a settings panel. Before that, I was at a smaller startup where I did a bit of everything—React, some backend work, even a little devops when needed.
+
+I think the Growth team role is interesting because I’ve done some A/B testing before, like when we tested different onboarding flows at TechFlow. I don’t have a ton of experience with performance optimization, but I’ve done some basic stuff, like lazy loading images and reducing bundle size.
+
+INTERVIEWER:
+Got it. What drew you to Brightlane specifically, and why the Growth team?
+
+CANDIDATE:
+I’ve heard good things about Brightlane—like the culture and the focus on education. The Growth team sounds cool because it’s not just about building features; it’s about figuring out what actually moves the needle for users. At my last job, I felt like a lot of our work was just keeping the lights on, so I’m excited about the idea of working on experiments and seeing real impact.
+
+INTERVIEWER:
+That makes sense. Let’s dig into some technical details. Can you walk me through how you’d approach optimizing the performance of a React application that’s feeling sluggish?
+
+CANDIDATE:
+Yeah, so the first thing I’d do is run Lighthouse or something similar to see where the bottlenecks are. If it’s a rendering issue, I’d look at React.memo or useMemo to avoid unnecessary re-renders. I’ve also used code splitting with React.lazy to load components only when they’re needed. For bundle size, I’d check if we’re importing large libraries unnecessarily and see if we can tree-shake or replace them with lighter alternatives.
+
+I haven’t done a ton of deep performance work, but I know the basics. Like, I’d avoid inline functions in JSX if they’re causing re-renders, and I’d make sure we’re not doing expensive computations in the render cycle.
+
+INTERVIEWER:
+Got it. Let’s say you’re working on an A/B test for a new feature, but the data team tells you the results aren’t statistically significant after two weeks. How would you handle that?
+
+CANDIDATE:
+Hmm, I guess I’d first check if we can just let it run longer. Sometimes you just need more time to get enough data. If that’s not an option, maybe we could tweak the test—like change the sample size or adjust the variant to make it more different from the control. I’d probably loop in the PM or data scientist to figure out the best path forward.
+
+I don’t have a ton of experience with the stats side of A/B testing, so I’d rely on the experts there. But I’d make sure we’re not just guessing—like, we should have a plan before we change anything.
+
+INTERVIEWER:
+Makes sense. Let’s switch gears to behavioral questions. Can you tell me about a time you had to persuade a teammate or stakeholder to adopt your approach or idea?
+
+CANDIDATE:
+Yeah, at TechFlow, I wanted to switch our state management from Redux to React Context for a smaller feature we were building. The team was used to Redux, and some people were skeptical because Context can get messy if you overuse it. I put together a small proof of concept to show how it could simplify the code for this specific case, and I walked through the pros and cons with the team. Eventually, they agreed to try it out, and it worked pretty well for that feature.
+
+I think the key was showing them the actual code and not just talking about it in theory. It wasn’t a huge win, but it got people thinking differently about when to use Redux versus Context.
+
+INTERVIEWER:
+How did you measure whether your approach was successful?
+
+CANDIDATE:
+Honestly, we didn’t really measure it formally. It was more about whether the code was easier to maintain and if the feature worked as expected. The team seemed happier with the simpler setup, and we didn’t run into any major issues, so I’d say it was a success in that sense.
+
+INTERVIEWER:
+Got it. Can you share an example of a time you failed or made a mistake at work? How did you handle it?
+
+CANDIDATE:
+Oh man, there’s a few. One time, I was working on a feature that involved updating a bunch of API endpoints. I thought I had tested everything locally, but when we deployed to staging, a few things broke because I missed a dependency in one of the endpoints. The QA team caught it, but it delayed the release by a day.
+
+I felt pretty bad about it, but I owned up to it and worked with the team to fix the issues. After that, I made sure to double-check my work and get more eyes on it before deploying. I also started using a checklist for changes that touched multiple parts of the system.
+
+INTERVIEWER:
+What did you learn from that experience?
+
+CANDIDATE:
+I learned that I need to be more thorough with testing, especially when changes affect multiple parts of the system. I also realized that it’s better to ask for help earlier rather than assuming I’ve got everything covered. Like, if I had looped in another engineer to review my changes before deploying, we might have caught the issue sooner.
+
+INTERVIEWER:
+Can you tell me about a time you mentored or helped a junior teammate grow?
+
+CANDIDATE:
+Yeah, at TechFlow, we had a new grad join the team. He was really smart but didn’t have much experience with React or frontend in general. I set up some regular 1:1s with him to go over code reviews and answer questions. I also walked him through some of our core patterns, like how we structured our components and managed state.
+
+He got up to speed pretty quickly, and I think he appreciated the help. I didn’t do anything super formal—just tried to be available and explain things clearly. It was nice to see him start contributing more confidently after a few months.
+
+INTERVIEWER:
+How did you know your mentorship was effective?
+
+CANDIDATE:
+I guess I could tell because he started asking fewer basic questions and more advanced ones. Like, at first, he’d ask about things like how to use useEffect, but later, he was asking about performance optimizations or how to structure a complex component. He also started reviewing other people’s PRs, which was a good sign.
+
+INTERVIEWER:
+Let’s talk about prioritization. Can you describe a time when you had to juggle multiple competing priorities? How did you decide what to focus on?
+
+CANDIDATE:
+Oh, that happens all the time. At TechFlow, we had a sprint where we were supposed to work on a new feature, but we also had a bunch of bugs piling up from the last release. The PM wanted us to focus on the feature, but the support team was getting slammed with complaints about the bugs.
+
+I talked to the PM and explained that if we didn’t fix the bugs, it would hurt the user experience and make the new feature less effective. We ended up splitting the team—some people worked on the bugs, and others worked on the feature. It wasn’t perfect, but it balanced the needs of both teams.
+
+INTERVIEWER:
+How did you decide which bugs to tackle first?
+
+CANDIDATE:
+I looked at the severity and how many users were affected. Like, if a bug was causing a crash for a lot of users, that took priority over something that was just a minor UI glitch. I also checked with the support team to see which issues were generating the most complaints. It was mostly about impact—what would make the biggest difference for users.
+
+INTERVIEWER:
+Can you tell me about a time you improved a process or workflow on your team?
+
+CANDIDATE:
+Yeah, at my last job, we were doing manual deployments, which was kind of a pain. It involved a lot of steps, and people would sometimes forget something or mess up the order. I suggested we set up a CI/CD pipeline to automate it. I did some research, put together a proposal, and presented it to the team. They were on board, so I worked with our devops person to set it up.
+
+It took a little while to get everything working smoothly, but once it was done, deployments were way faster and less error-prone. The team seemed to like it, and it freed up time for other work.
+
+INTERVIEWER:
+What was the biggest challenge in implementing that change?
+
+CANDIDATE:
+Getting everyone to adopt it was a little tricky. Some people were used to the old way and were hesitant to switch. I had to do a few training sessions to show them how it worked and address their concerns. There were also a few bugs in the pipeline at first, which made people even more skeptical. But once we ironed those out, most people came around.
+
+INTERVIEWER:
+What’s a weakness or area for improvement you’ve identified in your work?
+
+CANDIDATE:
+I’d say I’m not always the best at estimating how long a task will take. Sometimes I’ll think something is straightforward, but then it ends up taking way longer because of unexpected issues. I’ve gotten better at padding my estimates, but it’s still something I’m working on.
+
+I also tend to get a little too focused on the details sometimes. Like, I’ll spend too much time polishing a feature when maybe it’s good enough to ship. I’ve been trying to balance that by setting clearer deadlines for myself and checking in with the team to make sure I’m not over-engineering things.
+
+INTERVIEWER:
+Let’s wrap up with a technical question. How would you design the frontend infrastructure for a new A/B testing framework at Brightlane?
+
+CANDIDATE:
+Hmm, I’d probably start by making sure the framework is flexible enough to handle different types of experiments—like UI changes, feature flags, or even backend logic. I’d use React’s Context API or a state management library like Redux to manage the experiment variants so that components can easily access the current variant.
+
+For the A/B testing itself, I’d want to make sure we’re tracking the right metrics, like conversion rates or user engagement. I’d work with the data team to set up the tracking and make sure we’re collecting clean data. I’d also want to make sure the framework is performant—like, we shouldn’t be loading extra code for variants that the user isn’t seeing.
+
+I haven’t built a full A/B testing framework before, but I’ve used tools like Optimizely and Google Optimize, so I’d borrow some ideas from those. Like, I’d want to make it easy for non-technical folks to set up experiments without needing to write code.
+
+INTERVIEWER:
+Got it. Before we finish up, do you have any questions for me about the role or the team?
+
+CANDIDATE:
+Yeah, a couple. What’s the team’s biggest challenge right now? And how do you measure success for someone in this role?
+
+INTERVIEWER:
+Great questions. The team’s biggest challenge is scaling our experimentation infrastructure—right now, it’s a bit fragmented, and we’re working on unifying it so we can run more experiments faster. For success in this role, we look at a mix of things: the impact of the features you ship, how you collaborate with the team, and your ability to iterate based on data.
+
+CANDIDATE:
+Cool, that makes sense. One more question—what’s the team culture like? Like, how do people work together?
+
+INTERVIEWER:
+We’re pretty collaborative. There’s a lot of pair programming and code reviews, and we try to make decisions as a team. That said, we also value autonomy—once you’re up to speed, we trust you to own your work. We’re not super formal, but we do care about process and making sure we’re all aligned.
+
+CANDIDATE:
+Got it. Thanks for answering my questions. I think that’s all I’ve got.
+
+INTERVIEWER:
+Great, thanks for coming in, Riley. We’ll be in touch soon. Have a good one.
+
+CANDIDATE:
+Thanks, Dana. Have a good day.

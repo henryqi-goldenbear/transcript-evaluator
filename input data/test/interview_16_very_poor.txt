@@ -1,0 +1,180 @@
+# Interview transcript fixture
+# Role: Frontend Engineer, Growth team @ Brightlane
+# Quality target: very_poor candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hi Sam, I’m Lin—thanks for joining me today. How’s your day going so far?
+
+CANDIDATE:
+Fine.
+
+---
+
+INTERVIEWER:
+Great. Let’s start with a quick walk through your resume. Can you give me a two-minute overview of your experience, especially the parts most relevant to this Growth team role?
+
+CANDIDATE:
+Uh, I’ve worked at a couple places. Did frontend stuff. Mostly React, I guess.
+
+---
+
+INTERVIEWER:
+Got it. What drew you to Brightlane’s Growth team specifically?
+
+CANDIDATE:
+I saw the job posting. It seemed okay.
+
+---
+
+INTERVIEWER:
+Okay. Let’s talk about a time you improved performance in a React app. What was the issue, and how did you fix it?
+
+CANDIDATE:
+I don’t really remember. I think we had some slow pages. I made them faster.
+
+---
+
+INTERVIEWER:
+Can you walk me through the steps you took? Did you use any tools to identify the bottleneck?
+
+CANDIDATE:
+I just looked at it and changed some code. Not sure what tools.
+
+---
+
+INTERVIEWER:
+Got it. Let’s switch gears to collaboration. Tell me about a time you disagreed with a teammate on a technical decision. How did you handle it?
+
+CANDIDATE:
+I don’t think I’ve really disagreed with anyone. People usually just do their own thing.
+
+---
+
+INTERVIEWER:
+Interesting. What about a time you had to persuade someone to adopt your approach?
+
+CANDIDATE:
+I don’t know. I just do my work.
+
+---
+
+INTERVIEWER:
+Fair enough. Can you share an example of a project where you took ownership of something outside your immediate responsibilities?
+
+CANDIDATE:
+I don’t think so. I just do what’s assigned to me.
+
+---
+
+INTERVIEWER:
+I see. Let’s talk about A/B testing. Have you ever worked on infrastructure for running experiments in a frontend app?
+
+CANDIDATE:
+Yeah, I think so. I don’t remember the details.
+
+---
+
+INTERVIEWER:
+No problem. How would you structure an A/B test to measure the impact of a new feature on user engagement?
+
+CANDIDATE:
+I’d just split the users and see what happens.
+
+---
+
+INTERVIEWER:
+Got it. What metrics would you track to determine success?
+
+CANDIDATE:
+I don’t know. Clicks, maybe?
+
+---
+
+INTERVIEWER:
+Okay. Let’s talk about process. Have you ever identified a bottleneck in your team’s workflow and suggested an improvement?
+
+CANDIDATE:
+Not really. The process was fine.
+
+---
+
+INTERVIEWER:
+What about mentoring? Have you ever helped a junior engineer grow their skills?
+
+CANDIDATE:
+No, I don’t think so. I’m not really into that.
+
+---
+
+INTERVIEWER:
+Got it. Can you tell me about a time you failed at something and what you learned from it?
+
+CANDIDATE:
+I don’t fail.
+
+---
+
+INTERVIEWER:
+Interesting. What’s a technical weakness you’ve been working to improve?
+
+CANDIDATE:
+I don’t have any weaknesses. I’m good at everything.
+
+---
+
+INTERVIEWER:
+Alright. Let’s talk about prioritization. How do you decide what to work on when you have multiple competing deadlines?
+
+CANDIDATE:
+I just do whatever’s due first.
+
+---
+
+INTERVIEWER:
+Got it. What about when priorities shift unexpectedly? How do you adapt?
+
+CANDIDATE:
+I just do the new thing. It’s fine.
+
+---
+
+INTERVIEWER:
+Okay. Let’s circle back to TypeScript. How do you use it to catch errors early in your React components?
+
+CANDIDATE:
+I just write the code. TypeScript fixes stuff.
+
+---
+
+INTERVIEWER:
+Can you give me an example of a time TypeScript helped you catch a bug before it reached production?
+
+CANDIDATE:
+I don’t remember. It just does.
+
+---
+
+INTERVIEWER:
+Got it. Last behavioral one: Tell me about a time you had to learn a new technology or tool quickly. How did you approach it?
+
+CANDIDATE:
+I just read the docs. It’s easy.
+
+---
+
+INTERVIEWER:
+Okay. Do you have any questions for me about the role or the team?
+
+CANDIDATE:
+No.
+
+---
+
+INTERVIEWER:
+Alright, Sam. Thanks for your time today. We’ll be in touch.
+
+CANDIDATE:
+Okay. Bye.

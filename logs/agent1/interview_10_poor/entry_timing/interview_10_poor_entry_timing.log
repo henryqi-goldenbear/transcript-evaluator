@@ -1,0 +1,29 @@
+18:57:13 INFO [__main__] Starting convert and evaluate task; logging to logs\agent1\interview_10_poor\entry_timing\interview_10_poor_entry_timing.log
+18:57:13 INFO [__main__] input=input data\test\interview_10_poor.txt batch_size=4
+18:57:13 INFO [__main__] Parsing transcript: input=input data\test\interview_10_poor.txt chars=6744 classifier=ministral:ministral-3b-latest
+18:57:37 INFO [__main__] Starting Agent 2 structure review iteration 1/until satisfied
+18:57:37 INFO [__main__] Wrote Agent 2 structure review prompt to logs\agent1\interview_10_poor\structure_review\interview_10_poor_agent2_structure_review_1_prompt.md
+18:57:56 INFO [__main__] Agent 2 structure review iteration 1 satisfied=False issues=4 log=logs\agent1\interview_10_poor\structure_review\interview_10_poor_agent2_structure_review_1.md
+18:57:56 INFO [__main__] Starting Agent 2 structure review iteration 2/until satisfied
+18:57:56 INFO [__main__] Wrote Agent 2 structure review prompt to logs\agent1\interview_10_poor\structure_review\interview_10_poor_agent2_structure_review_2_prompt.md
+18:58:07 INFO [__main__] Agent 2 structure review iteration 2 satisfied=False issues=2 log=logs\agent1\interview_10_poor\structure_review\interview_10_poor_agent2_structure_review_2.md
+18:58:07 INFO [__main__] Agent 2 re-requested operations that are already satisfied; treating structure as converged.
+18:58:07 INFO [__main__] Parsed transcript into 13 cases
+18:58:07 INFO [__main__] Detected 13 evaluator cases
+18:58:07 INFO [__main__] Question/answer pair 1: started_at=18:58:07 finished_at=18:58:07 question_chars=163 answer_chars=241 follow_ups=1
+18:58:07 INFO [__main__] Question/answer pair 2: started_at=18:58:07 finished_at=18:58:07 question_chars=176 answer_chars=219 follow_ups=2
+18:58:07 INFO [__main__] Question/answer pair 3: started_at=18:58:07 finished_at=18:58:07 question_chars=111 answer_chars=110 follow_ups=0
+18:58:07 INFO [__main__] Question/answer pair 4: started_at=18:58:07 finished_at=18:58:07 question_chars=121 answer_chars=149 follow_ups=0
+18:58:07 INFO [__main__] Question/answer pair 5: started_at=18:58:07 finished_at=18:58:07 question_chars=81 answer_chars=139 follow_ups=0
+18:58:07 INFO [__main__] Question/answer pair 6: started_at=18:58:07 finished_at=18:58:07 question_chars=109 answer_chars=136 follow_ups=1
+18:58:07 INFO [__main__] Question/answer pair 7: started_at=18:58:07 finished_at=18:58:07 question_chars=155 answer_chars=119 follow_ups=2
+18:58:07 INFO [__main__] Question/answer pair 8: started_at=18:58:07 finished_at=18:58:07 question_chars=105 answer_chars=112 follow_ups=0
+18:58:07 INFO [__main__] Question/answer pair 9: started_at=18:58:07 finished_at=18:58:07 question_chars=135 answer_chars=106 follow_ups=0
+18:58:07 INFO [__main__] Question/answer pair 10: started_at=18:58:07 finished_at=18:58:07 question_chars=139 answer_chars=137 follow_ups=1
+18:58:07 INFO [__main__] Question/answer pair 11: started_at=18:58:07 finished_at=18:58:07 question_chars=139 answer_chars=105 follow_ups=2
+18:58:07 INFO [__main__] Question/answer pair 12: started_at=18:58:07 finished_at=18:58:07 question_chars=103 answer_chars=56 follow_ups=0
+18:58:07 INFO [__main__] Question/answer pair 13: started_at=18:58:07 finished_at=18:58:07 question_chars=110 answer_chars=118 follow_ups=0
+18:58:07 INFO [__main__] Finished conversion: input=input data\test\interview_10_poor.txt output=input data\test\interview_10_poor.json started_at=18:57:13 finished_at=18:58:07 input_chars=6744 cases=13 batch_size=4
+18:58:07 INFO [__main__] Stored approved interview structure in SQLite: db=data\interviews.sqlite interview_id=6
+18:58:11 INFO [__main__] Started pipeline server on port 3000
+18:58:11 INFO [__main__] Opening evaluator HTML: http://localhost:3000/src/frontend/evaluator.html?v=mistral-small-2&input=input+data%2Ftest%2Finterview_10_poor.json&batch_size=4&log_file=logs%2Fagent1%2Finterview_10_poor%2Finterview_10_poor_eval.log&result_log_file=logs%2Fagent1%2Finterview_10_poor%2Finterview_10_poor.log

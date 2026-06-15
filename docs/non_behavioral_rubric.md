@@ -1,18 +1,12 @@
-# Non-Behavioral Interview Rubric
+# Unified Interview Evaluation Rubric
 
-Score only evidence that appears in the answer.
+This project now uses one rubric for all interview questions because not every interview answer follows STAR.
 
-## Dimensions
+Use `docs/behavioral_rubric.md` as the source of truth. It rates every question on:
 
-- clarity: how directly and coherently the candidate answers.
-- relevance: how well the answer addresses the question asked.
-- specificity: how much concrete detail, context, and evidence the answer includes.
-- self_awareness: include only when the question asks for reflection, growth, weakness, motivation, or judgment.
+- clarity
+- relevance
+- specificity
+- self-awareness
 
-## Calibration
-
-- 5: precise, complete, role-relevant, and supported by concrete detail.
-- 4: strong and relevant, with minor missing detail.
-- 3: adequate but somewhat generic, incomplete, or light on evidence.
-- 2: weak, vague, or only partially responsive.
-- 1: mostly non-responsive or unsupported.
+It also includes follow-up handling and credibility risk rules.

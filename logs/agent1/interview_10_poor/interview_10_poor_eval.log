@@ -1,0 +1,140 @@
+[pipeline] Evaluator run started at 18:58:14
+[ok] #4 Auto case 4 | behavioral | model=mistral-small-latest | overall=very poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: average | The answer is somewhat coherent but lacks structure and directness.
+     - relevance: poor | The response only loosely addresses the question about Airflow usage and improvements.
+     - specificity: very poor | The answer provides no concrete details about Airflow usage, context, or specific improvements.
+     - self_awareness: very poor | The candidate shows minimal ownership or reflection on their experience with Airflow.
+     - follow_up: present=false | probe=none | impact=none | No follow-up was provided in the candidate's response.
+     - overall: very poor | The response is vague, non-specific, and lacks meaningful evidence or reflection.
+     start=18:58:14 | end=18:58:16 | duration=2.51s
+[ok] #3 Auto case 3 | behavioral | model=mistral-small-latest | overall=poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The response addresses the question but lacks depth and concrete evidence.
+     - clarity: good | The answer is direct and easy to follow, though brief.
+     - relevance: average | The response partially answers the question but misses key details like the root cause or debugging steps.
+     - specificity: poor | The answer is vague and lacks concrete context, such as the DAG's purpose, the timeout value, or the resolution process.
+     - self_awareness: poor | The candidate does not reflect on their role, the tradeoffs of increasing the timeout, or what they learned.
+     - follow_up: present=false | probe=none | impact=none | No follow-up was provided in the response.
+     - flags: Credibility risk: candidate failed to substantiate the debugging process or root cause after follow-up.
+     - overall: poor | The answer is too generic, lacks specificity, and does not demonstrate meaningful debugging or self-awareness.
+     start=18:58:14 | end=18:58:16 | duration=2.63s
+[ok] #2 Auto case 2 | behavioral | model=mistral-small-latest | overall=poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate's response is evaluable against the rubric.
+     - clarity: average | The answer is understandable but lacks organization and concrete detail, making it mildly hard to follow.
+     - relevance: average | The answer addresses the question but misses key details like the situation, role, and specific outcome.
+     - specificity: poor | The response is vague with no concrete evidence, metrics, or context about the pipeline, role, or improvements.
+     - self_awareness: poor | The candidate shows minimal ownership or reflection, deflecting with vague claims and no personal accountability.
+     - follow_up: present=true | probe=clarifying | impact=downgrade_specificity | The candidate could not provide specific details (scale or speed improvement), reducing credibility and specificity.
+     - flags: Credibility risk: candidate failed to substantiate the claimed improvements or data scale after follow-up.
+     - overall: poor | The answer is weak, vague, and poorly supported, with no meaningful evidence or ownership of the work.
+     start=18:58:14 | end=18:58:17 | duration=2.88s
+[ok] #1 Auto case 1 | behavioral | model=mistral-small-latest | overall=poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: average | The answer is somewhat clear but lacks organization and conciseness, with vague phrasing like 'ETL stuff' and 'pretty standard tools'.
+     - relevance: average | The response touches on the resume walkthrough but does not directly address the company or role specifics, making it only partially relevant.
+     - specificity: poor | The answer lacks concrete details about companies, projects, or specific tools used, and the follow-up response is generic and unspecific to Quanta.
+     - self_awareness: poor | The candidate does not demonstrate reflection on their career choices or understanding of their own impact, and the follow-up shows no personal connection to the role.
+     - follow_up: present=true | probe=deepening | impact=credibility_risk | The follow-up response is generic and does not substantiate the initial claim of interest in Quanta's platform or problems.
+     - flags: Credibility risk: candidate failed to substantiate interest in Quanta's analytics platform or specific problems after follow-up.
+     - overall: poor | The response is vague, generic, and lacks concrete evidence or personal connection to the role, with a credibility risk in the follow-up.
+     start=18:58:14 | end=18:58:17 | duration=3.77s
+[ok] #8 Auto case 8 | behavioral | model=mistral-small-latest | overall=average
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate's response is directly responsive to the question about mentoring or guiding a junior engineer.
+     - clarity: good | The response is clear and straightforward, though it lacks depth or elaboration.
+     - relevance: excellent | The answer directly addresses the question about mentoring or guiding a junior engineer.
+     - specificity: poor | The response provides minimal concrete detail about the mentoring experience or its impact.
+     - self_awareness: average | The candidate acknowledges their limited mentoring experience but does not reflect deeply on why or how they might improve.
+     - follow_up: present=false | probe=none | impact=none | No follow-up was provided in the input.
+     - overall: average | The answer is relevant and clear but lacks specificity and depth in self-awareness about mentoring experience.
+     start=18:58:17 | end=18:58:20 | duration=2.17s
+[ok] #5 Auto case 5 | behavioral | model=mistral-small-latest | overall=poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: average | The answer is understandable but lacks organization and conciseness, with vague phrasing like 'pretty straightforward'.
+     - relevance: average | The answer addresses the question but is overly generic and lacks specific details about how dbt was used.
+     - specificity: poor | The response provides no concrete examples, context, or details about the models, cleaning process, or outcomes.
+     - self_awareness: poor | The candidate does not reflect on their role, judgment, or impact, and the answer is largely descriptive without ownership.
+     - follow_up: present=false | probe=none | impact=none | No follow-up was provided in the input.
+     - overall: poor | The answer is vague, generic, and lacks concrete evidence or self-awareness, making it difficult to assess meaningful experience with dbt.
+     start=18:58:17 | end=18:58:20 | duration=2.25s
+[ok] #6 Auto case 6 | behavioral | model=mistral-small-latest | overall=very poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided responses to both the initial question and the follow-up.
+     - clarity: poor | The answer is vague, dismissive, and lacks coherent structure or detail.
+     - relevance: poor | The response does not address the complexity or transformation aspect of the question and minimizes the task.
+     - specificity: very poor | No concrete details about the transformation, problem, or implementation are provided.
+     - self_awareness: very poor | The candidate dismisses the complexity of the task and shows no reflection on the adequacy of their approach or testing.
+     - follow_up: present=true | probe=deepening | impact=credibility_risk | The candidate's follow-up response reveals a lack of rigor in testing and validation, contradicting any implied competence in the initial answer.
+     - flags: Credibility risk: candidate failed to substantiate the complexity or adequacy of their transformation after follow-up.
+     - overall: very poor | The answer is non-responsive, lacks specificity, and demonstrates minimal self-awareness or credibility under follow-up.
+     start=18:58:17 | end=18:58:20 | duration=2.42s
+[ok] #7 Auto case 7 | behavioral | model=mistral-small-latest | overall=very poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: poor | The answer is vague, disorganized, and lacks a clear structure or point.
+     - relevance: average | The answer partially addresses the question but misses key details like the candidate's role, process, or collaboration specifics.
+     - specificity: very poor | The answer lacks concrete details such as the scope of the data, the candidate's actions, or any evidence of collaboration beyond sending a file.
+     - self_awareness: very poor | The candidate shows no reflection on their role, judgment, or impact, and deflects by stating the stakeholder was 'happy' without evidence or ownership.
+     - follow_up: present=true | probe=clarifying | impact=downgrade_specificity | The follow-up response provided minimal additional detail, failing to clarify the candidate's actions or the collaboration process.
+     - flags: Credibility risk: candidate failed to substantiate the claim of stakeholder satisfaction or their own contribution after follow-up.
+     - overall: very poor | The answer is non-responsive, lacks specificity, and shows no meaningful collaboration or self-awareness.
+     start=18:58:17 | end=18:58:20 | duration=2.59s
+[ok] #9 Auto case 9 | behavioral | model=mistral-small-latest | overall=poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a direct response to the question.
+     - clarity: good | The answer is direct and easy to follow, though it lacks depth.
+     - relevance: good | The answer addresses the question but does not provide evidence of process improvement efforts.
+     - specificity: poor | The answer is vague and lacks concrete details about processes, bottlenecks, or proposed solutions.
+     - self_awareness: poor | The candidate shows minimal reflection on their role or potential for improvement.
+     - follow_up: present=false | probe=none | impact=none | No follow-up was provided in the response.
+     - overall: poor | The answer is relevant but lacks specificity, self-awareness, and concrete evidence of process improvement efforts.
+     start=18:58:20 | end=18:58:22 | duration=2.02s
+[ok] #12 Auto case 12 | behavioral | model=mistral-small-latest | overall=poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a direct response to the question.
+     - clarity: good | The answer is direct and easy to follow, though it lacks depth.
+     - relevance: poor | The response does not address the question about pushing back on requests.
+     - specificity: very poor | The answer provides no concrete evidence, context, or detail.
+     - self_awareness: very poor | The candidate shows no reflection on their role, judgment, or impact.
+     - follow_up: present=false | probe=none | impact=none | No follow-up was provided in the input.
+     - overall: poor | The answer is irrelevant, lacks specificity, and shows no self-awareness.
+     start=18:58:20 | end=18:58:22 | duration=2.19s
+[ok] #11 Auto case 11 | behavioral | model=mistral-small-latest | overall=poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The response is evaluable against the rubric.
+     - clarity: average | The answer is concise but lacks depth and structure, making it only partially clear.
+     - relevance: good | The answer addresses the question but omits critical details about scalability and fault tolerance.
+     - specificity: poor | The response is vague and lacks concrete details about the pipeline design, scalability, or fault tolerance mechanisms.
+     - self_awareness: poor | The candidate shows minimal ownership or reflection on the technical decisions or tradeoffs.
+     - follow_up: present=true | probe=deepening | impact=credibility_risk | The follow-up response is vague and fails to provide meaningful technical considerations, contradicting the initial claim of simplicity.
+     - flags: Credibility risk: candidate failed to substantiate scalability or fault tolerance considerations after follow-up.
+     - overall: poor | The answer is weak, lacks specificity, and collapses under follow-up, indicating poor credibility and understanding.
+     start=18:58:20 | end=18:58:23 | duration=2.51s
+[ok] #10 Auto case 10 | behavioral | model=mistral-small-latest | overall=very poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: poor | The answer is vague, disorganized, and lacks a clear structure or point.
+     - relevance: average | The answer partially addresses the question but misses key aspects like the project's context, impact, and deeper lessons.
+     - specificity: very poor | The answer provides almost no concrete detail about the project, the failure, or the candidate's actions beyond a vague mention of a schema change.
+     - self_awareness: very poor | The candidate shows no reflection on the failure, its impact, or meaningful learning; the response minimizes the issue and avoids ownership.
+     - follow_up: present=true | probe=deepening | impact=credibility_risk | The follow-up response contradicts the initial claim of taking steps to prevent issues, revealing a lack of substantive action or learning.
+     - flags: Credibility risk: candidate failed to substantiate prevention steps after follow-up.
+     - overall: very poor | The response is non-responsive, lacks concrete evidence, and demonstrates minimal self-awareness or credibility under follow-up.
+     start=18:58:20 | end=18:58:23 | duration=2.68s
+[ok] #13 Auto case 13 | behavioral | model=mistral-small-latest | overall=poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The response is directly evaluable against the rubric.
+     - clarity: good | The answer is straightforward and easy to follow, though it lacks depth.
+     - relevance: average | The response addresses prioritization but only in a passive, manager-driven way, missing personal agency.
+     - specificity: poor | No concrete examples, metrics, or personal decision-making criteria are provided.
+     - self_awareness: poor | The candidate shows no personal judgment or ownership in prioritization, deferring entirely to the manager.
+     - follow_up: present=false | probe=none | impact=none | No follow-up was provided in the input.
+     - overall: poor | The answer is clear but lacks relevance, specificity, and self-awareness, relying solely on external direction.
+     start=18:58:23 | end=18:58:25 | duration=2.24s
+[pdf] Evaluation report PDF downloaded.
+[agent2] queued: evaluation log, input text, and input JSON queued for Agent 2 websocket delivery

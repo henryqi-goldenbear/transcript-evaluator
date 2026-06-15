@@ -1,0 +1,219 @@
+[
+  {
+    "id": 1,
+    "label": "Auto case 1",
+    "turn_type": "non_behavioral",
+    "rubric_type": "non_behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Seeks general background summary without requiring a specific past example",
+    "question": "Before we get into the details, can you give me the short version of your background?",
+    "response": "Sure. I have about five years of backend experience. I have worked mostly on APIs and internal tools. My most recent role was at FinBridge, where I worked on payments-related services. I have used Python, some Go, Postgres, and a bit of AWS. I would say I am a solid backend engineer who likes solving practical problems and working with teams.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 2,
+    "label": "Auto case 2",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a specific past example of resume content and relevant roles",
+    "question": "Walk me through your resume and the main roles that are relevant for this position.",
+    "response": "I started at a small software company after college doing general backend work. Then I moved to FinBridge, which is more in the fintech space. At FinBridge I was on a team that handled transaction reporting and some partner integrations. I built endpoints, fixed bugs, and helped with a few migrations. I have not always owned huge projects end to end, but I have contributed to a lot of them.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 3,
+    "label": "Auto case 3",
+    "turn_type": "non_behavioral",
+    "rubric_type": "non_behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Open-ended but substantive, seeking general motivation without requiring a past example",
+    "question": "What drew you to this role and to Northline?",
+    "response": "The role seems aligned with my background. I have worked around payments and data consistency, and this sounds like more of that. I also saw that Northline is growing and has interesting technical problems. I do not know every detail of your architecture yet, but the platform engineering part stood out to me.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 4,
+    "label": "Auto case 4",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a specific past example of Go usage in production.",
+    "question": "How have you used Go in production?",
+    "response": "I have used Go on a couple services, mostly maintaining existing code. I wrote some handlers, added logging, and fixed a few bugs around retries. I am more comfortable in Python, but I can work in Go. I know the basics like interfaces, contexts, and goroutines, though I would not say I am an expert in concurrency.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 5,
+    "label": "Auto case 5",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a specific past example of project leadership under a tight deadline",
+    "question": "Tell me about a time you led a project under a tight deadline.",
+    "response": "At FinBridge we had to update an integration for a partner API before they deprecated the old version. I was one of the main engineers on it. The deadline was coming up quickly, maybe a month or so. I helped break down the tasks, implemented some endpoint changes, and coordinated with QA. We shipped it before the deadline. It was stressful, but it worked out.",
+    "follow_ups": [
+      {
+        "question": "What specifically did you own on that project?",
+        "response": "I owned the mapping changes for two of the partner response types and wrote some tests for them. I also helped debug a production issue after launch where one optional field was coming through empty. I was not the official lead, but I was responsible for a decent chunk of the work.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 6,
+    "label": "Auto case 6",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example of persuasion, making it behavioral.",
+    "question": "Describe a situation where you had to persuade a skeptical stakeholder.",
+    "response": "There was a time when product wanted a dashboard change faster than engineering thought was safe. I explained that we needed more time to do it properly. I do not remember all the details, but I showed them that rushing it might create rework. Eventually they agreed to give us a bit more time.",
+    "follow_ups": [
+      {
+        "question": "What evidence did you use to convince them?",
+        "response": "Mostly examples from previous dashboard bugs. We had a few cases where metrics were confusing because the definitions were not clear. I pulled up one ticket where support had to explain a wrong-looking number to customers. It was not a formal analysis, but it helped make the risk more concrete.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 7,
+    "label": "Auto case 7",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Directly prompts for a past example of conflict resolution",
+    "question": "Tell me about a time you had a conflict with a teammate.",
+    "response": "I had a disagreement with another engineer about whether to add unit tests for a helper function or just cover it through integration tests. I thought unit tests would be useful, and he thought it was unnecessary. We went back and forth a bit. Eventually we compromised and added a smaller set of unit tests.",
+    "follow_ups": [
+      {
+        "question": "How did you handle the conflict in the moment?",
+        "response": "I probably could have handled it better. At first I pushed my point too hard in the pull request comments. After that I messaged him directly and we talked through the concern. It ended fine, but I learned that PR comments can sound sharper than intended.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 8,
+    "label": "Auto case 8",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Directly prompts for a past example of failure or mistake",
+    "question": "Tell me about a time you failed or made a mistake.",
+    "response": "I once deployed a change that caused a reporting job to miss some records. It was not a huge outage, but it created manual cleanup work. The issue was that I assumed a timestamp field was always present, and it was not. I rolled back the change and added a null check later.",
+    "follow_ups": [
+      {
+        "question": "What did you change afterward to prevent that kind of issue?",
+        "response": "I added a test case for missing timestamps and updated the runbook with the symptom. I also started checking edge cases more carefully when dealing with partner data. I would not say it transformed the whole process, but it made me more cautious.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 9,
+    "label": "Auto case 9",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example of process improvement",
+    "question": "Tell me about a time you improved a process.",
+    "response": "Our deploy process had a few manual steps that people sometimes forgot. I wrote a script to automate part of it. It saved some time and made deployments easier.",
+    "follow_ups": [
+      {
+        "question": "Can you be more specific about what the script did and how much time it saved?",
+        "response": "It checked that migrations had run, confirmed the service health endpoint, and posted the deployment version to Slack. Before that, people copied commands from a wiki. It probably saved ten or fifteen minutes per deploy and reduced small mistakes, though I do not have a precise metric.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 10,
+    "label": "Auto case 10",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example of mentoring or growth, fitting the behavioral definition.",
+    "question": "Tell me about a time you mentored someone or helped them grow.",
+    "response": "I helped a newer engineer get familiar with our codebase. I reviewed their pull requests and answered questions. They got more comfortable over time.",
+    "follow_ups": [
+      {
+        "question": "What was your actual approach to mentoring them?",
+        "response": "I set up a weekly thirty-minute pairing session for a few weeks. We walked through one service together, and I asked them to explain changes before opening PRs. I also gave more context in reviews instead of just saying what to change. It helped, but I did not have a formal mentorship plan.",
+        "probe_type": "deepening",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 11,
+    "label": "Auto case 11",
+    "turn_type": "non_behavioral",
+    "rubric_type": "non_behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Open-ended but not tied to a past example, focusing on self-reflection and personal traits",
+    "question": "What is your greatest weakness?",
+    "response": "I can get too focused on finishing my own tasks and not communicate early enough when something is slipping. I have improved on that by sending status updates sooner, but it is still something I watch.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 12,
+    "label": "Auto case 12",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example of handling competing priorities",
+    "question": "How do you handle competing priorities when everything is urgent?",
+    "response": "I try to compare impact and deadlines, then talk to my manager if there is a conflict. I usually ask which item matters most to the business. I am not always perfect at it, but I try not to quietly work late on everything.",
+    "follow_ups": [
+      {
+        "question": "Can you give me a past example when you had to do that?",
+        "response": "Earlier this year I had a partner bug, a reporting cleanup task, and an internal tool request all due around the same time. I asked my manager to confirm priority. The partner bug came first because it affected customer data, then the reporting cleanup, and the tool request moved by a week. I fixed the bug in two days and avoided overcommitting.",
+        "probe_type": "clarifying",
+        "classification_source": "ministral:ministral-3b-latest"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 13,
+    "label": "Auto case 13",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example of leadership in a non-formal role.",
+    "question": "Tell me about a time you showed leadership when you were not the formal lead.",
+    "response": "During a release, a few people were confused about who was handling rollback checks. I started a shared checklist and asked people to mark what they had verified. It was not a big incident, but it helped the release go more smoothly.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 14,
+    "label": "Auto case 14",
+    "turn_type": "non_behavioral",
+    "rubric_type": "non_behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Open-ended question assessing general approach without requiring a past example",
+    "question": "How do you typically work with product managers?",
+    "response": "I try to understand what they actually need, not just the ticket wording. Sometimes I ask clarifying questions if acceptance criteria are vague. I have had good relationships with PMs, though I am still learning how to push back earlier when scope is unclear.",
+    "follow_ups": [],
+    "expected": {}
+  }
+]

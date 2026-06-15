@@ -1,0 +1,166 @@
+# Interview transcript fixture
+# Role: Backend Software Engineer, Platform team @ Northline Financial
+# Quality target: very_poor candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+INTERVIEWER:
+Hey Sam, welcome! How’s your day going so far?
+
+CANDIDATE:
+Fine.
+
+INTERVIEWER:
+Great. Let’s start with a quick walk through your resume. Can you give me a high-level overview of your most recent role at DataFlow Systems?
+
+CANDIDATE:
+Uh, yeah, I worked there. Did some backend stuff.
+
+INTERVIEWER:
+Got it. What kind of backend work did you focus on?
+
+CANDIDATE:
+Just coding. You know, fixing bugs and stuff.
+
+INTERVIEWER:
+I see. Were there any specific projects or systems you worked on that you’re particularly proud of?
+
+CANDIDATE:
+Not really. It was just work.
+
+INTERVIEWER:
+Okay. What drew you to apply for this role on Northline’s Platform team?
+
+CANDIDATE:
+I dunno. It’s a job. Pays better than my last one.
+
+INTERVIEWER:
+Fair enough. The Platform team here deals a lot with distributed systems and ledger consistency for payments. Have you worked with distributed systems before?
+
+CANDIDATE:
+Yeah, kinda. I mean, I’ve used some tools that are distributed.
+
+INTERVIEWER:
+Can you give me an example of a time you had to debug a consistency issue in a distributed system?
+
+CANDIDATE:
+Uh, I don’t remember. It was a while ago.
+
+INTERVIEWER:
+No problem. Let’s switch gears a bit. Can you tell me about a time you had to persuade a teammate or stakeholder to adopt your technical approach?
+
+CANDIDATE:
+I don’t think I’ve ever had to do that. People usually just go with what I say.
+
+INTERVIEWER:
+Interesting. What if they didn’t? How would you handle it?
+
+CANDIDATE:
+I’d just do it my way anyway. It’s usually right.
+
+INTERVIEWER:
+Got it. How about a time you failed at something at work? What happened?
+
+CANDIDATE:
+I don’t fail. I just move on to the next thing.
+
+INTERVIEWER:
+Okay. What’s a process at your last job that you thought could be improved?
+
+CANDIDATE:
+Everything was fine. I didn’t really pay attention to that stuff.
+
+INTERVIEWER:
+Fair. Have you ever mentored or helped onboard a junior engineer?
+
+CANDIDATE:
+Nope. They just figured it out.
+
+INTERVIEWER:
+How do you prioritize your work when you have multiple competing deadlines?
+
+CANDIDATE:
+I just do whatever’s easiest first.
+
+INTERVIEWER:
+What if the easiest task isn’t the most important?
+
+CANDIDATE:
+Then I guess I do that one later. Or not.
+
+INTERVIEWER:
+Got it. Let’s talk about Go. What’s a project you’ve built in Go that you’re proud of?
+
+CANDIDATE:
+I don’t know. I’ve written some APIs.
+
+INTERVIEWER:
+Can you walk me through how you structured one of those APIs?
+
+CANDIDATE:
+It was just basic stuff. Nothing special.
+
+INTERVIEWER:
+What about error handling? How do you approach that in Go?
+
+CANDIDATE:
+I just return errors. Not a big deal.
+
+INTERVIEWER:
+Have you ever had to optimize a slow database query in Postgres?
+
+CANDIDATE:
+Yeah, once. I just added an index.
+
+INTERVIEWER:
+What was the query doing before the optimization?
+
+CANDIDATE:
+I don’t remember. It was slow.
+
+INTERVIEWER:
+How did you measure the improvement?
+
+CANDIDATE:
+It ran faster. That’s all that matters.
+
+INTERVIEWER:
+Got it. Let’s talk about teamwork. Can you describe a time you had a conflict with a teammate? How did you resolve it?
+
+CANDIDATE:
+I don’t really get into conflicts. People just do what I say.
+
+INTERVIEWER:
+What if they don’t?
+
+CANDIDATE:
+Then they’re wrong.
+
+INTERVIEWER:
+How do you handle feedback from peers or managers?
+
+CANDIDATE:
+I don’t really listen to it. I know what I’m doing.
+
+INTERVIEWER:
+What’s a weakness you’ve identified in your own work?
+
+CANDIDATE:
+I don’t have any. I’m good at what I do.
+
+INTERVIEWER:
+Okay. What’s something you’ve learned recently that’s made you a better engineer?
+
+CANDIDATE:
+I don’t know. I don’t really keep up with new stuff.
+
+INTERVIEWER:
+Fair. Do you have any questions for me about the role or the team?
+
+CANDIDATE:
+Nah, I think I’m good.
+
+INTERVIEWER:
+Alright, Sam. Thanks for coming in today. We’ll be in touch.
+
+CANDIDATE:
+Cool. See ya.

@@ -4,55 +4,94 @@ Transcript Evaluator converts interview transcripts into structured cases, score
 
 ## What This Does
 
-The project has four main pieces:
+The project has five main pieces:
 
-- **Frontend:** `evaluator.html` and the files in `web helpers/`.
-- **Backend:** `txt_to_json.py`, which converts transcripts, serves the local API, writes logs, and proxies Mistral calls.
+- **Frontend:** `src/frontend/evaluator.html` and the files in `src/frontend/web_helpers/`.
+- **Agent 1 / backend:** `src/agent1/txt_to_json.py`, which converts transcripts, serves the local API, writes logs, and proxies Mistral calls.
 - **Agent 1 / evaluator workflow:** the converter plus frontend evaluator that scores each interview case.
-- **Agent 2 / reviewer workflow:** `agent2_connection.py` queues the finished evaluation payload and `agent2.py` sends it to the configured Mistral Agent for a final report.
+- **Classifier agent:** a lightweight Ministral agent inside `src/agent1/txt_to_json.py` that categorizes transcript turns before scoring.
+- **Agent 2 / reviewer workflow:** `src/bridge/agent2_connection.py` queues the finished evaluation payload and `src/agent2/agent2.py` sends it to the configured Mistral Agent for a final report.
 
 ## How The Workflow Runs
 
-1. A `.txt` transcript from `input data/` is passed to `txt_to_json.py`.
-2. `txt_to_json.py` parses interviewer/candidate turns into evaluator-ready JSON.
-3. The script starts the local pipeline server on port `3000` and opens `evaluator.html`.
-4. The frontend loads the generated JSON, rubric files from `docs/`, and the selected Mistral model.
-5. Each case is sent to the backend endpoint `/mistral/evaluate`.
-6. The backend calls Mistral through `https://api.mistral.ai/v1/chat/completions`.
-7. The frontend parses the JSON score response, displays results, and appends detailed scoring breakdowns to `logs/{file}_eval.log`.
-8. When the batch completes, the frontend calls `/agent2/handoff`.
-9. `agent2_connection.py` packages the evaluation log, original transcript, and generated JSON into a websocket payload.
-10. `agent2.py` receives that payload, calls the configured Mistral Agent, and writes the final report under `logs/agent2/`.
+1. A `.txt` transcript from `input data/` is passed to Agent 0 in `src/agent1/txt_to_json.py`.
+2. Agent 0 drafts evaluator-ready JSON. By default, a small Ministral classifier categorizes turns as behavioral, non-behavioral, non-question, follow-up, clarifying, or deepening.
+3. Before scoring starts, Agent 0 sends a compact transcript/case outline to Agent 2 for structure review.
+4. Agent 2 either approves the structure or returns compact correction operations, such as splitting a follow-up into a new case, adding a missing case, moving a follow-up, or changing a probe type.
+5. Agent 0 applies those operations locally and resubmits the compact outline until Agent 2 is satisfied. If Agent 2 repeatedly fails to return usable JSON or usable operations, the run stops with a clear log path instead of silently accepting a bad structure.
+6. Agent 0 writes the approved JSON, starts the local pipeline server on port `3000`, and opens `src/frontend/evaluator.html`.
+7. Agent 1, the frontend evaluator, loads the approved JSON, rubric files from `docs/`, and the selected Mistral model.
+8. Each case is sent to the backend endpoint `/mistral/evaluate`.
+9. The backend calls Mistral through `https://api.mistral.ai/v1/chat/completions`.
+10. The frontend parses the JSON rating response, displays results, appends detailed breakdowns to `logs/agent1/{file}/{file}_eval.log`, and writes result records to `logs/agent1/{file}/{file}.log`.
+11. When the batch completes, the frontend calls `/agent2/handoff`.
+12. `src/bridge/agent2_connection.py` packages the evaluation log, original transcript, and approved JSON into a websocket payload.
+13. `src/agent2/agent2.py` receives that payload, calls the configured Mistral Agent, and writes the final report under `logs/agent2/{file}/`.
 
 Final Agent 2 reports are named like:
 
 ```text
-logs/agent2/agent2_entire_interview_truncated_06-06-26.md
+logs/agent2/entire_interview_truncated/agent2_entire_interview_truncated_06-06-26.md
 ```
 
-The date inside the report header is written as `MM/DD/YY`.
+The report header includes a local timestamp and a `MM/DD/YY` date.
 
 ## Frontend
 
 The frontend is intentionally simple: static HTML plus browser helper scripts.
 
-- `evaluator.html` is the main evaluator UI.
-- `web helpers/mistral.js` sends evaluation requests to the local backend.
-- `web helpers/evaluator-app.js` manages batches, scoring output, follow-up handling, PDF/export data, and Agent 2 handoff.
-- `web helpers/log.js` writes browser-side evaluation progress back to the backend log endpoint.
-- `web helpers/pdf.js` builds report exports.
-- `web helpers/rubrics.js` loads behavioral and non-behavioral rubric text.
-- `web helpers/analytics.js` records request attempts, retries, failures, and debug traces.
+- `src/frontend/evaluator.html` is the main evaluator UI.
+- `src/frontend/web_helpers/mistral.js` sends evaluation requests to the local backend.
+- `src/frontend/web_helpers/evaluator-app.js` manages batches, scoring output, follow-up handling, PDF/export data, and Agent 2 handoff.
+- `src/frontend/web_helpers/log.js` writes browser-side evaluation progress back to the backend log endpoint.
+- `src/frontend/web_helpers/pdf.js` builds report exports.
+- `src/frontend/web_helpers/rubrics.js` defines the unified scoring rubric.
+- `src/frontend/web_helpers/analytics.js` records request attempts, retries, failures, and debug traces.
 
 The frontend does not call Mistral directly. It calls the local backend so API keys stay out of browser code.
 
 ## Backend
 
-`txt_to_json.py` does three jobs:
+`src/agent1/txt_to_json.py` acts as Agent 0 and does four jobs:
 
 - Converts transcript text into structured JSON cases.
+- Runs the Agent 2 structure-review loop before scoring.
 - Runs the local pipeline server with `ThreadingHTTPServer`.
 - Exposes local endpoints for logs, Mistral evaluation, and Agent 2 handoff.
+
+The transcript conversion step uses a separate lightweight classifier agent so the main evaluator model does not spend tokens on low-reasoning categorization. The default classifier is:
+
+```text
+ministral-3b-latest
+```
+
+You can override it with:
+
+```text
+MISTRAL_CLASSIFIER_MODEL=ministral-8b-latest
+```
+
+You can also bypass the classifier agent:
+
+```powershell
+python -m src.agent1.txt_to_json "input data/entire_interview_truncated.txt" --classifier-provider heuristic
+```
+
+By default, Agent 0 keeps looping with Agent 2 until Agent 2 approves the structure.
+
+You can bypass the Agent 2 pre-evaluation structure loop when debugging:
+
+```powershell
+python -m src.agent1.txt_to_json "input data/entire_interview_truncated.txt" --structure-review-iterations 0
+```
+
+You can also set a manual cap if you want the loop to stop after a fixed number of attempts:
+
+```text
+AGENT2_STRUCTURE_REVIEW_ITERATIONS=5
+```
+
+Use `-1` for the default "until satisfied" behavior, `0` to skip, or a positive number to cap attempts.
 
 Important endpoints:
 
@@ -86,14 +125,20 @@ Agent 2 is the reviewer. It receives the full context from Agent 1:
 - the generated evaluator JSON
 - the detailed evaluation log
 
-The bridge between them is `agent2_connection.py`. The frontend posts to `/agent2/handoff`, the backend queues a payload, and `agent2.py` connects back over `/agent2-ws` to receive that payload. Agent 2 then calls the Mistral Agent configured by:
+Agent 2 audits both rating quality and Agent 1's transcript structure. It checks whether main
+questions were split correctly, whether non-scorable turns were skipped, whether follow-ups were
+attached to the right parent case, and whether each follow-up probe is correctly labeled as
+clarifying or deepening. When it finds a structure issue, it should pinpoint the case, question,
+nearby transcript context, and the correction needed in `txt_to_json.py`.
+
+The bridge between them is `src/bridge/agent2_connection.py`. The frontend posts to `/agent2/handoff`, the backend queues a payload, and `src/agent2/agent2.py` connects back over `/agent2-ws` to receive that payload. Agent 2 then calls the Mistral Agent configured by:
 
 ```text
 MISTRAL_AGENT2_ID
 MISTRAL_AGENT2_VERSION
 ```
 
-If those are not set, `agent2.py` uses the default Agent 2 ID already configured in the script.
+If those are not set, `src/agent2/agent2.py` uses the default Agent 2 ID already configured in the script.
 
 ## Gemini To Mistral Change
 
@@ -121,6 +166,7 @@ Create or update `.env` with:
 
 ```text
 MISTRAL_API_KEY=your_mistral_api_key
+MISTRAL_CLASSIFIER_MODEL=ministral-3b-latest
 MISTRAL_EVALUATOR_MODEL=mistral-small-latest
 MISTRAL_AGENT2_ID=ag_019e9f09fadc72f7b26c3a4eace4fcd1
 MISTRAL_AGENT2_VERSION=1
@@ -133,14 +179,16 @@ MISTRAL_AGENT2_VERSION=1
 From the project root:
 
 ```powershell
-python txt_to_json.py "input data/entire_interview_truncated.txt" --batch-size 3
+python -m src.agent1.txt_to_json "input data/entire_interview_truncated.txt" --batch-size 3
 ```
 
 This writes:
 
 ```text
 input data/entire_interview_truncated.json
-logs/entire_interview_truncated_eval.log
+logs/entry_timing/entire_interview_truncated_entry_timing.log
+logs/agent1/entire_interview_truncated/entire_interview_truncated_eval.log
+logs/agent1/entire_interview_truncated/entire_interview_truncated.log
 ```
 
 It also opens the evaluator in the browser.
@@ -168,7 +216,7 @@ Run Test Runner
 That regenerates `tests/test_cases.json`, starts the local pipeline server, and opens:
 
 ```text
-http://localhost:3000/tests/test_runner.html?v=mistral-small-1
+http://localhost:3000/tests/test_runner.html?v=mistral-small-4
 ```
 
 ## Outputs
@@ -176,11 +224,19 @@ http://localhost:3000/tests/test_runner.html?v=mistral-small-1
 Primary outputs:
 
 - `input data/*.json`: parsed transcript cases
-- `logs/*_eval.log`: evaluator logs with scoring breakdowns
-- `logs/agent2/agent2_{file_name}_{MM-DD-YY}.md`: final Agent 2 QA reports
+- `logs/entry_timing/{file}_entry_timing.log`: Agent 1 conversion and per-entry timing logs
+- `logs/agent1/{file}/{file}_eval.log`: evaluator logs with scoring breakdowns
+- `logs/agent1/{file}/{file}.log`: structured evaluator result records
+- `logs/agent2/{file}/agent2_{file}_{MM-DD-YY}.md`: final Agent 2 QA reports
 - `reports/`: exported reports and supporting artifacts
 
 All runtime time marks are local `HH:MM:SS`.
+
+To erase all log files and keep the log folders ready for the next run:
+
+```text
+python -m src.agent1.txt_to_json clean
+```
 
 ## Follow-Up Steps
 
@@ -191,6 +247,6 @@ Good next improvements:
 - Add automated regression tests for a few known transcripts so prompt changes do not silently change scoring.
 - Add a "rerun failed cases only" button in the frontend.
 - Add a config panel for Agent 2 so the agent ID/version can be changed without editing `.env`.
-- Add a final report index page that lists every `logs/agent2/*.md` report by transcript name and date.
+- Add a final report index page that lists every `logs/agent2/{file}/*.md` report by transcript name and date.
 - Move the remaining optional Ollama classification path behind an explicit setting if you want the project to be fully Mistral-only.
 

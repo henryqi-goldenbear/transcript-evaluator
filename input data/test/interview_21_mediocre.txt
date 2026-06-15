@@ -1,0 +1,144 @@
+# Interview transcript fixture
+# Role: Data Engineer, Analytics Platform @ Quanta Logistics
+# Quality target: mediocre candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hi Casey, I’m Renee from the data platform team. Thanks for coming in today—how’s your morning going so far?
+
+CANDIDATE:
+Hey Renee, morning’s been okay. Traffic was a little rough, but I made it. Thanks for having me.
+
+INTERVIEWER:
+Glad you’re here. Let’s start with a quick walk through your resume—could you give me the two-minute version of your background and what led you to apply for this role?
+
+CANDIDATE:
+Sure. So I’ve been a data engineer for about four years now. Started at a small e-commerce company where I built some basic ETL pipelines in Python and SQL. Then I moved to my current role at FinTech Solutions, where I work on batch pipelines using Spark and Airflow. I’ve done some dbt modeling too, mostly for reporting. I applied here because I saw Quanta is doing a lot with logistics data, and I thought it’d be a good chance to work on bigger datasets and maybe some streaming stuff, which I haven’t done much of yet.
+
+INTERVIEWER:
+Got it. You mentioned Spark and Airflow—can you tell me about a time you had to optimize a Spark job that was running slowly? What was the problem, and how did you fix it?
+
+CANDIDATE:
+Yeah, so at FinTech, we had this job that was processing transaction data, and it was taking like six hours to run. It was a pretty big dataset, but it felt like it was taking too long. I looked at the code and realized we were doing a lot of shuffles—like, way too many joins. So I tried to reduce the number of joins by pre-aggregating some of the data before the main job. I also increased the number of executors and tweaked the memory settings a bit. It got faster, maybe down to like four hours, but I think there was still room for improvement. I didn’t get to dig deeper because other priorities came up.
+
+INTERVIEWER:
+That’s fair. Four hours is still a long time—did you consider partitioning the data or using broadcast joins for smaller tables?
+
+CANDIDATE:
+Oh, right, broadcast joins. I think I tried that for one of the smaller tables, but I’m not sure if it made a huge difference. Partitioning—I didn’t really think about that at the time. I was mostly focused on the joins and the resource allocation.
+
+INTERVIEWER:
+Got it. Let’s switch gears a little. Can you tell me about a time you had to work with a stakeholder who was unhappy with the data or the pipeline you built? How did you handle it?
+
+CANDIDATE:
+Yeah, so last year, the marketing team was using this dashboard I helped build, and they kept saying the numbers didn’t match what they expected. I dug into it and realized the issue was with how we were joining some of the campaign data. The join key was wrong, so it was duplicating some records. I fixed the join, but then they were like, “Why did this take so long to catch?” I explained that the data was coming from a new source, and we hadn’t fully validated it yet. They weren’t super happy, but they understood after I showed them the before-and-after numbers.
+
+INTERVIEWER:
+How did you prevent that kind of issue from happening again?
+
+CANDIDATE:
+Well, I added some basic data quality checks in Airflow—like row counts and null checks—to catch stuff like that earlier. I also started documenting the pipeline logic better so people could see how the joins worked. It wasn’t perfect, but it helped.
+
+INTERVIEWER:
+Makes sense. You mentioned documentation—can you talk about a time you improved a process or workflow for your team? What was the impact?
+
+CANDIDATE:
+Yeah, so at FinTech, we had this issue where people were constantly asking me how to run certain pipelines or where to find the output. It was getting annoying, so I put together a quick Confluence page with instructions and links to the Airflow DAGs. I also added a README in the repo with some basic setup steps. It didn’t take long, and it cut down on the questions by like 50%. People still asked sometimes, but at least they had a place to start.
+
+INTERVIEWER:
+That’s a good start. Did you ever get feedback on how to make that documentation even better?
+
+CANDIDATE:
+Not really. I mean, people said it was helpful, but no one gave me specific feedback. I think it could’ve been more detailed, but I didn’t have time to keep updating it.
+
+INTERVIEWER:
+Fair enough. Let’s talk about collaboration. Can you describe a time you had to work with someone who had a very different approach to solving a problem? How did you handle it?
+
+CANDIDATE:
+Oh, yeah. So I was working with this analyst who wanted to build a new report, and he was really pushing for us to use this complex SQL query he wrote. I thought it was way too complicated and would be hard to maintain. I suggested we break it down into smaller dbt models instead, but he wasn’t really into it. We ended up compromising—I kept most of his query but split it into a couple of CTEs so it was easier to debug. It wasn’t my ideal solution, but it worked.
+
+INTERVIEWER:
+Did you ever revisit that decision later to see if it was the right call?
+
+CANDIDATE:
+Not really. It was a one-off report, so once it was done, we moved on. I think it was fine, but I don’t know if it was the *best* way to do it.
+
+INTERVIEWER:
+Got it. Let’s talk about failure. Can you tell me about a time a project you were working on didn’t go as planned? What happened, and what did you learn?
+
+CANDIDATE:
+Yeah, so last year, I was building this pipeline to ingest some third-party data, and I underestimated how messy the source files would be. The schema kept changing, and I didn’t account for that in the code. The pipeline kept failing, and I had to go back and add a bunch of validation steps. It took way longer than I thought it would, and my manager was pretty annoyed. I learned to spend more time upfront understanding the data before I start coding.
+
+INTERVIEWER:
+That’s a good lesson. Did you end up automating any of those validation steps for future pipelines?
+
+CANDIDATE:
+Not really. I added some basic checks, but I didn’t build anything reusable. I think I could’ve done more there.
+
+INTERVIEWER:
+Switching back to technical stuff—how do you approach testing your data pipelines? Can you walk me through your process?
+
+CANDIDATE:
+Yeah, so I usually write unit tests for the Python parts of the pipeline—like testing the transformation logic. For the SQL parts, I’ll run some sample queries to make sure the output looks right. In Airflow, I’ll add some data quality checks, like making sure the row counts match what we expect. I don’t do anything super fancy, but it catches the big issues.
+
+INTERVIEWER:
+Do you ever use tools like Great Expectations or dbt tests for data quality?
+
+CANDIDATE:
+I’ve heard of Great Expectations, but I haven’t used it. At my current job, we use dbt tests for some things, like checking for nulls or unique values, but not for everything. It’s on my list to learn more about.
+
+INTERVIEWER:
+Got it. Let’s talk about prioritization. Can you describe a time you had to juggle multiple projects with competing deadlines? How did you decide what to focus on?
+
+CANDIDATE:
+Oh, yeah. So last quarter, I was working on two big projects—a new pipeline for customer data and an update to an existing reporting pipeline. The reporting pipeline was supposed to be done first, but then the customer data project got pushed up because the sales team needed it for a big presentation. I ended up working late a few nights to get both done. I didn’t really have a great system for prioritizing—I just did what my manager told me to focus on.
+
+INTERVIEWER:
+Did you ever push back or ask for help when the workload got too heavy?
+
+CANDIDATE:
+Not really. I just figured I’d power through it. I probably should’ve asked for help sooner, but I didn’t want to seem like I couldn’t handle it.
+
+INTERVIEWER:
+That’s understandable. Let’s talk about mentorship. Have you ever helped onboard or mentor a junior engineer? What was that experience like?
+
+CANDIDATE:
+Yeah, so at FinTech, we hired this junior engineer, and I was supposed to help get him up to speed. I showed him around the codebase and explained how our pipelines worked. He had a lot of questions, which was fine, but sometimes I felt like I didn’t have great answers. Like, he’d ask why we did something a certain way, and I’d be like, “I don’t know, that’s just how it’s always been.” I think he learned some stuff, but I probably could’ve done a better job explaining things.
+
+INTERVIEWER:
+What’s one thing you’d do differently if you had to mentor someone again?
+
+CANDIDATE:
+I’d probably spend more time documenting the “why” behind things, not just the “how.” And maybe set up more regular check-ins so I could see how he was doing.
+
+INTERVIEWER:
+That’s a good point. Let’s wrap up with a quick technical question—how do you decide when to use batch processing versus streaming for a pipeline?
+
+CANDIDATE:
+Well, batch is good for stuff that doesn’t need to be real-time, like daily reports or big aggregations. Streaming is better for things where you need the data right away, like fraud detection or live dashboards. At my current job, we mostly do batch because that’s what the business needs. I haven’t worked much with streaming, but I know it’s something I’d like to learn.
+
+INTERVIEWER:
+Got it. Before we finish, do you have any questions for me about the role or the team?
+
+CANDIDATE:
+Yeah, um, what’s the team’s biggest challenge right now? And what’s the tech stack like for the analytics platform?
+
+INTERVIEWER:
+Great questions. The team’s biggest challenge is scaling our pipelines to handle the growing volume of logistics data while keeping costs under control. As for the tech stack, we’re heavy on Spark and Airflow for orchestration, dbt for modeling, and we’re starting to experiment with streaming using Kafka and Spark Structured Streaming. We also use Snowflake as our warehouse.
+
+CANDIDATE:
+Cool, that sounds like a good mix. One more question—how does the team handle code reviews? Like, is it pretty collaborative, or is it more hands-off?
+
+INTERVIEWER:
+It’s a mix. We try to keep reviews constructive and collaborative, but the level of detail can vary depending on who’s reviewing. We’re working on making it more consistent. Anything else you’re curious about?
+
+CANDIDATE:
+No, that’s all. Thanks for answering my questions.
+
+INTERVIEWER:
+Of course. Thanks for coming in today, Casey. We’ll be in touch soon with next steps.
+
+CANDIDATE:
+Sounds good. Thanks, Renee. Have a good one.

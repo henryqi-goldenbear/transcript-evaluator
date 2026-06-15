@@ -1,0 +1,148 @@
+# Interview transcript fixture
+# Role: Site Reliability Engineer, Core Infrastructure @ Mesa Cloud
+# Quality target: poor candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+INTERVIEWER:
+Hi Riley, I’m Kira, one of the SREs on the Core Infra team. Thanks for coming in today—how’s your morning going so far?
+
+CANDIDATE:
+Hey Kira, it’s going okay. Traffic was kind of bad, but I made it on time.
+
+INTERVIEWER:
+Glad you made it! To kick things off, could you walk me through your resume—maybe highlight the parts that line up best with this role?
+
+CANDIDATE:
+Sure. So, I’ve been working as an SRE for about three years now, mostly at my current company. Before that, I did some DevOps stuff. I’ve worked with Kubernetes, monitoring, and incident response. I think that’s pretty much what you’re looking for here.
+
+INTERVIEWER:
+Got it. What drew you to Mesa Cloud specifically, and this team in particular?
+
+CANDIDATE:
+Well, I’ve heard Mesa is a good company, and the role sounded interesting. I like working on infrastructure, and this seems like a place where I can do that. Plus, the team seems nice from what I’ve read.
+
+INTERVIEWER:
+Let’s dig into some of the technical work you’ve done. You mentioned Kubernetes—can you tell me about a time you had to debug a tricky issue in a Kubernetes cluster? What was the problem, and how did you approach it?
+
+CANDIDATE:
+Yeah, so there was this one time when pods were crashing. I think it was because of some memory issues. I just restarted the pods, and that fixed it. Sometimes you just have to do that.
+
+INTERVIEWER:
+What tools or commands did you use to diagnose the issue before restarting the pods?
+
+CANDIDATE:
+Oh, I just checked the logs in the dashboard. There wasn’t really much else to do—it was pretty straightforward.
+
+INTERVIEWER:
+I see. Let’s switch gears a bit. Tell me about a time you had to handle a major incident. What was your role, and how did you contribute to resolving it?
+
+CANDIDATE:
+There was this outage once where the whole service went down. I was on call, so I joined the bridge. I didn’t really do much—just followed what the senior engineers were saying. They figured it out eventually.
+
+INTERVIEWER:
+What steps did you take to help diagnose or mitigate the issue while you were on the call?
+
+CANDIDATE:
+I mean, I was just listening mostly. I didn’t want to mess anything up, so I let the others handle it. I did check the dashboards to see if anything looked off, but it all seemed normal to me.
+
+INTERVIEWER:
+Got it. How do you typically approach capacity planning for a service you’re responsible for?
+
+CANDIDATE:
+We usually just look at the graphs and see if we need to add more nodes or something. If the CPU is high, we scale up. It’s not that complicated.
+
+INTERVIEWER:
+Have you ever had to forecast growth or model future resource needs based on historical data?
+
+CANDIDATE:
+Not really. We just kind of react when things get slow. I don’t think we’ve ever done a deep dive on that.
+
+INTERVIEWER:
+Let’s talk about collaboration. Can you share an example of a time you had to work with another team—maybe developers or networking—to solve a problem?
+
+CANDIDATE:
+Yeah, there was this one time when the devs were pushing a new feature, and it kept breaking in staging. I told them they needed to fix their code because it was causing issues. They didn’t really listen at first, but eventually they had to.
+
+INTERVIEWER:
+How did you communicate the issue to them, and what was the outcome?
+
+CANDIDATE:
+I just messaged them on Slack and said their stuff was broken. They argued a bit, but then they fixed it. It wasn’t a big deal.
+
+INTERVIEWER:
+Tell me about a time you identified a process that wasn’t working well and took steps to improve it.
+
+CANDIDATE:
+Hmm, I can’t really think of anything specific. Most of the processes at my current job seem fine. I guess if something’s broken, we just deal with it when it comes up.
+
+INTERVIEWER:
+What about a time you failed at something? Maybe a project or task that didn’t go as planned.
+
+CANDIDATE:
+I don’t know if I’d call it a failure, but there was this one time when I misconfigured a load balancer. It caused some downtime, but it wasn’t a huge deal. My manager just told me to be more careful next time.
+
+INTERVIEWER:
+What did you learn from that experience, and how did you apply it going forward?
+
+CANDIDATE:
+I mean, I just double-check my work now. It’s not like it was a big mistake or anything.
+
+INTERVIEWER:
+Let’s talk about mentorship. Have you ever helped onboard or mentor a junior engineer?
+
+CANDIDATE:
+Not really. I’ve shown a few people where the docs are, but that’s about it. Mostly, people figure things out on their own.
+
+INTERVIEWER:
+How do you prioritize your work when you have multiple competing tasks or incidents happening at the same time?
+
+CANDIDATE:
+I just do whatever seems most urgent at the time. If something’s on fire, I deal with that first. Otherwise, I just kind of go down the list.
+
+INTERVIEWER:
+Have you ever had to push back on a request from another team or stakeholder? How did you handle it?
+
+CANDIDATE:
+Yeah, sometimes the devs ask for stuff that doesn’t make sense. I just tell them no if it’s not reasonable. They usually get over it.
+
+INTERVIEWER:
+What’s an area where you feel you could improve as an engineer?
+
+CANDIDATE:
+I guess I could be better at writing documentation. I don’t really like doing it, so I don’t spend much time on it.
+
+INTERVIEWER:
+How do you stay up to date with new technologies or best practices in the SRE space?
+
+CANDIDATE:
+I read some blogs sometimes, but mostly I just learn on the job. If something new comes up, I’ll figure it out when I need to.
+
+INTERVIEWER:
+Let’s talk about SLOs. Can you explain how you’ve used Service Level Objectives in your current or past roles?
+
+CANDIDATE:
+We have SLOs, but I don’t really work with them much. The team sets them, and I just make sure the alerts don’t go off too often.
+
+INTERVIEWER:
+How do you determine what an appropriate SLO should be for a service?
+
+CANDIDATE:
+I don’t know—we just use whatever the team decides. I don’t think I’ve ever had to set one myself.
+
+INTERVIEWER:
+Alright, last question before we wrap up. Do you have any questions for me about the team or the role?
+
+CANDIDATE:
+Yeah, what’s the on-call rotation like? Is it pretty intense?
+
+INTERVIEWER:
+It’s a standard rotation—one week on, a few weeks off. The load varies, but we try to keep it manageable. Anything else you’re curious about?
+
+CANDIDATE:
+Nah, that’s it. Thanks.
+
+INTERVIEWER:
+Great, thanks for your time, Riley. We’ll be in touch soon. Have a good rest of your day.
+
+CANDIDATE:
+Cool, thanks. Bye.

@@ -1,0 +1,26 @@
+11:04:48 INFO [__main__] Starting convert and evaluate task; logging to logs\agent1\entire_interview\entry_timing\entire_interview_entry_timing.log
+11:04:48 INFO [__main__] input=input data\entire_interview.txt batch_size=4
+11:04:48 INFO [__main__] Parsing transcript: input=input data\entire_interview.txt chars=20942 classifier=ministral:ministral-3b-latest
+11:05:03 INFO [__main__] Parsed transcript into 18 cases
+11:05:03 INFO [__main__] Detected 18 evaluator cases
+11:05:03 INFO [__main__] Question/answer pair 1: started_at=11:05:03 finished_at=11:05:03 question_chars=94 answer_chars=699 follow_ups=0
+11:05:03 INFO [__main__] Question/answer pair 2: started_at=11:05:03 finished_at=11:05:03 question_chars=161 answer_chars=1107 follow_ups=0
+11:05:03 INFO [__main__] Question/answer pair 3: started_at=11:05:03 finished_at=11:05:03 question_chars=96 answer_chars=621 follow_ups=0
+11:05:03 INFO [__main__] Question/answer pair 4: started_at=11:05:03 finished_at=11:05:03 question_chars=94 answer_chars=452 follow_ups=0
+11:05:03 INFO [__main__] Question/answer pair 5: started_at=11:05:03 finished_at=11:05:03 question_chars=89 answer_chars=218 follow_ups=0
+11:05:03 INFO [__main__] Question/answer pair 6: started_at=11:05:03 finished_at=11:05:03 question_chars=52 answer_chars=585 follow_ups=0
+11:05:03 INFO [__main__] Question/answer pair 7: started_at=11:05:03 finished_at=11:05:03 question_chars=85 answer_chars=806 follow_ups=0
+11:05:03 INFO [__main__] Question/answer pair 8: started_at=11:05:03 finished_at=11:05:03 question_chars=111 answer_chars=772 follow_ups=1
+11:05:03 INFO [__main__] Question/answer pair 9: started_at=11:05:03 finished_at=11:05:03 question_chars=89 answer_chars=920 follow_ups=0
+11:05:03 INFO [__main__] Question/answer pair 10: started_at=11:05:03 finished_at=11:05:03 question_chars=56 answer_chars=655 follow_ups=0
+11:05:03 INFO [__main__] Question/answer pair 11: started_at=11:05:03 finished_at=11:05:03 question_chars=62 answer_chars=805 follow_ups=0
+11:05:03 INFO [__main__] Question/answer pair 12: started_at=11:05:03 finished_at=11:05:03 question_chars=74 answer_chars=710 follow_ups=0
+11:05:03 INFO [__main__] Question/answer pair 13: started_at=11:05:03 finished_at=11:05:03 question_chars=44 answer_chars=241 follow_ups=1
+11:05:03 INFO [__main__] Question/answer pair 14: started_at=11:05:03 finished_at=11:05:03 question_chars=62 answer_chars=337 follow_ups=1
+11:05:03 INFO [__main__] Question/answer pair 15: started_at=11:05:03 finished_at=11:05:03 question_chars=31 answer_chars=580 follow_ups=0
+11:05:03 INFO [__main__] Question/answer pair 16: started_at=11:05:03 finished_at=11:05:03 question_chars=65 answer_chars=258 follow_ups=1
+11:05:03 INFO [__main__] Question/answer pair 17: started_at=11:05:03 finished_at=11:05:03 question_chars=76 answer_chars=665 follow_ups=0
+11:05:03 INFO [__main__] Question/answer pair 18: started_at=11:05:03 finished_at=11:05:03 question_chars=87 answer_chars=612 follow_ups=0
+11:05:03 INFO [__main__] Finished conversion: input=input data\entire_interview.txt output=input data\entire_interview.json started_at=11:04:48 finished_at=11:05:03 input_chars=20942 cases=18 batch_size=4
+11:05:03 INFO [__main__] Reusing existing pipeline server on port 3000
+11:05:03 INFO [__main__] Opening evaluator HTML: http://localhost:3000/evaluator.html?v=mistral-small-1&input=input+data%2Fentire_interview.json&batch_size=4&log_file=logs%2Fagent1%2Fentire_interview%2Fentire_interview_eval.log&result_log_file=logs%2Fagent1%2Fentire_interview%2Fentire_interview.log

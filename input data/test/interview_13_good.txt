@@ -1,0 +1,141 @@
+# Interview transcript fixture
+# Role: Data Engineer, Analytics Platform @ Quanta Logistics
+# Quality target: good candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hi Alex, I’m Dana—great to meet you. How’s your day going so far?
+
+CANDIDATE:
+Hi Dana, nice to meet you too! My day’s been good—just finished a quick coffee before hopping on this call. How about you?
+
+INTERVIEWER:
+Doing well, thanks. Let’s start with a quick walk through your resume—can you give me the two-minute version of your background and what led you to apply for this role at Quanta?
+
+CANDIDATE:
+Sure! I’ve been a data engineer for about five years now, starting at a mid-sized e-commerce company where I built batch pipelines in Spark and Airflow to power our recommendation engine. From there, I moved to a logistics tech startup called FleetFlow, where I spent the last three years focusing on scaling our analytics platform. I led the migration from on-prem Hadoop to a cloud-based data lake on AWS, using Spark for both batch and streaming workloads. We also adopted dbt to standardize our warehouse modeling, which cut down our reporting errors by about 30% and improved query performance.
+
+I applied to Quanta because I’m really excited about the scale and complexity of your logistics data. FleetFlow was great, but I’m ready to tackle larger datasets and more intricate supply chain challenges. Plus, I saw that Quanta is investing in real-time analytics, which is something I’ve been passionate about—especially after working on a streaming project last year that reduced our shipment tracking latency from 15 minutes to under 2.
+
+INTERVIEWER:
+That’s a great overview. Let’s dig into one of those projects a bit more. You mentioned the migration from on-prem Hadoop to AWS. Can you walk me through a specific challenge you faced during that migration and how you handled it?
+
+CANDIDATE:
+Absolutely. One of the biggest challenges was dealing with the sheer volume of historical data—we had about 500 TB in our on-prem HDFS cluster, and we needed to migrate it to S3 without disrupting our daily batch pipelines. The initial plan was to use DistCp, but we quickly ran into issues with network bandwidth and job failures due to the size of the dataset.
+
+I proposed a phased approach: first, we’d migrate the most critical datasets—about 20% of the total volume—using a combination of DistCp and Spark jobs to compress and partition the data more efficiently. This let us validate the process and iron out issues like schema drift and data corruption before tackling the rest. For the remaining 80%, we used AWS DataSync to parallelize the transfer, which cut the migration time from an estimated 3 weeks to just 5 days. We also set up a dual-write pattern during the transition so that new data was written to both the old and new systems, which minimized downtime for our analytics teams.
+
+INTERVIEWER:
+That’s a solid approach. How did you measure the success of the migration, and what was the impact on the business?
+
+CANDIDATE:
+We tracked a few key metrics. First, we monitored the data freshness and accuracy of our downstream reports—we had automated checks in place to compare results from the old and new systems for the same time periods. After the migration, we saw a 99.8% match rate, which was within our acceptable threshold. Second, we measured query performance in our new environment. Our most complex Spark jobs, which used to take 4-6 hours on-prem, now ran in under 2 hours on EMR. That was a huge win for our data scientists, who could iterate faster on their models.
+
+For the business, the biggest impact was cost. We reduced our infrastructure costs by about 40% by moving to a pay-as-you-go model with AWS, and we also saw a 25% reduction in support tickets related to pipeline failures. The migration also set us up to adopt streaming more easily, which was a strategic goal for the company.
+
+INTERVIEWER:
+You’ve clearly worked on some complex projects. I’m curious—what’s a time when you had to push back on a stakeholder or teammate about a technical decision? How did you handle that?
+
+CANDIDATE:
+That’s a good question. Last year, our product team wanted to add a real-time dashboard for shipment tracking, and their initial proposal was to build it directly on top of our existing batch pipeline by querying the warehouse every 30 seconds. I pushed back because I knew that would put a ton of strain on our Redshift cluster and lead to performance issues for other teams.
+
+Instead, I proposed that we build a separate streaming pipeline using Kafka and Spark Streaming to process the tracking events in real time and write them to a dedicated table in our warehouse. I walked them through the trade-offs: the batch approach would be cheaper upfront but would degrade performance for other users, while the streaming approach would require more engineering effort but would scale better and provide true real-time updates.
+
+To make my case, I put together a quick prototype to show the latency differences—we were able to get sub-second updates with the streaming pipeline versus 30-60 seconds with the batch approach. I also estimated the cost of scaling up Redshift to handle the additional load, which would have been more expensive in the long run than the streaming solution. In the end, they agreed, and we went with the streaming approach. The dashboard ended up being one of the most popular tools for our customer support team.
+
+INTERVIEWER:
+That’s a great example of balancing technical trade-offs with business needs. Let’s switch gears a bit—can you tell me about a time when you mentored someone on your team? What was the situation, and what did you learn from it?
+
+CANDIDATE:
+Sure. About a year ago, we hired a junior data engineer straight out of a bootcamp. She had some Python experience but was completely new to Spark and distributed systems. I was assigned as her mentor, and my goal was to get her up to speed on our codebase and best practices.
+
+One of the first things I did was pair program with her on a small project—optimizing a Spark job that was taking too long to run. I walked her through how to read the Spark UI to identify bottlenecks, and we refactored the job to use broadcast joins instead of shuffle joins, which cut the runtime from 3 hours to 45 minutes. I also encouraged her to ask questions and shadow me during meetings with stakeholders so she could see how we translated business requirements into technical solutions.
+
+What I learned from this experience was the importance of patience and breaking down complex concepts. At first, I assumed she’d pick up things quickly, but I realized that distributed systems can be overwhelming for someone new. I started creating small, digestible tasks for her and using analogies—like comparing Spark partitions to pizza slices—to explain concepts. By the end of her first three months, she was owning small pipelines on her own, and I saw her confidence grow a lot.
+
+INTERVIEWER:
+That’s awesome to hear. Mentoring is such a valuable skill. On the flip side, can you share a time when you failed or made a mistake in your work? How did you handle it, and what did you take away from it?
+
+CANDIDATE:
+Oh, I’ve definitely had my share of mistakes. One that stands out was early in my time at FleetFlow. I was responsible for a daily batch pipeline that aggregated shipment data for our finance team. I made a change to the pipeline to add a new column to the output table, but I didn’t test it thoroughly enough—I assumed the change was simple and didn’t account for how it would interact with downstream dependencies.
+
+The next morning, the finance team reached out in a panic because their reports were missing data for the previous day. I dug into it and realized that the new column I added had caused a schema mismatch in one of the downstream tables, which broke the ETL job that loaded the data into their reporting tool. It took me about 2 hours to diagnose the issue and another hour to roll back the change and reprocess the data.
+
+The lesson I took away was to always test changes in a staging environment that mirrors production as closely as possible. I also started documenting dependencies more carefully and adding automated schema validation checks to our CI/CD pipeline. After that incident, I made it a habit to over-communicate with stakeholders when making changes that could impact them—even if I thought the change was minor.
+
+INTERVIEWER:
+That’s a great example of turning a mistake into a process improvement. Let’s talk about some technical details. You mentioned using dbt for warehouse modeling. Can you walk me through how you’ve structured your dbt projects in the past? What’s your approach to modeling layers, and how do you handle dependencies between models?
+
+CANDIDATE:
+Sure. At FleetFlow, we structured our dbt project with three main layers: staging, intermediate, and marts. The staging layer was where we landed raw data from our sources—like our operational databases and third-party APIs—and applied light transformations like renaming columns, casting data types, and filtering out test data. We kept this layer as close to the source as possible to make debugging easier.
+
+The intermediate layer was where we did more complex transformations—things like joining tables, aggregating data, and applying business logic. For example, we had an intermediate model that calculated shipment delays by joining our shipment tracking data with our carrier performance data. We tried to keep this layer modular so that we could reuse models across different marts.
+
+The marts layer was where we built the final tables that our analytics teams queried. We organized these by business domain—like finance, operations, and customer support—so that each team had a dedicated set of tables tailored to their needs. For dependencies, we used dbt’s built-in ref function to ensure models were built in the correct order, and we also added explicit dependencies in our documentation to make it clear which models relied on others.
+
+One challenge we faced was managing the complexity of our intermediate layer as the number of models grew. To keep things organized, we adopted a naming convention where intermediate models were prefixed with `int_` and followed a consistent pattern, like `int_shipment_delays_by_carrier`. We also used dbt’s packages to share common logic—like date spine generation—across projects.
+
+INTERVIEWER:
+That’s a solid approach. How did you handle testing in your dbt models? Can you give an example of a test you wrote that caught a critical issue?
+
+CANDIDATE:
+Testing was a big focus for us, especially after a few incidents where bad data made it into production. We used dbt’s built-in tests—like `not_null`, `unique`, and `relationships`—for basic data quality checks. For example, we had a `not_null` test on the `shipment_id` column in our staging tables to catch any records where the ID was missing.
+
+Beyond that, we wrote custom data tests using dbt’s `test` blocks to validate business logic. One test that caught a critical issue was a check on our `shipment_delays` model. The test verified that the number of delayed shipments in our intermediate model matched the count from our source system. At one point, the test started failing because a change in our source data format caused the delay calculation to break. The test alerted us before the bad data made it into our marts, and we were able to fix the issue and reprocess the data before our finance team ran their reports.
+
+We also used dbt’s `docs` feature to document our assumptions and edge cases. For example, we documented that our `shipment_delays` model excluded test shipments and shipments with a status of "cancelled." This helped new team members understand the logic and avoid introducing bugs.
+
+INTERVIEWER:
+That’s great—testing is so important in data work. Let’s talk about Airflow. How have you structured your DAGs in the past to handle complex dependencies and ensure reliability?
+
+CANDIDATE:
+At FleetFlow, we used Airflow to orchestrate both our batch and streaming pipelines. For batch pipelines, we structured our DAGs to reflect the dependencies between our dbt models. For example, we had a DAG that ran our staging models first, then our intermediate models, and finally our marts. We used Airflow’s `TriggerDagRunOperator` to chain DAGs together when we needed to run pipelines in sequence, like our daily financial reporting pipeline that depended on the output of our shipment aggregation pipeline.
+
+For reliability, we focused on a few key areas. First, we used Airflow’s `retries` and `retry_delay` parameters to handle transient failures, like API timeouts or network issues. We also set up SLA monitoring to alert us if a DAG ran longer than expected. Second, we used Airflow’s `XCom` to pass metadata between tasks—like the start and end times of a Spark job—so that downstream tasks could use that information. Third, we implemented a "dry run" mode for our DAGs, where we’d run the pipeline with a small subset of data to validate the logic before processing the full dataset.
+
+One challenge we faced was managing the complexity of our DAGs as our pipeline grew. To keep things maintainable, we adopted a modular approach where we broke down large DAGs into smaller, reusable components. For example, we had a `spark_submit` task that we reused across multiple DAGs, with parameters to specify the job name, arguments, and dependencies. We also used Airflow’s `Variables` to store configuration like file paths and database connections, which made it easier to update settings across multiple DAGs.
+
+INTERVIEWER:
+That’s a thorough approach. Let’s shift to a behavioral question about prioritization. Can you tell me about a time when you had to juggle multiple competing priorities? How did you decide what to focus on, and what was the outcome?
+
+CANDIDATE:
+That’s a situation I’ve been in a few times. Last quarter, I was leading the migration of our legacy batch pipelines to a new architecture, and I was also responsible for fixing a critical bug in our real-time shipment tracking pipeline. On top of that, our data science team asked me to help them debug a model that was performing poorly in production.
+
+To prioritize, I started by assessing the impact and urgency of each task. The bug in the real-time pipeline was causing our customer support team to see incorrect shipment statuses, which was a high-priority issue. The migration was important for long-term scalability but wasn’t blocking any immediate business needs. The data science request was important but not urgent—they could work around the issue for a few days.
+
+I decided to tackle the bug first. I worked with the team to roll back the pipeline to a known-good state and then deployed a fix within a few hours. For the migration, I broke it down into smaller milestones and delegated some of the work to a teammate. I also set up a meeting with the data science team to understand their needs better and pointed them to some documentation that helped them debug the issue on their own.
+
+In the end, we resolved the bug within a day, made steady progress on the migration, and the data science team was able to improve their model without my direct involvement. The key takeaway for me was to always align with stakeholders on priorities—sometimes what seems urgent to one team isn’t as critical to the business as a whole.
+
+INTERVIEWER:
+That’s a great example of balancing short-term and long-term priorities. Let’s wrap up with a question about process improvement. Can you share an example of a process you improved in your past role? What was the problem, and how did you measure the impact?
+
+CANDIDATE:
+Sure. At FleetFlow, we had a manual process for deploying changes to our production pipelines. Engineers would write SQL or Python scripts, test them locally, and then manually run them in production. This led to a few issues: it was error-prone, it didn’t scale as the team grew, and it made it hard to track changes over time.
+
+I proposed that we adopt a CI/CD pipeline for our data pipelines, similar to what our software engineering team was using. I worked with our DevOps team to set up a GitHub Actions workflow that would automatically run tests on our dbt models and Airflow DAGs whenever a pull request was opened. The workflow also included a step to deploy changes to our staging environment, where we could validate them before promoting to production.
+
+To measure the impact, we tracked a few metrics. First, we looked at the number of production incidents caused by manual deployments. After implementing the CI/CD pipeline, we saw a 60% reduction in incidents over the next three months. Second, we measured the time it took to deploy changes. Before, it could take up to a day to manually test and deploy a change. With the CI/CD pipeline, we reduced that to under an hour. Finally, we surveyed the team to get qualitative feedback—engineers reported feeling more confident in their deployments and appreciated the ability to catch issues earlier in the process.
+
+INTERVIEWER:
+That’s a fantastic improvement. Before we wrap up, do you have any questions for me about the role or the team at Quanta?
+
+CANDIDATE:
+Yes, I do! I’d love to hear more about the team’s current priorities. What are the biggest challenges the analytics platform team is facing right now, and how does this role contribute to addressing them?
+
+INTERVIEWER:
+Great question. One of our biggest challenges is scaling our real-time analytics capabilities. We’re seeing a lot of demand from our operations teams for real-time visibility into shipments, but our current streaming pipelines are struggling to keep up with the volume of data. This role would be focused on redesigning and optimizing those pipelines, as well as improving our monitoring and alerting to catch issues before they impact our users.
+
+CANDIDATE:
+That’s really interesting. I’ve worked on similar challenges before, so I’d love to hear more about the tech stack you’re using for streaming. Are you primarily using Spark Streaming, or have you explored other tools like Flink or Kafka Streams?
+
+INTERVIEWER:
+We’re currently using Spark Streaming, but we’re open to evaluating other tools if they better fit our needs. We’ve also been experimenting with Kafka Streams for some of our lower-latency use cases. It’s still early days, so there’s a lot of opportunity to shape the direction of the platform.
+
+CANDIDATE:
+Got it. One more question—how does the team collaborate with other functions, like data science or product? Are there regular syncs or a more ad-hoc approach?
+
+INTERVIEWER:
+We have a mix of both. We have weekly syncs with our data science team to align on priorities and review any pipeline changes that might impact their models. With product, it’s more ad-hoc—we’ll often

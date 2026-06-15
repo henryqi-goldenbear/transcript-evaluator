@@ -1,0 +1,142 @@
+# Interview transcript fixture
+# Role: Senior Product Manager, Marketplace team @ Hearthside
+# Quality target: very_poor candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+INTERVIEWER:
+Hey Alex, thanks for joining today. How’s your morning going so far?
+
+CANDIDATE:
+Fine.
+
+INTERVIEWER:
+Great. Let’s start with a quick walkthrough of your resume. Can you give me the two-minute version of your background and what led you to apply for this role?
+
+CANDIDATE:
+Uh, yeah. So I’ve been a PM for a while. Worked at a couple places. Mostly did stuff with marketplaces, I guess. Applied here because I saw the job posting and it seemed okay.
+
+INTERVIEWER:
+Got it. Can you tell me about a time when you had to make a tough tradeoff between short-term gains and long-term strategy in a marketplace?
+
+CANDIDATE:
+Oh, I don’t really remember specifics. I think we just did what the team wanted. It worked out.
+
+INTERVIEWER:
+Hmm. Let’s try this—what’s a project you led that you’re particularly proud of?
+
+CANDIDATE:
+I don’t know. There was this one thing where we launched a feature. It was fine, I guess.
+
+INTERVIEWER:
+What was the feature, and how did you measure its success?
+
+CANDIDATE:
+It was, like, a new way for people to list things. We didn’t really track it much. It just kind of happened.
+
+INTERVIEWER:
+Interesting. How do you typically approach prioritizing features in a two-sided marketplace where supply and demand have different needs?
+
+CANDIDATE:
+I just go with whatever the loudest person says. Usually works out.
+
+INTERVIEWER:
+Can you give me an example of a time when you had to persuade stakeholders to align on a decision they initially disagreed with?
+
+CANDIDATE:
+I don’t really do that. People usually just agree with me.
+
+INTERVIEWER:
+Really? What if they don’t?
+
+CANDIDATE:
+Then I just move on. Not a big deal.
+
+INTERVIEWER:
+Let’s talk about experimentation. How do you design and analyze A/B tests in a marketplace setting?
+
+CANDIDATE:
+We just run tests. If it looks good, we ship it. If not, we don’t.
+
+INTERVIEWER:
+What metrics do you look at to determine if a test is successful?
+
+CANDIDATE:
+Uh, the usual ones. Like, clicks or something.
+
+INTERVIEWER:
+Got it. Can you walk me through a time when an experiment failed and what you learned from it?
+
+CANDIDATE:
+I don’t think any of them failed. They all worked.
+
+INTERVIEWER:
+Okay. What’s a process you’ve improved in your past roles?
+
+CANDIDATE:
+I don’t really change processes. They’re fine the way they are.
+
+INTERVIEWER:
+Fair enough. Tell me about a time you had to mentor or coach a junior PM.
+
+CANDIDATE:
+I don’t do that. They figure it out on their own.
+
+INTERVIEWER:
+What’s a weakness you’ve had to work on as a PM?
+
+CANDIDATE:
+I don’t have any weaknesses. I’m good at everything.
+
+INTERVIEWER:
+That’s… confident. Let’s switch gears. How do you handle conflicts between teams, like engineering and design?
+
+CANDIDATE:
+I just tell them to stop arguing. It’s not that hard.
+
+INTERVIEWER:
+And if they don’t listen?
+
+CANDIDATE:
+Then I ignore it. Not my problem.
+
+INTERVIEWER:
+Got it. What’s your approach to roadmap planning in a fast-moving marketplace?
+
+CANDIDATE:
+I don’t really plan. We just do whatever comes up.
+
+INTERVIEWER:
+How do you ensure alignment with leadership on your roadmap?
+
+CANDIDATE:
+I don’t. They don’t care.
+
+INTERVIEWER:
+Let’s talk about a time you failed and how you handled it.
+
+CANDIDATE:
+I don’t fail. Everything I do works.
+
+INTERVIEWER:
+Interesting. What’s a recent trend in marketplace dynamics that excites you?
+
+CANDIDATE:
+I don’t follow trends. They’re not important.
+
+INTERVIEWER:
+Alright. What questions do you have for me about the role or Hearthside?
+
+CANDIDATE:
+Uh, no, I don’t have any.
+
+INTERVIEWER:
+No questions at all?
+
+CANDIDATE:
+Nope.
+
+INTERVIEWER:
+Alright, well, thanks for your time, Alex. We’ll be in touch.
+
+CANDIDATE:
+Cool. Bye.

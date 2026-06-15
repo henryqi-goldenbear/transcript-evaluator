@@ -1,0 +1,132 @@
+# Interview transcript fixture
+# Role: Frontend Engineer, Growth team @ Brightlane
+# Quality target: poor candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hi Avery, thanks for joining today. How’s your morning going so far?
+
+CANDIDATE:
+Hey Marcus, it’s going okay. Just had some coffee, so I’m good.
+
+INTERVIEWER:
+Great to hear. Why don’t we start with you walking me through your resume? Highlight the parts most relevant to this role on the Growth team.
+
+CANDIDATE:
+Sure. So, I’ve been a frontend developer for about four years now. I worked at TechCorp for two years, then moved to StartupX for another two. Mostly React and JavaScript, some TypeScript. I’ve built a few dashboards and some UI components. Nothing too crazy.
+
+INTERVIEWER:
+Got it. What drew you to Brightlane’s Growth team specifically?
+
+CANDIDATE:
+Well, I saw the job posting and it seemed like a good fit. I’ve worked on growth stuff before, like sign-up flows and things. I think it’s cool to work on features that help the company grow, you know? Plus, the team seems nice.
+
+INTERVIEWER:
+Can you tell me about a time you optimized the performance of a frontend application? What was the problem, and how did you measure the impact?
+
+CANDIDATE:
+Oh, yeah, I did that once. There was this page that was loading really slow. I think it was because of some big images or something. So I compressed them and made the page load faster. I didn’t really measure it, but people said it felt quicker.
+
+INTERVIEWER:
+Got it. Let’s shift to teamwork. Tell me about a time you had a disagreement with a teammate. How did you handle it?
+
+CANDIDATE:
+Hmm, I don’t really like conflict, so I usually just go with what the other person wants. There was this one time when a designer wanted to change the layout of a page, and I thought it was fine the way it was. But I just did what they asked because it’s easier that way.
+
+INTERVIEWER:
+I see. How do you prioritize your work when you have multiple competing deadlines?
+
+CANDIDATE:
+I just kind of do what’s due first. If my manager tells me something is urgent, I’ll work on that. Otherwise, I just pick whatever seems easiest at the time. It’s worked out so far.
+
+INTERVIEWER:
+Tell me about a time you mentored a junior engineer or helped someone on your team grow.
+
+CANDIDATE:
+I don’t know if I’ve really mentored anyone. I’ve shown people how to do small things, like fix a bug or something. But nothing big. I’m not really the teaching type.
+
+INTERVIEWER:
+Fair enough. Let’s talk about A/B testing. Can you walk me through how you’ve designed or implemented an A/B test in the past?
+
+CANDIDATE:
+Yeah, so we had this button that wasn’t getting clicked enough. So I made two versions of it—one red and one blue—and we just kind of guessed which one worked better. I think the red one did, so we kept that.
+
+INTERVIEWER:
+How did you ensure the test was statistically valid?
+
+CANDIDATE:
+I’m not really sure. We just ran it for a few days and picked the one that seemed better. I think that’s how it works.
+
+INTERVIEWER:
+Got it. Tell me about a time you failed at something at work. What happened, and what did you learn?
+
+CANDIDATE:
+Oh, I don’t know. I guess I’ve made small mistakes, like typos in code or something. But nothing big. I just fix them and move on.
+
+INTERVIEWER:
+Let’s talk about TypeScript. How do you use it to improve code quality in a React application?
+
+CANDIDATE:
+TypeScript is good because it catches errors before you run the code. I use it for props and stuff, so you don’t pass the wrong type. It’s pretty straightforward.
+
+INTERVIEWER:
+Can you give me an example of a time you used TypeScript to prevent a bug?
+
+CANDIDATE:
+I don’t remember exactly. I think there was a time when it caught a typo in a prop name. So that was helpful, I guess.
+
+INTERVIEWER:
+Tell me about a time you improved a process on your team. What was the problem, and what did you do?
+
+CANDIDATE:
+I don’t think I’ve really done that. We had standups and stuff, and that worked fine. I didn’t see a need to change anything.
+
+INTERVIEWER:
+How do you stay up to date with frontend technologies and best practices?
+
+CANDIDATE:
+I read some blogs sometimes and watch YouTube videos. But I don’t go too deep. If something new comes up, I’ll learn it if I need to.
+
+INTERVIEWER:
+Tell me about a time you had to persuade someone to adopt your technical approach. How did you make your case?
+
+CANDIDATE:
+I don’t usually push for my ideas. If someone else has a better way, I just go with that. It’s easier than arguing.
+
+INTERVIEWER:
+Let’s talk about React. How do you manage state in a large application?
+
+CANDIDATE:
+I use useState and useEffect a lot. For bigger stuff, I’ve used Redux, but I don’t really like it. It’s kind of complicated.
+
+INTERVIEWER:
+Can you walk me through how you’d debug a performance issue in a React app?
+
+CANDIDATE:
+I’d probably look at the network tab and see if anything is loading slow. If it’s a React issue, I’d check if there are too many re-renders. But I don’t know all the tools for that.
+
+INTERVIEWER:
+What’s a weakness you’ve identified in your work, and how have you worked to improve it?
+
+CANDIDATE:
+I guess I’m not great at estimating how long things will take. Sometimes I think something will be quick, but it ends up taking longer. I’m trying to get better at it, but it’s hard.
+
+INTERVIEWER:
+Last question: Do you have any questions for me about the role or the team?
+
+CANDIDATE:
+Uh, not really. I think I know what the job is about. Maybe how big is the team?
+
+INTERVIEWER:
+The Growth team is about 10 engineers right now. Anything else you’d like to know?
+
+CANDIDATE:
+No, that’s it. Thanks.
+
+INTERVIEWER:
+Great, thanks for your time, Avery. We’ll be in touch.
+
+CANDIDATE:
+Cool, thanks. Bye.

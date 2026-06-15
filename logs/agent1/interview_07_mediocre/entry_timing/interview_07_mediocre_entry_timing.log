@@ -1,0 +1,26 @@
+17:17:09 INFO [__main__] Starting convert and evaluate task; logging to logs\agent1\interview_07_mediocre\entry_timing\interview_07_mediocre_entry_timing.log
+17:17:09 INFO [__main__] input=input data\test\interview_07_mediocre.txt batch_size=5
+17:17:09 INFO [__main__] Parsing transcript: input=input data\test\interview_07_mediocre.txt chars=12836 classifier=ministral:ministral-3b-latest
+17:17:36 INFO [__main__] Starting Agent 2 structure review iteration 1/until satisfied
+17:18:09 INFO [__main__] Agent 2 structure review iteration 1 satisfied=False issues=5 log=logs\agent1\interview_07_mediocre\structure_review\interview_07_mediocre_agent2_structure_review_1.md
+17:18:09 INFO [__main__] Starting Agent 2 structure review iteration 2/until satisfied
+17:18:36 INFO [__main__] Agent 2 structure review iteration 2 satisfied=False issues=3 log=logs\agent1\interview_07_mediocre\structure_review\interview_07_mediocre_agent2_structure_review_2.md
+17:18:36 INFO [__main__] Starting Agent 2 structure review iteration 3/until satisfied
+17:18:39 INFO [__main__] Agent 2 structure review iteration 3 satisfied=True issues=0 log=logs\agent1\interview_07_mediocre\structure_review\interview_07_mediocre_agent2_structure_review_3.md
+17:18:39 INFO [__main__] Parsed transcript into 12 cases
+17:18:39 INFO [__main__] Detected 12 evaluator cases
+17:18:39 INFO [__main__] Question/answer pair 1: started_at=17:18:39 finished_at=17:18:39 question_chars=164 answer_chars=446 follow_ups=0
+17:18:39 INFO [__main__] Question/answer pair 2: started_at=17:18:39 finished_at=17:18:39 question_chars=85 answer_chars=418 follow_ups=0
+17:18:39 INFO [__main__] Question/answer pair 3: started_at=17:18:39 finished_at=17:18:39 question_chars=214 answer_chars=527 follow_ups=1
+17:18:39 INFO [__main__] Question/answer pair 4: started_at=17:18:39 finished_at=17:18:39 question_chars=189 answer_chars=608 follow_ups=1
+17:18:39 INFO [__main__] Question/answer pair 5: started_at=17:18:39 finished_at=17:18:39 question_chars=134 answer_chars=586 follow_ups=1
+17:18:39 INFO [__main__] Question/answer pair 6: started_at=17:18:39 finished_at=17:18:39 question_chars=121 answer_chars=430 follow_ups=1
+17:18:39 INFO [__main__] Question/answer pair 7: started_at=17:18:39 finished_at=17:18:39 question_chars=123 answer_chars=497 follow_ups=2
+17:18:39 INFO [__main__] Question/answer pair 8: started_at=17:18:39 finished_at=17:18:39 question_chars=110 answer_chars=479 follow_ups=0
+17:18:39 INFO [__main__] Question/answer pair 9: started_at=17:18:39 finished_at=17:18:39 question_chars=128 answer_chars=329 follow_ups=0
+17:18:39 INFO [__main__] Question/answer pair 10: started_at=17:18:39 finished_at=17:18:39 question_chars=108 answer_chars=362 follow_ups=0
+17:18:39 INFO [__main__] Question/answer pair 11: started_at=17:18:39 finished_at=17:18:39 question_chars=113 answer_chars=445 follow_ups=1
+17:18:39 INFO [__main__] Question/answer pair 12: started_at=17:18:39 finished_at=17:18:39 question_chars=182 answer_chars=477 follow_ups=1
+17:18:39 INFO [__main__] Finished conversion: input=input data\test\interview_07_mediocre.txt output=input data\test\interview_07_mediocre.json started_at=17:17:09 finished_at=17:18:39 input_chars=12836 cases=12 batch_size=5
+17:18:39 INFO [__main__] Reusing existing pipeline server on port 3000
+17:18:39 INFO [__main__] Opening evaluator HTML: http://localhost:3000/src/frontend/evaluator.html?v=mistral-small-1&input=input+data%2Ftest%2Finterview_07_mediocre.json&batch_size=5&log_file=logs%2Fagent1%2Finterview_07_mediocre%2Finterview_07_mediocre_eval.log&result_log_file=logs%2Fagent1%2Finterview_07_mediocre%2Finterview_07_mediocre.log

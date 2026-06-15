@@ -1,0 +1,162 @@
+# Interview transcript fixture
+# Role: Data Engineer, Analytics Platform @ Quanta Logistics
+# Quality target: excellent candidate performance
+# Format: INTERVIEWER / CANDIDATE turns
+
+---
+
+INTERVIEWER:
+Hi Casey, welcome! I’m Priya, one of the engineers on the Analytics Platform team here at Quanta. How’s your day going so far?
+
+CANDIDATE:
+Hi Priya, thanks for having me! My day’s been great—just finished a quick coffee run, so I’m feeling energized and ready to chat.
+
+---
+
+INTERVIEWER:
+Perfect. Let’s start with a quick walk through your resume. Could you give me a two-minute highlight reel of your journey so far, especially the parts that line up with data engineering and analytics platforms?
+
+CANDIDATE:
+Absolutely. I started my career as a backend engineer at a fintech startup, where I first got hands-on with data pipelines—mostly batch ETL in Python and SQL. That’s where I caught the data bug. From there, I joined a mid-sized e-commerce company as a data engineer, and that’s where I really cut my teeth on modern data stacks. I led the migration from a monolithic Redshift cluster to a Snowflake-based architecture, which reduced our query costs by about 40% and improved pipeline reliability. I also introduced dbt for modeling, which cut our time-to-insight for new features by 30% by standardizing transformations and documentation.
+
+Most recently, I’ve been at a logistics tech company, where I’ve been building and scaling the analytics platform. I architected a streaming pipeline using Spark Structured Streaming and Kafka to process real-time shipment telemetry, which reduced our latency for critical alerts from 15 minutes to under 30 seconds. I also overhauled our Airflow setup to use KubernetesPodOperator, which improved task isolation and reduced our infra costs by 25%. Along the way, I’ve been mentoring junior engineers and collaborating with data scientists to productionize their models.
+
+---
+
+INTERVIEWER:
+That’s a great overview. What drew you to Quanta specifically, and why this role on the Analytics Platform team?
+
+CANDIDATE:
+I’ve been following Quanta’s growth in the logistics space, especially how you’re leveraging data to optimize supply chains. What excites me about this role is the opportunity to work on a platform that directly impacts decision-making at scale. At my current company, I’ve seen firsthand how a well-built analytics platform can unlock new use cases—like real-time route optimization or predictive maintenance—and I’m eager to bring that experience to a team that’s tackling even larger-scale challenges.
+
+I also love that this role is focused on both batch and streaming. I’ve worked extensively with both, and I think the interplay between them is where a lot of the magic happens in modern data systems. For example, at my current job, we built a hybrid pipeline that uses streaming for real-time alerts but falls back to batch for historical analysis, and that flexibility has been a game-changer for our stakeholders.
+
+---
+
+INTERVIEWER:
+Let’s dive into a technical topic. You mentioned Spark Structured Streaming. Can you walk me through how you’d design a streaming pipeline to handle real-time shipment telemetry, assuming we’re dealing with high throughput—say, 100K events per second—and need to support both real-time dashboards and batch aggregations for historical analysis?
+
+CANDIDATE:
+Sure. For a high-throughput scenario like that, I’d start by ensuring the pipeline is scalable and fault-tolerant. Here’s how I’d approach it:
+
+1. **Ingestion Layer**: I’d use Kafka as the message broker, partitioning the topics by shipment ID or region to ensure even distribution and parallel processing. For 100K events per second, I’d aim for at least 100 partitions to handle the load, with replication factor 3 for durability.
+
+2. **Processing Layer**: Spark Structured Streaming is a great fit here because it integrates well with Kafka and supports exactly-once processing semantics. I’d use the `kafka` source in Spark to read from Kafka, and I’d configure the `maxOffsetsPerTrigger` to control the batch size and avoid overwhelming the cluster. For stateful operations like aggregations or windowed computations, I’d use RocksDB for state management, which is more memory-efficient than the default in-memory state store.
+
+3. **Output Sinks**: For real-time dashboards, I’d write the processed data to a low-latency store like Druid or Pinot, which are optimized for OLAP queries. For batch aggregations, I’d write the raw or lightly processed data to a data lake (e.g., S3 or GCS) in Parquet format, partitioned by time and region. This allows downstream batch jobs to efficiently compute historical aggregations using Spark or Trino.
+
+4. **Monitoring and Scaling**: I’d instrument the pipeline with metrics for throughput, latency, and error rates, using Prometheus and Grafana. For scaling, I’d run Spark on Kubernetes, using the cluster autoscaler to handle spikes in load. I’d also set up alerts for lag in the Kafka consumer group, so we can proactively scale up if needed.
+
+5. **Schema Management**: I’d use a schema registry like Confluent’s or AWS Glue Schema Registry to enforce schema evolution and compatibility, which is critical for long-running pipelines.
+
+One tradeoff I’d consider is whether to pre-aggregate data in the streaming pipeline or push that logic downstream. Pre-aggregating can reduce storage costs and query latency, but it limits flexibility for ad-hoc analysis. I’d lean toward pushing raw data to the lake and using materialized views or dbt models for aggregations, so we can iterate on the business logic without reprocessing the entire stream.
+
+---
+
+INTERVIEWER:
+That’s a really thorough answer. Let’s shift gears to a behavioral question. Can you tell me about a time you had to persuade a stakeholder—maybe an engineer, a product manager, or a business leader—to adopt a technical solution or change they were initially resistant to?
+
+CANDIDATE:
+Sure. At my current company, I was advocating for migrating our Airflow setup from a single EC2 instance to a Kubernetes-based deployment using the KubernetesPodOperator. The resistance came from two places: the engineering team was hesitant because they were comfortable with the existing setup, and the finance team was concerned about the upfront cost of standing up a Kubernetes cluster.
+
+To persuade them, I started by framing the problem in terms of their priorities. For the engineering team, I highlighted the pain points they were already experiencing—like task failures due to resource contention and the inability to scale during peak loads. I showed them data from our Airflow logs, where we had a 15% failure rate during high-traffic periods, and I walked them through how Kubernetes would isolate tasks and improve reliability.
+
+For the finance team, I put together a cost-benefit analysis. I modeled the current costs of our EC2 instance, including the overhead of managing it, and compared it to the projected costs of running Airflow on EKS. I showed that while the upfront cost was higher, the long-term savings from reduced operational overhead and improved efficiency would pay off within six months. I also highlighted the opportunity cost of not migrating—like lost revenue from delayed data products.
+
+To make it concrete, I built a proof of concept using Minikube and demonstrated how the KubernetesPodOperator could run tasks in isolated pods with custom resource requests. I invited the engineering team to a hands-on session where they could see the improved reliability firsthand.
+
+Ultimately, both teams came around. The migration reduced our task failure rate to under 2%, and we saw a 25% reduction in infra costs within three months. The finance team was particularly happy because the actual savings exceeded my projections.
+
+---
+
+INTERVIEWER:
+That’s a great example of balancing technical and business considerations. Let’s talk about failure. Can you share a time when a project you were leading didn’t go as planned? What happened, and what did you learn?
+
+CANDIDATE:
+Absolutely. Early in my current role, I led the migration of our legacy ETL pipelines from a custom Python framework to Spark. The goal was to improve scalability and reduce maintenance overhead. The project was scoped for three months, but it ended up taking six, and we had to roll back some of the changes temporarily.
+
+The root cause was underestimating the complexity of the legacy codebase. The Python framework had a lot of implicit business logic that wasn’t well-documented, and we assumed we could replicate it in Spark with minimal changes. We also didn’t account for the learning curve for the team—Spark was new to most of the engineers, and we didn’t allocate enough time for training.
+
+About halfway through the project, we started hitting performance issues. Some of the Spark jobs were running slower than the legacy Python jobs, and we realized we’d made some suboptimal choices in how we partitioned the data and configured the Spark cluster. We also discovered that a few of the legacy pipelines had dependencies on external services that weren’t compatible with Spark’s distributed execution model.
+
+We had to pause the migration, roll back the most problematic pipelines, and re-architect the solution. We spent the next two months refactoring the code, adding better documentation, and setting up a staging environment to test the Spark jobs more thoroughly. We also brought in a Spark consultant to train the team and review our approach.
+
+In the end, we successfully migrated all the pipelines, and the new system was more scalable and easier to maintain. But the delay was frustrating, and it taught me a few important lessons:
+1. **Assumptions are dangerous**: I should have spent more time upfront analyzing the legacy codebase and validating our assumptions about its complexity.
+2. **Invest in training**: We should have allocated time for the team to get comfortable with Spark before diving into the migration.
+3. **Incremental rollouts**: Instead of trying to migrate everything at once, we should have started with a smaller, less critical pipeline to validate our approach.
+
+Since then, I’ve been much more diligent about breaking projects into smaller milestones and validating assumptions early. I also make sure to involve the team in the planning process so we can surface potential risks before they become problems.
+
+---
+
+INTERVIEWER:
+That’s a really honest reflection. Let’s talk about mentorship. How do you approach mentoring junior engineers, and can you share an example of a time you helped someone grow?
+
+CANDIDATE:
+Mentoring is one of the most rewarding parts of my job. I approach it with a few principles in mind:
+1. **Meet them where they are**: Everyone has different strengths and gaps, so I start by understanding their background and goals.
+2. **Hands-on learning**: I believe the best way to learn is by doing, so I try to pair theory with practical exercises.
+3. **Psychological safety**: I want my mentees to feel comfortable asking questions and admitting when they don’t know something.
+
+An example that comes to mind is when I mentored a junior engineer named Jamie, who had just joined my team. Jamie had a background in software engineering but was new to data engineering. One of their first tasks was to build a dbt model to transform some raw data into a dimensional table for reporting. They were struggling with SQL—specifically, with window functions and complex joins—and they were hesitant to ask for help because they didn’t want to slow down the team.
+
+I noticed they were spending a lot of time on Slack asking for feedback on their PRs, so I scheduled a 1:1 to check in. I started by asking them about their experience so far and what they were finding challenging. They admitted they were feeling overwhelmed by the SQL complexity and were worried they weren’t catching on fast enough.
+
+I suggested we pair on the problem. We started by breaking down the requirements for the dbt model and sketching out the SQL logic on a whiteboard. I walked them through how to use window functions to calculate running totals and how to structure the joins to avoid fan-outs. Then, we wrote the SQL together, with me explaining my thought process as we went. After that, I gave them a similar but slightly simpler task to try on their own, and we reviewed it together afterward.
+
+Over the next few weeks, I made it a point to check in regularly and give them increasingly complex tasks to build their confidence. I also connected them with some resources—like SQLZoo and the dbt documentation—and encouraged them to share their learnings with the team in our weekly knowledge-sharing sessions.
+
+By the end of their first quarter, Jamie had taken ownership of several dbt models and was even helping onboard another new hire. They told me later that the pairing sessions had been a turning point for them, because it helped them see that everyone struggles with new concepts and that asking for help is part of the learning process.
+
+---
+
+INTERVIEWER:
+That’s a great story. Let’s talk about process improvement. Can you share an example of a time you identified a bottleneck or inefficiency in your team’s workflow and how you addressed it?
+
+CANDIDATE:
+Sure. At my current company, our data team was struggling with a slow and error-prone deployment process for our dbt models. Every time we wanted to deploy a change, we had to manually run a series of commands in our CI/CD pipeline, and if something went wrong, we’d have to roll back manually. This led to a lot of downtime and frustration, especially during peak hours when stakeholders were relying on the data.
+
+I started by mapping out the current process and identifying the pain points. The biggest issue was that our CI/CD pipeline wasn’t idempotent—if a step failed, we’d have to manually clean up the state before retrying. We also didn’t have a good way to test changes before deploying them to production, which led to a lot of last-minute fire drills.
+
+To address this, I proposed a few changes:
+1. **Automated testing**: I introduced a staging environment where we could test dbt models before deploying them to production. I set up a CI job that would run `dbt test` and `dbt run` against a copy of the production data, so we could catch issues early.
+2. **Idempotent deployments**: I refactored our CI/CD pipeline to use `dbt run --select state:modified+` and `dbt test --select state:modified+`, which ensured that only the models affected by the changes were rebuilt. This reduced the deployment time from 30 minutes to under 5 minutes.
+3. **Rollback mechanism**: I added a step to the pipeline that would automatically roll back to the previous version of the models if the deployment failed. This gave the team more confidence to deploy changes during business hours.
+
+I also introduced a lightweight change management process, where we’d review the impact of changes in a team meeting before deploying them. This helped us catch edge cases and coordinate with stakeholders.
+
+The changes reduced our deployment failures by 90% and cut the average deployment time by 80%. The team was much happier, and we were able to ship changes more frequently without disrupting the business.
+
+---
+
+INTERVIEWER:
+That’s a really impactful improvement. Let’s talk about prioritization. How do you decide what to work on when you have multiple competing priorities, especially in a fast-moving environment like logistics?
+
+CANDIDATE:
+Prioritization is all about balancing impact, effort, and urgency. At my current company, we use a framework inspired by RICE (Reach, Impact, Confidence, Effort) to evaluate projects, but I also factor in a few other things:
+
+1. **Business impact**: How much value will this project deliver? For example, a pipeline that enables real-time tracking for high-value shipments is likely more impactful than one that optimizes a low-traffic dashboard.
+2. **Stakeholder alignment**: Are the key stakeholders—like product managers, data scientists, or business leaders—aligned on the priorities? If there’s misalignment, I’ll work with them to clarify the goals and tradeoffs.
+3. **Technical debt**: How much technical debt will this project incur, and how will it affect future work? For example, if we’re building a quick-and-dirty solution to meet a tight deadline, I’ll make sure we have a plan to refactor it later.
+4. **Dependencies**: Are there external dependencies that could block the project? For example, if we’re waiting on another team to provide data, I’ll factor that into the timeline.
+
+An example of this in action was when I was leading the migration of our batch pipelines to Spark. We had a backlog of 50+ pipelines to migrate, and the business was pushing for new features at the same time. To prioritize, I worked with the product team to identify the pipelines that were most critical to the business—like the ones powering our revenue reporting—and focused on those first. I also looked for opportunities to bundle related pipelines together to reduce the overall effort. For example, if two pipelines were processing similar data, I’d migrate them in the same sprint.
+
+I also made sure to communicate the tradeoffs to the stakeholders. For example, I explained that if we prioritized the migration, we’d have to delay some of the new features, but the long-term benefits—like improved scalability and reduced maintenance—would outweigh the short-term costs.
+
+---
+
+INTERVIEWER:
+That’s a great approach. Let’s wrap up with a technical question. You mentioned dbt earlier. How do you structure your dbt projects to ensure they’re maintainable and scalable, especially as the number of models grows?
+
+CANDIDATE:
+Great question. Structuring dbt projects is all about balancing flexibility and consistency. Here’s how I approach it:
+
+1. **Modularity**: I break the project into logical layers—like staging, intermediate, and marts—following the dbt best practices. This makes it easier to understand the data flow and reduces duplication. For example, the staging layer contains raw or lightly transformed data, the intermediate layer contains reusable transformations, and the marts layer contains business-facing models.
+
+2. **Naming conventions**: I enforce consistent naming conventions for models, tests, and macros. For example, I prefix staging models with `stg_`, intermediate models with `int_`, and marts with `fct_` or `dim_`. This makes it easier to navigate the project and understand the purpose of each model.
+
+3. **Documentation**: I use dbt’s built-in documentation features to document models, columns, and tests. I also encourage the team to write high-level overviews of each layer and how they fit together. This is especially important as the project grows, because it helps new team members get up to speed quickly.
+
+4. **Testing**: I add tests at every layer of the project. For staging models, I focus on data quality tests—like `not_null` and `unique`—to ensure the raw data is clean. For intermediate and marts models, I add more complex tests—like `relationships` and

@@ -1,0 +1,31 @@
+19:15:49 INFO [__main__] Starting convert and evaluate task; logging to logs\entry_timing\interview_05_poor_entry_timing.log
+19:15:49 INFO [__main__] input=input data\test\interview_05_poor.txt batch_size=5
+19:15:49 INFO [__main__] Parsing transcript: input=input data\test\interview_05_poor.txt chars=7126 classifier=heuristic-only
+19:15:49 INFO [__main__] Agent 2 structure review disabled.
+19:15:49 INFO [__main__] Parsed transcript into 21 cases
+19:15:49 INFO [__main__] Detected 21 evaluator cases
+19:15:49 INFO [__main__] Question/answer pair 1: started_at=19:15:49 finished_at=19:15:49 question_chars=116 answer_chars=364 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 2: started_at=19:15:49 finished_at=19:15:49 question_chars=143 answer_chars=304 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 3: started_at=19:15:49 finished_at=19:15:49 question_chars=98 answer_chars=202 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 4: started_at=19:15:49 finished_at=19:15:49 question_chars=111 answer_chars=232 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 5: started_at=19:15:49 finished_at=19:15:49 question_chars=110 answer_chars=245 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 6: started_at=19:15:49 finished_at=19:15:49 question_chars=100 answer_chars=174 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 7: started_at=19:15:49 finished_at=19:15:49 question_chars=133 answer_chars=230 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 8: started_at=19:15:49 finished_at=19:15:49 question_chars=100 answer_chars=180 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 9: started_at=19:15:49 finished_at=19:15:49 question_chars=102 answer_chars=230 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 10: started_at=19:15:49 finished_at=19:15:49 question_chars=58 answer_chars=131 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 11: started_at=19:15:49 finished_at=19:15:49 question_chars=92 answer_chars=159 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 12: started_at=19:15:49 finished_at=19:15:49 question_chars=44 answer_chars=166 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 13: started_at=19:15:49 finished_at=19:15:49 question_chars=75 answer_chars=125 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 14: started_at=19:15:49 finished_at=19:15:49 question_chars=94 answer_chars=122 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 15: started_at=19:15:49 finished_at=19:15:49 question_chars=74 answer_chars=102 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 16: started_at=19:15:49 finished_at=19:15:49 question_chars=68 answer_chars=85 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 17: started_at=19:15:49 finished_at=19:15:49 question_chars=88 answer_chars=166 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 18: started_at=19:15:49 finished_at=19:15:49 question_chars=127 answer_chars=182 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 19: started_at=19:15:49 finished_at=19:15:49 question_chars=110 answer_chars=103 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 20: started_at=19:15:49 finished_at=19:15:49 question_chars=64 answer_chars=116 follow_ups=0
+19:15:49 INFO [__main__] Question/answer pair 21: started_at=19:15:49 finished_at=19:15:49 question_chars=83 answer_chars=121 follow_ups=0
+19:15:49 INFO [__main__] Finished conversion: input=input data\test\interview_05_poor.txt output=input data\test\interview_05_poor.json started_at=19:15:49 finished_at=19:15:49 input_chars=7126 cases=21 batch_size=5
+19:15:49 INFO [__main__] Stored approved interview structure in SQLite: db=data\interviews.sqlite interview_id=4
+19:15:49 INFO [__main__] Reusing existing pipeline server on port 3000
+19:15:49 INFO [__main__] Opening evaluator HTML: http://localhost:3000/src/frontend/evaluator.html?v=mistral-small-3&input=input+data%2Ftest%2Finterview_05_poor.json&batch_size=5&log_file=logs%2Fagent1%2Finterview_05_poor%2Finterview_05_poor_eval.log&result_log_file=logs%2Fagent1%2Finterview_05_poor%2Finterview_05_poor.log

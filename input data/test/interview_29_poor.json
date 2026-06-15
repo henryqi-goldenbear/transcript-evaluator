@@ -1,0 +1,177 @@
+[
+  {
+    "id": 1,
+    "label": "Auto case 1",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Asks for a specific past experience or motivation tied to Brightlane\u2019s Growth team",
+    "question": "Got it. What drew you to Brightlane\u2019s Growth team specifically?",
+    "response": "Well, I saw the job posting and it seemed like a good fit. I\u2019ve worked on growth stuff before, like sign-up flows and things. I think it\u2019s cool to work on features that help the company grow, you know? Plus, the team seems nice.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 2,
+    "label": "Auto case 2",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a specific past example and measurable impact, fitting the behavioral definition.",
+    "question": "Can you tell me about a time you optimized the performance of a frontend application? What was the problem, and how did you measure the impact?",
+    "response": "Oh, yeah, I did that once. There was this page that was loading really slow. I think it was because of some big images or something. So I compressed them and made the page load faster. I didn\u2019t really measure it, but people said it felt quicker.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 3,
+    "label": "Auto case 3",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example and focuses on handling conflict in a team setting",
+    "question": "Got it. Let\u2019s shift to teamwork. Tell me about a time you had a disagreement with a teammate. How did you handle it?",
+    "response": "Hmm, I don\u2019t really like conflict, so I usually just go with what the other person wants. There was this one time when a designer wanted to change the layout of a page, and I thought it was fine the way it was. But I just did what they asked because it\u2019s easier that way.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 4,
+    "label": "Auto case 4",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "agent2-structure-review",
+    "classification_reasoning": "This is an independent question incorrectly nested as a follow-up.",
+    "question": "I see. How do you prioritize your work when you have multiple competing deadlines?",
+    "response": "I just kind of do what\u2019s due first. If my manager tells me something is urgent, I\u2019ll work on that. Otherwise, I just pick whatever seems easiest at the time. It\u2019s worked out so far.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 5,
+    "label": "Auto case 5",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "requires a past example of mentoring or growth",
+    "question": "Tell me about a time you mentored a junior engineer or helped someone on your team grow.",
+    "response": "I don\u2019t know if I\u2019ve really mentored anyone. I\u2019ve shown people how to do small things, like fix a bug or something. But nothing big. I\u2019m not really the teaching type.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 6,
+    "label": "Auto case 6",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example of A/B testing design/implementation",
+    "question": "Fair enough. Let\u2019s talk about A/B testing. Can you walk me through how you\u2019ve designed or implemented an A/B test in the past?",
+    "response": "Yeah, so we had this button that wasn\u2019t getting clicked enough. So I made two versions of it\u2014one red and one blue\u2014and we just kind of guessed which one worked better. I think the red one did, so we kept that.",
+    "follow_ups": [
+      {
+        "question": "How did you ensure the test was statistically valid?",
+        "response": "I\u2019m not really sure. We just ran it for a few days and picked the one that seemed better. I think that\u2019s how it works.",
+        "probe_type": "clarifying",
+        "classification_source": "agent2-structure-review"
+      }
+    ],
+    "expected": {}
+  },
+  {
+    "id": 7,
+    "label": "Auto case 7",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Asks for a specific past example with a structured format (what happened, what was learned).",
+    "question": "Got it. Tell me about a time you failed at something at work. What happened, and what did you learn?",
+    "response": "Oh, I don\u2019t know. I guess I\u2019ve made small mistakes, like typos in code or something. But nothing big. I just fix them and move on.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 8,
+    "label": "Auto case 8",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example of using TypeScript to improve code quality in a React app",
+    "question": "Let\u2019s talk about TypeScript. How do you use it to improve code quality in a React application?",
+    "response": "TypeScript is good because it catches errors before you run the code. I use it for props and stuff, so you don\u2019t pass the wrong type. It\u2019s pretty straightforward.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 9,
+    "label": "Auto case 9",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example of using TypeScript to prevent a bug",
+    "question": "Can you give me an example of a time you used TypeScript to prevent a bug?",
+    "response": "I don\u2019t remember exactly. I think there was a time when it caught a typo in a prop name. So that was helpful, I guess.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 10,
+    "label": "Auto case 10",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Asks for a specific past example with problem and solution details",
+    "question": "Tell me about a time you improved a process on your team. What was the problem, and what did you do?",
+    "response": "I don\u2019t think I\u2019ve really done that. We had standups and stuff, and that worked fine. I didn\u2019t see a need to change anything.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 11,
+    "label": "Auto case 11",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example and details of persuasion strategy",
+    "question": "Tell me about a time you had to persuade someone to adopt your technical approach. How did you make your case?",
+    "response": "I don\u2019t usually push for my ideas. If someone else has a better way, I just go with that. It\u2019s easier than arguing.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 12,
+    "label": "Auto case 12",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example of state management in a large React application",
+    "question": "Let\u2019s talk about React. How do you manage state in a large application?",
+    "response": "I use useState and useEffect a lot. For bigger stuff, I\u2019ve used Redux, but I don\u2019t really like it. It\u2019s kind of complicated.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 13,
+    "label": "Auto case 13",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "ministral:ministral-3b-latest",
+    "classification_reasoning": "Requires a past example or hypothetical scenario to demonstrate debugging process",
+    "question": "Can you walk me through how you\u2019d debug a performance issue in a React app?",
+    "response": "I\u2019d probably look at the network tab and see if anything is loading slow. If it\u2019s a React issue, I\u2019d check if there are too many re-renders. But I don\u2019t know all the tools for that.",
+    "follow_ups": [],
+    "expected": {}
+  },
+  {
+    "id": 14,
+    "label": "Auto case 14",
+    "turn_type": "behavioral",
+    "rubric_type": "behavioral",
+    "classification_source": "agent2-structure-review",
+    "classification_reasoning": "Missing main question case",
+    "question": "Great to hear. Why don\u2019t we start with you walking me through your resume? Highlight the parts most relevant to this role on the Growth team.",
+    "response": "Sure. So, I\u2019ve been a frontend developer for about four years now. I worked at TechCorp for two years, then moved to StartupX for another two. Mostly React and JavaScript, some TypeScript. I\u2019ve built a few dashboards and some UI components. Nothing too crazy.",
+    "follow_ups": [],
+    "expected": {}
+  }
+]

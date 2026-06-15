@@ -4,7 +4,7 @@
     {
       "label": "Convert and Run Evaluator",
       "type": "shell",
-      "command": "& 'C:\\Users\\zhiha\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe' txt_to_json.py '${input:transcriptTxtPath}' --batch-size '${input:evaluatorBatchSize}'",
+      "command": "python -m src.agent1.txt_to_json '${input:transcriptTxtPath}' --batch-size '${input:evaluatorBatchSize}'",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -20,7 +20,7 @@
     {
       "label": "Run Test Runner",
       "type": "shell",
-      "command": "$py = 'C:\\Users\\zhiha\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe'; & $py 'tests\\response_test.py' --json | Out-File -FilePath 'tests\\test_cases.json' -Encoding utf8; powershell -NoProfile -ExecutionPolicy Bypass -File 'scripts\\start_pipeline_server.ps1' -OpenUrl 'http://localhost:3000/tests/test_runner.html?v=mistral-small-1'",
+      "command": "python 'tests\\response_test.py' --json | Out-File -FilePath 'tests\\test_cases.json' -Encoding utf8; powershell -NoProfile -ExecutionPolicy Bypass -File 'scripts\\start_pipeline_server.ps1' -OpenUrl 'http://localhost:3000/tests/test_runner.html?v=mistral-small-4'",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -32,7 +32,7 @@
     {
       "label": "Export Test Cases",
       "type": "shell",
-      "command": "C:\\Users\\zhiha\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe tests\\response_test.py --json | Out-File -FilePath tests\\test_cases.json -Encoding utf8",
+      "command": "python tests\\response_test.py --json | Out-File -FilePath tests\\test_cases.json -Encoding utf8",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -44,7 +44,7 @@
     {
       "label": "Open Evaluator",
       "type": "shell",
-      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File 'scripts\\start_pipeline_server.ps1' -OpenUrl 'http://localhost:3000/evaluator.html?v=mistral-small-1'",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File 'scripts\\start_pipeline_server.ps1' -OpenUrl 'http://localhost:3000/src/frontend/evaluator.html?v=mistral-small-4'",
       "options": {
         "cwd": "${workspaceFolder}"
       },

@@ -1,0 +1,123 @@
+[pipeline] Evaluator run started at 17:18:41
+[ok] #5 Auto case 5 | behavioral | model=mistral-small-latest | overall=good
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: good | The answer is clear and easy to follow, though slightly informal in tone.
+     - relevance: good | The answer directly addresses the question about conflict resolution in a team.
+     - specificity: good | The answer includes concrete details about the conflict, the approaches discussed, and the outcome.
+     - self_awareness: average | The candidate shows some ownership of the resolution but does not deeply reflect on their role or the impact of their approach.
+     - follow_up: present=true | probe=deepening | impact=positive_signal | The follow-up response adds depth by explaining how the candidate convinced the teammates, showing reasoning and collaboration.
+     - overall: good | The answer is relevant, clear, and specific with minor gaps in self-awareness and depth of reflection.
+     start=17:18:41 | end=17:18:43 | duration=2.45s
+[ok] #3 Auto case 3 | behavioral | model=mistral-small-latest | overall=good
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: good | The answer is direct and mostly coherent, though it could be slightly more concise.
+     - relevance: good | The answer addresses the question about designing/improving a consistency model for a ledger system.
+     - specificity: good | The answer includes concrete details like Postgres, advisory locks, and a quantified reduction in errors.
+     - self_awareness: average | The candidate acknowledges limitations (e.g., 'It wasn’t perfect') but does not deeply reflect on tradeoffs or alternatives.
+     - follow_up: present=true | probe=deepening | impact=positive_signal | The follow-up response adds depth by addressing lock failure handling and alternative considerations.
+     - overall: good | The answer is relevant and specific with minor gaps in depth and reflection.
+     start=17:18:41 | end=17:18:43 | duration=2.48s
+[ok] #1 Auto case 1 | behavioral | model=mistral-small-latest | overall=good
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate's response is directly responsive to the question and provides a high-level overview of their experience.
+     - clarity: good | The response is clear and organized, though it could be slightly more concise.
+     - relevance: excellent | The answer fully addresses the question by providing a high-level overview of the candidate's backend engineering experience over the last six years.
+     - specificity: good | The response includes concrete details such as company names, roles, technologies (Java, Go, Postgres), and system types (payment processing, ledger, microservices), but lacks specific timeframes or outcomes.
+     - self_awareness: average | The candidate demonstrates awareness of their role and technologies used but does not reflect on their growth, impact, or lessons learned.
+     - follow_up: present=false | probe=none | impact=none | No follow-up was provided in the context.
+     - overall: good | The answer is relevant and specific with minor gaps in depth and self-reflection.
+     start=17:18:41 | end=17:18:44 | duration=2.56s
+[ok] #2 Auto case 2 | behavioral | model=mistral-small-latest | overall=average
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: good | The answer is direct and easy to follow, though it includes some filler ('like, how much ownership teams have').
+     - relevance: good | The response addresses the question about interest in Northline and the Platform team, though it could better tie personal motivations to the specific team's work.
+     - specificity: average | The answer provides some concrete context (e.g., 'ledger' at CloudPay, 'core systems'), but lacks deeper detail about Northline's culture or the Platform team's specific work.
+     - self_awareness: average | The candidate shows some reflection on their fit ('I think I’d be a good fit') but does not deeply articulate why their experience aligns with Northline's needs.
+     - follow_up: present=false | probe=none | impact=none | No follow-up was provided in the input.
+     - overall: average | The answer is relevant and clear but lacks depth and specificity about Northline's Platform team or the candidate's direct alignment with its work.
+     start=17:18:41 | end=17:18:44 | duration=2.94s
+[ok] #4 Auto case 4 | behavioral | model=mistral-small-latest | overall=good
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: good | The answer is direct and coherent, though it could be slightly more concise.
+     - relevance: excellent | The answer fully addresses the question about pushing back on a technical decision and how it was handled.
+     - specificity: good | The answer includes concrete context (CloudPay, product team, ledger changes, Jira tickets, cycle times) but lacks exact metrics or detailed steps.
+     - self_awareness: good | The candidate shows ownership of the pushback and acknowledges stakeholder reaction, though the reflection could be deeper.
+     - follow_up: present=true | probe=clarifying | impact=positive_signal | The follow-up response adds specific detail (Jira tickets, cycle times, lack of slide deck) that strengthens the evidence.
+     - overall: good | The answer is solid with minor gaps in depth and metrics, but it clearly demonstrates the required behavioral evidence.
+     start=17:18:41 | end=17:18:45 | duration=4.36s
+[ok] #9 Auto case 9 | behavioral | model=mistral-small-latest | overall=good
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a direct and relevant response to the question about weaknesses.
+     - clarity: good | The answer is clear and easy to follow, with a straightforward point about seeking feedback.
+     - relevance: excellent | The response directly addresses the question about weaknesses and growth areas.
+     - specificity: good | The candidate provides concrete context (project work, asking manager/teammates) and a personal effort to improve.
+     - self_awareness: good | The candidate acknowledges the weakness and describes a conscious effort to improve, showing ownership.
+     - follow_up: present=false | probe=none | impact=none | No follow-up was provided in the input.
+     - overall: good | The answer is relevant, clear, and shows self-awareness with minor gaps in depth or concrete outcomes.
+     start=17:18:45 | end=17:18:48 | duration=2.32s
+[ok] #6 Auto case 6 | behavioral | model=mistral-small-latest | overall=good
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate's response directly addresses the question and provides specific details about mentorship.
+     - clarity: good | The answer is clear and easy to follow, with a coherent structure.
+     - relevance: excellent | The answer fully addresses the question about mentorship and the follow-up about challenges.
+     - specificity: good | The answer includes concrete context (CloudPay, distributed systems, ledger service, pair programming) but lacks exact metrics or outcomes.
+     - self_awareness: good | The candidate reflects on the challenge of balancing explanation and autonomy, showing awareness of their own judgment and growth.
+     - follow_up: present=true | probe=deepening | impact=positive_signal | The follow-up response adds depth by revealing the candidate's reflection on the mentoring challenge.
+     - overall: good | The answer is relevant, clear, and shows good self-awareness with minor gaps in specificity (e.g., no metrics or exact outcomes).
+     start=17:18:45 | end=17:18:48 | duration=2.35s
+[ok] #8 Auto case 8 | behavioral | model=mistral-small-latest | overall=good
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate's response directly addresses the question and provides specific details about the process improvement.
+     - clarity: good | The answer is clear and easy to follow, though it could be slightly more concise.
+     - relevance: excellent | The response fully answers the question about identifying and improving a slow process.
+     - specificity: good | The answer includes concrete details like the original CI time (20 minutes), the solution (parallelizing tests), and the outcome (8 minutes), but lacks some specifics about the candidate's exact role in implementation.
+     - self_awareness: average | The candidate shows some ownership of the improvement but does not explicitly state their personal contributions or tradeoffs considered during the process.
+     - follow_up: present=false | probe=none | impact=none | No follow-up was provided in the input.
+     - overall: good | The answer is relevant and specific with minor gaps in self-awareness and clarity.
+     start=17:18:45 | end=17:18:48 | duration=2.35s
+[ok] #10 Auto case 10 | behavioral | model=mistral-small-latest | overall=average
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: good | The answer is mostly clear and organized, though it includes minor filler like 'That’s a good question' and lacks a strong structure.
+     - relevance: average | The answer addresses the question but misses key aspects like concrete examples, specific criteria for prioritization, or tradeoffs.
+     - specificity: poor | The answer is vague and lacks concrete details such as specific deadlines, team names, metrics, or outcomes.
+     - self_awareness: average | The candidate acknowledges the system isn't perfect but provides limited reflection on their own judgment or growth.
+     - follow_up: present=false | probe=none | impact=none | No follow-up was provided in the response.
+     - overall: average | The answer is partially responsive and somewhat clear but lacks specificity and depth, making it adequate but incomplete.
+     start=17:18:45 | end=17:18:48 | duration=2.44s
+[ok] #7 Auto case 7 | behavioral | model=mistral-small-latest | overall=good
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a clear, relevant, and specific response to the behavioral question.
+     - clarity: good | The response is direct and easy to follow, though it includes minor filler like 'Oh, man' and 'it wasn’t a total disaster'.
+     - relevance: excellent | The answer fully addresses the question by describing a failure, its impact, and the outcome.
+     - specificity: good | The response includes concrete details such as the company (PayFlow), the feature (recurring payments), the bug (duplicate transactions), and the outcome (roll back and fix). Minor gap: exact timeline or metric of impact.
+     - self_awareness: good | The candidate shows ownership of the mistake and reflects on lessons learned, including rushing and not seeking code reviews.
+     - follow_up: present=true | probe=deepening | impact=positive_signal | The follow-up response adds depth by explaining specific lessons learned and changes in behavior.
+     - overall: good | The answer is solid with minor gaps in specificity and a minor lack of formality, but it demonstrates clear ownership and learning.
+     start=17:18:45 | end=17:18:48 | duration=2.90s
+[ok] #11 Auto case 11 | behavioral | model=mistral-small-latest | overall=good
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: good | The answer is clear and organized, though it could be slightly more concise.
+     - relevance: good | The answer addresses the question about persuasion but lacks some depth in the initial response.
+     - specificity: average | The answer includes some concrete details (e.g., Prometheus, open-source, demo) but lacks specific metrics, timelines, or deeper context.
+     - self_awareness: good | The candidate shows ownership of the effort and reflects on addressing concerns, though the reflection could be deeper.
+     - follow_up: present=true | probe=deepening | impact=positive_signal | The follow-up response adds meaningful detail about handling pushback, improving specificity and self-awareness.
+     - overall: good | The answer is relevant and mostly specific, with clear ownership and a positive follow-up response, though some details are missing.
+     start=17:18:48 | end=17:18:51 | duration=2.42s
+[ok] #12 Auto case 12 | behavioral | model=mistral-small-latest | overall=good
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: good | The answer is direct and easy to follow, with a clear structure and minimal filler.
+     - relevance: excellent | The answer fully addresses the question about optimizing Postgres for performance in a high-throughput system.
+     - specificity: good | The answer includes concrete details like the table type (transaction records), specific optimizations (indexes on account ID and timestamp, denormalization), and outcomes (faster reads, slower writes, storage trade-offs). Minor gaps include exact metrics or before/after performance numbers.
+     - self_awareness: good | The candidate acknowledges trade-offs (write performance, storage costs, sync challenges) and demonstrates judgment in prioritizing reads over writes, showing ownership of the decisions.
+     - follow_up: present=true | probe=deepening | impact=positive_signal | The follow-up response added depth by addressing trade-offs (write performance, storage, sync challenges) and demonstrated the candidate's reasoning about the impact of their optimizations.
+     - overall: good | The answer is relevant, specific, and shows good self-awareness with minor gaps in concrete metrics or deeper technical trade-offs.
+     start=17:18:48 | end=17:18:51 | duration=2.79s
+[pdf] Evaluation report PDF downloaded.
+[agent2] queued: evaluation log, input text, and input JSON queued for Agent 2 websocket delivery
