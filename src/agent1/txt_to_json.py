@@ -35,6 +35,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import mimetypes
 import os
 import re
 import socket
@@ -42,6 +43,7 @@ import subprocess
 import sys
 import time
 import unicodedata
+import uuid
 import webbrowser
 from datetime import datetime
 from http import HTTPStatus
@@ -138,6 +140,57 @@ CANDIDATE_QA_START_PATTERNS = [
     re.compile(r"\bdo you have any questions\b", re.IGNORECASE),
     re.compile(r"\bquestions for (me|us)\b", re.IGNORECASE),
 ]
+
+RECORDING_TRANSCRIPT_SUFFIXES = {".txt", ".vtt", ".srt"}
+AUDIO_RECORDING_SUFFIXES = {".m4a", ".mp3", ".mp4", ".mpeg", ".mpga", ".wav", ".webm"}
+SUPPORTED_RECORDING_SUFFIXES = RECORDING_TRANSCRIPT_SUFFIXES | AUDIO_RECORDING_SUFFIXES
+DEFAULT_TRANSCRIPTION_MODEL = "voxtral-mini-latest"
+DEFAULT_TRANSCRIPT_OUTPUT_DIR = Path("input data")
+DEFAULT_TRANSCRIPTION_PROMPT = (
+    "Transcribe this job interview recording. Preserve speaker turns and label each turn as "
+    "Interviewer: or Candidate: whenever possible."
+)
+TIMESTAMP_PREFIX_RE = re.compile(
+    r"^\s*(?:\[?\d{1,2}:\d{2}(?::\d{2})?(?:[.,]\d{1,3})?\]?\s*(?:-->|-)?\s*)+"
+)
+TIMESTAMP_ONLY_RE = re.compile(
+    r"^\s*\d{1,2}:\d{2}(?::\d{2})?(?:[.,]\d{1,3})?\s*(?:-->|-)\s*"
+    r"\d{1,2}:\d{2}(?::\d{2})?(?:[.,]\d{1,3})?\s*$"
+)
+WEBVTT_METADATA_RE = re.compile(r"^\s*(WEBVTT|NOTE\b|Kind:|Language:)", re.IGNORECASE)
+SPEAKER_LINE_RE = re.compile(
+    r"^\s*(?:[-*]\s*)?(?:\[[^\]]+\]\s*)?"
+    r"(?P<speaker>[A-Za-z][A-Za-z0-9 ._'()-]{0,60})"
+    r"\s*(?::|-|\u2013|\u2014)\s*(?P<text>\S.*)?$"
+)
+SPEAKER_TIMESTAMP_LINE_RE = re.compile(
+    r"^\s*(?P<speaker>[A-Za-z][A-Za-z0-9 ._'()-]{0,60})\s+"
+    r"\d{1,2}:\d{2}(?::\d{2})?(?:[.,]\d{1,3})?\s*$"
+)
+RECORDING_SPEAKER_ALIASES = {
+    "interviewer": {
+        "interviewer",
+        "interview",
+        "recruiter",
+        "hiring manager",
+        "manager",
+        "host",
+        "moderator",
+        "questioner",
+        "operator",
+        "speaker 1",
+        "speaker a",
+    },
+    "candidate": {
+        "candidate",
+        "applicant",
+        "interviewee",
+        "guest",
+        "respondent",
+        "speaker 2",
+        "speaker b",
+    },
+}
 
 
 def local_time_mark() -> str:
@@ -309,7 +362,7 @@ Schema:
     }}
   ],
   "operations": [
-    {
+    {{
       "op": "split_follow_up_to_case" | "add_missing_case" | "remove_case" | "move_follow_up" | "change_probe_type",
       "reason": "why this operation is needed",
       "source_case_id": <number or null>,
@@ -319,7 +372,7 @@ Schema:
       "response": "candidate response text or empty string",
       "turn_type": "behavioral" | "non_behavioral" | "",
       "probe_type": "clarifying" | "deepening" | ""
-    }
+    }}
   ],
   "desired_cases": []
 }}
@@ -471,9 +524,37 @@ def find_response_after_question(raw_text: str, question: str) -> str:
     turns = _extract_turns(raw_text)
     for index, turn in enumerate(turns):
         if turn["speaker"] == "interviewer" and text_matches(question, str(turn.get("text", ""))):
-            if index + 1 < len(turns) and turns[index + 1]["speaker"] == "candidate":
-                return str(turns[index + 1].get("text", "")).strip()
+            for response_index in range(index + 1, len(turns)):
+                if turns[response_index]["speaker"] == "candidate":
+                    return str(turns[response_index].get("text", "")).strip()
+                if turns[response_index]["speaker"] != "interviewer":
+                    break
     return ""
+
+
+def response_looks_truncated(response: str) -> bool:
+    text = str(response or "").strip()
+    if not text:
+        return True
+    return text.endswith("...") or "..." in text[-20:]
+
+
+def hydrate_case_responses_from_transcript(
+    cases: list[dict[str, Any]],
+    raw_text: str,
+) -> list[dict[str, Any]]:
+    hydrated = json.loads(json.dumps(cases))
+    for case in hydrated:
+        question = str(case.get("question", "")).strip()
+        full_response = find_response_after_question(raw_text, question)
+        if full_response and response_looks_truncated(str(case.get("response", ""))):
+            case["response"] = full_response
+        for follow in case.get("follow_ups", []) or []:
+            follow_question = str(follow.get("question", "")).strip()
+            full_follow_response = find_response_after_question(raw_text, follow_question)
+            if full_follow_response and response_looks_truncated(str(follow.get("response", ""))):
+                follow["response"] = full_follow_response
+    return hydrated
 
 
 def renumber_cases(cases: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -593,7 +674,9 @@ def apply_agent2_structure_operations(
             question = str(operation.get("question", "")).strip()
             if not question or case_exists(updated, question):
                 continue
-            response = str(operation.get("response", "")).strip() or find_response_after_question(raw_text, question)
+            operation_response = str(operation.get("response", "")).strip()
+            transcript_response = find_response_after_question(raw_text, question)
+            response = transcript_response if response_looks_truncated(operation_response) else operation_response
             turn_type = infer_turn_type(question, str(operation.get("turn_type", "")))
             updated.append(make_case_from_question(0, question, response, turn_type, reason))
         elif op_name == "remove_case":
@@ -843,6 +926,218 @@ def load_dotenv(path: Path = Path(".env")) -> None:
         value = value.strip().strip('"').strip("'")
         if key and key not in os.environ:
             os.environ[key] = value
+
+
+def _multipart_field(boundary: str, name: str, value: str) -> bytes:
+    return (
+        f"--{boundary}\r\n"
+        f'Content-Disposition: form-data; name="{name}"\r\n\r\n'
+        f"{value}\r\n"
+    ).encode("utf-8")
+
+
+def _multipart_file(boundary: str, field_name: str, file_path: Path) -> bytes:
+    content_type = mimetypes.guess_type(file_path.name)[0] or "application/octet-stream"
+    header = (
+        f"--{boundary}\r\n"
+        f'Content-Disposition: form-data; name="{field_name}"; filename="{file_path.name}"\r\n'
+        f"Content-Type: {content_type}\r\n\r\n"
+    ).encode("utf-8")
+    return header + file_path.read_bytes() + b"\r\n"
+
+
+def extract_transcription_text(payload: Any) -> str:
+    if isinstance(payload, str):
+        return payload.strip()
+    if not isinstance(payload, dict):
+        return ""
+    for key in ("text", "transcript", "content"):
+        value = payload.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    segments = payload.get("segments")
+    if isinstance(segments, list):
+        texts = []
+        for segment in segments:
+            if isinstance(segment, dict) and isinstance(segment.get("text"), str):
+                texts.append(segment["text"].strip())
+        return "\n".join(text for text in texts if text).strip()
+    return ""
+
+
+def split_transcript_for_labeling(transcript: str, max_chars: int = 5000) -> list[str]:
+    text = " ".join(transcript.split())
+    if len(text) <= max_chars:
+        return [text] if text else []
+    chunks: list[str] = []
+    current: list[str] = []
+    current_len = 0
+    parts = re.split(r"(?<=[.!?])\s+", text)
+    for part in parts:
+        part = part.strip()
+        if not part:
+            continue
+        if current and current_len + len(part) + 1 > max_chars:
+            chunks.append(" ".join(current))
+            current = []
+            current_len = 0
+        current.append(part)
+        current_len += len(part) + 1
+    if current:
+        chunks.append(" ".join(current))
+    return chunks
+
+
+def transcribe_audio_recording(
+    audio_path: Path,
+    model: str = DEFAULT_TRANSCRIPTION_MODEL,
+    prompt: str = DEFAULT_TRANSCRIPTION_PROMPT,
+) -> str:
+    load_dotenv()
+    api_key = os.environ.get("MISTRAL_API_KEY")
+    if not api_key:
+        raise RuntimeError("MISTRAL_API_KEY is required to transcribe audio recordings.")
+
+    api_base = os.environ.get("MISTRAL_API_BASE", DEFAULT_MISTRAL_API_BASE).rstrip("/")
+    timeout = float(os.environ.get("MISTRAL_TRANSCRIPTION_TIMEOUT_SECONDS", "600"))
+    boundary = f"----transcript-evaluator-{uuid.uuid4().hex}"
+    body = b"".join(
+        [
+            _multipart_field(boundary, "model", model),
+            _multipart_field(boundary, "response_format", "json"),
+            _multipart_field(boundary, "prompt", prompt),
+            _multipart_file(boundary, "file", audio_path),
+            f"--{boundary}--\r\n".encode("utf-8"),
+        ]
+    )
+    req = request.Request(
+        f"{api_base}/audio/transcriptions",
+        data=body,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": f"multipart/form-data; boundary={boundary}",
+            "Accept": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with request.urlopen(req, timeout=timeout) as resp:
+            payload = json.loads(resp.read().decode("utf-8", errors="replace"))
+    except error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"Mistral transcription HTTP {exc.code}: {detail}") from exc
+    except (error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"Mistral transcription request failed: {exc}") from exc
+
+    transcript = extract_transcription_text(payload)
+    if not transcript:
+        raise RuntimeError("Mistral transcription returned no transcript text.")
+    return transcript
+
+
+def label_transcribed_interview_turns(transcript: str) -> str:
+    if has_canonical_speaker_labels(transcript):
+        return transcript
+
+    labeled_chunks: list[str] = []
+    chunks = split_transcript_for_labeling(transcript)
+    for chunk_index, chunk in enumerate(chunks, start=1):
+        labeled_chunk = label_transcribed_interview_chunk(chunk, chunk_index, len(chunks))
+        if has_canonical_speaker_labels(labeled_chunk):
+            labeled_chunks.append(labeled_chunk)
+        else:
+            LOGGER.warning("Transcript labeler failed for chunk %s/%s.", chunk_index, len(chunks))
+            labeled_chunks.append(chunk)
+    labeled_transcript = "\n".join(labeled_chunks).strip()
+    if has_canonical_speaker_labels(labeled_transcript):
+        return labeled_transcript
+    LOGGER.warning("Transcript labeler did not return canonical speaker labels; using raw transcript.")
+    return transcript
+
+
+def label_transcribed_interview_chunk(chunk: str, chunk_index: int = 1, chunk_count: int = 1) -> str:
+    prompt = f"""Add speaker labels to this job interview transcript.
+
+Return JSON only:
+{{
+  "turns": [
+    {{"speaker": "INTERVIEWER", "text": "..."}},
+    {{"speaker": "CANDIDATE", "text": "..."}}
+  ]
+}}
+
+Rules:
+- Preserve the original wording as much as possible.
+- Split turns whenever the speaker changes.
+- Label the interviewer/recruiter/hiring manager as INTERVIEWER.
+- Label Henry/the applicant/interviewee as CANDIDATE.
+- Do not summarize or evaluate.
+- Do not omit substantive questions or answers.
+
+Transcript chunk {chunk_index} of {chunk_count}:
+{chunk}
+"""
+    parsed = mistral_chat_json(
+        "You convert raw interview transcripts into speaker-labeled transcripts.",
+        prompt,
+        os.environ.get("MISTRAL_TRANSCRIPT_LABELER_MODEL", DEFAULT_MISTRAL_MODEL),
+        max_tokens=12000,
+    )
+    if isinstance(parsed, dict):
+        labeled = format_labeler_response(parsed)
+        if has_canonical_speaker_labels(labeled):
+            return labeled
+    return chunk
+
+
+def format_labeler_response(parsed: dict[str, Any]) -> str:
+    transcript = parsed.get("transcript")
+    if isinstance(transcript, str):
+        return transcript.strip()
+
+    turns = parsed.get("turns")
+    if isinstance(turns, list):
+        lines: list[str] = []
+        for turn in turns:
+            if not isinstance(turn, dict):
+                continue
+            speaker = str(turn.get("speaker") or "").strip().upper()
+            text = str(turn.get("text") or "").strip()
+            if speaker not in {"INTERVIEWER", "CANDIDATE"} or not text:
+                continue
+            lines.append(f"{speaker}:")
+            lines.append(text)
+        return "\n".join(lines).strip()
+
+    if isinstance(transcript, dict):
+        lines = []
+        for speaker, text in transcript.items():
+            canonical = str(speaker).strip().upper()
+            if canonical in {"INTERVIEWER", "CANDIDATE"} and str(text).strip():
+                lines.append(f"{canonical}:")
+                lines.append(str(text).strip())
+        return "\n".join(lines).strip()
+
+    return ""
+
+
+def read_recording_input(
+    input_path: Path,
+    transcription_model: str = DEFAULT_TRANSCRIPTION_MODEL,
+    transcript_output_dir: Path = DEFAULT_TRANSCRIPT_OUTPUT_DIR,
+) -> tuple[str, str, Path]:
+    suffix = input_path.suffix.lower()
+    if suffix in AUDIO_RECORDING_SUFFIXES:
+        LOGGER.info("Transcribing audio recording before Agent 0 parsing: input=%s", input_path)
+        transcript = transcribe_audio_recording(input_path, transcription_model)
+        labeled_transcript = label_transcribed_interview_turns(transcript)
+        normalized_transcript = normalize_transcript_input(labeled_transcript)
+        transcript_output_dir.mkdir(parents=True, exist_ok=True)
+        transcript_path = transcript_output_dir / f"{input_path.stem}.txt"
+        transcript_path.write_text(normalized_transcript + "\n", encoding="utf-8")
+        LOGGER.info("Wrote audio transcript text: %s", transcript_path)
+        return normalized_transcript, "audio-transcription", transcript_path
+    return input_path.read_text(encoding="utf-8"), "transcript-export", input_path
 
 
 def mistral_chat_json(system_prompt: str, user_message: str, model: str, max_tokens: int = 256) -> Any | None:
@@ -1105,9 +1400,120 @@ def strip_fixture_footer(raw_text: str) -> str:
     return raw_text
 
 
+def _clean_recording_line(line: str) -> str:
+    cleaned = line.strip().lstrip("\ufeff")
+    if not cleaned:
+        return ""
+    if WEBVTT_METADATA_RE.match(cleaned):
+        return ""
+    if TIMESTAMP_ONLY_RE.match(cleaned):
+        return ""
+    if cleaned.isdigit():
+        return ""
+    cleaned = TIMESTAMP_PREFIX_RE.sub("", cleaned).strip()
+    return cleaned
+
+
+def _normalize_speaker_name(speaker: str) -> str:
+    normalized = unicodedata.normalize("NFKD", speaker).encode("ascii", "ignore").decode("ascii")
+    normalized = re.sub(r"[^a-z0-9]+", " ", normalized.lower())
+    return " ".join(normalized.split())
+
+
+def _canonical_recording_speaker(
+    speaker: str,
+    speaker_order: list[str],
+    speaker_roles: dict[str, str],
+) -> str:
+    normalized = _normalize_speaker_name(speaker)
+    for canonical, aliases in RECORDING_SPEAKER_ALIASES.items():
+        if normalized in aliases:
+            speaker_roles.setdefault(speaker, canonical)
+            return canonical
+    if speaker in speaker_roles:
+        return speaker_roles[speaker]
+    if speaker not in speaker_order:
+        speaker_order.append(speaker)
+    if len(speaker_order) == 1:
+        speaker_roles[speaker] = "interviewer"
+        return speaker_roles[speaker]
+    if len(speaker_order) == 2:
+        speaker_roles[speaker] = "candidate"
+        return speaker_roles[speaker]
+    speaker_roles[speaker] = "candidate"
+    return speaker_roles[speaker]
+
+
+def parse_recording_transcript(raw_text: str) -> str:
+    """Normalize common recording transcript exports into INTERVIEWER/CANDIDATE turns."""
+    lines = strip_fixture_footer(raw_text).splitlines()
+    normalized_lines: list[str] = []
+    speaker_order: list[str] = []
+    speaker_roles: dict[str, str] = {}
+    current_speaker: str | None = None
+    current_message: list[str] = []
+
+    def flush_current() -> None:
+        nonlocal current_speaker, current_message
+        if current_speaker is None:
+            return
+        message = "\n".join(part.strip() for part in current_message if part.strip()).strip()
+        if message:
+            normalized_lines.append(f"{current_speaker.upper()}:")
+            normalized_lines.append(message)
+        current_speaker = None
+        current_message = []
+
+    for raw_line in lines:
+        line = _clean_recording_line(raw_line)
+        if not line:
+            continue
+
+        speaker_timestamp_match = SPEAKER_TIMESTAMP_LINE_RE.match(line)
+        if speaker_timestamp_match:
+            speaker = str(speaker_timestamp_match.group("speaker") or "").strip()
+            canonical = _canonical_recording_speaker(speaker, speaker_order, speaker_roles)
+            if canonical != current_speaker:
+                flush_current()
+                current_speaker = canonical
+                current_message = []
+            continue
+
+        speaker_match = SPEAKER_LINE_RE.match(line)
+        if speaker_match:
+            speaker = str(speaker_match.group("speaker") or "").strip()
+            text = str(speaker_match.group("text") or "").strip()
+            canonical = _canonical_recording_speaker(speaker, speaker_order, speaker_roles)
+            if canonical != current_speaker:
+                flush_current()
+                current_speaker = canonical
+                current_message = []
+            if text:
+                current_message.append(text)
+            continue
+
+        if current_speaker is not None:
+            current_message.append(line)
+
+    flush_current()
+    return "\n".join(normalized_lines).strip()
+
+
+def has_canonical_speaker_labels(raw_text: str) -> bool:
+    return any(SPEAKER_RE.match(line) for line in raw_text.splitlines())
+
+
+def normalize_transcript_input(raw_text: str) -> str:
+    cleaned = strip_fixture_footer(raw_text)
+    if has_canonical_speaker_labels(cleaned):
+        return cleaned
+    normalized = parse_recording_transcript(cleaned)
+    return normalized or cleaned
+
+
 # extract turns from raw text
 def _extract_turns(raw_text: str) -> list[dict[str, Any]]:
-    lines = strip_fixture_footer(raw_text).splitlines()
+    lines = normalize_transcript_input(raw_text).splitlines()
     turns: list[dict[str, Any]] = []
     current_speaker: str | None = None
     current_message: list[str] = []
@@ -1335,6 +1741,31 @@ def _model_segment_decision(
         return SEGMENT_NEW_CASE
     return decision
 
+
+def collect_interviewer_prompt_before_response(
+    turns: list[dict[str, Any]],
+    start_index: int,
+) -> tuple[int, str, str, bool]:
+    index = start_index
+    interviewer_turns: list[str] = []
+    while index < len(turns) and turns[index]["speaker"] == "interviewer":
+        text = str(turns[index].get("text", "")).strip()
+        if text:
+            interviewer_turns.append(text)
+        index += 1
+
+    response = ""
+    consumed_candidate = False
+    if index < len(turns) and turns[index]["speaker"] == "candidate":
+        response = str(turns[index].get("text", "")).strip()
+        consumed_candidate = True
+        index += 1
+
+    if not interviewer_turns:
+        return index, "", response, consumed_candidate
+
+    return index, interviewer_turns[-1], response, consumed_candidate
+
 """
 Check if the question is a follow-up question.
 @param question_text - The question text to check.
@@ -1467,21 +1898,17 @@ def parse_transcript_to_test_cases(
             i += 1
             continue
 
-        response = ""
-        consumed_candidate = False
-        if i + 1 < len(turns) and turns[i + 1]["speaker"] == "candidate":
-            response = turns[i + 1]["text"].strip()
-            consumed_candidate = True
+        next_index, question, response, consumed_candidate = collect_interviewer_prompt_before_response(turns, i)
 
         if candidate_qa_mode:
             previous_interviewer_turn = question
             previous_candidate_response = response
             previous_was_follow_up = False
-            i += 2 if consumed_candidate else 1
+            i = next_index
             continue
 
         deterministic_decision = _deterministic_segment_decision(question, last_main_case)
-        if _starts_candidate_qa(question):
+        if _starts_candidate_qa(question) and last_main_case is not None:
             candidate_qa_mode = True
 
         decision = deterministic_decision
@@ -1502,7 +1929,7 @@ def parse_transcript_to_test_cases(
             previous_interviewer_turn = question
             previous_candidate_response = response
             previous_was_follow_up = False
-            i += 2 if consumed_candidate else 1
+            i = next_index
             continue
 
         if decision == SEGMENT_FOLLOW_UP and last_main_case is not None:
@@ -1532,7 +1959,7 @@ def parse_transcript_to_test_cases(
                 previous_interviewer_turn = question
                 previous_candidate_response = response
                 previous_was_follow_up = False
-                i += 2 if consumed_candidate else 1
+                i = next_index
                 continue
 
             case_entry = {
@@ -1554,7 +1981,7 @@ def parse_transcript_to_test_cases(
             previous_candidate_response = response
             previous_was_follow_up = False
 
-        i += 2 if consumed_candidate else 1
+        i = next_index
 
     return cases
 
@@ -1936,6 +2363,11 @@ def main() -> None:
         help="Mistral/Ministral model for transcript categorization.",
     )
     parser.add_argument(
+        "--transcription-model",
+        default=os.environ.get("MISTRAL_TRANSCRIPTION_MODEL", DEFAULT_TRANSCRIPTION_MODEL),
+        help="Mistral/Voxtral model for audio recording transcription.",
+    )
+    parser.add_argument(
         "--ollama-model",
         default=os.environ.get("OLLAMA_MODEL"),
         help="Optional legacy Ollama model name when --classifier-provider ollama is used.",
@@ -1975,9 +2407,10 @@ def main() -> None:
     if not input_path.exists():
         LOGGER.error("Input file not found: %s", input_path)
         raise FileNotFoundError(f"Input file not found: {input_path}")
-    if input_path.suffix.lower() != ".txt":
-        LOGGER.error("Input must be a .txt file. Got: %s", input_path.name)
-        raise ValueError(f"Input must be a .txt file. Got: {input_path.name}")
+    if input_path.suffix.lower() not in SUPPORTED_RECORDING_SUFFIXES:
+        allowed = ", ".join(sorted(SUPPORTED_RECORDING_SUFFIXES))
+        LOGGER.error("Input must be a recording or transcript export (%s). Got: %s", allowed, input_path.name)
+        raise ValueError(f"Input must be a recording or transcript export ({allowed}). Got: {input_path.name}")
 
     classifier_provider = args.classifier_provider.strip().lower()
     active_ollama_model = args.ollama_model if classifier_provider == "ollama" else None
@@ -1990,11 +2423,21 @@ def main() -> None:
     )
 
     conversion_started_at = local_time_mark()
-    output_path = input_path.with_suffix(".json")
-    raw_text = input_path.read_text(encoding="utf-8")
+    original_text, input_source, transcript_input_path = read_recording_input(input_path, args.transcription_model)
+    pipeline_input_path = transcript_input_path
+    output_path = pipeline_input_path.with_suffix(".json")
+    eval_log_file = evaluator_log_path_for_input(pipeline_input_path)
+    result_log_file = result_log_path_for_input(pipeline_input_path)
+    eval_log_file.parent.mkdir(parents=True, exist_ok=True)
+    result_log_file.parent.mkdir(parents=True, exist_ok=True)
+    raw_text = normalize_transcript_input(original_text)
+    if raw_text != strip_fixture_footer(original_text):
+        LOGGER.info("Normalized recording transcript before Agent 0 parsing.")
     LOGGER.info(
-        "Parsing transcript: input=%s chars=%s classifier=%s",
+        "Parsing transcript: input=%s transcript=%s source=%s chars=%s classifier=%s",
         input_path,
+        pipeline_input_path,
+        input_source,
         len(raw_text),
         classifier_mode,
     )
@@ -2008,9 +2451,10 @@ def main() -> None:
     parsed_cases = run_agent2_structure_review_loop(
         raw_text,
         parsed_cases,
-        input_path,
+        pipeline_input_path,
         max_iterations=args.structure_review_iterations,
     )
+    parsed_cases = hydrate_case_responses_from_transcript(parsed_cases, raw_text)
     LOGGER.info("Parsed transcript into %s cases", len(parsed_cases))
     log_parsed_cases(parsed_cases)
     output_path.write_text(
@@ -2018,8 +2462,8 @@ def main() -> None:
     )
     interview_id = save_interview_cases(
         parsed_cases,
-        input_path.stem,
-        input_path,
+        pipeline_input_path.stem,
+        pipeline_input_path,
         output_path,
         Path(args.sqlite_db),
     )
@@ -2027,7 +2471,7 @@ def main() -> None:
     LOGGER.info(
         "Finished conversion: input=%s output=%s started_at=%s finished_at=%s "
         "input_chars=%s cases=%s batch_size=%s",
-        input_path,
+        pipeline_input_path,
         output_path,
         conversion_started_at,
         conversion_finished_at,
@@ -2037,6 +2481,8 @@ def main() -> None:
     )
     LOGGER.info("Stored approved interview structure in SQLite: db=%s interview_id=%s", args.sqlite_db, interview_id)
 
+    if input_source == "audio-transcription":
+        print(f"Wrote transcript TXT to: {pipeline_input_path}")
     print(f"Wrote JSON to: {output_path}")
     print(f"Stored SQLite interview id: {interview_id} ({args.sqlite_db})")
     print(f"Cases: {len(parsed_cases)}")

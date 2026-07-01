@@ -1,35 +1,3 @@
-19:51:56 INFO [__main__] Starting convert and evaluate task; logging to logs\entry_timing\interview_29_poor_entry_timing.log
-19:51:56 INFO [__main__] input=input data\test\interview_29_poor.txt batch_size=4
-19:51:56 INFO [__main__] Parsing transcript: input=input data\test\interview_29_poor.txt chars=5765 classifier=ministral:ministral-3b-latest
-19:52:14 INFO [__main__] Starting Agent 2 structure review iteration 1/until satisfied
-19:52:14 INFO [__main__] Wrote Agent 2 structure review prompt to logs\agent2\interview_29_poor\structure_review\interview_29_poor_agent2_structure_review_1_prompt.md
-19:52:24 INFO [__main__] Agent 2 structure review iteration 1 satisfied=False issues=2 log=logs\agent2\interview_29_poor\structure_review\interview_29_poor_agent2_structure_review_1.md
-19:52:24 INFO [__main__] Starting Agent 2 structure review iteration 2/until satisfied
-19:52:24 INFO [__main__] Wrote Agent 2 structure review prompt to logs\agent2\interview_29_poor\structure_review\interview_29_poor_agent2_structure_review_2_prompt.md
-19:52:35 INFO [__main__] Agent 2 structure review iteration 2 satisfied=False issues=3 log=logs\agent2\interview_29_poor\structure_review\interview_29_poor_agent2_structure_review_2.md
-19:52:35 INFO [__main__] Starting Agent 2 structure review iteration 3/until satisfied
-19:52:35 INFO [__main__] Wrote Agent 2 structure review prompt to logs\agent2\interview_29_poor\structure_review\interview_29_poor_agent2_structure_review_3_prompt.md
-19:52:50 INFO [__main__] Agent 2 structure review iteration 3 satisfied=False issues=3 log=logs\agent2\interview_29_poor\structure_review\interview_29_poor_agent2_structure_review_3.md
-19:52:50 INFO [__main__] Starting Agent 2 structure review iteration 4/until satisfied
-19:52:50 INFO [__main__] Wrote Agent 2 structure review prompt to logs\agent2\interview_29_poor\structure_review\interview_29_poor_agent2_structure_review_4_prompt.md
-19:52:52 INFO [__main__] Agent 2 structure review iteration 4 satisfied=True issues=0 log=logs\agent2\interview_29_poor\structure_review\interview_29_poor_agent2_structure_review_4.md
-19:52:52 INFO [__main__] Parsed transcript into 14 cases
-19:52:52 INFO [__main__] Detected 14 evaluator cases
-19:52:52 INFO [__main__] Question/answer pair 1: started_at=19:52:52 finished_at=19:52:52 question_chars=63 answer_chars=228 follow_ups=0
-19:52:52 INFO [__main__] Question/answer pair 2: started_at=19:52:52 finished_at=19:52:52 question_chars=143 answer_chars=245 follow_ups=0
-19:52:52 INFO [__main__] Question/answer pair 3: started_at=19:52:52 finished_at=19:52:52 question_chars=116 answer_chars=271 follow_ups=0
-19:52:52 INFO [__main__] Question/answer pair 4: started_at=19:52:52 finished_at=19:52:52 question_chars=82 answer_chars=181 follow_ups=0
-19:52:52 INFO [__main__] Question/answer pair 5: started_at=19:52:52 finished_at=19:52:52 question_chars=88 answer_chars=166 follow_ups=0
-19:52:52 INFO [__main__] Question/answer pair 6: started_at=19:52:52 finished_at=19:52:52 question_chars=126 answer_chars=208 follow_ups=1
-19:52:52 INFO [__main__] Question/answer pair 7: started_at=19:52:52 finished_at=19:52:52 question_chars=100 answer_chars=130 follow_ups=0
-19:52:52 INFO [__main__] Question/answer pair 8: started_at=19:52:52 finished_at=19:52:52 question_chars=94 answer_chars=162 follow_ups=0
-19:52:52 INFO [__main__] Question/answer pair 9: started_at=19:52:52 finished_at=19:52:52 question_chars=74 answer_chars=118 follow_ups=0
-19:52:52 INFO [__main__] Question/answer pair 10: started_at=19:52:52 finished_at=19:52:52 question_chars=100 answer_chars=125 follow_ups=0
-19:52:52 INFO [__main__] Question/answer pair 11: started_at=19:52:52 finished_at=19:52:52 question_chars=110 answer_chars=115 follow_ups=0
-19:52:52 INFO [__main__] Question/answer pair 12: started_at=19:52:52 finished_at=19:52:52 question_chars=71 answer_chars=124 follow_ups=0
-19:52:52 INFO [__main__] Question/answer pair 13: started_at=19:52:52 finished_at=19:52:52 question_chars=75 answer_chars=181 follow_ups=0
-19:52:52 INFO [__main__] Question/answer pair 14: started_at=19:52:52 finished_at=19:52:52 question_chars=141 answer_chars=259 follow_ups=0
-19:52:52 INFO [__main__] Finished conversion: input=input data\test\interview_29_poor.txt output=input data\test\interview_29_poor.json started_at=19:51:56 finished_at=19:52:52 input_chars=5765 cases=14 batch_size=4
-19:52:52 INFO [__main__] Stored approved interview structure in SQLite: db=data\interviews.sqlite interview_id=9
-19:52:52 INFO [__main__] Reusing existing pipeline server on port 3000
-19:52:52 INFO [__main__] Opening evaluator HTML: http://localhost:3000/src/frontend/evaluator.html?v=mistral-small-4&input=input+data%2Ftest%2Finterview_29_poor.json&batch_size=4&log_file=logs%2Fagent1%2Finterview_29_poor%2Finterview_29_poor_eval.log&result_log_file=logs%2Fagent1%2Finterview_29_poor%2Finterview_29_poor.log
+15:23:02 INFO [__main__] Starting convert and evaluate task; logging to logs\entry_timing\interview_29_poor_entry_timing.log
+15:23:02 INFO [__main__] input=input data\test\interview_29_poor.txt batch_size=1
+15:23:02 INFO [__main__] Parsing transcript: input=input data\test\interview_29_poor.txt chars=5765 classifier=ministral:ministral-3b-latest

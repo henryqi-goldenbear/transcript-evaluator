@@ -1,0 +1,78 @@
+[pipeline] Evaluator run started at 20:37:28
+[ok] #1 Auto case 1 | non_behavioral | model=mistral-small-latest | overall=average
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: average | The answer is somewhat disorganized and includes filler ('what was it'), but the main points are understandable.
+     - relevance: average | The response partially addresses the question about career goals but focuses heavily on past experiences (TA, internship) rather than future aspirations at Visa.
+     - specificity: good | The candidate provides concrete details about their education (Berkeley, EECS) and past roles (TA, internship at Compatible), including specific tasks and outcomes.
+     - self_awareness: poor | The candidate does not reflect on their career goals or why they are interested in Visa; the answer is descriptive rather than introspective.
+     - follow_up: present=false | probe=none | impact=none | No follow-up was provided in the input.
+     - overall: average | The answer is relevant but lacks depth in career goals and self-reflection, despite providing specific past experiences.
+     start=20:37:28 | end=20:37:31 | duration=2.43s
+[ok] #2 Auto case 2 | behavioral | model=mistral-small-latest | overall=good
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: good | The answer is mostly clear and organized, though it starts with a slight detour ('Yeah, so currently I'm actually an intern right now at Intel').
+     - relevance: good | The answer directly addresses the question by providing an example of an invention (a GUI tool) and explains its purpose.
+     - specificity: good | The candidate provides concrete details about the invention (a GUI for executing Python functions) and its purpose (avoiding manual command memorization), though the scope and technical depth are somewhat limited.
+     - self_awareness: average | The candidate shows some ownership of the invention but does not fully reflect on their judgment, tradeoffs, or personal growth in creating it.
+     - follow_up: present=true | probe=clarifying | impact=positive_signal | The follow-up response clarifies the dynamic vs. static nature of the GUI, adding useful detail about future plans.
+     - overall: good | The answer is relevant, mostly specific, and clear, with minor gaps in self-awareness and depth.
+     start=20:37:31 | end=20:37:34 | duration=2.98s
+[ok] #3 Auto case 3 | behavioral | model=mistral-small-latest | overall=very poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: poor | The answer is disorganized, starts with irrelevant context, and trails off without a clear point.
+     - relevance: very poor | The response does not address the question about challenging a colleague's idea or disagreeing with a team's approach.
+     - specificity: very poor | The answer lacks concrete details, context, or any evidence related to the question.
+     - self_awareness: very poor | The candidate does not demonstrate any reflection, ownership, or awareness of the question's intent.
+     - follow_up: present=true | probe=clarifying | impact=downgrade_specificity | The follow-up reveals the candidate's confusion about the term 'model,' further undermining specificity and relevance.
+     - flags: Credibility risk: candidate failed to substantiate any claim about challenging a colleague's idea or disagreeing with a team's approach after follow-up.
+     - overall: very poor | The response is non-responsive, incoherent, and lacks any meaningful evidence or ownership of the topic.
+     start=20:37:34 | end=20:37:37 | duration=2.76s
+[ok] #4 Auto case 4 | behavioral | model=mistral-small-latest | overall=poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate provided a response that can be evaluated against the rubric.
+     - clarity: poor | The answer is disorganized, rambling, and hard to follow due to vague language, filler words, and incomplete sentences.
+     - relevance: average | The answer partially addresses the question by describing inappropriate behavior but does not clearly identify the candidate's own discomfort or the specific actions taken.
+     - specificity: poor | The answer lacks concrete details such as the exact context, the candidate's role, the professor's exact words, or the outcome beyond a vague 'spiral.'
+     - self_awareness: very poor | The candidate does not demonstrate personal discomfort, ownership, or reflection on their role as a bystander; the focus is on external factors.
+     - follow_up: present=true | probe=clarifying | impact=downgrade_specificity | The follow-up clarified the candidate's passive role, but the candidate's confirmation did not add meaningful detail to the original answer.
+     - flags: Credibility risk: candidate failed to substantiate the claimed inappropriate behavior or their personal reaction after follow-up.
+     - overall: poor | The answer is vague, poorly structured, and lacks concrete evidence or personal reflection, with a credibility risk due to unsubstantiated claims.
+     start=20:37:37 | end=20:37:40 | duration=3.05s
+[ok] #5 Auto case 5 | behavioral | model=mistral-small-latest | overall=poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate's response addresses the question about acting on an unassigned problem/opportunity.
+     - clarity: poor | The answer is disorganized, rambling, and hard to follow due to excessive filler, repetition, and lack of structure.
+     - relevance: average | The answer partially addresses the question but focuses heavily on a tangential example (GUI automation) rather than a clear unassigned problem/opportunity.
+     - specificity: poor | The answer lacks concrete context (e.g., team, timeline, role), metrics, or clear ownership of the unassigned problem/opportunity.
+     - self_awareness: poor | The candidate does not reflect on their initiative, judgment, or impact; the response is purely descriptive and lacks ownership.
+     - follow_up: present=true | probe=clarifying | impact=neutral | The follow-up clarifies the outcome (availability to the team) but does not significantly improve the overall evidence.
+     - flags: Credibility risk: candidate failed to substantiate the unassigned problem/opportunity or their proactive role after follow-up.
+     - overall: poor | The answer is vague, poorly structured, and lacks concrete evidence or self-awareness of the unassigned problem/opportunity.
+     start=20:37:40 | end=20:37:43 | duration=2.81s
+[ok] #6 Auto case 6 | behavioral | model=mistral-small-latest | overall=very poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate's response, while challenging to follow, does address the question about persuasion.
+     - clarity: poor | The answer is disorganized, rambling, and difficult to follow due to technical jargon without clear structure or coherence.
+     - relevance: poor | The response only loosely ties to the question about persuasion, focusing heavily on technical details of CPU pipeline design with minimal connection to the interpersonal challenge.
+     - specificity: very poor | The answer lacks concrete evidence of the persuasion challenge, personal role, or outcome; it is overly technical and vague about the disagreement or resolution.
+     - self_awareness: very poor | There is no reflection on the candidate's own role in the persuasion attempt, their judgment, or the impact of their approach.
+     - follow_up: present=true | probe=deepening | impact=credibility_risk | The follow-up reveals the candidate's inability to substantiate the claimed persuasion challenge, shifting focus entirely to technical details without addressing the interpersonal aspect.
+     - flags: Credibility risk: candidate failed to substantiate the persuasion challenge after follow-up.
+     - overall: very poor | The answer is non-responsive, incoherent, and lacks any meaningful evidence of the requested persuasion scenario, with credibility collapsing under follow-up.
+     start=20:37:43 | end=20:37:46 | duration=3.06s
+[ok] #7 Auto case 7 | behavioral | model=mistral-small-latest | overall=very poor
+     breakdown: scorable=true | path=unified
+     - scorable_reasoning: The candidate's response is evaluable against the rubric.
+     - clarity: poor | The answer is disorganized, evasive, and hard to follow, with unclear ownership of the problem.
+     - relevance: poor | The response does not directly address the question about uplifting team spirit or fostering a positive environment.
+     - specificity: poor | The answer lacks concrete context, personal actions, or outcomes; it focuses on a tangential issue (rubrics) without tying it to team morale.
+     - self_awareness: very poor | The candidate deflects responsibility and does not demonstrate ownership of addressing the dip in enthusiasm.
+     - follow_up: present=true | probe=clarifying | impact=downgrade_specificity | The follow-up clarifies the rubric creation process but does not improve the relevance or specificity of the answer.
+     - flags: Credibility risk: candidate failed to substantiate any action taken to uplift team spirit after follow-up.
+     - overall: very poor | The answer is non-responsive, lacks concrete evidence, and shows no self-awareness or ownership of the asked behavior.
+     start=20:37:46 | end=20:37:48 | duration=2.80s
+[pdf] Evaluation report PDF downloaded.
+[agent2] queued: evaluation log, input text, and input JSON queued for Agent 2 websocket delivery

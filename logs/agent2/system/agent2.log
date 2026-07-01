@@ -185,3 +185,67 @@
 19:53:26 Agent 2 live response received for interview_29_poor
 19:53:26 Stored Agent 2 report in SQLite for interview_29_poor
 19:53:26 Wrote Agent 2 report to C:\Users\zhiha\transcript-evaluator\logs\agent2\interview_29_poor\agent2_interview_29_poor_06-14-26_3.md
+19:10:49 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:28:26 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:36:11 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:36:52 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:37:12 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:37:53 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:38:35 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:39:15 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:40:47 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:41:29 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:42:08 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:42:48 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:43:28 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:43:59 Wrote Agent 2 prompt to C:\Users\zhiha\transcript-evaluator\logs\agent2\New_Recording_3\agent2_prompt_New_Recording_3_06-30-26_194359.md
+19:43:59 Agent 2 live prompt ready chars=17274 prompt=C:\Users\zhiha\transcript-evaluator\logs\agent2\New_Recording_3\agent2_prompt_New_Recording_3_06-30-26_194359.md
+19:43:59 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:44:15 Agent 2 live response received for New_Recording_3
+19:44:15 Wrote Agent 2 report to C:\Users\zhiha\transcript-evaluator\logs\agent2\New_Recording_3\agent2_New_Recording_3_06-30-26.md
+19:44:27 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:45:03 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:45:43 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:46:22 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:46:46 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:47:27 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:48:06 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:48:53 Wrote Agent 2 prompt to C:\Users\zhiha\transcript-evaluator\logs\agent2\New_Recording_3\agent2_prompt_New_Recording_3_06-30-26_194853.md
+19:48:53 Agent 2 live prompt ready chars=33880 prompt=C:\Users\zhiha\transcript-evaluator\logs\agent2\New_Recording_3\agent2_prompt_New_Recording_3_06-30-26_194853.md
+19:48:53 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+19:49:12 Agent 2 live response received for New_Recording_3
+19:49:12 Wrote Agent 2 report to C:\Users\zhiha\transcript-evaluator\logs\agent2\New_Recording_3\agent2_New_Recording_3_06-30-26_2.md
+20:06:04 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:06:44 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:07:24 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:08:05 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:08:45 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:09:28 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:11:18 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:11:38 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:12:19 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:12:58 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:13:39 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:14:18 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:15:01 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:18:55 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:19:22 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:20:02 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:20:41 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:21:22 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:22:01 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:22:41 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:26:14 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:26:53 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:27:38 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:28:17 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:29:04 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:29:43 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:30:23 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:31:04 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:31:45 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:37:50 Wrote Agent 2 prompt to C:\Users\zhiha\transcript-evaluator\logs\agent2\New_Recording_3\agent2_prompt_New_Recording_3_06-30-26_203750.md
+20:37:50 Agent 2 live prompt ready chars=35519 prompt=C:\Users\zhiha\transcript-evaluator\logs\agent2\New_Recording_3\agent2_prompt_New_Recording_3_06-30-26_203750.md
+20:37:50 Calling Mistral Agent 2 id=ag_019e9f09fadc72f7b26c3a4eace4fcd1 version=1 key=<set>
+20:38:11 Agent 2 live response received for New_Recording_3
+20:38:11 Wrote Agent 2 report to C:\Users\zhiha\transcript-evaluator\logs\agent2\New_Recording_3\agent2_New_Recording_3_06-30-26_3.md

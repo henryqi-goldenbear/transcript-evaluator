@@ -1,0 +1,17 @@
+20:36:34 INFO [__main__] Starting convert and evaluate task; logging to logs\entry_timing\New Recording 3_entry_timing.log
+20:36:34 INFO [__main__] input=input data\New Recording 3.txt batch_size=1
+20:36:34 INFO [__main__] Parsing transcript: input=input data\New Recording 3.txt transcript=input data\New Recording 3.txt source=transcript-export chars=25762 classifier=ministral:ministral-3b-latest
+20:37:26 INFO [__main__] Agent 2 structure review disabled.
+20:37:26 INFO [__main__] Parsed transcript into 7 cases
+20:37:26 INFO [__main__] Detected 7 evaluator cases
+20:37:26 INFO [__main__] Question/answer pair 1: started_at=20:37:26 finished_at=20:37:26 question_chars=94 answer_chars=855 follow_ups=0
+20:37:26 INFO [__main__] Question/answer pair 2: started_at=20:37:26 finished_at=20:37:26 question_chars=259 answer_chars=549 follow_ups=3
+20:37:26 INFO [__main__] Question/answer pair 3: started_at=20:37:26 finished_at=20:37:26 question_chars=181 answer_chars=192 follow_ups=8
+20:37:26 INFO [__main__] Question/answer pair 4: started_at=20:37:26 finished_at=20:37:26 question_chars=259 answer_chars=1237 follow_ups=2
+20:37:26 INFO [__main__] Question/answer pair 5: started_at=20:37:26 finished_at=20:37:26 question_chars=180 answer_chars=992 follow_ups=4
+20:37:26 INFO [__main__] Question/answer pair 6: started_at=20:37:26 finished_at=20:37:26 question_chars=105 answer_chars=1201 follow_ups=3
+20:37:26 INFO [__main__] Question/answer pair 7: started_at=20:37:26 finished_at=20:37:26 question_chars=171 answer_chars=594 follow_ups=5
+20:37:26 INFO [__main__] Finished conversion: input=input data\New Recording 3.txt output=input data\New Recording 3.json started_at=20:36:34 finished_at=20:37:26 input_chars=25762 cases=7 batch_size=1
+20:37:26 INFO [__main__] Stored approved interview structure in SQLite: db=data\interviews.sqlite interview_id=12
+20:37:26 INFO [__main__] Reusing existing pipeline server on port 3000
+20:37:26 INFO [__main__] Opening evaluator HTML: http://localhost:3000/src/frontend/evaluator.html?v=mistral-small-4&input=input+data%2FNew+Recording+3.json&batch_size=1&log_file=logs%2Fagent1%2FNew+Recording+3%2FNew+Recording+3_eval.log&result_log_file=logs%2Fagent1%2FNew+Recording+3%2FNew+Recording+3.log
